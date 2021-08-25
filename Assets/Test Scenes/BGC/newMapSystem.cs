@@ -12,6 +12,7 @@ public class newMapSystem : MonoBehaviour
     /// Depth_lever*2+1 
     /// </summary>
     public int Depth_Lever;
+    public MapData mapdata;
 
     private GameObject[,] map;
     private Vector2 Start_Map_Index;
@@ -75,7 +76,8 @@ public class newMapSystem : MonoBehaviour
 
         map = new GameObject[Depth_Lever*2+1, Depth_Lever*2+1];
         Start_Map_Index = new Vector2(Depth_Lever, Depth_Lever);
-
+        mapdata.Get_center(this.gameObject);
+        mapdata.Batch_map();
     }
 
 
