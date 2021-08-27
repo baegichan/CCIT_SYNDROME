@@ -9,11 +9,12 @@ public class AbilityItem : MonoBehaviour
     AbilityManager AM;
     public int ThisCode;
     public int ThisPrice;
+    public Ability me;
 
     void Start()
     {
         AM = AbManager.GetComponent<AbilityManager>();
-
+        ThisCode = Random.Range(0, AM.AbList.Count);
         SelectAbility();
     }
 
@@ -27,6 +28,7 @@ public class AbilityItem : MonoBehaviour
                 spt.sprite = AM.AbList[i].AbSprite;
                 gameObject.name = AM.AbList[i].AbName;
                 ThisPrice = AM.AbList[i].AbPrice;
+                me = AM.AbList[i];
             }
         }
     }
@@ -52,6 +54,19 @@ public class AbilityItem : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag == "Player") { AbililtyEffect(); }
+        if(col.tag == "Player")
+        { 
+            AbililtyEffect();
+
+            PlayerTest pt = col.GetComponent<PlayerTest>();
+
+            if (!pt.HaveAbility[0].IsUsing){ pt.HaveAbility[0] = me; }
+            else if (pt.HaveAbility[0].IsUsing && !pt.HaveAbility[1].IsUsing) { pt.HaveAbility[1] = me; }
+            else if(pt.HaveAbility[0].IsUsing && pt.HaveAbility[1].IsUsing)
+            {
+                pt.HaveAbility[0] = pt.HaveAbility[1];
+                pt.HaveAbility[1] = me;
+            }
+        }
     }
 }
