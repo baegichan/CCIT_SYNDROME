@@ -97,5 +97,21 @@ public class MapData : ScriptableObject
     {
         return Back_Ground_Sprite.Length;
     }
-   
+   public void Save_WH()
+    {
+
+        if(direction==Map_Direction.x)
+        {
+            Width = Get_Total_Sprite_Width();
+            Height= Back_Ground_Sprite[0].GetComponent<SpriteRenderer>().sprite.rect.height / Back_Ground_Sprite[0].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        }
+        else
+        {
+
+            Width = Back_Ground_Sprite[0].GetComponent<SpriteRenderer>().sprite.rect.width / Back_Ground_Sprite[0].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+            Height = Get_Total_Sprite_Height();
+        }
+      
+
+    }
 }
