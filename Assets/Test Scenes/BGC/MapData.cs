@@ -18,6 +18,10 @@ public class MapData : ScriptableObject
     GameObject Tile_Map;
     [SerializeField]
     GameObject Center;
+    
+    
+    float Width;
+    float Height;
 
     public Map_Direction direction = Map_Direction.x;
     public void Get_center(GameObject center)
@@ -57,6 +61,7 @@ public class MapData : ScriptableObject
                 break;
 
         }
+        Instantiate(Tile_Map, Vector3.zero, Quaternion.identity, Center.transform);
         for (int i = 0; i < Back_Ground_Sprite.Length; i++)
         {
             switch(direction)
