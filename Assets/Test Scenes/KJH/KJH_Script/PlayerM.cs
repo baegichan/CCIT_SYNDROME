@@ -20,7 +20,8 @@ public class PlayerM : MonoBehaviour
     public float P_AttackForce;
     public float P_AttackInt;
     public float P_AttackTimer = 1;
-
+    public Transform P_FrontAttack;
+    public Transform P_TopAttack;
     //
 
     Animation ani;
@@ -29,6 +30,7 @@ public class PlayerM : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        ani = GetComponent<Animation>();
     }
 
     void Start()
@@ -76,12 +78,14 @@ public class PlayerM : MonoBehaviour
         {
             P_DashForce = 0; 
             P_DashTimer -= Time.deltaTime;
+            Physics2D.IgnoreLayerCollision(10, 11);
         }
         if(P_DashTimer <= 0)
         {
             P_DashTimer = 2;
             P_DashInt = 1;
             P_DashForce = 150;
+            Physics2D.IgnoreLayerCollision(10, 11, false);
         }
         
     }
@@ -119,7 +123,10 @@ public class PlayerM : MonoBehaviour
 
     public void Attack()
     {
+        if (Input.GetKeyDown((KeyCode)settingmanager.GM.nomalattack))
+        {
 
+        }
     }
 
     public void AttackSlow()//공격시 Player 이동속도 조절
