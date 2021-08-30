@@ -29,11 +29,13 @@ public class MapManager : MonoBehaviour
     {
         GameObject room = GameObject.FindGameObjectWithTag("Room");
         Start_Room_Index = new Vector2(Level, Level);
-        map = new GameObject[(2 * Level) +1, (2 * Level) + 1]; //?
+        map = new GameObject[(2 * Level) +1, (2 * Level) + 1]; 
         map_index = (2 * Level + 1) * (2 * Level + 1);
         //map[Level, Level].transform.position = new Vector2(0, 0);
         //Start_Map = map[Level, Level].transform.position;
-        Boss_Room_Index = new Vector2(Level + (Random.Range(0,2)==0? Random.Range(Level / 2, Level + 1) : - Random.Range(Level / 2, Level + 1)), Level + (Random.Range(0, 2) == 0 ? +Random.Range(Level / 2, Level+1) : - Random.Range(Level / 2, Level + 1)));
+        Boss_Room_Index = new Vector2(Level + (Random.Range(0,2)==0? Random.Range(Level / 2, Level + 1) : - Random.Range(Level / 2, Level + 1)),
+            Level + (Random.Range(0, 2) == 0 ? +Random.Range(Level / 2, Level+1) : - Random.Range(Level / 2, Level + 1)));
+        //Level은 3보다 높아야 함
         
 
 
