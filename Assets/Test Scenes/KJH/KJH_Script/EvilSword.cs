@@ -10,18 +10,19 @@ public class EvilSword : MonoBehaviour
     public float E_Attack_Range;
     public Transform E_Attack_Throw;
     public float E_Move_Speed;
-    public float E_Move_SpinSpeed;
-    public Transform SpawnPoint;
+    public float E_Move_SpinSpeed;  
+    public static Transform Player;
+
 
     void Start()
     {
-        
+        Player = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        //Instantiate(GameObject.FindWithTag("Evil Sword"),Player);
     }
 
-   
     void Update()
     {
-        
+        this.transform.position = Player.transform.position;
     }
 
     public void Attack()
@@ -62,20 +63,24 @@ public class EvilSword : MonoBehaviour
     }
     public void AttackZero()
     {
-        this.gameObject.transform.Translate(Vector3.back * 100 * Time.deltaTime, SpawnPoint);
+        this.gameObject.transform.Translate(Vector3.back * 100 * Time.deltaTime, Player);
     }
+
     public void AttackOne()
     {
         this.gameObject.transform.Translate(Vector3.forward * E_Move_Speed * 500 * Time.deltaTime, E_Attack_Throw);
     }
+
     public void AttackTwo()
     {
-        this.gameObject.transform.rotation = Quaternion.Euler(180 * E_Move_SpinSpeed, 0, 0);
+        this.gameObject.transform.rotation = Quaternion.Euler(0, 0, 180 * E_Move_SpinSpeed);
     }
+
     public void AttackThree()
     {
-        this.gameObject.transform.rotation = Quaternion.Euler(-180 * E_Move_SpinSpeed, 0, 0);
+        this.gameObject.transform.rotation = Quaternion.Euler(0, 0, -180 * E_Move_SpinSpeed);
     }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Monster")

@@ -15,7 +15,11 @@ public class Playerindigo : MonoBehaviour
     }
 
     /// Test
+    /// 플레이어 스테이터스
     public float P_Hp;
+    public int P_Money;
+    ///
+    /// 플레이어 이동
     public float P_M_Speed;
     public float P_JumpForce;
     public float P_MaxJumpInt = 1;
@@ -23,10 +27,12 @@ public class Playerindigo : MonoBehaviour
     public float P_DashForce;
     public float P_DashInt = 1;
     public float P_DashTimer = 2;
+    ///
+    /// 플레이어 특수능력 관련 함수
     public int MulYakInt;
     public int AlYakInt;
-    public int P_Money;
-
+    /// 
+    /// 플레이어 공격
     public float P_AttackForce;
     public float P_AttackInt = 0;
     public float P_AttackTimer = 1;
@@ -36,7 +42,9 @@ public class Playerindigo : MonoBehaviour
     public Transform P_TopAttack;
     public Vector2 P_UBox_Size;
     public Vector2 P_RBox_Size;
-
+    /// <summary>
+    /// 
+    /// </summary>
     Animation ani;
     Rigidbody2D rigid;
 
