@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Playerindigo : MonoBehaviour
 {
+    /// Test
+    public int A;
+    public int B;
+    public int C;
+
+    public void Test_Attack_Passive()
+    {
+
+    }
+
+    /// Test
     public float P_Hp;
     public float P_M_Speed;
     public float P_JumpForce;
@@ -136,7 +147,7 @@ public class Playerindigo : MonoBehaviour
             P_AttackInt++;
             Debug.Log("공격 작동");
         }
-        else if (P_AttackInt > 3)
+        if (P_AttackInt > 3)
         {
             P_AttackState = false;
             P_AttackInt = 0;
