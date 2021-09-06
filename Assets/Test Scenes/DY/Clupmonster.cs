@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Drillmonster : MonoBehaviour
+public class Clupmonster : MonoBehaviour
 {
     Animator animator;
     public Transform player;
@@ -25,7 +25,7 @@ public class Drillmonster : MonoBehaviour
     }
     public Transform boxPos;
     public Vector2 boxSize;
-    public void DrillAttack()
+    public void ClupAttack()
     {
         if (boxPos.localPosition.x > 0)
             boxPos.localPosition = new Vector2(boxPos.localPosition.x * -1, boxPos.localPosition.y);
@@ -37,7 +37,7 @@ public class Drillmonster : MonoBehaviour
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(boxPos.position, boxSize, 0);
         foreach (Collider2D collider in collider2Ds)
         {
-            if(collider.tag == "Player")
+            if (collider.tag == "Player")
             {
                 Debug.Log("Damage");
             }
