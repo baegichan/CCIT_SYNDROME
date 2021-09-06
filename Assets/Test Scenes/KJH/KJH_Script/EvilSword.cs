@@ -7,22 +7,22 @@ public class EvilSword : MonoBehaviour
     //¸¶°Ë = Evil Sword
     public float E_Attack_Damage;
     public float E_Attack_Int = 0;
-    public float E_Attack_Range;
+    public float E_Attack_Range = 100;
     public Transform E_Attack_Throw;
-    public float E_Move_Speed;
-    public float E_Move_SpinSpeed;  
-    public static Transform Player;
+    public float E_Move_Speed = 500;
+    public float E_Move_SpinSpeed = 500;  
+    public static Transform Spawn;
 
 
     void Start()
     {
-        Player = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        Spawn = GameObject.FindWithTag("Evil Sword Spawn").GetComponent<Transform>();
         //Instantiate(GameObject.FindWithTag("Evil Sword"),Player);
     }
 
     void Update()
     {
-        this.transform.position = Player.transform.position;
+        this.transform.position = Spawn.transform.position;
     }
 
     public void Attack()
@@ -63,7 +63,7 @@ public class EvilSword : MonoBehaviour
     }
     public void AttackZero()
     {
-        this.gameObject.transform.Translate(Vector3.back * 100 * Time.deltaTime, Player);
+        this.gameObject.transform.Translate(Vector3.back * 100 * Time.deltaTime, Spawn);
     }
 
     public void AttackOne()

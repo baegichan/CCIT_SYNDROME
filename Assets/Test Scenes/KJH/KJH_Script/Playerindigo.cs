@@ -150,19 +150,15 @@ public class Playerindigo : MonoBehaviour
     
     public void Attack()
     {
-        if (/*Input.GetKeyDown((KeyCode)settingmanager.GM.nomalattack)*/Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             P_AttackInt++;
             Debug.Log("공격 작동");
         }
-        if (P_AttackInt > 3)
-        {
-            P_AttackState = false;
-            P_AttackInt = 0;
-        }
+        
         switch (P_AttackInt)
         {
-            case 0:
+           case 0:
                 P_AttackState = false;
                 P_AttackResetTimer = 0.8f;
                 break;
@@ -212,6 +208,11 @@ public class Playerindigo : MonoBehaviour
                 {
                     AttackBoundary();
                 }
+                break;
+
+            case 4:
+                P_AttackState = false;
+                P_AttackInt = 0;
                 break;
         }
     }

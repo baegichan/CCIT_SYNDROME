@@ -5,6 +5,7 @@ using UnityEngine;
 public class TestScript : MonoBehaviour
 {
     public GameObject Sword;
+    
     void Start()
     {
         
@@ -20,8 +21,8 @@ public class TestScript : MonoBehaviour
     {
         if(col.tag == "Player")
         {
-            EvilSword.Player =  GameObject.FindWithTag("Player").GetComponent<Transform>();
-            Instantiate(Sword, EvilSword.Player);
+            EvilSword.Spawn =  GameObject.FindWithTag("Evil Sword Spawn").GetComponent<Transform>();
+            Instantiate(Sword, EvilSword.Spawn);
             Destroy(this.gameObject);
 
         }
