@@ -23,18 +23,54 @@ public class MapManager : MonoBehaviour
     Vector2 Start_Room_Index;
     [SerializeField]
     Vector2 Boss_Room_Index;
+    [SerializeField]
+    Vector2 Gacha_Room_Index;
+    [SerializeField]
+    Vector2 Store_Room_Index;
     
-
+    public Vector2 BOSS_ROOM
+    {
+        get
+        {
+            return Boss_Room_Index;
+        }
+        
+    }
+    
+    
+    public void Check_Room_Index(Vector2 One, Vector2 targetroom)
+    {
+         
+        if(One==targetroom)
+        {
+            //change()
+            Check_Room_Index(One, targetroom);
+        }
+        else
+        {
+            
+        }
+    }
     private void Start()
     {
         GameObject room = GameObject.FindGameObjectWithTag("Room");
         Start_Room_Index = new Vector2(Level, Level);
-        map = new GameObject[(2 * Level) +1, (2 * Level) + 1]; //?
+        map = new GameObject[(2 * Level) +1, (2 * Level) + 1]; 
         map_index = (2 * Level + 1) * (2 * Level + 1);
         //map[Level, Level].transform.position = new Vector2(0, 0);
         //Start_Map = map[Level, Level].transform.position;
-        Boss_Room_Index = new Vector2(Level + (Random.Range(0,2)==0? Random.Range(Level / 2, Level + 1) : - Random.Range(Level / 2, Level + 1)), Level + (Random.Range(0, 2) == 0 ? +Random.Range(Level / 2, Level+1) : - Random.Range(Level / 2, Level + 1)));
-        
+        if(Level==3)
+        {
+            Boss_Room_Index = new Vector2(Level + (Random.Range(0, 2) == 0 ? Random.Range(2, Level + 1) : -Random.Range( 2, Level + 1)), Level + (Random.Range(0, 2) == 0 ? +Random.Range(2, Level + 1) : -Random.Range( 2, Level + 1)));
+      
+        }
+        else
+        {
+            Boss_Room_Index = new Vector2(Level + (Random.Range(0, 2) == 0 ? Random.Range(Level / 2, Level + 1) : -Random.Range(Level / 2, Level + 1)), Level + (Random.Range(0, 2) == 0 ? +Random.Range(Level / 2, Level + 1) : -Random.Range(Level / 2, Level + 1)));
+
+        }
+        //Level은 3보다 높아야 함
+
 
 
         make_map();
