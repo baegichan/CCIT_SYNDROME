@@ -7,21 +7,7 @@ public class PlayerM_ : MonoBehaviour
     public float P_Hp;
     public float P_M_Speed;
     public float P_JumpForce;
-    public float P_DefaultJumpInt = 1;
-    public float P_MaxJumpInt
-    {
-        get
-        {
-            if (PassiveAbility.AbCode != 6) { return 1; }
-            else { return P_DefaultJumpInt; }
-        }
-        set 
-        {
-            P_DefaultJumpInt = value;
-            if (PassiveAbility.AbCode == 6) { P_JumpInt = 2; }
-            else { P_JumpInt = 1; }
-        }
-    }
+    public float P_MaxJumpInt = 1;
     public float P_JumpInt;
     public float P_DashForce;
     public float P_DashInt = 1;
@@ -30,12 +16,7 @@ public class PlayerM_ : MonoBehaviour
     public int AlYakInt;
     public int P_Money;
 
-    public float P_DefaultAttack = 10;
-    public float P_AttackForce
-    {
-        get { return P_DefaultAttack; }
-        set { P_DefaultAttack = value; }
-    }
+    public float P_AttackForce;
     public float P_AttackInt = 0;
     public float P_AttackTimer = 1;
     public bool P_AttackState = false;
@@ -115,15 +96,27 @@ public class PlayerM_ : MonoBehaviour
     }
     public void Jump()
     {
+        //if (P_JumpInt > 1)
+        //{
+        //    P_JumpInt = 1;
+        //}
+
         switch (P_JumpInt)
         {
             case 2:
-                if (Input.GetKeyDown(KeyCode.Space)) { jump(); }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    jump();
+                }
                 break;
             case 1:
-                if (Input.GetKeyDown(KeyCode.Space)) { jump(); }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    jump();
+                }
                 break;
             case 0:
+                Debug.Log("작동x");
                 rigid.AddForce(Vector3.up * 0);
                 break;
         }
@@ -131,7 +124,8 @@ public class PlayerM_ : MonoBehaviour
 
     void jump()
     {
-        rigid.AddForce(Vector3.up * P_JumpForce * 100);
+        Debug.Log("작동");
+        rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
         P_JumpInt -= 1;
     }
     
@@ -140,6 +134,7 @@ public class PlayerM_ : MonoBehaviour
         if (/*Input.GetKeyDown((KeyCode)settingmanager.GM.nomalattack)*/Input.GetMouseButtonDown(0))
         {
             P_AttackInt++;
+            Debug.Log("공격 작동");
         }
         else if (P_AttackInt > 3)
         {
@@ -169,32 +164,38 @@ public class PlayerM_ : MonoBehaviour
                 break;
 
             case 2:
-                attack();
+                P_AttackResetTimer = 0.8f;
+                P_AttackResetTimer -= Time.deltaTime;
+                if (P_AttackResetTimer <= 0)
+                {
+                    P_AttackInt = 0;
+                    P_AttackState = false;
+                    P_AttackResetTimer = 0.8f;
+                }
+                P_AttackState = true;
+                if (P_AttackState == true)
+                {
+                    AttackBoundary();
+                }
                 break;
 
             case 3:
-                attack();
+                P_AttackResetTimer = 0.8f;
+                P_AttackResetTimer -= Time.deltaTime;
+                if (P_AttackResetTimer <= 0)
+                {
+                    P_AttackInt = 0;
+                    P_AttackState = false;
+                    P_AttackResetTimer = 0.8f;
+                }
+                P_AttackState = true;
+                if (P_AttackState == true)
+                {
+                    AttackBoundary();
+                }
                 break;
         }
     }
-
-    void attack()
-    {
-        P_AttackResetTimer = 0.8f;
-        P_AttackResetTimer -= Time.deltaTime;
-        if (P_AttackResetTimer <= 0)
-        {
-            P_AttackInt = 0;
-            P_AttackState = false;
-            P_AttackResetTimer = 0.8f;
-        }
-        P_AttackState = true;
-        if (P_AttackState == true)
-        {
-            AttackBoundary();
-        }
-    }
-
     public void AttackBoundary()
     {
         Collider2D[] Uhit = Physics2D.OverlapBoxAll(P_TopAttack.position, P_UBox_Size, 0);
@@ -260,6 +261,7 @@ public class PlayerM_ : MonoBehaviour
     {
         if (col.gameObject.tag == "Ground")
         {
+            Debug.Log("점프 +1");
             P_JumpInt = P_MaxJumpInt;
         }
     }

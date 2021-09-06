@@ -102,9 +102,20 @@ public class AbilityItem : MonoBehaviour
 
     void UsePassive()
     {
-        AM.Change_Jump_int();
         switch(me.AbCode)
         {
+            case 0:
+                passive = new usePassive(AM.Werewolf);
+                break;
+            case 1:
+                passive = new usePassive(AM.Parao);
+                break;
+            case 2:
+                passive = new usePassive(AM.BomberMan);
+                break;
+            case 3:
+                passive = new usePassive(AM.Ability_D);
+                break;
             case 4:
                 passive = new usePassive(AM.Ability_E);
                 break;
@@ -113,6 +124,7 @@ public class AbilityItem : MonoBehaviour
                 break;
             case 6:
                 passive = new usePassive(AM.Double_Jump);
+                Ply.GetComponent<PlayerM_>().P_MaxJumpInt = 2;
                 break;
         }
     }
