@@ -41,7 +41,7 @@ public class AbilityItem : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag == "Player")
+        if (col.tag == "Player")
         {
             Ply = col.gameObject;
             PlayerM_ pt = col.GetComponent<PlayerM_>();
@@ -102,7 +102,7 @@ public class AbilityItem : MonoBehaviour
 
     void UsePassive()
     {
-        switch(me.AbCode)
+        switch (me.AbCode)
         {
             case 0:
                 passive = new usePassive(AM.Werewolf);

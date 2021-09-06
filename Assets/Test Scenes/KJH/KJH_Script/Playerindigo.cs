@@ -2,53 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerM_ : MonoBehaviour
+public class Playerindigo : MonoBehaviour
 {
+    // Start is called before the first frame update
+    /// Test
+    public int A;
+    public int B;
+    public int C;
+
+    public void Test_Attack_Passive()
+    {
+
+    }
+
+    /// Test
+    /// 플레이어 스테이터스
     public float P_Hp;
+    public int P_Money;
+    ///
+    /// 플레이어 이동
     public float P_M_Speed;
     public float P_JumpForce;
-    public float P_DefaultJumpInt = 1;
-    public float P_MaxJumpInt
-    {
-        get
-        {
-            if (PassiveAbility.AbCode != 6) { return 1; }
-            else { return P_DefaultJumpInt; }
-        }
-        set
-        {
-            P_DefaultJumpInt = value;
-            if (PassiveAbility.AbCode == 6) { P_JumpInt = 2; }
-            else { P_JumpInt = 1; }
-        }
-    }
+    public float P_MaxJumpInt = 1;
     public float P_JumpInt;
     public float P_DashForce;
     public float P_DashInt = 1;
     public float P_DashTimer = 2;
+    ///
+    /// 플레이어 특수능력 관련 함수
+    public GameObject abilityManager;
     public int MulYakInt;
     public int AlYakInt;
-    public int P_Money;
-
-    public float P_DefaultAttack = 10;
-    public float P_AttackForce
-    {
-        get { return P_DefaultAttack; }
-        set { P_DefaultAttack = value; }
-    }
+    /// 
+    /// 플레이어 공격
+    public float P_AttackForce;
     public float P_AttackInt = 0;
     public float P_AttackTimer = 1;
-    public bool P_AttackState = false;
+      public bool P_AttackState = false;
     public float P_AttackResetTimer = 0.8f;
     public Transform P_FrontAttack;
+   
     public Transform P_TopAttack;
     public Vector2 P_UBox_Size;
     public Vector2 P_RBox_Size;
+    /// <summary>
+    /// 
+    /// </summary>
 
     Animation ani;
     Rigidbody2D rigid;
-
-    public GameObject abilityManager;
     public Ability ActiveAbility;
     public Ability PassiveAbility;
 
@@ -57,13 +59,11 @@ public class PlayerM_ : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animation>();
     }
-
     void FixedUpdate()
     {
         Move();
         //Attack();
     }
-
     void Update()
     {
         if (ActiveAbility.AbSprite != null)
@@ -73,13 +73,10 @@ public class PlayerM_ : MonoBehaviour
         UseItem();
         Jump();
     }
-
     public void Move()//Move안에 대쉬까지 만듦
     {
-
         float h = Input.GetAxis("Horizontal");
         transform.position += new Vector3(h * P_M_Speed * Time.deltaTime, 0);
-
         switch (h)
         {
             case -1:
@@ -97,7 +94,6 @@ public class PlayerM_ : MonoBehaviour
                 }
                 break;
         }
-
         if (P_DashInt == 0)
         {
             P_DashForce = 0;
@@ -111,7 +107,6 @@ public class PlayerM_ : MonoBehaviour
             P_DashForce = 300;
             Physics2D.IgnoreLayerCollision(10, 11, false);
         }
-
     }
     public void Jump()
     {
@@ -119,7 +114,6 @@ public class PlayerM_ : MonoBehaviour
         //{
         //    P_JumpInt = 1;
         //}
-
         switch (P_JumpInt)
         {
             case 2:
@@ -140,7 +134,6 @@ public class PlayerM_ : MonoBehaviour
                 break;
         }
     }
-
     void jump()
     {
         Debug.Log("작동");
@@ -148,25 +141,20 @@ public class PlayerM_ : MonoBehaviour
         P_JumpInt -= 1;
     }
 
+
     public void Attack()
-    {
-        if (/*Input.GetKeyDown((KeyCode)settingmanager.GM.nomalattack)*/Input.GetMouseButtonDown(0))
         {
-            P_AttackInt++;
-            Debug.Log("공격 작동");
-        }
-        else if (P_AttackInt > 3)
-        {
-            P_AttackState = false;
-            P_AttackInt = 0;
-        }
+            if (Input.GetMouseButton(0))
+            {
+                P_AttackInt++;
+                Debug.Log("공격 작동");
+            }
         switch (P_AttackInt)
         {
             case 0:
                 P_AttackState = false;
                 P_AttackResetTimer = 0.8f;
                 break;
-
             case 1:
                 P_AttackState = true;
                 P_AttackResetTimer -= Time.deltaTime;
@@ -181,7 +169,6 @@ public class PlayerM_ : MonoBehaviour
                     AttackBoundary();
                 }
                 break;
-
             case 2:
                 P_AttackResetTimer = 0.8f;
                 P_AttackResetTimer -= Time.deltaTime;
@@ -197,7 +184,6 @@ public class PlayerM_ : MonoBehaviour
                     AttackBoundary();
                 }
                 break;
-
             case 3:
                 P_AttackResetTimer = 0.8f;
                 P_AttackResetTimer -= Time.deltaTime;
@@ -212,6 +198,11 @@ public class PlayerM_ : MonoBehaviour
                 {
                     AttackBoundary();
                 }
+                break;
+
+            case 4:
+                P_AttackState = false;
+                P_AttackInt = 0;
                 break;
         }
     }
@@ -232,7 +223,6 @@ public class PlayerM_ : MonoBehaviour
         Collider2D[] Rhit = Physics2D.OverlapBoxAll(P_FrontAttack.position, P_RBox_Size, 0);
         foreach (Collider2D collider in Rhit)
         {
-
             if (collider.tag == "Monster")
             {
                 if (P_AttackState == true)
@@ -243,12 +233,10 @@ public class PlayerM_ : MonoBehaviour
             }
         }
     }
-
     public void OnDrawGizumos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(P_TopAttack.position, P_UBox_Size);
-
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(P_FrontAttack.position, P_RBox_Size);
     }
@@ -270,12 +258,9 @@ public class PlayerM_ : MonoBehaviour
                 break;
         }
     }
-
     public void AttackReset()
     {
-
     }
-
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Ground")
@@ -284,14 +269,13 @@ public class PlayerM_ : MonoBehaviour
             P_JumpInt = P_MaxJumpInt;
         }
     }
-
     public delegate void useAbility();
     useAbility ability;
+
 
     public void SelectAbility()
     {
         AbilityManager AM = abilityManager.GetComponent<AbilityManager>();
-
         switch (ActiveAbility.AbCode)
         {
             case 0:
@@ -317,7 +301,6 @@ public class PlayerM_ : MonoBehaviour
                 break;
         }
     }
-
     void UseSkill()
     {
         switch (ActiveAbility.AbName)
@@ -333,7 +316,6 @@ public class PlayerM_ : MonoBehaviour
                 break;
         }
     }
-
     void UseItem()
     {
         if (MulYakInt > 0 && Input.GetKeyDown(KeyCode.E))
@@ -348,3 +330,6 @@ public class PlayerM_ : MonoBehaviour
         }
     }
 }
+
+
+
