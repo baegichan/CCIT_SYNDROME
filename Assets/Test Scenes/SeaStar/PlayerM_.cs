@@ -2,9 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerM_ : MonoBehaviour
+public class Playerindigo : MonoBehaviour
 {
+    /// Test
+    public int A;
+    public int B;
+    public int C;
+
+    public void Test_Attack_Passive()
+    {
+
+    }
+
+    /// Test
+    /// 플레이어 스테이터스
     public float P_Hp;
+    public int P_Money;
+    ///
+    /// 플레이어 이동
     public float P_M_Speed;
     public float P_JumpForce;
     public float P_MaxJumpInt = 1;
@@ -12,10 +27,12 @@ public class PlayerM_ : MonoBehaviour
     public float P_DashForce;
     public float P_DashInt = 1;
     public float P_DashTimer = 2;
+    ///
+    /// 플레이어 특수능력 관련 함수
     public int MulYakInt;
     public int AlYakInt;
-    public int P_Money;
-
+    /// 
+    /// 플레이어 공격
     public float P_AttackForce;
     public float P_AttackInt = 0;
     public float P_AttackTimer = 1;
@@ -25,13 +42,15 @@ public class PlayerM_ : MonoBehaviour
     public Transform P_TopAttack;
     public Vector2 P_UBox_Size;
     public Vector2 P_RBox_Size;
-
+    /// <summary>
+    /// 
+    /// </summary>
     Animation ani;
     Rigidbody2D rigid;
 
     public GameObject abilityManager;
-    public Ability ActiveAbility;
-    public Ability PassiveAbility;
+    public Ability_ ActiveAbility;
+    public Ability_ PassiveAbility;
 
     void Awake()
     {
@@ -131,19 +150,15 @@ public class PlayerM_ : MonoBehaviour
     
     public void Attack()
     {
-        if (/*Input.GetKeyDown((KeyCode)settingmanager.GM.nomalattack)*/Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             P_AttackInt++;
             Debug.Log("공격 작동");
         }
-        else if (P_AttackInt > 3)
-        {
-            P_AttackState = false;
-            P_AttackInt = 0;
-        }
+        
         switch (P_AttackInt)
         {
-            case 0:
+           case 0:
                 P_AttackState = false;
                 P_AttackResetTimer = 0.8f;
                 break;
@@ -194,6 +209,11 @@ public class PlayerM_ : MonoBehaviour
                     AttackBoundary();
                 }
                 break;
+
+            case 4:
+                P_AttackState = false;
+                P_AttackInt = 0;
+                break;
         }
     }
     public void AttackBoundary()
@@ -225,7 +245,7 @@ public class PlayerM_ : MonoBehaviour
         }
     }
 
-    public void OnDrawGizumos()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(P_TopAttack.position, P_UBox_Size);
@@ -271,7 +291,7 @@ public class PlayerM_ : MonoBehaviour
 
     public void SelectAbility()
     {
-        AbilityManager AM = abilityManager.GetComponent<AbilityManager>();
+        AbilityManager_ AM = abilityManager.GetComponent<AbilityManager_>();
 
         switch (ActiveAbility.AbCode)
         {
