@@ -4,43 +4,80 @@ using UnityEngine;
 
 public class Drillmonster : MonoBehaviour
 {
-    Animator animator;
-    public Transform player;
-    public float speed;
+    //Moveable
+    public float Movespeed;
+    public float Patrollspeed;
+    public float Attackspeed;
+    public Transform Groundcheck;
 
-    public float atkCooltime = 4;
-    public float atkDelay;
+    //Attack
+    public float Attackrange;
+    public float Akcooltime;
+    public float Akcurrenttime;
+    public float Damege;
+    public Transform Target;
 
-    private void Start()
+    //Hp
+    public float Hp;
+
+    //PlayerCheck
+    public bool hit;
+
+    //References
+    public Animator anim;
+
+    //Sound
+    public AudioClip Attacksound;
+    public AudioClip Movesound;
+    public AudioClip Findsound;
+    public AudioClip Diesound;
+
+
+
+    private void Awake()
     {
-        animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        //패트롤 기본 위치값 선정
+        anim = GetComponent<Animator>();
     }
 
-    private void Update()
+    // Start is called before the first frame update
+    void Start()
     {
-        if (atkDelay >= 0)
-            atkDelay -= Time.deltaTime;
+        anim = GetComponent<Animator>();
     }
-    public Transform boxPos;
-    public Vector2 boxSize;
-    public void DrillAttack()
+
+    // Update is called once per frame
+    void Update()
     {
-        if (boxPos.localPosition.x > 0)
-            boxPos.localPosition = new Vector2(boxPos.localPosition.x * -1, boxPos.localPosition.y);
-        else
-        {
-            if (boxPos.localPosition.x < 0)
-                boxPos.localPosition = new Vector2(Mathf.Abs(boxPos.localPosition.x), boxPos.localPosition.y);
-        }
-        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(boxPos.position, boxSize, 0);
-        foreach (Collider2D collider in collider2Ds)
-        {
-            if(collider.tag == "Player")
-            {
-                Debug.Log("Damage");
-            }
-        }
+        
+    }
+
+    public void Patroll()
+    {
+        
+    }
+
+    public void Move()
+    {
+        
+    }
+
+    public void Filp()
+    {
+
+    }
+
+    public void Attack()
+    {
+
+    }
+
+    public void idle()
+    {
+
+    }
+
+    public void Die()
+    {
+
     }
 }
