@@ -19,14 +19,29 @@ public class Addtilesinspecter : Editor
         GUILayout.Label("");
         if (GUILayout.Button("맵데이터 세이브"))
         {
+            string localPath = "Assets/" + "TileMaps/" + "test" + ".prefab";
+            localPath = AssetDatabase.GenerateUniqueAssetPath(localPath);
 
+            PrefabUtility.SaveAsPrefabAssetAndConnect(map.transform.GetChild(0).gameObject, localPath, InteractionMode.UserAction);
+            map.MapData.Save_TileMap(map.transform.GetChild(0).gameObject);
         }
 
 
         GUILayout.Label("");
         if (GUILayout.Button("맵데이터 로드"))
         {
-            if(map.Check_MapData())
+            int count = map.Get_EditorOBJ().transform.childCount;
+
+            for (int i = 0; i < count; i++)
+            {
+                Debug.Log(map.Get_EditorOBJ().transform.GetChild(0).gameObject);
+                DestroyImmediate(map.Get_EditorOBJ().transform.GetChild(0).gameObject);
+            }
+            map.GetComponent<newMapSystem>().mapdata = null;
+            //map.Base_Tile = null;
+
+
+            if (map.Check_MapData())
             {
                 map.MapData.Get_center(map.Get_EditorOBJ());
                 map.Load_MapData();

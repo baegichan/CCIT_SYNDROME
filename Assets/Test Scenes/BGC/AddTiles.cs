@@ -10,12 +10,21 @@ public class AddTiles : MonoBehaviour
     public GameObject Base_Tile;
     public GameObject Get_EditorOBJ()
     {
+        Editor = GameObject.Find("MapEditer");
         return Editor;
     }
 
-  
+    string Text;
 
-   public  bool Check_MapData()
+    public string TEXT
+    {
+        get { return Text; }
+        set { Text = value; }
+
+    }
+ 
+
+    public  bool Check_MapData()
     {
         if(MapData!=null)
         {
@@ -28,6 +37,11 @@ public class AddTiles : MonoBehaviour
     }
     public void Load_MapData()
     {
+        if (transform.childCount != 0)
+        {
+
+        }
         MapData.Batch_map();
+        this.GetComponent<newMapSystem>().Set_mapdata(this.MapData);
     }
 }
