@@ -43,6 +43,7 @@ public class Addtilesinspecter : Editor
 
             if (map.Check_MapData())
             {
+                map.MapData.Road_Default_TileMap();
                 map.MapData.Get_center(map.Get_EditorOBJ());
                 map.Load_MapData();
             }
