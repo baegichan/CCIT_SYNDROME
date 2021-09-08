@@ -20,7 +20,7 @@ public class Clup_Ready : StateMachineBehaviour
         if(clupmon.atkDelay <=0)
         animator.SetTrigger("Attack");
 
-        if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 3f)
+        if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 5f)
             animator.SetBool("Follow", true);
 
         clupmon.DirectionClupmonster(clupmon.player.position.x, clupTransform.position.x);

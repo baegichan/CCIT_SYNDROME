@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Clup_Move : StateMachineBehaviour
 {
+    //몬스터 위치가 계속 해서 바뀔 수 있도록 고쳐야함
     Transform clupTransform;
     ClupMonster clupmon;
 
@@ -17,9 +18,10 @@ public class Clup_Move : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(Vector2.Distance(clupmon.first, clupTransform.position) <0.1f || Vector2.Distance(clupTransform.position, clupmon.player.position) < 10f)
+        if(Vector2.Distance(clupmon.first, clupTransform.position) <0.1f || Vector2.Distance(clupTransform.position, clupmon.player.position) > 10f)
         {
             animator.SetBool("Move", false);
+            animator.SetBool("Follow", true);
         }
         else
         {
