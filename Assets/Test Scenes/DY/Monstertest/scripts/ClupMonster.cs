@@ -19,6 +19,8 @@ public class ClupMonster : MonoBehaviour
     public Transform groundCheck;
     public Transform playerCheck;
     public Transform boxpos;
+    public Vector2 direction;
+    public float distance;
 
     //turn state
     public bool filp;
