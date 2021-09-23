@@ -55,6 +55,7 @@ public class MapData : ScriptableObject
             Tile_Map = (GameObject)Resources.Load("Grid");
         }
         GameObject Grid=Instantiate(Tile_Map, Vector3.zero, Quaternion.identity, Center.transform);
+
         for (int j = 0; j < BG.Length; j++)
         {
             if (BG[j].Tilemap == null)
@@ -62,6 +63,15 @@ public class MapData : ScriptableObject
                 BG[j].Tilemap = (GameObject)Resources.Load("Tilemap");
             }
             GameObject Tile = Instantiate(BG[j].Tilemap, Vector3.zero, Quaternion.identity, Grid.transform);
+            Tile.AddComponent<TilemapCollider2D>();
+            if (BG[j].Its_Object)
+            {
+                Tile.GetComponent<TilemapCollider2D>().enabled=true;
+            }
+            else
+            {
+                Tile.GetComponent<TilemapCollider2D>().enabled = false;
+            }
             Tile.name = BG[j].TilemapName;
             int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].Layer.value, 2));
             int Layer_count = 0;
@@ -184,14 +194,13 @@ public class BackGroundSprites
    public GameObject[] BackGround;
     [Tooltip("null 상태로 로드해도됩니다")]
    public GameObject Tilemap;
+    [Tooltip("오브젝트일경우 체크 배경일경우 False")]
+    public bool Its_Object=false;
     public String TilemapName;
     [Tooltip("넉넉하게 잡은거임")]
     [Range(-30,-50)]public int OrderInLayer=-30;
     [Tooltip("Please do not chose multiple Layer")]
     public LayerMask Layer;
-   
-
-
 }
 [Serializable]
 public class Event
