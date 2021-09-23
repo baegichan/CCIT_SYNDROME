@@ -26,7 +26,7 @@ public class Addtilesinspecter : Editor
         GUILayout.Label("");
         if (GUILayout.Button("맵데이터 로드"))
         {
-            if(map.Check_MapData())
+            if (map.Check_MapData())
             {
                 map.MapData.Get_center(map.Get_EditorOBJ());
                 map.Load_MapData();
@@ -35,7 +35,7 @@ public class Addtilesinspecter : Editor
 
 
         GUILayout.Label("");
-        if (GUILayout.Button("맵데이터 초기화"))
+        if (GUILayout.Button("에디터 초기화"))
         {
             int count = map.Editor.transform.childCount;
             Debug.Log(count);
@@ -46,7 +46,15 @@ public class Addtilesinspecter : Editor
             }
             map.Base_Tile = null;
             map.MapData = null;
-          
+
+        }
+        GUILayout.Label("");
+
+
+        EditorGUILayout.HelpBox("이벤트 추가 미완성", MessageType.Warning);
+        if (GUILayout.Button("이벤트 추가"))
+        {
+
         }
     }
 }
