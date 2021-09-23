@@ -35,7 +35,7 @@ public class Addtilesinspecter : Editor
 
 
         GUILayout.Label("");
-        if (GUILayout.Button("맵데이터 초기화"))
+        if (GUILayout.Button("에디터 초기화"))
         {
             int count = map.Editor.transform.childCount;
             Debug.Log(count);
