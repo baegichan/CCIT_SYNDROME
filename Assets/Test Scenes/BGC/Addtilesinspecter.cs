@@ -13,13 +13,13 @@ public class Addtilesinspecter : Editor
 
         DrawDefaultInspector();
 
-        EditorGUILayout.HelpBox("설정할 맵데이터 를 넣은후 타일맵설치", MessageType.Info);
+        EditorGUILayout.HelpBox("맵데이터를 넣은후 로드해주세요. \n미리 로드된 오브젝트들이있으면 초기화후 로드해주세요.", MessageType.Warning);
 
         AddTiles map = (AddTiles)target;
         GUILayout.Label("");
         if (GUILayout.Button("맵데이터 세이브"))
         {
-
+            map.Save_MapData();
         }
 
 

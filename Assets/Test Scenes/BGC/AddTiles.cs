@@ -30,4 +30,8 @@ public class AddTiles : MonoBehaviour
     {
         MapData.Batch_map();
     }
+    public void Save_MapData()
+    {
+        MapData.Save_MapData(Editor.transform.GetChild(0).gameObject);
+    }
 }

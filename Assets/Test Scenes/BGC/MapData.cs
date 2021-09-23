@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Tilemaps;
-
+using UnityEditor;
 [CreateAssetMenu(fileName = "Map Data", menuName = "SYNDROME_MAP/Map_data")]
 public class MapData : ScriptableObject
 {
@@ -22,6 +22,7 @@ public class MapData : ScriptableObject
     public BackGroundSprites[] BG;
     float Width;
     float Height;
+    public Event Map_Event;
 
     public Map_Direction direction = Map_Direction.x;
     public void Get_center(GameObject center)
@@ -62,7 +63,7 @@ public class MapData : ScriptableObject
             }
             GameObject Tile = Instantiate(BG[j].Tilemap, Vector3.zero, Quaternion.identity, Grid.transform);
             Tile.name = BG[j].TilemapName;
-            int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].SortingLayer.value, 2));
+            int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].Layer.value, 2));
             int Layer_count = 0;
             for (int L = 0; L < 32; L++)
             {
@@ -100,7 +101,7 @@ public class MapData : ScriptableObject
                         BackGround_x.GetComponent<SpriteRenderer>().sortingOrder = BG[j].OrderInLayer;
                         
                         /*
-                        int Layer_binary =Convert.ToInt32(Convert.ToString(BG[j].SortingLayer.value,2));
+                        int Layer_binary =Convert.ToInt32(Convert.ToString(BG[j].Layer.value,2));
                         int Layer_count = 0;
                         for (int L = 0; L < 32; L++)
                         {
@@ -114,7 +115,7 @@ public class MapData : ScriptableObject
                             
                             
                             Layer_count++;
-                           // LayerMask Layer = (BG[j].SortingLayer.value);
+                           // LayerMask Layer = (BG[j].Layer.value);
                            // BackGround_x.layer = Layer;
                         }
                         */
@@ -127,7 +128,7 @@ public class MapData : ScriptableObject
 
                         GameObject BackGround_y = Instantiate(BG[j].BackGround[i], new Vector3(0, total - BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.rect.height / (2 * BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit), 0), Quaternion.identity, Center.transform);
                         BackGround_y.GetComponent<SpriteRenderer>().sortingOrder = BG[j].OrderInLayer;
-                        BackGround_y.layer = BG[j].SortingLayer.value;
+                        BackGround_y.layer = BG[j].Layer.value;
                         if (i + 1 < BG[j].BackGround.Length)
                         {
                             total -= BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.rect.height / BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
@@ -140,6 +141,14 @@ public class MapData : ScriptableObject
                 
             }
            
+        }
+    }
+    public void Save_MapData(GameObject grid)
+    {
+        for(int i=0; i<BG.Length;i++)
+        {
+           GameObject Prefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
+            BG[i].Tilemap = Prefab;
         }
     }
     public Sprite Get_Sprite(int index)
@@ -171,7 +180,7 @@ public class MapData : ScriptableObject
 [Serializable]
 public class BackGroundSprites 
 {
-    [Tooltip("기획변경으로 인해 안쓸듯 0유지해주세요")]
+    [Header("인덱스 0 유지해주세요")]
    public GameObject[] BackGround;
     [Tooltip("null 상태로 로드해도됩니다")]
    public GameObject Tilemap;
@@ -179,7 +188,7 @@ public class BackGroundSprites
     [Tooltip("넉넉하게 잡은거임")]
     [Range(-30,-50)]public int OrderInLayer=-30;
     [Tooltip("Please do not chose multiple Layer")]
-    public LayerMask SortingLayer;
+    public LayerMask Layer;
    
 
 
