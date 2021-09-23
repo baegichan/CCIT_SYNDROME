@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "Map Data", menuName = "SYNDROME_MAP/Map_data")]
 public class MapData : ScriptableObject
@@ -16,9 +16,8 @@ public class MapData : ScriptableObject
     //GameObject[] Back_Ground_Sprite;
     
     GameObject Tile_Map;
-    [SerializeField]
     GameObject Center;
-
+    
 
     public BackGroundSprites[] BG;
     float Width;
@@ -61,7 +60,23 @@ public class MapData : ScriptableObject
             {
                 BG[j].Tilemap = (GameObject)Resources.Load("Tilemap");
             }
-            BG[j].Tilemap = Instantiate(BG[j].Tilemap, Vector3.zero, Quaternion.identity, Grid.transform);
+            GameObject Tile = Instantiate(BG[j].Tilemap, Vector3.zero, Quaternion.identity, Grid.transform);
+            Tile.name = BG[j].TilemapName;
+            int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].SortingLayer.value, 2));
+            int Layer_count = 0;
+            for (int L = 0; L < 32; L++)
+            {
+
+                if (Layer_binary % 2 == 1)
+                {
+                    Tile.layer = Layer_count;
+                    break;
+                }
+                Layer_binary = Layer_binary / 10;
+
+                Layer_count++;
+            }
+            Tile.GetComponent<TilemapRenderer>().sortingOrder = BG[j].OrderInLayer;
             float total = 0;
             switch (direction)
             {
@@ -84,7 +99,7 @@ public class MapData : ScriptableObject
                         GameObject BackGround_x=Instantiate(BG[j].BackGround[i], new Vector3(total - BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.rect.width / (2 * BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit), 0, 0), Quaternion.identity, Center.transform);
                         BackGround_x.GetComponent<SpriteRenderer>().sortingOrder = BG[j].OrderInLayer;
                         
-
+                        /*
                         int Layer_binary =Convert.ToInt32(Convert.ToString(BG[j].SortingLayer.value,2));
                         int Layer_count = 0;
                         for (int L = 0; L < 32; L++)
@@ -102,7 +117,7 @@ public class MapData : ScriptableObject
                            // LayerMask Layer = (BG[j].SortingLayer.value);
                            // BackGround_x.layer = Layer;
                         }
-                        
+                        */
                         if (i + 1 < BG[j].BackGround.Length)
                         {
                             total -= BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.rect.width / BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
@@ -156,11 +171,13 @@ public class MapData : ScriptableObject
 [Serializable]
 public class BackGroundSprites 
 {
-    [Tooltip("기획변경으로 인해 안쓸듯")]
+    [Tooltip("기획변경으로 인해 안쓸듯 0유지해주세요")]
    public GameObject[] BackGround;
+    [Tooltip("null 상태로 로드해도됩니다")]
    public GameObject Tilemap;
+    public String TilemapName;
     [Tooltip("넉넉하게 잡은거임")]
-    [Range(-30,-40)]public int OrderInLayer;
+    [Range(-30,-50)]public int OrderInLayer=-30;
     [Tooltip("Please do not chose multiple Layer")]
     public LayerMask SortingLayer;
    
