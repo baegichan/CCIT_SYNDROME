@@ -13,8 +13,6 @@ public class AddTiles : MonoBehaviour
         return Editor;
     }
 
-  
-
    public  bool Check_MapData()
     {
         if(MapData!=null)

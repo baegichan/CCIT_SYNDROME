@@ -197,7 +197,7 @@ public class BackGroundSprites
     [Tooltip("오브젝트일경우 체크 배경일경우 False")]
     public bool Its_Object=false;
     public String TilemapName;
-    [Tooltip("넉넉하게 잡은거임")]
+    [Tooltip("-30~-50까지")]
     [Range(-30,-50)]public int OrderInLayer=-30;
     [Tooltip("Please do not chose multiple Layer")]
     public LayerMask Layer;
