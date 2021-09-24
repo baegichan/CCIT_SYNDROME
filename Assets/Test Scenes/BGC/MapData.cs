@@ -17,7 +17,7 @@ public class MapData : ScriptableObject
     
     GameObject Tile_Map;
     GameObject Center;
-    
+    public int MapCode;
 
     public BackGroundSprites[] BG;
     float Width;

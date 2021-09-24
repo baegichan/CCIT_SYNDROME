@@ -8,12 +8,13 @@ using UnityEditor;
 public class Addtilesinspecter : Editor
 {
     // Start is called before the first frame update
+  
     public override void OnInspectorGUI()
     {
 
         DrawDefaultInspector();
 
-        EditorGUILayout.HelpBox("맵데이터를 넣은후 로드해주세요. \n미리 로드된 오브젝트들이있으면 초기화후 로드해주세요.", MessageType.Warning);
+        EditorGUILayout.HelpBox("맵데이터를 넣은후 로드해주세요. \n미리 로드된 오브젝트들이있으면 초기화후 로드해주세요.", MessageType.Info);
 
         AddTiles map = (AddTiles)target;
         GUILayout.Label("");
@@ -49,8 +50,97 @@ public class Addtilesinspecter : Editor
 
         }
         GUILayout.Label("");
+        EditorGUILayout.HelpBox("포탈 추가 미완성 20%", MessageType.Warning);
 
+        GUILayout.Label("포탈추가");
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button(new GUIContent("LeftPotal"), GUILayout.Width(80)))
+        {
+            map.PotalsCheck();
+            if (map.PotalnameCheck("LeftPotal",false))
+            {
+                GameObject potal = Instantiate((GameObject)Resources.Load("Potal"), map.GetPotalsroots().transform);
+                potal.name = "LeftPotal";
+            }
+           
+        }
+        if (GUILayout.Button(new GUIContent("RightPotal"), GUILayout.Width(80)))
+        {
+            map.PotalsCheck();
+            if (map.PotalnameCheck("RightPotal", false))
+            {
+                GameObject potal = Instantiate((GameObject)Resources.Load("Potal"), map.GetPotalsroots().transform);
+                potal.name = "RightPotal";
+            }
+        }
+        if (GUILayout.Button(new GUIContent("TopPotal"), GUILayout.Width(80)))
+        {
+            map.PotalsCheck();
+            if (map.PotalnameCheck("TopPotal", false))
+            {
+                GameObject potal = Instantiate((GameObject)Resources.Load("Potal"), map.GetPotalsroots().transform);
+                potal.name = "TopPotal";
+            }
+        }
+        if (GUILayout.Button(new GUIContent("BottomPotal"), GUILayout.Width(80)))
+        {
+            map.PotalsCheck();
+            if (map.PotalnameCheck("BottomPotal", false))
+            {
+                GameObject potal = Instantiate((GameObject)Resources.Load("Potal"), map.GetPotalsroots().transform);
+                potal.name = "BottomPotal";
+            }
+            //유형 변경추가
+        }
+        EditorGUILayout.EndHorizontal();
+        GUILayout.Label("포탈제거");
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button(new GUIContent("LeftPotal"), GUILayout.Width(80)))
+        {
+            map.PotalnameCheck("LeftPotal", true);
 
+        }
+        if (GUILayout.Button(new GUIContent("RightPotal"), GUILayout.Width(80)))
+        {
+
+            map.PotalnameCheck("RightPotal", true);
+          
+        }
+        if (GUILayout.Button(new GUIContent("TopPotal"), GUILayout.Width(80)))
+        {
+            map.PotalnameCheck("TopPotal", true);
+           
+        }
+        if (GUILayout.Button(new GUIContent("BottomPotal"), GUILayout.Width(80)))
+        {
+
+            map.PotalnameCheck("BottomPotal", true);
+          
+            //유형 변경추가
+        }
+        EditorGUILayout.EndHorizontal();
+        GUILayout.Label("");
+        EditorGUILayout.HelpBox("몬스터 추가 미완성", MessageType.Warning);
+
+        GUILayout.Label("위치 고정");
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button(new GUIContent("몬스터 고정"), GUILayout.Width(80)))
+        {
+        }
+   
+        EditorGUILayout.EndHorizontal();
+        GUILayout.Label("");
+
+        GUILayout.Label("위치 랜덤");
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button(new GUIContent("몬스터 랜덤"), GUILayout.Width(80)))
+        {
+        }
+        if (GUILayout.Button(new GUIContent("몬스터 고정"), GUILayout.Width(80)))
+        {
+        }
+        EditorGUILayout.EndHorizontal();
+        GUILayout.Label("");
         EditorGUILayout.HelpBox("이벤트 추가 미완성", MessageType.Warning);
         if (GUILayout.Button("이벤트 추가"))
         {

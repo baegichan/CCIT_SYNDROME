@@ -8,6 +8,60 @@ public class AddTiles : MonoBehaviour
     public MapData MapData;
     public GameObject Editor;
     public GameObject Base_Tile;
+
+    GameObject Potals;
+    
+
+    public bool PotalnameCheck(string potalname,bool isdelete)
+    {
+        if (!isdelete)
+        {
+            for (int i = 0; i < Potals.transform.childCount; i++)
+            {
+                if (Potals.transform.GetChild(i).name == potalname)
+                {
+                    return false;
+                }
+
+
+            }
+            return true;
+        }
+        else
+        {
+            for (int i = 0; i < Potals.transform.childCount; i++)
+            {
+                if (Potals.transform.GetChild(i).name == potalname)
+                {
+                    DestroyImmediate(Potals.transform.GetChild(i).gameObject);
+                }
+
+
+            }
+            return false ;
+        }
+    }
+    /// <summary>
+    /// 비어있을시 true 아닐시 false
+    /// </summary>
+    /// <returns></returns>
+    public bool PotalsCheck()
+    {
+        if(Potals==null)
+        {
+            Potals=(GameObject)Instantiate(Resources.Load("Potals"), this.transform);
+            return true;
+        }
+        else
+        {
+          
+            return false;
+        }
+    }
+    public GameObject GetPotalsroots()
+    {
+        return Potals;
+    }
     public GameObject Get_EditorOBJ()
     {
         return Editor;
