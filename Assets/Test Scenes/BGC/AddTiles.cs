@@ -10,8 +10,21 @@ public class AddTiles : MonoBehaviour
     public GameObject Base_Tile;
 
     GameObject Potals;
-    
 
+    public GameObject PotalObjectCheck(string potalname)
+    {
+       
+            for (int i = 0; i < Potals.transform.childCount; i++)
+            {
+                if (Potals.transform.GetChild(i).name == potalname)
+                {
+                return (Potals.transform.GetChild(i).gameObject);
+                }
+
+
+            }
+        return null;
+    }
     public bool PotalnameCheck(string potalname,bool isdelete)
     {
         if (!isdelete)
@@ -41,6 +54,7 @@ public class AddTiles : MonoBehaviour
             return false ;
         }
     }
+    
     /// <summary>
     /// 비어있을시 true 아닐시 false
     /// </summary>
@@ -85,5 +99,38 @@ public class AddTiles : MonoBehaviour
     public void Save_MapData()
     {
         MapData.Save_MapData(Editor.transform.GetChild(0).gameObject);
+        if(!PotalnameCheck("LeftPotal",false))
+        {
+            MapData.Save_Potal(PotalObjectCheck("LeftPotal"),0);
+        }
+        else
+        {
+            MapData.DestroyPotal(0);
+        }
+        if (!PotalnameCheck("RightPotal", false))
+        {
+            MapData.Save_Potal(PotalObjectCheck("RightPotal"), 1);
+        }
+        else
+        {
+            MapData.DestroyPotal(1);
+        }
+        if (!PotalnameCheck("TopPotal", false))
+        {
+            MapData.Save_Potal(PotalObjectCheck("TopPotal"), 2);
+        }
+        else
+        {
+            MapData.DestroyPotal(2);
+        }
+        if (!PotalnameCheck("BottomPotal", false))
+        {
+            MapData.Save_Potal(PotalObjectCheck("BottomPotal"), 3);
+        }
+        else
+        {
+            MapData.DestroyPotal(3);
+        }
     }
+    
 }

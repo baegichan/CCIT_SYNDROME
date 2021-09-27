@@ -8,7 +8,7 @@ using UnityEditor;
 public class Addtilesinspecter : Editor
 {
     // Start is called before the first frame update
-  
+    int selected = 0;
     public override void OnInspectorGUI()
     {
 
@@ -50,7 +50,7 @@ public class Addtilesinspecter : Editor
 
         }
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("포탈 추가 미완성 20%", MessageType.Warning);
+        EditorGUILayout.HelpBox("포탈 로드 작업및 포탈 이동이벤트가 필요합니다. 70%", MessageType.Warning);
 
         GUILayout.Label("포탈추가");
         EditorGUILayout.BeginHorizontal();
@@ -119,6 +119,37 @@ public class Addtilesinspecter : Editor
             //유형 변경추가
         }
         EditorGUILayout.EndHorizontal();
+
+        GUILayout.Label("");
+        EditorGUILayout.HelpBox("이벤트 추가 미완성", MessageType.Warning);
+        
+        string[] options = new string[]
+        {
+         "None","방잠김&열림", "몬스터 스폰",
+        };
+        selected = EditorGUILayout.Popup("이벤트 목록", selected, options);
+        if (GUILayout.Button("이벤트 추가"))
+        {
+            switch (selected)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+
+        }
+        if (GUILayout.Button("이벤트 저장"))
+        {
+           
+
+        }
+        if (GUILayout.Button("이벤트 초기화"))
+        {
+
+
+        }
+
         GUILayout.Label("");
         EditorGUILayout.HelpBox("몬스터 추가 미완성", MessageType.Warning);
 
@@ -141,10 +172,6 @@ public class Addtilesinspecter : Editor
         }
         EditorGUILayout.EndHorizontal();
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("이벤트 추가 미완성", MessageType.Warning);
-        if (GUILayout.Button("이벤트 추가"))
-        {
-
-        }
+   
     }
 }

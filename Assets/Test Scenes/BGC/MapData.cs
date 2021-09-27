@@ -17,14 +17,31 @@ public class MapData : ScriptableObject
     
     GameObject Tile_Map;
     GameObject Center;
+    /// <summary>
+    /// 세이브 시에 변경되게 해야됨
+    /// </summary>
     public int MapCode;
-
+    [Header("로드전 조정해주세요")]
     public BackGroundSprites[] BG;
     float Width;
     float Height;
     public Event Map_Event;
+    [Header("로드전 조정 불필요합니다.")]
+    public Potal[] Potals = new Potal[]{ new Potal(Potal.Potal_type.LeftPotal), new Potal(Potal.Potal_type.RightPotal), new Potal(Potal.Potal_type.TopPotal), new Potal(Potal.Potal_type.BottomPotal) };
+   
+   
+
 
     public Map_Direction direction = Map_Direction.x;
+    public void Save_Potal(GameObject potal,int index)
+    {
+       
+        Potals[index].Save_Potal_Location(potal);
+    }
+    public void DestroyPotal(int index)
+    {
+        Potals[index].DestroyPotal();
+    }
     public void Get_center(GameObject center)
     {
         Center = center;
@@ -169,6 +186,7 @@ public class MapData : ScriptableObject
     {
         return BG[index].BackGround.Length;
     }
+    
    public void Save_WH(int j)
     {
 
@@ -209,4 +227,38 @@ public class Event
     
 
 
+}
+[Serializable]
+public class Potal
+{
+    public Potal(Potal_type type)
+    {
+        Potaltype = type;
+    }
+    public enum Potal_type
+    {
+        None,
+        LeftPotal,
+        RightPotal,
+        BottomPotal,
+        TopPotal
+    }
+    public bool EnablePotal = false;
+    public Potal_type Potaltype=Potal.Potal_type.None;
+  
+    public Vector2[] VertexPoints = new Vector2[5];
+    public Vector2 PotalLocation = new Vector2(0, 0);
+    
+    public void Save_Potal_Location(GameObject Potal)
+    {
+        EnablePotal = true;
+        VertexPoints = Potal.GetComponent<EdgeCollider2D>().points;
+        PotalLocation = Potal.transform.position;
+    }
+    public void DestroyPotal()
+    {
+        EnablePotal = false;
+        VertexPoints = null;
+        PotalLocation = new Vector2(0,0);
+    }
 }
