@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[SerializeField]
 public class MapEvent :MonoBehaviour
 {
    
+
     public enum Event
     {
         None,
@@ -14,6 +15,6 @@ public class MapEvent :MonoBehaviour
     }
 
     public Event EventType;
-   
-   
+    public GameObject[] Events;
+
 }

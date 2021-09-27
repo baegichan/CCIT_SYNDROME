@@ -25,7 +25,7 @@ public class MapData : ScriptableObject
     public BackGroundSprites[] BG;
     float Width;
     float Height;
-    public Event Map_Event;
+    public Event[] Map_Event;
     [Header("로드전 조정 불필요합니다.")]
     public Potal[] Potals = new Potal[]{ new Potal(Potal.Potal_type.LeftPotal), new Potal(Potal.Potal_type.RightPotal), new Potal(Potal.Potal_type.TopPotal), new Potal(Potal.Potal_type.BottomPotal) };
    
@@ -41,6 +41,17 @@ public class MapData : ScriptableObject
     public void DestroyPotal(int index)
     {
         Potals[index].DestroyPotal();
+    }
+    public void SpawnPotal(GameObject Parent)
+    {
+        for (int i = 0; i < Potals.Length; i++)
+        {
+            if (Potals[i].Potaltype != Potal.Potal_type.None)
+            {
+                Potals[i].Spawn_Potal(Parent);
+            }
+        
+        }
     }
     public void Get_center(GameObject center)
     {
@@ -223,8 +234,18 @@ public class BackGroundSprites
 [Serializable]
 public class Event
 {
-    public GameObject[] Events;
-    
+
+   
+    public enum EventType
+    {
+        None,
+        MapLock,
+        MonsterSpawn,
+    }
+
+    public EventType MapEventType;
+   
+
 
 
 }
@@ -261,4 +282,20 @@ public class Potal
         VertexPoints = null;
         PotalLocation = new Vector2(0,0);
     }
+    public void Spawn_Potal(GameObject Parent)
+    {
+        if (EnablePotal)
+        {
+            GameObject potal = (GameObject)Resources.Load("Potal");
+            GameObject SpawnedPotal = GameObject.Instantiate(potal, Parent.transform);
+            SpawnedPotal.name = Potaltype.ToString();
+            SpawnedPotal.GetComponent<MapLineDraw>().T_Area = VertexPoints[0].y;
+            SpawnedPotal.GetComponent<MapLineDraw>().B_Area = VertexPoints[2].y;
+            SpawnedPotal.GetComponent<MapLineDraw>().L_Area = VertexPoints[0].x;
+            SpawnedPotal.GetComponent<MapLineDraw>().R_Area = VertexPoints[1].x;
+            SpawnedPotal.GetComponent<EdgeCollider2D>().points = VertexPoints;
+            SpawnedPotal.transform.position = PotalLocation;
+        }
+    }
+    
 }

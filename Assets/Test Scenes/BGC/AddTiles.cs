@@ -95,6 +95,12 @@ public class AddTiles : MonoBehaviour
     public void Load_MapData()
     {
         MapData.Batch_map();
+        if (Potals == null)
+        {
+           Potals=Instantiate((GameObject)Resources.Load("Potals"), transform).gameObject;
+        }        
+        MapData.SpawnPotal(Potals);
+
     }
     public void Save_MapData()
     {

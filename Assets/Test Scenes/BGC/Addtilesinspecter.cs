@@ -50,7 +50,7 @@ public class Addtilesinspecter : Editor
 
         }
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("포탈 로드 작업및 포탈 이동이벤트가 필요합니다. 70%", MessageType.Warning);
+        EditorGUILayout.HelpBox("포탈 이동 미구현 모르는거있으면 질문", MessageType.Info);
 
         GUILayout.Label("포탈추가");
         EditorGUILayout.BeginHorizontal();
@@ -115,7 +115,7 @@ public class Addtilesinspecter : Editor
         {
 
             map.PotalnameCheck("BottomPotal", true);
-          
+            
             //유형 변경추가
         }
         EditorGUILayout.EndHorizontal();
@@ -157,6 +157,7 @@ public class Addtilesinspecter : Editor
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button(new GUIContent("몬스터 고정"), GUILayout.Width(80)))
         {
+
         }
    
         EditorGUILayout.EndHorizontal();
@@ -166,9 +167,11 @@ public class Addtilesinspecter : Editor
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button(new GUIContent("몬스터 랜덤"), GUILayout.Width(80)))
         {
+
         }
         if (GUILayout.Button(new GUIContent("몬스터 고정"), GUILayout.Width(80)))
         {
+
         }
         EditorGUILayout.EndHorizontal();
         GUILayout.Label("");
