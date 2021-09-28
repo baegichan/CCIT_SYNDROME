@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapLockEvent : MapEvent
-{ 
-    // Start is called before the first frame update
-    void Start()
+{
+    MapLockEvent()
     {
-        
+        base.EventType = MapEvent.Event.MapLock;
     }
 
     // Update is called once per frame

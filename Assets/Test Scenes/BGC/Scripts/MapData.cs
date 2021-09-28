@@ -20,19 +20,25 @@ public class MapData : ScriptableObject
     /// <summary>
     /// 세이브 시에 변경되게 해야됨
     /// </summary>
-    public int MapCode;
+   // public int MapCode;
     public int MapTypeCode;
     [Header("로드전 조정해주세요")]
     public BackGroundSprites[] BG;
     float Width;
     float Height;
     [Header("로드전 조정 불필요합니다.")]
-    public List<Event> Map_Event = new List<Event>();
+    public Event[] Map_Event;
  
     public Potal[] Potals = new Potal[]{ new Potal(Potal.Potal_type.LeftPotal), new Potal(Potal.Potal_type.RightPotal), new Potal(Potal.Potal_type.TopPotal), new Potal(Potal.Potal_type.BottomPotal) };
-   
-   
 
+    public void Map_Code_Save(int Mapcode)
+    {
+        MapTypeCode = Mapcode;
+    }
+    public void MapDataLengthSet(int index)
+    {
+        Map_Event = new Event[index];
+    }
 
     public Map_Direction direction = Map_Direction.x;
     public void Save_Potal(GameObject potal,int index)
@@ -53,6 +59,16 @@ public class MapData : ScriptableObject
                 Potals[i].Spawn_Potal_Object(Parent);
             }
         
+        }
+    }
+    public void SpawnEvent(GameObject Parent)
+    {
+        for (int i = 0; i <Map_Event.Length; i++)
+        {
+           
+                Map_Event[i].Spawn_Event_Object(Parent,Map_Event[i].MapEventType);
+           
+
         }
     }
     public void Get_center(GameObject center)
@@ -237,44 +253,74 @@ public class BackGroundSprites
 public class Event
 {
 
-   
-    public enum EventType
-    {
-        None,
-        MapLock,
-        MonsterSpawn,
-    }
 
-    public EventType MapEventType;
 
+    public MapEvent.Event MapEventType = MapEvent.Event.None;
     public Vector2[] VertexPoints = new Vector2[5];
     public Vector2 EventLocation = new Vector2(0, 0);
 
+ 
+    public Event(GameObject EventObject)
+    {
+        Save_Event_Location(EventObject);
+    }
     public void Save_Event_Location(GameObject Event)
     {
-       
-        VertexPoints = Event.GetComponent<EdgeCollider2D>().points;
+        MapEventType = Event.GetComponent<MapEvent>().EventType;
+         VertexPoints = Event.GetComponent<EdgeCollider2D>().points;
         EventLocation = Event.transform.position;
     }
     public void DestroyEvent()
     {
-        MapEventType = EventType.None;
+        MapEventType = MapEvent.Event.None;
         VertexPoints = null;
         EventLocation = new Vector2(0, 0);
     }
     public void Spawn_Event_Object(GameObject Parent)
     {
-       
-            GameObject potal = (GameObject)Resources.Load("Potal");
-            GameObject SpawnedPotal = GameObject.Instantiate(potal, Parent.transform);
-            SpawnedPotal.name = MapEventType.ToString();
-            SpawnedPotal.GetComponent<MapLineDraw>().T_Area = VertexPoints[0].y;
-            SpawnedPotal.GetComponent<MapLineDraw>().B_Area = VertexPoints[2].y;
-            SpawnedPotal.GetComponent<MapLineDraw>().L_Area = VertexPoints[0].x;
-            SpawnedPotal.GetComponent<MapLineDraw>().R_Area = VertexPoints[1].x;
-            SpawnedPotal.GetComponent<EdgeCollider2D>().points = VertexPoints;
-            SpawnedPotal.transform.position = EventLocation;
-        
+
+        GameObject potal = (GameObject)Resources.Load("DefaultEvent");
+        GameObject SpawnedEvent = GameObject.Instantiate(potal, Parent.transform);
+        SpawnedEvent.name = MapEventType.ToString();
+        SpawnedEvent.GetComponent<MapLineDraw>().T_Area = VertexPoints[0].y;
+        SpawnedEvent.GetComponent<MapLineDraw>().B_Area = VertexPoints[2].y;
+        SpawnedEvent.GetComponent<MapLineDraw>().L_Area = VertexPoints[0].x;
+        SpawnedEvent.GetComponent<MapLineDraw>().R_Area = VertexPoints[1].x;
+        SpawnedEvent.GetComponent<EdgeCollider2D>().points = VertexPoints;
+        SpawnedEvent.transform.position = EventLocation;
+
+    }
+    public void Spawn_Event_Object(GameObject Parent,MapEvent.Event even)
+    {
+            
+            GameObject potal = (GameObject)Resources.Load("DefaultEvent");
+            GameObject SpawnedEvent = GameObject.Instantiate(potal, Parent.transform);
+            SpawnedEvent.name = MapEventType.ToString();
+            SpawnedEvent.GetComponent<MapLineDraw>().T_Area = VertexPoints[0].y;
+            SpawnedEvent.GetComponent<MapLineDraw>().B_Area = VertexPoints[2].y;
+            SpawnedEvent.GetComponent<MapLineDraw>().L_Area = VertexPoints[0].x;
+            SpawnedEvent.GetComponent<MapLineDraw>().R_Area = VertexPoints[1].x;
+            SpawnedEvent.GetComponent<EdgeCollider2D>().points = VertexPoints;
+            SpawnedEvent.transform.position = EventLocation;
+        switch (even)
+        {
+            case MapEvent.Event.MapLock:
+                SpawnedEvent.AddComponent<MapLockEvent>();
+                break;
+            case MapEvent.Event.MonsterSpawn:
+                SpawnedEvent.AddComponent<MonsterSpawnEvent>();
+                break;
+
+            case MapEvent.Event.MapLockandMonsterSpawn:
+                SpawnedEvent.AddComponent<MapLockEvent>();
+                SpawnedEvent.AddComponent<MonsterSpawnEvent>();
+                break;
+
+
+
+        }
+
+
     }
 }
 [Serializable]

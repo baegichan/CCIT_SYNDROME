@@ -50,7 +50,7 @@ public class Addtilesinspecter : Editor
 
         }
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("포탈 이동 미구현", MessageType.Info);
+        EditorGUILayout.HelpBox("포탈 이동 구현해야됨", MessageType.Info);
 
         GUILayout.Label("포탈추가");
         EditorGUILayout.BeginHorizontal();
@@ -121,11 +121,11 @@ public class Addtilesinspecter : Editor
         EditorGUILayout.EndHorizontal();
 
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("이벤트 추가 미완성", MessageType.Warning);
+        EditorGUILayout.HelpBox("내부 이벤트 구현해야됨", MessageType.Info);
         
         string[] options = new string[]
         {
-         "None","방잠김&열림", "몬스터 스폰",
+         "None","방잠김&열림", "몬스터 스폰" , "방잠김+몬스터스폰",
         };
         selected = EditorGUILayout.Popup("이벤트 목록", selected, options);
         if (GUILayout.Button("이벤트 추가"))
@@ -134,7 +134,6 @@ public class Addtilesinspecter : Editor
                 switch (selected)
             {
                 case 1:
-                   
                     GameObject Eventtest1 = (GameObject)Instantiate(Resources.Load("DefaultEvent"),map.GetEventObjectCheck().transform);
                     Eventtest1.name = options[1].ToString();
                     Eventtest1.AddComponent<MapLockEvent>().EventType = MapEvent.Event.MapLock; ;
@@ -145,18 +144,35 @@ public class Addtilesinspecter : Editor
                     Eventtest2.AddComponent<MonsterSpawnEvent>().EventType=MapEvent.Event.MonsterSpawn;
 
                     break;
+                case 3:
+                    GameObject Eventtest3 = (GameObject)Instantiate(Resources.Load("DefaultEvent"), map.GetEventObjectCheck().transform);
+                    Eventtest3.name = options[3].ToString();
+                    Eventtest3.AddComponent<MonsterSpawnEvent>().EventType = MapEvent.Event.MapLockandMonsterSpawn;
+
+                    break;
             }
 
         }
         if (GUILayout.Button("이벤트 저장"))
         {
-           
+            map.Save_EventData();
 
         }
         if (GUILayout.Button("이벤트 초기화"))
         {
 
-
+            if(map.GetEventObjectCheck()!=null)
+            {
+                int Count = map.GetEventObjectCheck().transform.childCount;
+                for (int i =0; i <Count;i++)
+                {
+                   
+                    DestroyImmediate(map.GetEventObjectCheck().transform.GetChild(0).gameObject);
+                    //map.MapData.Map_Event[i].DestroyEvent();
+                    map.MapData.Map_Event = null;
+                }
+               
+            }
         }
 
         GUILayout.Label("");

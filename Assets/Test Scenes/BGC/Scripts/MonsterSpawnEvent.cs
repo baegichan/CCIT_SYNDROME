@@ -5,7 +5,10 @@ using UnityEngine;
 public class MonsterSpawnEvent : MapEvent
 {
     // Start is called before the first frame update
-  
+    MonsterSpawnEvent()
+    {
+        base.EventType = MapEvent.Event.MonsterSpawn;
+    }
     void Start()
     {
         

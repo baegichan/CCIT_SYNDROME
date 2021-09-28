@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AddTiles : MonoBehaviour
 {
-    // Start is called before the first frame update
+   
     public MapData MapData;
     public GameObject Editor;
     
@@ -14,6 +14,9 @@ public class AddTiles : MonoBehaviour
 
     GameObject Potals;
     GameObject Event;
+    int mapcode=0;
+  
+   
     public GameObject PotalObjectCheck(string potalname)
     {
        
@@ -119,14 +122,21 @@ public class AddTiles : MonoBehaviour
            Potals=Instantiate((GameObject)Resources.Load("Potals"), transform).gameObject;
         }        
         MapData.SpawnPotal(Potals);
+        if (Event == null)
+        {
+            Event = Instantiate((GameObject)Resources.Load("Event"), transform).gameObject;
+        }
+        MapData.SpawnEvent(Event);
 
     }
     public void Save_MapData()
     {
+        mapcode = 0;
         MapData.Save_MapData(Editor.transform.GetChild(0).gameObject);
         if(!PotalnameCheck("LeftPotal",false))
         {
             MapData.Save_Potal(PotalObjectCheck("LeftPotal"),0);
+            mapcode += 0b0001;
         }
         else
         {
@@ -135,6 +145,7 @@ public class AddTiles : MonoBehaviour
         if (!PotalnameCheck("RightPotal", false))
         {
             MapData.Save_Potal(PotalObjectCheck("RightPotal"), 1);
+            mapcode += 0b0010;
         }
         else
         {
@@ -143,6 +154,7 @@ public class AddTiles : MonoBehaviour
         if (!PotalnameCheck("TopPotal", false))
         {
             MapData.Save_Potal(PotalObjectCheck("TopPotal"), 2);
+            mapcode += 0b0100;
         }
         else
         {
@@ -151,11 +163,33 @@ public class AddTiles : MonoBehaviour
         if (!PotalnameCheck("BottomPotal", false))
         {
             MapData.Save_Potal(PotalObjectCheck("BottomPotal"), 3);
+            mapcode += 0b1000;
         }
         else
         {
             MapData.DestroyPotal(3);
         }
+        //배열 초기화 생각해야됨
+        MapData.MapDataLengthSet(Event.transform.childCount);
+        for (int i = 0; i < Event.transform.childCount; i++)
+        {
+            MapData.Map_Event[i]=(new Event(Event.transform.GetChild(i).gameObject));
+        }
+        MapData.Map_Code_Save(mapcode);
     }
-    
+    public  void Save_EventData()
+    {
+
+        MapData.MapDataLengthSet(Event.transform.childCount);
+        for (int j =0; j<MapData.Map_Event.Length;j++)
+        {
+            MapData.Map_Event[j] = null;
+        }
+        
+        for (int i=0; i<Event.transform.childCount;i++)
+        {
+            MapData.Map_Event[i]=(new Event(Event.transform.GetChild(i).gameObject));
+        }
+        
+    }
 }
