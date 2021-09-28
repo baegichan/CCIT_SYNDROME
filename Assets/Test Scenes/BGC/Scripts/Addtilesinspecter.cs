@@ -45,12 +45,12 @@ public class Addtilesinspecter : Editor
                 Debug.Log(map.Editor.transform.GetChild(0).gameObject);
                 DestroyImmediate(map.Editor.transform.GetChild(0).gameObject);
             }
-            map.Base_Tile = null;
+           // map.Base_Tile = null;
             map.MapData = null;
 
         }
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("포탈 이동 미구현 모르는거있으면 질문", MessageType.Info);
+        EditorGUILayout.HelpBox("포탈 이동 미구현", MessageType.Info);
 
         GUILayout.Label("포탈추가");
         EditorGUILayout.BeginHorizontal();
@@ -130,11 +130,20 @@ public class Addtilesinspecter : Editor
         selected = EditorGUILayout.Popup("이벤트 목록", selected, options);
         if (GUILayout.Button("이벤트 추가"))
         {
-            switch (selected)
+            map.EventObjectCheck();
+                switch (selected)
             {
                 case 1:
+                   
+                    GameObject Eventtest1 = (GameObject)Instantiate(Resources.Load("DefaultEvent"),map.GetEventObjectCheck().transform);
+                    Eventtest1.name = options[1].ToString();
+                    Eventtest1.AddComponent<MapLockEvent>().EventType = MapEvent.Event.MapLock; ;
                     break;
                 case 2:
+                    GameObject Eventtest2 = (GameObject)Instantiate(Resources.Load("DefaultEvent"), map.GetEventObjectCheck().transform);
+                    Eventtest2.name = options[2].ToString();
+                    Eventtest2.AddComponent<MonsterSpawnEvent>().EventType=MapEvent.Event.MonsterSpawn;
+
                     break;
             }
 
@@ -158,6 +167,8 @@ public class Addtilesinspecter : Editor
         if (GUILayout.Button(new GUIContent("몬스터 고정"), GUILayout.Width(80)))
         {
 
+
+
         }
    
         EditorGUILayout.EndHorizontal();
@@ -168,9 +179,13 @@ public class Addtilesinspecter : Editor
         if (GUILayout.Button(new GUIContent("몬스터 랜덤"), GUILayout.Width(80)))
         {
 
+
+
         }
         if (GUILayout.Button(new GUIContent("몬스터 고정"), GUILayout.Width(80)))
         {
+
+
 
         }
         EditorGUILayout.EndHorizontal();

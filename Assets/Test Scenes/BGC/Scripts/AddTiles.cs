@@ -7,10 +7,13 @@ public class AddTiles : MonoBehaviour
     // Start is called before the first frame update
     public MapData MapData;
     public GameObject Editor;
-    public GameObject Base_Tile;
+    
+    public Vector2 BaseTileSize;
+    GameObject Base_Tile;
+
 
     GameObject Potals;
-
+    GameObject Event;
     public GameObject PotalObjectCheck(string potalname)
     {
        
@@ -71,6 +74,22 @@ public class AddTiles : MonoBehaviour
           
             return false;
         }
+    }
+    public bool EventObjectCheck()
+    {
+       if(Event==null)
+        {
+            Event= (GameObject)Instantiate(Resources.Load("Event"), this.transform);
+            return true;
+        }
+       else
+        {
+            return false;
+        }
+    }
+    public GameObject GetEventObjectCheck()
+    {
+        return Event;
     }
     public GameObject GetPotalsroots()
     {

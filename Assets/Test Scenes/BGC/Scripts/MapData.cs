@@ -21,12 +21,14 @@ public class MapData : ScriptableObject
     /// 세이브 시에 변경되게 해야됨
     /// </summary>
     public int MapCode;
+    public int MapTypeCode;
     [Header("로드전 조정해주세요")]
     public BackGroundSprites[] BG;
     float Width;
     float Height;
-    public Event[] Map_Event;
     [Header("로드전 조정 불필요합니다.")]
+    public List<Event> Map_Event = new List<Event>();
+ 
     public Potal[] Potals = new Potal[]{ new Potal(Potal.Potal_type.LeftPotal), new Potal(Potal.Potal_type.RightPotal), new Potal(Potal.Potal_type.TopPotal), new Potal(Potal.Potal_type.BottomPotal) };
    
    
@@ -48,7 +50,7 @@ public class MapData : ScriptableObject
         {
             if (Potals[i].Potaltype != Potal.Potal_type.None)
             {
-                Potals[i].Spawn_Potal(Parent);
+                Potals[i].Spawn_Potal_Object(Parent);
             }
         
         }
@@ -244,10 +246,36 @@ public class Event
     }
 
     public EventType MapEventType;
-   
 
+    public Vector2[] VertexPoints = new Vector2[5];
+    public Vector2 EventLocation = new Vector2(0, 0);
 
-
+    public void Save_Event_Location(GameObject Event)
+    {
+       
+        VertexPoints = Event.GetComponent<EdgeCollider2D>().points;
+        EventLocation = Event.transform.position;
+    }
+    public void DestroyEvent()
+    {
+        MapEventType = EventType.None;
+        VertexPoints = null;
+        EventLocation = new Vector2(0, 0);
+    }
+    public void Spawn_Event_Object(GameObject Parent)
+    {
+       
+            GameObject potal = (GameObject)Resources.Load("Potal");
+            GameObject SpawnedPotal = GameObject.Instantiate(potal, Parent.transform);
+            SpawnedPotal.name = MapEventType.ToString();
+            SpawnedPotal.GetComponent<MapLineDraw>().T_Area = VertexPoints[0].y;
+            SpawnedPotal.GetComponent<MapLineDraw>().B_Area = VertexPoints[2].y;
+            SpawnedPotal.GetComponent<MapLineDraw>().L_Area = VertexPoints[0].x;
+            SpawnedPotal.GetComponent<MapLineDraw>().R_Area = VertexPoints[1].x;
+            SpawnedPotal.GetComponent<EdgeCollider2D>().points = VertexPoints;
+            SpawnedPotal.transform.position = EventLocation;
+        
+    }
 }
 [Serializable]
 public class Potal
@@ -282,7 +310,7 @@ public class Potal
         VertexPoints = null;
         PotalLocation = new Vector2(0,0);
     }
-    public void Spawn_Potal(GameObject Parent)
+    public void Spawn_Potal_Object(GameObject Parent)
     {
         if (EnablePotal)
         {
