@@ -80,13 +80,18 @@ public class AddTiles : MonoBehaviour
     }
     public bool EventObjectCheck()
     {
-       if(Event==null)
+       if(MapData.Map_Event==null)
         {
             Event= (GameObject)Instantiate(Resources.Load("Event"), this.transform);
             return true;
         }
        else
         {
+            if(Event == null)
+            {
+                Event = Instantiate(MapData.Map_Event, this.transform);
+            }
+           
             return false;
         }
     }
@@ -111,6 +116,7 @@ public class AddTiles : MonoBehaviour
         }
         else
         {
+            
             return false;
         }
     }
@@ -124,7 +130,7 @@ public class AddTiles : MonoBehaviour
         MapData.SpawnPotal(Potals);
         if (Event == null)
         {
-            Event = Instantiate((GameObject)Resources.Load("Event"), transform).gameObject;
+            EventObjectCheck();
         }
         MapData.SpawnEvent(Event);
 
@@ -132,7 +138,7 @@ public class AddTiles : MonoBehaviour
     public void Save_MapData()
     {
         mapcode = 0;
-        MapData.Save_MapData(Editor.transform.GetChild(0).gameObject);
+        MapData.Save_MapData(Editor.transform.GetChild(0).gameObject,Event);
         if(!PotalnameCheck("LeftPotal",false))
         {
             MapData.Save_Potal(PotalObjectCheck("LeftPotal"),0);
@@ -171,25 +177,15 @@ public class AddTiles : MonoBehaviour
         }
         //배열 초기화 생각해야됨
         MapData.MapDataLengthSet(Event.transform.childCount);
-        for (int i = 0; i < Event.transform.childCount; i++)
-        {
-            MapData.Map_Event[i]=(new Event(Event.transform.GetChild(i).gameObject));
-        }
+     
         MapData.Map_Code_Save(mapcode);
     }
     public  void Save_EventData()
     {
 
-        MapData.MapDataLengthSet(Event.transform.childCount);
-        for (int j =0; j<MapData.Map_Event.Length;j++)
-        {
-            MapData.Map_Event[j] = null;
-        }
+        MapData.Save_Event(Event);
+      
         
-        for (int i=0; i<Event.transform.childCount;i++)
-        {
-            MapData.Map_Event[i]=(new Event(Event.transform.GetChild(i).gameObject));
-        }
         
     }
 }

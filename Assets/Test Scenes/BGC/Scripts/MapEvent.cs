@@ -16,6 +16,6 @@ public class MapEvent :MonoBehaviour
     }
 
     public Event EventType;
-    
+
 
 }

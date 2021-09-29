@@ -11,15 +11,8 @@ public class MapLineDraw : MonoBehaviour
     [Range(-50.0f, 50.0f)] public float T_Area;
     [Range(-50.0f, 50.0f)] public float B_Area;
 
-    Rect rect = new Rect(0, 0, 300, 100);
-    Vector3 offset = new Vector3(0f, 0f, 0.0f); // height above the target position
-
-    void OnGUI()
-    {
-       
 
 
-    }
     private void OnDrawGizmos()
     {
         

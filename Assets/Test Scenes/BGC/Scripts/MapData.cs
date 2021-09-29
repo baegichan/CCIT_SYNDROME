@@ -17,6 +17,7 @@ public class MapData : ScriptableObject
     
     GameObject Tile_Map;
     GameObject Center;
+   public MonsterSet MonsterSet;
     /// <summary>
     /// 세이브 시에 변경되게 해야됨
     /// </summary>
@@ -27,7 +28,7 @@ public class MapData : ScriptableObject
     float Width;
     float Height;
     [Header("로드전 조정 불필요합니다.")]
-    public Event[] Map_Event;
+    public GameObject Map_Event;
  
     public Potal[] Potals = new Potal[]{ new Potal(Potal.Potal_type.LeftPotal), new Potal(Potal.Potal_type.RightPotal), new Potal(Potal.Potal_type.TopPotal), new Potal(Potal.Potal_type.BottomPotal) };
 
@@ -37,7 +38,7 @@ public class MapData : ScriptableObject
     }
     public void MapDataLengthSet(int index)
     {
-        Map_Event = new Event[index];
+      //  Map_Event = new Event[index];
     }
 
     public Map_Direction direction = Map_Direction.x;
@@ -63,14 +64,16 @@ public class MapData : ScriptableObject
     }
     public void SpawnEvent(GameObject Parent)
     {
+        /*
         for (int i = 0; i <Map_Event.Length; i++)
         {
            
-                Map_Event[i].Spawn_Event_Object(Parent,Map_Event[i].MapEventType);
+               // Map_Event[i].Spawn_Event_Object(Parent,Map_Event[i].MapEventType);
            
 
-        }
+        }*/
     }
+    #region 신경안써도되는부분
     public void Get_center(GameObject center)
     {
         Center = center;
@@ -199,14 +202,23 @@ public class MapData : ScriptableObject
            
         }
     }
-    public void Save_MapData(GameObject grid)
+    #endregion
+    public void Save_MapData(GameObject grid , GameObject Event)
     {
         for(int i=0; i<BG.Length;i++)
         {
-           GameObject Prefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
-            BG[i].Tilemap = Prefab;
+           GameObject MapPrefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
+            BG[i].Tilemap = MapPrefab;
+            //추가로 이벤트도 저장해야됨
+            
         }
+        Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
     }
+    public void Save_Event(GameObject Event)
+    {
+        Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
+    }
+
     public Sprite Get_Sprite(int index)
     {
         return BG[0].BackGround[index].GetComponent<SpriteRenderer>().sprite;
@@ -254,7 +266,8 @@ public class Event
 {
 
 
-
+    public GameObject EventPrefab;
+    /*
     public MapEvent.Event MapEventType = MapEvent.Event.None;
     public Vector2[] VertexPoints = new Vector2[5];
     public Vector2 EventLocation = new Vector2(0, 0);
@@ -321,7 +334,7 @@ public class Event
         }
 
 
-    }
+    }*/
 }
 [Serializable]
 public class Potal
