@@ -12,7 +12,7 @@ public class MapEvent :MonoBehaviour
         None,
         MapLock,
         MonsterSpawn,
-        MapLockandMonsterSpawn
+      
     }
 
     public Event EventType;

@@ -138,7 +138,7 @@ public class Addtilesinspecter : Editor
                 case 1:
                     GameObject Eventtest1 = (GameObject)Instantiate(Resources.Load("DefaultEvent"), map.GetEventObjectCheck().transform);
                     Eventtest1.name = "Lock";
-                    Eventtest1.AddComponent<MapLockEvent>().EventType = MapEvent.Event.MapLock; ;
+                    Eventtest1.AddComponent<MapLockEvent>().EventType = MapEvent.Event.MapLock; 
                     break;
                 case 2:
                     GameObject Eventtest2 = (GameObject)Instantiate(Resources.Load("DefaultEvent"), map.GetEventObjectCheck().transform);
@@ -149,7 +149,8 @@ public class Addtilesinspecter : Editor
                 case 3:
                     GameObject Eventtest3 = (GameObject)Instantiate(Resources.Load("DefaultEvent"), map.GetEventObjectCheck().transform);
                     Eventtest3.name = "LockandSpawn"; ;
-                    Eventtest3.AddComponent<MonsterSpawnEvent>().EventType = MapEvent.Event.MapLockandMonsterSpawn;
+                    Eventtest3.AddComponent<MonsterSpawnEvent>().EventType = MapEvent.Event.MonsterSpawn;
+                    Eventtest3.AddComponent<MapLockEvent>().EventType = MapEvent.Event.MapLock;
 
                     break;
             }
@@ -239,7 +240,7 @@ public class Addtilesinspecter : Editor
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button(new GUIContent("몬스터 고정"), GUILayout.Width(80)))
                 {
-
+                    Instantiate(Resources.Load("MonsterTest"), map.GetEventObjectCheck().transform.GetChild(Eventselected)).name = MonsterList[Monsterselected];
 
 
                 }
@@ -252,13 +253,13 @@ public class Addtilesinspecter : Editor
                 if (GUILayout.Button(new GUIContent("몬스터 랜덤"), GUILayout.Width(80)))
                 {
 
-
+                    Instantiate(Resources.Load("MonsterTest"), map.GetEventObjectCheck().transform.GetChild(Eventselected)).name = MonsterList[Monsterselected];
 
                 }
                 if (GUILayout.Button(new GUIContent("몬스터 고정"), GUILayout.Width(80)))
                 {
 
-
+                    Instantiate(Resources.Load("MonsterTest"), map.GetEventObjectCheck().transform.GetChild(Eventselected)).name = MonsterList[Monsterselected];
 
                 }
                 EditorGUILayout.EndHorizontal();
