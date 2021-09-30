@@ -34,11 +34,14 @@ public class MonsterSpawnEvent : MapEvent
         UseSpawner = true;
         for (int i = 0; i < count; i++)
         {
-            yield return new WaitForSeconds(SpawnDelay);
+            
      
             Debug.Log(transform.GetChild(0).gameObject.name + " Spawned");
+
+
             Instantiate(Resources.Load(transform.GetChild(0).gameObject.name), transform.GetChild(0).position, Quaternion.identity, this.gameObject.transform);
             Destroy(transform.GetChild(0).gameObject);
+            yield return new WaitForSeconds(SpawnDelay);
         }
     }
     public void Spawn_Monster()

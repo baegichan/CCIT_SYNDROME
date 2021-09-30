@@ -123,7 +123,7 @@ public class Addtilesinspecter : Editor
         EditorGUILayout.EndHorizontal();
 
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("내부 이벤트 구현해야됨", MessageType.Info);
+        EditorGUILayout.HelpBox("내부 이벤트 구현 (몬스터 스폰)\r내부 이벤트 비구현 (포탈 이동)", MessageType.Info);
 
         string[] options = new string[]
         {
@@ -179,7 +179,7 @@ public class Addtilesinspecter : Editor
         }
 
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("몬스터 추가 미완성", MessageType.Warning);
+        EditorGUILayout.HelpBox("현재 몬스터스폰 이벤트에 약간의 에러가있는걸 확인\n세이브시에 잘저장되어있는지 확인요망", MessageType.Warning);
 
 
 
@@ -207,7 +207,7 @@ public class Addtilesinspecter : Editor
 
 
       
-        Eventselected = EditorGUILayout.Popup("이벤트 목록", Eventselected, EventLists);
+        Eventselected = EditorGUILayout.Popup("등록된 이벤트 목록", Eventselected, EventLists);
         string[] MonsterList;
         
         if (EventLists!= null)
