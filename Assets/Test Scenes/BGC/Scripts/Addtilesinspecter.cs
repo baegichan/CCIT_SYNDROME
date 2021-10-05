@@ -26,7 +26,6 @@ public class Addtilesinspecter : Editor
         }
 
 
-        GUILayout.Label("");
         if (GUILayout.Button("맵데이터 로드"))
         {
             if (map.Check_MapData())
@@ -35,8 +34,7 @@ public class Addtilesinspecter : Editor
                 map.Load_MapData();
             }
         }
-
-
+        GUILayout.Label("");
         GUILayout.Label("");
         if (GUILayout.Button("에디터 초기화"))
         {
@@ -235,10 +233,22 @@ public class Addtilesinspecter : Editor
                     MonsterList = new string[] { "None" };
                 }
                 Monsterselected = EditorGUILayout.Popup("몬스터 종류", Monsterselected, MonsterList);
+                if (GUILayout.Button(new GUIContent("몬스터 삭제"), GUILayout.Width(160)))
+                {
+                  for(int i =0; i<map.GetEventObjectCheck().transform.GetChild(Eventselected).childCount;i++)
+                    {
+                        if (map.GetEventObjectCheck().transform.GetChild(Eventselected).GetChild(i).name == MonsterList[Monsterselected])
+                         {
+                            DestroyImmediate(map.GetEventObjectCheck().transform.GetChild(Eventselected).GetChild(i).gameObject);
+                            break;
+                         }
+                    }
+                    
 
+                }
                 GUILayout.Label("위치 고정");
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(new GUIContent("몬스터 고정"), GUILayout.Width(80)))
+                if (GUILayout.Button(new GUIContent("몬스터 소환"), GUILayout.Width(160)))
                 {
                     Instantiate(Resources.Load("MonsterTest"), map.GetEventObjectCheck().transform.GetChild(Eventselected)).name = MonsterList[Monsterselected];
 
@@ -247,7 +257,7 @@ public class Addtilesinspecter : Editor
 
                 EditorGUILayout.EndHorizontal();
                 GUILayout.Label("");
-
+                EditorGUILayout.HelpBox("위치 랜덤에대해서는 추후 예정", MessageType.Warning);
                 GUILayout.Label("위치 랜덤");
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button(new GUIContent("몬스터 랜덤"), GUILayout.Width(80)))
