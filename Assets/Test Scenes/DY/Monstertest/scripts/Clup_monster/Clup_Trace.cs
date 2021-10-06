@@ -39,13 +39,17 @@ public class Clup_Trace : StateMachineBehaviour
         }
         clupmon.DirectionClupmonster(clupmon.player.position.x, clupTransform.position.x);
         */
-        if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 5f)
-            clupTransform.position = Vector2.MoveTowards(clupTransform.position, clupmon.player.position, Time.deltaTime * clupmon.speed);
-        else
+        if(clupmon.Targeton == true)
         {
-            animator.SetBool("Move", false);
-            animator.SetBool("Follow", false);
+            if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 5f) //플레이어 따라 오는 함수
+                clupTransform.position = Vector2.MoveTowards(clupTransform.position, clupmon.player.position, Time.deltaTime * clupmon.speed);
+            else
+            {
+                animator.SetBool("Move", false);
+                animator.SetBool("Follow", false);
+            }
         }
+       
         //clupmon.DirectionClupmonster(clupmon.player.position.x, clupTransform.position.x);
     }
 
