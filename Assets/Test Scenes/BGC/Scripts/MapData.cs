@@ -17,20 +17,29 @@ public class MapData : ScriptableObject
     
     GameObject Tile_Map;
     GameObject Center;
+   public MonsterSet MonsterSet;
     /// <summary>
     /// 세이브 시에 변경되게 해야됨
     /// </summary>
-    public int MapCode;
+   // public int MapCode;
+    public int MapTypeCode;
     [Header("로드전 조정해주세요")]
     public BackGroundSprites[] BG;
     float Width;
     float Height;
-    public Event[] Map_Event;
     [Header("로드전 조정 불필요합니다.")]
+    public GameObject Map_Event;
+ 
     public Potal[] Potals = new Potal[]{ new Potal(Potal.Potal_type.LeftPotal), new Potal(Potal.Potal_type.RightPotal), new Potal(Potal.Potal_type.TopPotal), new Potal(Potal.Potal_type.BottomPotal) };
-   
-   
 
+    public void Map_Code_Save(int Mapcode)
+    {
+        MapTypeCode = Mapcode;
+    }
+    public void MapDataLengthSet(int index)
+    {
+      //  Map_Event = new Event[index];
+    }
 
     public Map_Direction direction = Map_Direction.x;
     public void Save_Potal(GameObject potal,int index)
@@ -48,11 +57,23 @@ public class MapData : ScriptableObject
         {
             if (Potals[i].Potaltype != Potal.Potal_type.None)
             {
-                Potals[i].Spawn_Potal(Parent);
+                Potals[i].Spawn_Potal_Object(Parent);
             }
         
         }
     }
+    public void SpawnEvent(GameObject Parent)
+    {
+        /*
+        for (int i = 0; i <Map_Event.Length; i++)
+        {
+           
+               // Map_Event[i].Spawn_Event_Object(Parent,Map_Event[i].MapEventType);
+           
+
+        }*/
+    }
+    #region 신경안써도되는부분
     public void Get_center(GameObject center)
     {
         Center = center;
@@ -181,14 +202,23 @@ public class MapData : ScriptableObject
            
         }
     }
-    public void Save_MapData(GameObject grid)
+    #endregion
+    public void Save_MapData(GameObject grid , GameObject Event)
     {
         for(int i=0; i<BG.Length;i++)
         {
-           GameObject Prefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
-            BG[i].Tilemap = Prefab;
+           GameObject MapPrefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
+            BG[i].Tilemap = MapPrefab;
+            //추가로 이벤트도 저장해야됨
+            
         }
+        Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
     }
+    public void Save_Event(GameObject Event)
+    {
+        Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
+    }
+
     public Sprite Get_Sprite(int index)
     {
         return BG[0].BackGround[index].GetComponent<SpriteRenderer>().sprite;
@@ -235,19 +265,76 @@ public class BackGroundSprites
 public class Event
 {
 
-   
-    public enum EventType
+
+    public GameObject EventPrefab;
+    /*
+    public MapEvent.Event MapEventType = MapEvent.Event.None;
+    public Vector2[] VertexPoints = new Vector2[5];
+    public Vector2 EventLocation = new Vector2(0, 0);
+
+ 
+    public Event(GameObject EventObject)
     {
-        None,
-        MapLock,
-        MonsterSpawn,
+        Save_Event_Location(EventObject);
     }
+    public void Save_Event_Location(GameObject Event)
+    {
+        MapEventType = Event.GetComponent<MapEvent>().EventType;
+         VertexPoints = Event.GetComponent<EdgeCollider2D>().points;
+        EventLocation = Event.transform.position;
+    }
+    public void DestroyEvent()
+    {
+        MapEventType = MapEvent.Event.None;
+        VertexPoints = null;
+        EventLocation = new Vector2(0, 0);
+    }
+    public void Spawn_Event_Object(GameObject Parent)
+    {
 
-    public EventType MapEventType;
-   
+        GameObject potal = (GameObject)Resources.Load("DefaultEvent");
+        GameObject SpawnedEvent = GameObject.Instantiate(potal, Parent.transform);
+        SpawnedEvent.name = MapEventType.ToString();
+        SpawnedEvent.GetComponent<MapLineDraw>().T_Area = VertexPoints[0].y;
+        SpawnedEvent.GetComponent<MapLineDraw>().B_Area = VertexPoints[2].y;
+        SpawnedEvent.GetComponent<MapLineDraw>().L_Area = VertexPoints[0].x;
+        SpawnedEvent.GetComponent<MapLineDraw>().R_Area = VertexPoints[1].x;
+        SpawnedEvent.GetComponent<EdgeCollider2D>().points = VertexPoints;
+        SpawnedEvent.transform.position = EventLocation;
+
+    }
+    public void Spawn_Event_Object(GameObject Parent,MapEvent.Event even)
+    {
+            
+            GameObject potal = (GameObject)Resources.Load("DefaultEvent");
+            GameObject SpawnedEvent = GameObject.Instantiate(potal, Parent.transform);
+            SpawnedEvent.name = MapEventType.ToString();
+            SpawnedEvent.GetComponent<MapLineDraw>().T_Area = VertexPoints[0].y;
+            SpawnedEvent.GetComponent<MapLineDraw>().B_Area = VertexPoints[2].y;
+            SpawnedEvent.GetComponent<MapLineDraw>().L_Area = VertexPoints[0].x;
+            SpawnedEvent.GetComponent<MapLineDraw>().R_Area = VertexPoints[1].x;
+            SpawnedEvent.GetComponent<EdgeCollider2D>().points = VertexPoints;
+            SpawnedEvent.transform.position = EventLocation;
+        switch (even)
+        {
+            case MapEvent.Event.MapLock:
+                SpawnedEvent.AddComponent<MapLockEvent>();
+                break;
+            case MapEvent.Event.MonsterSpawn:
+                SpawnedEvent.AddComponent<MonsterSpawnEvent>();
+                break;
+
+            case MapEvent.Event.MapLockandMonsterSpawn:
+                SpawnedEvent.AddComponent<MapLockEvent>();
+                SpawnedEvent.AddComponent<MonsterSpawnEvent>();
+                break;
 
 
 
+        }
+
+
+    }*/
 }
 [Serializable]
 public class Potal
@@ -282,7 +369,7 @@ public class Potal
         VertexPoints = null;
         PotalLocation = new Vector2(0,0);
     }
-    public void Spawn_Potal(GameObject Parent)
+    public void Spawn_Potal_Object(GameObject Parent)
     {
         if (EnablePotal)
         {

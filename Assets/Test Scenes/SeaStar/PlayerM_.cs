@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerM_ : MonoBehaviour
 {
+    public GameObject player;
     public float P_Hp;
     public float P_M_Speed;
     public float P_JumpForce;
     public float P_DefaultJumpInt = 1;
+
     public float P_MaxJumpInt
     {
         get
@@ -21,6 +23,8 @@ public class PlayerM_ : MonoBehaviour
             if (PassiveAbility.AbCode == 6) { P_JumpInt = 2; }
             else { P_JumpInt = 1; }
         }
+
+        //{chp + php}
     }
     public float P_JumpInt;
     public float P_DashForce;
@@ -54,7 +58,7 @@ public class PlayerM_ : MonoBehaviour
 
     void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
+        rigid = player.GetComponent<Rigidbody2D>();
         ani = GetComponent<Animation>();
     }
 
@@ -71,12 +75,12 @@ public class PlayerM_ : MonoBehaviour
             UseSkill();
         }
         UseItem();
-        Jump();
+        if (Input.GetKeyDown(KeyCode.Space))
+            Jump();
     }
 
     public void Move()//Move안에 대쉬까지 만듦
     {
-
         float h = Input.GetAxis("Horizontal");
         transform.position += new Vector3(h * P_M_Speed * Time.deltaTime, 0);
 
@@ -115,35 +119,30 @@ public class PlayerM_ : MonoBehaviour
     }
     public void Jump()
     {
-        //if (P_JumpInt > 1)
+        if(P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
+        else if (P_JumpInt > 0) { jump(); }
+        //switch (P_JumpInt)
         //{
-        //    P_JumpInt = 1;
+        //    case 2:
+        //        if (Input.GetKeyDown(KeyCode.Space))
+        //        {
+        //            jump();
+        //        }
+        //        break;
+        //    case 1:
+        //        if (Input.GetKeyDown(KeyCode.Space))
+        //        {
+        //            jump();
+        //        }
+        //        break;
+        //    case 0:
+        //        rigid.AddForce(Vector3.up * 0);
+        //        break;
         //}
-
-        switch (P_JumpInt)
-        {
-            case 2:
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    jump();
-                }
-                break;
-            case 1:
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    jump();
-                }
-                break;
-            case 0:
-                Debug.Log("작동x");
-                rigid.AddForce(Vector3.up * 0);
-                break;
-        }
     }
 
     void jump()
     {
-        Debug.Log("작동");
         rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
         P_JumpInt -= 1;
     }
@@ -280,7 +279,6 @@ public class PlayerM_ : MonoBehaviour
     {
         if (col.gameObject.tag == "Ground")
         {
-            Debug.Log("점프 +1");
             P_JumpInt = P_MaxJumpInt;
         }
     }

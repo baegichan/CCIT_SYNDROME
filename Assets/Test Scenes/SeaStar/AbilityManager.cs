@@ -8,26 +8,34 @@ public class AbilityManager : MonoBehaviour
     public Camera camera;
     public GameObject py;
     public GameObject Bomber;
-    float WereWolf_Gauge = 0;
+    public float WereWolf_Gauge = 0;
+    IEnumerator wolf;
+    Rigidbody2D rg;
+    public int power = 10;
     public void Werewolf()
     {
         Debug.Log("´Á´ë´Ù! ¹«¼·Âî!!");
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(1))
         {
-            WereWolf_Gauge += 1 * Time.deltaTime;
-            Debug.Log("ÃæÀüÁß,,,,,");
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            WereWolf_Gauge = 0;
-            Debug.Log("Àú µ¹ ¸Í Áø !!!!!!@!@!@!!@!");
-            Debug.Log("Àú µ¹ ¸Í Áø !!!@!@!@!!@!");
-            Debug.Log("Àú µ¹ ¸Í Áø !!@!@@!@!!@!@!@!!@!");
-            Debug.Log("Àú µ¹ ¸Í Áø @!@!!@!");
-            Debug.Log("Àú µ¹ ¸Í Áø !@@@@@@@@!@!@!!@!");
+            rg = py.GetComponent<Rigidbody2D>();
+            wolf = WolfGauge();
+            StartCoroutine(wolf);
         }
 
+        if (Input.GetMouseButtonUp(1))
+        {
+            StopAllCoroutines();
+            rg.AddForce(new Vector2(1,0.6f) * WereWolf_Gauge * power);
+            WereWolf_Gauge = 0;
+        }
+    }
+
+    IEnumerator WolfGauge()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if(WereWolf_Gauge < 5) { WereWolf_Gauge += 1; }
+        StartCoroutine(WolfGauge());
     }
 
     public void Parao()
@@ -41,13 +49,13 @@ public class AbilityManager : MonoBehaviour
                 if (MonsterCol[i].tag == "enemy")
                 {
                     Vector2 enemy = new Vector2(MonsterCol[i].transform.position.x, MonsterCol[i].transform.position.y) - pp;
-                    enemy = enemy.normalized;
+                    //enemy = enemy.normalized;
                     RaycastHit2D Hit = Physics2D.Raycast(pp, enemy);
                     Debug.DrawRay(pp, enemy, Color.green);
                     Debug.Log(Hit.transform.name);
                     if (Hit.transform.tag == "enemy")
                     {
-                        Debug.Log("ÆÄ¶ó¿Ë_4");
+                        Debug.Log("ÆÄ¶ó¿Ë!#@!!@!@$@#@");
                         Debug.Log(Hit.transform.name + "ÀÌ(°¡) ÇÇÇØ¸¦ ¹ÞÀ½");
                     }
                 }
@@ -70,11 +78,15 @@ public class AbilityManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("ÆøÅºÆøÅº");
-            Vector3 pp = py.transform.position;
+            Vector2 pp = py.transform.position;
+            Vector2 CursorPos = Input.mousePosition;
+            CursorPos = camera.ScreenToWorldPoint(CursorPos);
+            Vector2 Dir = CursorPos - pp;
+            Dir = Dir.normalized;
             GameObject Boom = Instantiate(Bomber, pp, Quaternion.identity);
             Boom.gameObject.name = "Bomb";
             Rigidbody2D rg = Boom.GetComponent<Rigidbody2D>();
-            rg.AddForce(Vector3.up * 100000 * Time.deltaTime);
+            rg.AddForce(Dir * 100000 * Time.deltaTime);
         }
     }
 

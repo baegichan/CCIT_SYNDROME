@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class AddTiles : MonoBehaviour
 {
-    // Start is called before the first frame update
+   
     public MapData MapData;
     public GameObject Editor;
-    public GameObject Base_Tile;
+    
+    public Vector2 BaseTileSize;
+    GameObject Base_Tile;
+
 
     GameObject Potals;
-
+    GameObject Event;
+    int mapcode=0;
+  
+   
     public GameObject PotalObjectCheck(string potalname)
     {
        
@@ -72,6 +78,27 @@ public class AddTiles : MonoBehaviour
             return false;
         }
     }
+    public bool EventObjectCheck()
+    {
+       if(MapData.Map_Event==null)
+        {
+            Event= (GameObject)Instantiate(Resources.Load("Event"), this.transform);
+            return true;
+        }
+       else
+        {
+            if(Event == null)
+            {
+                Event = Instantiate(MapData.Map_Event, this.transform);
+            }
+           
+            return false;
+        }
+    }
+    public GameObject GetEventObjectCheck()
+    {
+        return Event;
+    }
     public GameObject GetPotalsroots()
     {
         return Potals;
@@ -89,6 +116,7 @@ public class AddTiles : MonoBehaviour
         }
         else
         {
+            
             return false;
         }
     }
@@ -100,14 +128,21 @@ public class AddTiles : MonoBehaviour
            Potals=Instantiate((GameObject)Resources.Load("Potals"), transform).gameObject;
         }        
         MapData.SpawnPotal(Potals);
+        if (Event == null)
+        {
+            EventObjectCheck();
+        }
+        MapData.SpawnEvent(Event);
 
     }
     public void Save_MapData()
     {
-        MapData.Save_MapData(Editor.transform.GetChild(0).gameObject);
+        mapcode = 0;
+        MapData.Save_MapData(Editor.transform.GetChild(0).gameObject,Event);
         if(!PotalnameCheck("LeftPotal",false))
         {
             MapData.Save_Potal(PotalObjectCheck("LeftPotal"),0);
+            mapcode += 0b0001;
         }
         else
         {
@@ -116,6 +151,7 @@ public class AddTiles : MonoBehaviour
         if (!PotalnameCheck("RightPotal", false))
         {
             MapData.Save_Potal(PotalObjectCheck("RightPotal"), 1);
+            mapcode += 0b0010;
         }
         else
         {
@@ -124,6 +160,7 @@ public class AddTiles : MonoBehaviour
         if (!PotalnameCheck("TopPotal", false))
         {
             MapData.Save_Potal(PotalObjectCheck("TopPotal"), 2);
+            mapcode += 0b0100;
         }
         else
         {
@@ -132,11 +169,23 @@ public class AddTiles : MonoBehaviour
         if (!PotalnameCheck("BottomPotal", false))
         {
             MapData.Save_Potal(PotalObjectCheck("BottomPotal"), 3);
+            mapcode += 0b1000;
         }
         else
         {
             MapData.DestroyPotal(3);
         }
+        //배열 초기화 생각해야됨
+        MapData.MapDataLengthSet(Event.transform.childCount);
+     
+        MapData.Map_Code_Save(mapcode);
     }
-    
+    public  void Save_EventData()
+    {
+
+        MapData.Save_Event(Event);
+      
+        
+        
+    }
 }
