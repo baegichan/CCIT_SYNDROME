@@ -28,4 +28,33 @@ public class MonsterSet : ScriptableObject
         }
         return null;
     }
+    public string Get_Monster_Name(int index)
+    {
+        return Monster[index].name;
+    }
+   public int Get_Monster_Index(string Monstername)
+    {
+        for(int i =0; i<Monster.Length;i++)
+        {
+            if(Monster[i].name==Monstername)
+            {
+                return i;
+            }
+            else
+            {
+                //¾øÀ½
+           
+            }
+        }
+        return -1;
+    }
+   public void Monster_Spawn(Transform Target,int MonsterIndex)
+    {
+        Instantiate(Monster[MonsterIndex], Target.position, Quaternion.identity, Target);
+    }
+    public void Monster_Spawn(Transform Target,string MonsterName)
+    {
+        Instantiate( Get_Monster(MonsterName),Target.position,Quaternion.identity,Target);
+    }
+   
 }
