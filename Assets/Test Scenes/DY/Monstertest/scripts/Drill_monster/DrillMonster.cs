@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClupMonster : MonoBehaviour
+public class DrillMonster : MonoBehaviour
 {
     //prameter
     public float speed;
@@ -26,8 +26,9 @@ public class ClupMonster : MonoBehaviour
     public bool filp;
     public bool patroll;
     public bool trace;
-
+    public bool Targeton = false;
     //2D sight
+
     [SerializeField] private bool m_bDebugMode = false;
 
     [Header("View Config")]
@@ -72,7 +73,7 @@ public class ClupMonster : MonoBehaviour
 
     }
 
-    public void DirectionClupmonster(float target, float baseobj)
+    public void Directiondrillmonster(float target, float baseobj)
     {
         if (target < baseobj)
             anim.SetFloat("Direction", -1);
@@ -80,7 +81,7 @@ public class ClupMonster : MonoBehaviour
             anim.SetFloat("Direction", 1);
     }
 
-    public void ClupAttack()
+    public void DrillAttack()
     {
         if (anim.GetFloat("Direction") == -1)
         {
@@ -189,6 +190,8 @@ public class ClupMonster : MonoBehaviour
                 {
                     hitedTargetContainer.Add(hitedTarget);
 
+                    Targeton = true;
+
                     if (m_bDebugMode)
                         Debug.DrawLine(originPos, targetPos, Color.red);
                 }
@@ -203,6 +206,3 @@ public class ClupMonster : MonoBehaviour
 
 
 }
-
-
-

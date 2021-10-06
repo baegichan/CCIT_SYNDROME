@@ -17,7 +17,8 @@ public class Clup_Idle : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Vector2.Distance(clupTransform.position, clupmon.player.position) <= 15) //몬스터와 플레이어 거리가 10이거나 이상이라면 
+
+        if (clupmon.Targeton == true) //거리 상관 없이 인식된다면 따라가기
             animator.SetBool("Follow", true);
     }
 
