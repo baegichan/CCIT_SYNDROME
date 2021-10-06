@@ -11,9 +11,13 @@ public class MapLineDraw : MonoBehaviour
     [Range(-50.0f, 50.0f)] public float T_Area;
     [Range(-50.0f, 50.0f)] public float B_Area;
 
- 
+
+
     private void OnDrawGizmos()
     {
+        
+
+
         Gizmos.color = LineColor;
         Gizmos.DrawLine(new Vector2(L_Area+this.transform.position.x, T_Area+this.transform.position.y), new Vector2(R_Area + this.transform.position.x, T_Area + this.transform.position.y));
         Gizmos.DrawLine(new Vector2(R_Area + this.transform.position.x, T_Area + this.transform.position.y), new Vector2(R_Area + this.transform.position.x, B_Area + this.transform.position.y));
