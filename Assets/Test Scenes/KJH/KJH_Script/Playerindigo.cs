@@ -25,6 +25,8 @@ public class Playerindigo : MonoBehaviour
     public float P_JumpForce;
     public float P_MaxJumpInt = 1;
     public float P_JumpInt;
+    public RaycastHit2D P_J_Ray;
+    public float P_J_RayDistance;
     public float P_DashForce;
     public float P_DashInt = 1;
     public float P_DashTimer = 2;
@@ -48,7 +50,7 @@ public class Playerindigo : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-
+    
     Animation ani;
     Rigidbody2D rigid;
     public Ability ActiveAbility;
@@ -62,7 +64,8 @@ public class Playerindigo : MonoBehaviour
     void FixedUpdate()
     {
         Move();
-        //Attack();
+        Attack();
+        
     }
     void Update()
     {
@@ -72,6 +75,7 @@ public class Playerindigo : MonoBehaviour
         }
         UseItem();
         Jump();
+        JumpRay();
     }
     public void Move()//Move안에 대쉬까지 만듦
     {
@@ -119,28 +123,43 @@ public class Playerindigo : MonoBehaviour
             case 2:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    jump();
+                    JumpWorking();
                 }
                 break;
             case 1:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    jump();
+                    JumpWorking();
                 }
                 break;
             case 0:
-                Debug.Log("작동x");
+                
                 rigid.AddForce(Vector3.up * 0);
                 break;
         }
     }
-    void jump()
+    void JumpWorking()
     {
         Debug.Log("작동");
         rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
         P_JumpInt -= 1;
     }
+    void JumpRay()
+    {
+        int layerMask = (-1) - (1 << LayerMask.NameToLayer("Player"));
 
+        P_J_Ray = Physics2D.Raycast(transform.position + Vector3.down ,Vector3.down, P_J_RayDistance, layerMask);//, LayerMask.NameToLayer("Ground"));
+        
+        Debug.DrawRay(transform.position, Vector3.down * P_J_RayDistance, new Color(1,0,0));
+
+        
+       
+        if (P_J_Ray.collider.gameObject.layer == 31)
+        {
+            
+            P_JumpInt = P_MaxJumpInt;
+        }
+    }
 
     public void Attack()
         {
@@ -233,7 +252,7 @@ public class Playerindigo : MonoBehaviour
             }
         }
     }
-    public void OnDrawGizumos()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(P_TopAttack.position, P_UBox_Size);
@@ -260,14 +279,18 @@ public class Playerindigo : MonoBehaviour
     }
     public void AttackReset()
     {
+
+
     }
+
+    
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Ground")
+        /*if (col.gameObject.tag == "Ground")
         {
             Debug.Log("점프 +1");
             P_JumpInt = P_MaxJumpInt;
-        }
+        }*/
     }
     public delegate void useAbility();
     useAbility ability;
