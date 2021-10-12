@@ -32,7 +32,7 @@ public class Playerindigo : MonoBehaviour
     public int P_AttackInt = 0;
     public float P_AttackTimer = 1;
     public bool P_AttackState = false;
-    public float P_AttackResetTimer = 0.8f;
+    public float P_AttackResetTimer;
     public Transform P_FrontAttack;
     public Transform P_TopAttack;
     public Vector2 P_UBox_Size;
@@ -160,18 +160,19 @@ public class Playerindigo : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (P_AttackInt <= 3)
+            if (P_AttackInt <= 2)
             {
                 P_AttackInt++;
             }
 
         }
+        float Reset = 1;
         switch (P_AttackInt)
         {
             case 0:
 
                 P_AttackState = false;
-                P_AttackResetTimer = 0.8f;
+                P_AttackResetTimer = Reset;
                 break;
             case 1:
 
@@ -181,7 +182,7 @@ public class Playerindigo : MonoBehaviour
                 {
                     P_AttackInt = 0;
                     P_AttackState = false;
-                    P_AttackResetTimer = 0.8f;
+                    P_AttackResetTimer = Reset;
                 }
                 if (P_AttackState == true)
                 {
@@ -189,17 +190,16 @@ public class Playerindigo : MonoBehaviour
                 }
                 break;
             case 2:
-
+                P_AttackResetTimer -= Time.deltaTime;
                 if (Input.GetMouseButtonDown(0))
                 {
-                    P_AttackResetTimer = 0.8f;
+                    P_AttackResetTimer = Reset;
                 }
-                P_AttackResetTimer -= Time.deltaTime;
                 if (P_AttackResetTimer <= 0)
                 {
                     P_AttackInt = 0;
                     P_AttackState = false;
-                    P_AttackResetTimer = 0.8f;
+                    P_AttackResetTimer = Reset;
                 }
                 P_AttackState = true;
                 if (P_AttackState == true)
@@ -208,29 +208,9 @@ public class Playerindigo : MonoBehaviour
                 }
                 break;
             case 3:
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    P_AttackResetTimer = 0.8f;
-                }
                 P_AttackResetTimer -= Time.deltaTime;
+
                 if (P_AttackResetTimer <= 0)
-                {
-                    P_AttackInt = 0;
-                    P_AttackState = false;
-                    P_AttackResetTimer = 0.8f;
-                }
-                P_AttackState = true;
-                if (P_AttackState == true)
-                {
-                    AttackBoundary();
-                }
-                break;
-
-            case 4:
-                if(P_AttackInt == 4) {P_AttackResetTimer = 0.8f;}
-                P_AttackResetTimer -= Time.deltaTime;
-                if (P_AttackResetTimer == 0)
                 {
                   P_AttackInt = 0;
                 }
@@ -276,26 +256,7 @@ public class Playerindigo : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(P_FrontAttack.position, P_RBox_Size);
     }
-    public void AttackSlow()//공격시 Player 이동속도 조절
-    {
-        switch (P_AttackInt)
-        {
-            case 0:
-                P_M_Speed = 10;
-                break;
-            case 1:
-                P_M_Speed = 3;
-                break;
-            case 2:
-                P_M_Speed = 3;
-                break;
-            case 3:
-                P_M_Speed = 3;
-                break;
-        }
-    }
     
-
     public void WorldChange()//이면세계 전환 2021.10.07 김재헌
     {
         GameObject A = GameObject.FindGameObjectWithTag("Player");

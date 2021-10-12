@@ -31,7 +31,7 @@ public class TestPlayer : MonoBehaviour
     //
     //점프
     public float P_JumpForce;
-    float P_DefaultJumpInt = 1;
+    public float P_DefaultJumpInt = 1;
     public float P_MaxJumpInt
     {
         get
@@ -164,8 +164,8 @@ public class TestPlayer : MonoBehaviour
     //
 
     //공격
-    public delegate void attack();
-    attack atk;
+    public delegate void Attack();
+    Attack atk;
     //
 
     //점프
@@ -174,7 +174,7 @@ public class TestPlayer : MonoBehaviour
         if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0)
         {
-            rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
+            rigid.AddForce(Vector3.up * P_JumpForce * 150 * Time.deltaTime);
             P_JumpInt -= 1;
         }
     }
