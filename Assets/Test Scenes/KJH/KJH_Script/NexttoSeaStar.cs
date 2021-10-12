@@ -101,7 +101,7 @@ public class NexttoSeaStar : MonoBehaviour
 
     public void Ability_D()
     {
-        Debug.Log("D");
+        Debug.Log("바토루-아쿠스");
     }
 
     public void Ability_E()
