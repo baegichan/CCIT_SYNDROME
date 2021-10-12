@@ -8,7 +8,7 @@ public class Attack_False : MonoBehaviour
 
     public void Event()
     {
-        this.gameObject.GetComponent<Animator>().SetBool("Attack", false);
+        GetComponent<Animator>().SetBool("Attack", false);
     }
 
     public void Event_()
