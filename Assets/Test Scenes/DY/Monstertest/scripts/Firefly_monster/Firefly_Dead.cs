@@ -16,7 +16,7 @@ public class Firefly_Dead : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+       //현재 죽는 애니메이션이 없기 때문에 아직 구현 X
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
