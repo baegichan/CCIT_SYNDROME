@@ -55,6 +55,7 @@ public class TestTest : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         SelectChar = Char[0];
         ChangeCahr();
+        Debug.Log("dddd");
     }
 
     void FixedUpdate()
