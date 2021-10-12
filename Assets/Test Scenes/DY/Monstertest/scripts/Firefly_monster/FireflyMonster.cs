@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrillMonster : MonoBehaviour
+public class FireflyMonster: MonoBehaviour
 {
     [Header("Prameter")]
     public float speed;
@@ -11,14 +11,16 @@ public class DrillMonster : MonoBehaviour
     public float atkDelay;
 
     [Header("Refernce")]
+    public GameObject fireflybullet;
     public Transform player;
     public Animator anim;
     public Vector2 first;
-    public Vector2 boxSize;
     public Rigidbody2D rb;
-    public Transform groundCheck;
+    public Transform wallCheck;// 공중 벽 체크로 변경해야 됨
+    public Transform upCheck;
+    public Transform downCheck;
     public Transform playerCheck;
-    public Transform boxpos;
+    public Transform atkpos; //공격 근접이면 가능이지만 원거리는 교체가 필요
     public Vector2 direction;
     public float distance;
 
@@ -26,9 +28,9 @@ public class DrillMonster : MonoBehaviour
     public bool filp;
     public bool patroll;
     public bool trace;
-    public bool Targeton;
-
+    public bool Targeton = false;
     //2D sight
+
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
 
     [SerializeField] private bool m_bDebugMode = false;
@@ -57,9 +59,9 @@ public class DrillMonster : MonoBehaviour
         filp = true;
         patroll = true;
         trace = false;
-        Targeton = false;
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -72,10 +74,12 @@ public class DrillMonster : MonoBehaviour
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
+        Up();
+        Down();
 
     }
 
-    public void Directiondrillmonster(float target, float baseobj)
+    public void DirectionFireflymonster(float target, float baseobj)
     {
         if (target < baseobj)
             anim.SetFloat("Direction", -1);
@@ -83,27 +87,27 @@ public class DrillMonster : MonoBehaviour
             anim.SetFloat("Direction", 1);
     }
 
-    public void DrillAttack()
+    public void FireflyAttack() //인스턴시에이트 써서 총알 나갈  수 있도록 만들기
     {
         if (anim.GetFloat("Direction") == -1)
         {
-            if (boxpos.localPosition.x > 0)
-                boxpos.localPosition = new Vector2(boxpos.localPosition.x * -1, boxpos.localPosition.y);
+            if (atkpos.localPosition.x > 0)
+                atkpos.localPosition = new Vector2(atkpos.localPosition.x * -1, atkpos.localPosition.y);
         }
         else
         {
-            if (boxpos.localPosition.x < 0)
-                boxpos.localPosition = new Vector2(Mathf.Abs(boxpos.localPosition.x * 1), boxpos.localPosition.y);
+            if (atkpos.localPosition.x < 0)
+                atkpos.localPosition = new Vector2(Mathf.Abs(atkpos.localPosition.x * 1), atkpos.localPosition.y);
         }
-
-        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(boxpos.position, boxSize, 0);
-        foreach (Collider2D col in collider2Ds)
-        {
-            if (col.tag == "Player")
-            {
-                Debug.Log("damage1");
-            }
-        }
+        Instantiate(fireflybullet, atkpos.transform.position, Quaternion.identity);
+        //Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(atkpos.position, boxSize, 0);
+        //foreach (Collider2D col in collider2Ds)
+        //{
+        //    if (col.tag == "Player")
+        //    {
+        //        Debug.Log("damage1");
+        //    }
+        //}
     }
 
     public void Patroll()
@@ -114,8 +118,8 @@ public class DrillMonster : MonoBehaviour
 
     public void Filp()
     {
-        RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 2f);
-        if (groundcheck.collider == false)
+        RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 2f); //레이케스트를 옆으로 쏴서 확인 된다면 플립
+        if (wallcheck.collider == true)
         {
             if (filp == true)
             {
@@ -127,6 +131,23 @@ public class DrillMonster : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, 0, 0);
                 filp = true;
             }
+        }
+    }
+
+    public void Up()
+    {
+        RaycastHit2D upcheck = Physics2D.Raycast(upCheck.position, Vector2.up, 2f);
+        if(upcheck.collider == true)
+        {
+            rb.AddForce(transform.up * -5f);
+        }
+    }
+    public void Down()
+    {
+        RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 2f);
+        if (downcheck.collider == true)
+        {
+            rb.AddForce(transform.up * 5f);
         }
     }
 
