@@ -51,13 +51,14 @@ public class PlayerM_ : MonoBehaviour
 
     Animation ani;
     Rigidbody2D rigid;
+    AbilityManager AM;
 
-    public GameObject abilityManager;
     public Ability ActiveAbility;
     public Ability PassiveAbility;
 
     void Awake()
     {
+        AM = GetComponent<AbilityManager>();
         rigid = player.GetComponent<Rigidbody2D>();
         ani = GetComponent<Animation>();
     }
@@ -121,24 +122,6 @@ public class PlayerM_ : MonoBehaviour
     {
         if(P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0) { jump(); }
-        //switch (P_JumpInt)
-        //{
-        //    case 2:
-        //        if (Input.GetKeyDown(KeyCode.Space))
-        //        {
-        //            jump();
-        //        }
-        //        break;
-        //    case 1:
-        //        if (Input.GetKeyDown(KeyCode.Space))
-        //        {
-        //            jump();
-        //        }
-        //        break;
-        //    case 0:
-        //        rigid.AddForce(Vector3.up * 0);
-        //        break;
-        //}
     }
 
     void jump()
@@ -284,34 +267,32 @@ public class PlayerM_ : MonoBehaviour
     }
 
     public delegate void useAbility();
-    useAbility ability;
+    useAbility active;
 
     public void SelectAbility()
     {
-        AbilityManager AM = abilityManager.GetComponent<AbilityManager>();
-
         switch (ActiveAbility.AbCode)
         {
             case 0:
-                ability = new useAbility(AM.Werewolf);
+                active = new useAbility(AM.Werewolf);
                 break;
             case 1:
-                ability = new useAbility(AM.Parao);
+                active = new useAbility(AM.Parao);
                 break;
             case 2:
-                ability = new useAbility(AM.BomberMan);
+                active = new useAbility(AM.BomberMan);
                 break;
             case 3:
-                ability = new useAbility(AM.Ability_D);
+                active = new useAbility(AM.Ability_D);
                 break;
             case 4:
-                ability = new useAbility(AM.Ability_E);
+                active = new useAbility(AM.Ability_E);
                 break;
             case 5:
-                ability = new useAbility(AM.Ability_F);
+                active = new useAbility(AM.Ability_F);
                 break;
             case 6:
-                ability = new useAbility(AM.Double_Jump);
+                active = new useAbility(AM.Double_Jump);
                 break;
         }
     }
@@ -321,13 +302,13 @@ public class PlayerM_ : MonoBehaviour
         switch (ActiveAbility.AbName)
         {
             case "Werewolf":
-                ability();
+                active();
                 break;
             case "Parao":
-                ability();
+                active();
                 break;
             case "BomberMan":
-                ability();
+                active();
                 break;
         }
     }
