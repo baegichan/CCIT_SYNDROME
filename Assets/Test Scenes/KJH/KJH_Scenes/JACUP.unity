@@ -163,6 +163,7 @@ MonoBehaviour:
   P_OtherWorld: 0
   P_M_Speed: 0
   P_JumpForce: 0
+  P_DefaultJumpInt: 1
   P_DashForce: 0
   MulYakInt: 0
   AlYakInt: 0
@@ -350,7 +351,8 @@ MonoBehaviour:
   DefualtHP: 0
   P_OtherWorld: 0
   P_M_Speed: 5
-  P_JumpForce: 100
+  P_JumpForce: 300
+  P_DefaultJumpInt: 1
   P_DashForce: 100
   MulYakInt: 0
   AlYakInt: 0
@@ -510,6 +512,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 167876236}
     m_Modifications:
+    - target: {fileID: 718366478248155569, guid: 565ecf00962fed84a94371cb53776513, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1782499535815697220, guid: 565ecf00962fed84a94371cb53776513, type: 3}
       propertyPath: m_Name
       value: MainCharacter_Eden
@@ -799,7 +805,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1032255010
 Transform:
   m_ObjectHideFlags: 0
@@ -1078,7 +1084,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1787137990}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1787137986 stripped
 GameObject:

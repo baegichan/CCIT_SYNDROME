@@ -116,8 +116,8 @@ public class TestPlayer : MonoBehaviour
             case "Defualt":
                 atk = SelectChar.GetComponent<child1>().Attack;
                 break;
-            case "Wolf":
-                atk = SelectChar.GetComponent<child2>().Attack;
+            case "MainCharacter_Eden":
+                atk = SelectChar.GetComponent<MentalChaild>().Attack;
                 break;
         }
     }
