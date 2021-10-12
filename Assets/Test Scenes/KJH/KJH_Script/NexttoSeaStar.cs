@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityManager : MonoBehaviour
+public class NexttoSeaStar : MonoBehaviour
 {
     public List<Ability> AbList = new List<Ability>();
     public Camera camera;
@@ -12,6 +12,15 @@ public class AbilityManager : MonoBehaviour
     IEnumerator wolf;
     Rigidbody2D rg;
     public int power = 10;
+    //¸¶°Ë
+    public float E_Attack_Damage;
+    public float E_Attack_Int = 0;
+    public float E_Attack_Range = 100;
+    public float E_ResetTimer = 0.8f;   
+    public static Transform Spawn;
+
+    //
+
     public void Werewolf()
     {
         Debug.Log("´Á´ë´Ù! ¹«¼·Âî!!");
@@ -26,7 +35,7 @@ public class AbilityManager : MonoBehaviour
         if (Input.GetMouseButtonUp(1))
         {
             StopAllCoroutines();
-            rg.AddForce(new Vector2(1,0.6f) * WereWolf_Gauge * power);
+            rg.AddForce(new Vector2(1, 0.6f) * WereWolf_Gauge * power);
             WereWolf_Gauge = 0;
         }
     }
@@ -34,7 +43,7 @@ public class AbilityManager : MonoBehaviour
     IEnumerator WolfGauge()
     {
         yield return new WaitForSeconds(0.5f);
-        if(WereWolf_Gauge < 5) { WereWolf_Gauge += 1; }
+        if (WereWolf_Gauge < 5) { WereWolf_Gauge += 1; }
         StartCoroutine(WolfGauge());
     }
 
@@ -97,9 +106,84 @@ public class AbilityManager : MonoBehaviour
 
     public void Ability_E()
     {
-        Debug.Log("E");
+        EvilSword_Attack();
+        EvilSwordResetAttack();
+        Debug.Log("ÀÌ-ºÎ¸£ ¼Ò-µµ");
     }
-    
+
+    public void EvilSword_Attack()
+    {
+        AttackPlus();
+        switch (E_Attack_Int)
+        {
+            case 0:
+                E_ResetTimer = 0.8f;
+                E_Attack_Damage = 0;
+                break;
+            case 1:
+                EvilSwordResetAttack();
+                E_ResetTimer -= Time.deltaTime;
+                E_Attack_Damage = 15;
+                break;
+            case 2:
+                EvilSwordResetAttack();
+                E_ResetTimer -= Time.deltaTime;
+                E_Attack_Damage = 15;
+                break;
+            case 3:
+                EvilSwordResetAttack();
+                E_ResetTimer -= Time.deltaTime;
+                E_Attack_Damage = 30;
+                break;
+        }
+
+    }
+
+    public void AttackPlus()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            E_Attack_Int++;
+        }
+
+        if (E_Attack_Int > 3)
+        {
+            E_Attack_Int = 0;
+        }
+    }
+
+    public void EvilSwordResetAttack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            E_ResetTimer = 0.8f;
+        }
+        switch (E_Attack_Int)
+        {
+            case 1:
+                if (E_ResetTimer <= 0)
+                {
+                    E_ResetTimer = 0.8f;
+                    E_Attack_Int = 0;
+                }
+                break;
+            case 2:
+                if (E_ResetTimer <= 0)
+                {
+                    E_ResetTimer = 0.8f;
+                    E_Attack_Int = 0;
+                }
+                break;
+            case 3:
+                if (E_ResetTimer <= 0)
+                {
+                    E_ResetTimer = 0.8f;
+                    E_Attack_Int = 0;
+                }
+                break;
+        }
+    }
+
     public void Ability_F()
     {
         Debug.Log("F");

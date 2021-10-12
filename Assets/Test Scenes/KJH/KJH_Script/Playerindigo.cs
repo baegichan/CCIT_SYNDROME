@@ -3,22 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Playerindigo : MonoBehaviour
-{
-    // Start is called before the first frame update
-    /// Test
-    public int A;
-    public int B;
-    public int C;
-
-    public void Test_Attack_Passive()
-    {
-
-    }
-
-    /// Test
+{ 
     /// 플레이어 스테이터스
     public float P_Hp;
     public int P_Money;
+    public bool P_OtherWorld = false;//2021.10.07 김재헌
     ///
     /// 플레이어 이동
     public float P_M_Speed;
@@ -30,6 +19,8 @@ public class Playerindigo : MonoBehaviour
     public float P_DashForce;
     public float P_DashInt = 1;
     public float P_DashTimer = 2;
+    Vector2 Mouse;
+    Vector2 PlayerPosition;
     ///
     /// 플레이어 특수능력 관련 함수
     public GameObject abilityManager;
@@ -38,19 +29,18 @@ public class Playerindigo : MonoBehaviour
     /// 
     /// 플레이어 공격
     public float P_AttackForce;
-    public float P_AttackInt = 0;
+    public int P_AttackInt = 0;
     public float P_AttackTimer = 1;
-      public bool P_AttackState = false;
+    public bool P_AttackState = false;
     public float P_AttackResetTimer = 0.8f;
     public Transform P_FrontAttack;
-   
     public Transform P_TopAttack;
     public Vector2 P_UBox_Size;
     public Vector2 P_RBox_Size;
     /// <summary>
     /// 
     /// </summary>
-    
+    Camera Cam;
     Animation ani;
     Rigidbody2D rigid;
     public Ability ActiveAbility;
@@ -60,22 +50,27 @@ public class Playerindigo : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animation>();
+        Cam = Camera.main;
     }
     void FixedUpdate()
     {
         Move();
-        Attack();
-        
+
     }
     void Update()
     {
+        PlayerPosition = Cam.WorldToScreenPoint(transform.position);//마우스 포인터 좌표받기
+        Mouse = Input.mousePosition;
+        UseItem();
+        Jump();
+        //JumpRay();
+        MouseFilp();
+        Attack();
         if (ActiveAbility.AbSprite != null)
         {
             UseSkill();
         }
-        UseItem();
-        Jump();
-        JumpRay();
+       
     }
     public void Move()//Move안에 대쉬까지 만듦
     {
@@ -162,19 +157,24 @@ public class Playerindigo : MonoBehaviour
     }
 
     public void Attack()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButton(0))
+            if (P_AttackInt <= 3)
             {
                 P_AttackInt++;
-                Debug.Log("공격 작동");
             }
+
+        }
         switch (P_AttackInt)
         {
             case 0:
+
                 P_AttackState = false;
                 P_AttackResetTimer = 0.8f;
                 break;
             case 1:
+
                 P_AttackState = true;
                 P_AttackResetTimer -= Time.deltaTime;
                 if (P_AttackResetTimer <= 0)//공격하다가 중간에 멈추면 다시 1타로 초기화.
@@ -189,7 +189,11 @@ public class Playerindigo : MonoBehaviour
                 }
                 break;
             case 2:
-                P_AttackResetTimer = 0.8f;
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    P_AttackResetTimer = 0.8f;
+                }
                 P_AttackResetTimer -= Time.deltaTime;
                 if (P_AttackResetTimer <= 0)
                 {
@@ -204,7 +208,11 @@ public class Playerindigo : MonoBehaviour
                 }
                 break;
             case 3:
-                P_AttackResetTimer = 0.8f;
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    P_AttackResetTimer = 0.8f;
+                }
                 P_AttackResetTimer -= Time.deltaTime;
                 if (P_AttackResetTimer <= 0)
                 {
@@ -220,11 +228,19 @@ public class Playerindigo : MonoBehaviour
                 break;
 
             case 4:
+                if(P_AttackInt == 4) {P_AttackResetTimer = 0.8f;}
+                P_AttackResetTimer -= Time.deltaTime;
+                if (P_AttackResetTimer == 0)
+                {
+                  P_AttackInt = 0;
+                }
                 P_AttackState = false;
-                P_AttackInt = 0;
+               
+                
                 break;
         }
     }
+
     public void AttackBoundary()
     {
         Collider2D[] Uhit = Physics2D.OverlapBoxAll(P_TopAttack.position, P_UBox_Size, 0);
@@ -252,6 +268,7 @@ public class Playerindigo : MonoBehaviour
             }
         }
     }
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -277,13 +294,45 @@ public class Playerindigo : MonoBehaviour
                 break;
         }
     }
-    public void AttackReset()
+    
+
+    public void WorldChange()//이면세계 전환 2021.10.07 김재헌
     {
-
-
+        GameObject A = GameObject.FindGameObjectWithTag("Player");
+        GameObject B = GameObject.FindGameObjectWithTag("OtherPlayer");//임시
+        if (P_OtherWorld == false)
+        {
+            if(Input.GetKeyDown(KeyCode.Q))
+            {
+                P_OtherWorld = true;//이면세계 진입 구현 필요            
+                Instantiate(B,A.transform);
+                Destroy(A,0f);
+            }
+        }
+        if(P_OtherWorld == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                P_OtherWorld = false;//기본세계 진입 구현 필요
+                Instantiate(A, B.transform);
+                Destroy(B, 0f);
+            }
+        }
+    }
+    
+    public void MouseFilp()
+    {
+        
+        if (Mouse.x <= PlayerPosition.x)// 1920x1080 기준 중간지점
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (Mouse.x > PlayerPosition.x)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 
-    
     void OnCollisionEnter2D(Collision2D col)
     {
         /*if (col.gameObject.tag == "Ground")
