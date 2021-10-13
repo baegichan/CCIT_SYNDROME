@@ -14,7 +14,7 @@ public class MiniMapDrag : MonoBehaviour, IEndDragHandler, IDragHandler
         if(Input.GetMouseButtonDown(0))
         {
            
-            Time.timeScale = 0;
+         
             BeginMousePosition = Input.mousePosition;
         }
         if(Input.GetMouseButton(0))
@@ -29,9 +29,6 @@ public class MiniMapDrag : MonoBehaviour, IEndDragHandler, IDragHandler
     {
         this.transform.position = new Vector3(0, 0, 0);
     }
-    
- 
-
     public void OnDrag(PointerEventData eventData)
     {
         /*

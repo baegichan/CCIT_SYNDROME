@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour
 {
+    #region FakeData
     /// <summary>
     /// 페이크 맵데이터 맵 프리팹하고 맵 알고리즘 만들때 맵 배열 넘겨줘야됨
     /// 맵전체 데이터 X 들어간 방만 추가업데이트 필요함
     /// 최종목표는 array  두개 받아서 사용
+    /// MapEnable도 따로받아야됨
     /// </summary>
     int[,] MapData = new int[,] { {1,1,1,1,1 },{ 0,0,1,0,1},{ 0,1,1,1,1},{ 0,1,1,1,0},{1,1,0,0,0 } };
     bool[,] MapEnable = new bool[,] { { true, true, true, false, false }, { false, false, true, false, false }, { false, true, false, false, true }, { false, false, true, true, false }, { true, false, false, false, false } };
+    #endregion
     GameObject[,] WorldMap;
     public int[,] WORLDMAP_DATA
     {
@@ -21,6 +24,9 @@ public class MiniMap : MonoBehaviour
     {
         transform.parent.GetComponent<Canvas>().worldCamera = Camera.main;
         WORLDMAP_DATA =new int[,] { { 1,1,1,1,1 },{ 0,0,1,0,1},{ 0,1,1,1,1},{ 0,1,1,1,0},{ 1,1,0,0,0 } };
+        LoadMiniMap(WORLDMAP_DATA);
+        MapUpdate();
+        Loaded = true;
     }
     /// <summary>
     /// 레벨도 추후 세팅다시해야됨 프로퍼티사용바람
@@ -33,27 +39,26 @@ public class MiniMap : MonoBehaviour
       
     }
    [Range(0,30)] public int distance = 15;
-
     public GameObject Target;
     public GameObject Canvas;
     public GameObject WolrdMap;
     public bool Loaded = false;
-    
-
     private void Update()
     {
        //이후 KeyManager 키로 변경요망
       if ( Input.GetKeyDown(KeyCode.M))
         {
-            Debug.Log(Level);
             if(Loaded==false)
             {
-                LoadMiniMap(MapData);
+                
+                LoadMiniMap(WORLDMAP_DATA);
                 Loaded = true;
+                WolrdMap.transform.localPosition = new Vector3(0, 0, 0);
+                MapUpdate();
             }
              else
             {
-                //WolrdMap.SetActive(WolrdMap.activeSelf ? false : true);
+                WolrdMap.transform.localPosition = new Vector3(0, 0, 0);
                 MapUpdate();
             }
         }
@@ -64,15 +69,20 @@ public class MiniMap : MonoBehaviour
         for (int i = 0; i < STAGELEVEL * 2 + 1; i++)
         {
             for (int j = 0; j < STAGELEVEL * 2 + 1; j++)
-            {   
-                    WorldMap[i, j].SetActive(MapEnable[i, j]);
+            {
+                if(MapEnable[i, j]==false && WorldMap[i, j] != null)
+                {
+                    WorldMap[i, j].SetActive(false);
+                }
+                if(MapEnable[i,j]==true&&WorldMap[i,j]==true)
+                {
+                    WorldMap[i, j].SetActive(WorldMap[i,j].activeSelf?false:true);
+                }             
             }
-         
         }
     }
     public void LoadMiniMap(int[,] LoadMap)
-    {
-       
+    {  
         int height= STAGELEVEL * distance;
         int width= -STAGELEVEL * distance;
          for(int i = 0;i< STAGELEVEL * 2+1;i++)
