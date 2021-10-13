@@ -27,5 +27,5 @@ Grid(Clone) 하위에 생성된 타일맵들을 목적에 맞게 그린후 맵�
 Assets/Test Scenes/BGC/TileMap/TileMaps/해당맵이름.prefab   으로 저장되며 해당 프리팹을 직접 수정하여도 무방합니다..
 현재 이벤트 항목은 사용불가능이며 추후 추가예정입니다.
 샘플 맵데이터는 Assets/Test Scenes/BGC/MapData 폴더에 저장되있습니다.
-
+//테스트용 파일변경 ^^
 //추가로 업데이트된내용은 적혀있지않습니다 ^^

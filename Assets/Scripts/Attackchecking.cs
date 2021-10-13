@@ -31,7 +31,7 @@ public class Attackchecking : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
 
-            cha.GetComponent<Chamovement>().Turn_move();
+           // cha.GetComponent<Chamovement>().Turn_move();
         }
     }
 }
