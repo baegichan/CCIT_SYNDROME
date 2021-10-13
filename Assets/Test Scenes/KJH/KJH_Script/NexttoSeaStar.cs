@@ -18,6 +18,8 @@ public class NexttoSeaStar : MonoBehaviour
     public float E_Attack_Range = 100;
     public float E_ResetTimer = 0.8f;   
     public static Transform Spawn;
+    //
+    //전투도끼
 
     //
 
@@ -99,9 +101,9 @@ public class NexttoSeaStar : MonoBehaviour
         }
     }
 
-    public void Ability_D()
+    public void BattleAxe()
     {
-        Debug.Log("D");
+        Debug.Log("바토루-아쿠스");
     }
 
     public void Ability_E()
