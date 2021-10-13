@@ -253,24 +253,6 @@ public class MapManager : MonoBehaviour
             }
 
             
-            /*
-            if (map[a, b + 1].GetComponent<Room_data>().Room_Created == true)
-            {
-                CreateRoomRogic(a, b + 1);
-            }
-            if (map[a + 1, b].GetComponent<Room_data>().Room_Created == true)
-            {
-                CreateRoomRogic(a + 1, b);
-            }
-            if (map[a, b - 1].GetComponent<Room_data>().Room_Created == true)
-            {
-                CreateRoomRogic(a, b - 1);
-            }
-            if (map[a - 1, b].GetComponent<Room_data>().Room_Created == true)
-            {
-                CreateRoomRogic(a - 1, b);
-            }
-            */
 
 
         }
