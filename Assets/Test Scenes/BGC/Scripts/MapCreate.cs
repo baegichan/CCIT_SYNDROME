@@ -21,7 +21,7 @@ public class MapCreate : MonoBehaviour
     }
     private void Start()
     {
-        Level = 10;
+        Level = 4;
         for(int i =0; i<Level*2+1;i++)
         {
             for(int j = 0;j<Level*2+1;j++)
