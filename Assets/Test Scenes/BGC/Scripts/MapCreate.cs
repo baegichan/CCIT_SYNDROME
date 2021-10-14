@@ -8,6 +8,7 @@ public class MapCreate : MonoBehaviour
     public int TestLevel ;
     public GameObject[,] MapArray;
     public DFSRoom DFS;
+    public MiniMap Minimap;
     public float distance;
     public int Level
     {
@@ -20,7 +21,7 @@ public class MapCreate : MonoBehaviour
     }
     private void Start()
     {
-        Level = 500;
+        Level = 10;
         for(int i =0; i<Level*2+1;i++)
         {
             for(int j = 0;j<Level*2+1;j++)
@@ -28,13 +29,15 @@ public class MapCreate : MonoBehaviour
                 SpawnMapObject(i-Level, j-Level);
             }
         }
+       
         FirstRoomSetting();
-        
+       
         DFS.DFSRoomCheck((int)Level, (int)Level, MapArray);
+        Minimap.MiniMapSetting();
     }
     public void FirstRoomSetting()
     {
-        MapArray[Level, Level].GetComponent<RoomData>().StartRoom();
+        MapArray[Level, Level].GetComponent<RoomData>().StartRoomSetting();
         MapArray[Level, Level].GetComponent<RoomData>().SetArroundRoom(RoomData.Roomdir.Bottom, MapArray[Level, Level - 1]);
         MapArray[Level, Level].GetComponent<RoomData>().SetArroundRoom(RoomData.Roomdir.Top, MapArray[Level, Level + 1]);
         MapArray[Level, Level].GetComponent<RoomData>().SetArroundRoom(RoomData.Roomdir.Left, MapArray[Level - 1, Level]);
@@ -55,12 +58,7 @@ public class MapCreate : MonoBehaviour
             if(MapArray[i, Level * 2 + 1].GetComponent<RoomData>().IsCreated)
             {
                 counter += 1;
-                
             }
-           
-
         }
-        
-
     }
 }

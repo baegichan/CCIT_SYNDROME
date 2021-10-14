@@ -9,14 +9,10 @@ public class DFSRoom : MonoBehaviour
     public GameObject[] Map_Image;
     private void Start()
     {
-      
         RoomList = new List<GameObject>();
     }
-   
-
     public void DFSRoomCheck(int x,int y,GameObject[,] Mapdata)
     {
-      
         if (0 < x && x < MapcreateSC.Level * 2 && 0 < y && y < MapcreateSC.Level * 2)
         {
             if (!Mapdata[x, y + 1].GetComponent<RoomData>().IsCreated)
@@ -25,9 +21,8 @@ public class DFSRoom : MonoBehaviour
                 {
                     Test(x, y+1, Mapdata);
                     Mapdata[x, y + 1].GetComponent<RoomData>().ChangeRoomCode(0b0010);
-                    Instantiate(Map_Image[Mapdata[x, y + 1].GetComponent<RoomData>().RoomCode], Mapdata[x, y + 1].transform);
+                    Instantiate(Map_Image[Mapdata[x, y + 1].GetComponent<RoomData>().RoomCode], Mapdata[x, y + 1].transform);            
                     DFSRoomCheck(x, y + 1, Mapdata);
-
                 }
             }
             if (!Mapdata[x + 1, y].GetComponent<RoomData>().IsCreated)
@@ -39,7 +34,6 @@ public class DFSRoom : MonoBehaviour
                     Instantiate(Map_Image[Mapdata[x + 1, y].GetComponent<RoomData>().RoomCode], Mapdata[x + 1, y].transform);
                     DFSRoomCheck(x + 1, y, Mapdata);
                 }
-
             }
             if (!Mapdata[x, y - 1].GetComponent<RoomData>().IsCreated)
             {
@@ -50,11 +44,9 @@ public class DFSRoom : MonoBehaviour
                     Instantiate(Map_Image[Mapdata[x, y - 1].GetComponent<RoomData>().RoomCode], Mapdata[x, y - 1].transform);
                     DFSRoomCheck(x, y - 1, Mapdata);
                 }
-
             }
             if (!Mapdata[x - 1, y].GetComponent<RoomData>().IsCreated)
             {
-
                 if ((Mapdata[x, y].GetComponent<RoomData>().RoomCode >> 3 & 0b0001) == 1)
                 {
                     Test(x - 1, y, Mapdata);
@@ -67,7 +59,6 @@ public class DFSRoom : MonoBehaviour
     }
     public void Test(int x, int y, GameObject[,] Mapdata)
     {
-
         if (y - 1 >= 0)
         {
             Mapdata[x, y ].GetComponent<RoomData>().SetArroundRoom(RoomData.Roomdir.Bottom, Mapdata[x, y-1]);

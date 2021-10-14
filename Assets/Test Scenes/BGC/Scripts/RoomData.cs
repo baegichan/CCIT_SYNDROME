@@ -9,6 +9,7 @@ public class RoomData : MonoBehaviour
     public int RoomindexX, RoomindexY;
     public bool IsCreated = false;
     public int RoomCode=0;
+    public bool VisitedRoom = true;
     public uint Test;
    public bool L_Brige, R_Brige, T_Brige, B_Brige;
     public GameObject L_Room, R_Room, T_Room, B_Room;
@@ -172,7 +173,7 @@ public class RoomData : MonoBehaviour
                 break;
         }
     }
-    public void StartRoom()
+    public void StartRoomSetting()
     {       
         RoomCode=Random.Range(5, 16);
         for (int i = 0; i < 4; i++)
@@ -196,6 +197,7 @@ public class RoomData : MonoBehaviour
                 }
             }
         }
+        VisitedRoom = true;
         IsCreated = true;
     }
     public bool ChangeRoomCode(int PreMask)
@@ -227,8 +229,7 @@ public class RoomData : MonoBehaviour
             }
         }
         if (((GetArroundRoom() & instanceRandom) == GetArroundRoom())&& Check(Roomdir.Left) && Check(Roomdir.Right) && Check(Roomdir.Bottom) && Check(Roomdir.Top))
-        {
-            
+        { 
             switch (PreMask)
             {
                 //0bLRTB
@@ -239,10 +240,6 @@ public class RoomData : MonoBehaviour
                         RoomCode = instanceRandom;
                         return true;
                     }
-                    else
-                    {
-                       // ChangeRoomCode(PreMask);
-                    }
                     break;
                 case 0b0010:
                     if ((instanceRandom >> 0 & 0b0001) == 1)
@@ -251,10 +248,6 @@ public class RoomData : MonoBehaviour
                         RoomCode = instanceRandom;
                         return true;
                     }
-                    else
-                    {
-                      //  ChangeRoomCode(PreMask);
-                    }
                     break;
                 case 0b0100:
                     if ((instanceRandom >> 3 & 0b0001) == 1)
@@ -262,28 +255,17 @@ public class RoomData : MonoBehaviour
                         IsCreated = true;
                         RoomCode = instanceRandom;
                         return true;
-                    }
-                    else
-                    {
-                       // ChangeRoomCode(PreMask);
-                    }
+                    }                
                     break;
                 case 0b1000:
                     if ((instanceRandom >> 2 & 0b0001) == 1)
                     {
                         IsCreated = true;
                         RoomCode = instanceRandom;
-
                         return true;
                     }
-                    else
-                    {
-                     //   ChangeRoomCode(PreMask);
-                    }
                     break;
-                    
             }
-
             return false;
         }
         else
@@ -291,15 +273,5 @@ public class RoomData : MonoBehaviour
             ChangeRoomCode(PreMask);
             return false;
         }
-    }
-    /// <summary>
-    /// 따로 만들어야됨 아직은 테스트용
-    /// </summary>
-    //public RoomData RoomData
- 
-    public void CreateRoom()
-    {
-        //spawned current object
-        //Instantiate();
     }
 }
