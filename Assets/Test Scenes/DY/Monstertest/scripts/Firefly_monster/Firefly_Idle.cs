@@ -16,9 +16,13 @@ public class Firefly_Idle : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(fireflyMon.Targeton == true)
+        if (fireflyMon.Targeton == false)
         {
-            animator.SetBool("Follow", true);
+            animator.SetBool("Move", true);
+        }
+        else if (fireflyMon.Targeton == true)
+        {
+            animator.SetBool("Follw", true);
         }
     }
 

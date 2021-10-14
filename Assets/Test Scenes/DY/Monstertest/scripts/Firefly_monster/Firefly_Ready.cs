@@ -16,10 +16,13 @@ public class Firefly_Ready : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetTrigger("Attack");
-
-        if (Vector2.Distance(fireflyMon.player.position, fireflyTransform.position) > 1f)
-            animator.SetBool("Follow", true);
+        if (fireflyMon.atkDelay <= 0)
+            animator.SetTrigger("Attack");
+        if (fireflyMon.Targeton == true)
+        {
+            if (Vector2.Distance(fireflyMon.player.position, fireflyTransform.position) > 2f) //따가라가서 공격 하는 범위
+                animator.SetBool("Follow", true);
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

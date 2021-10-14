@@ -11,12 +11,13 @@ public class Firefly_Attack : StateMachineBehaviour
     {
         fireflyMon = animator.GetComponent<FireflyMonster>();
         fireflyTransform = animator.GetComponent<Transform>();
+        //트리거 이기 때문에 여기서 공격을 받아야 됨
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //여기서 공격 가능한 인스턴시에이트가 가능하고 총알이 날라갈 수 있도록 한다.
+        
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

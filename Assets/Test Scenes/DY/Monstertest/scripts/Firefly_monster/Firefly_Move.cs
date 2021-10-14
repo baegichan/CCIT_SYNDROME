@@ -17,9 +17,13 @@ public class Firefly_Move : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Vector2.Distance(fireflyMon.first, fireflyTransform.position) < 0.1f || Vector2.Distance(fireflyTransform.position, fireflyMon.player.position) > 4f)
+        if(fireflyMon.Targeton == true)
         {
-            animator.SetBool("Move", false);
+            if (Vector2.Distance(fireflyMon.first, fireflyTransform.position) < 0.1f || Vector2.Distance(fireflyTransform.position, fireflyMon.player.position) > 10f)//Å½Áö ¹üÀ§
+            {
+                animator.SetBool("Move", false);
+                animator.SetBool("Follow", true);
+            }
         }
         else
         {

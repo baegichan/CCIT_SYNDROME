@@ -11,26 +11,27 @@ public class Firefly_Trace : StateMachineBehaviour
     {
         fireflyMon = animator.GetComponent<FireflyMonster>();
         fireflyTransform = animator.GetComponent<Transform>();
+
+        fireflyMon.patroll = false; //몬스터의 패트롤을 끝낼 수 있는 함수를 생성하고 여기서 받는다.
+        if (fireflyMon.filp == false || fireflyMon.patroll == false)
+        {
+            fireflyMon.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(Vector2.Distance(fireflyMon.player.position, fireflyTransform.position) > 4f) //4 이하라면 다시 되돌아 가기
+        if (fireflyMon.Targeton == true)
         {
-            animator.SetBool("Move", true);
-            animator.SetBool("Follow", false);
+            if (Vector2.Distance(fireflyMon.player.position, fireflyTransform.position) > 5f) //플레이어 따라 오는 함수
+                fireflyTransform.position = Vector2.MoveTowards(fireflyTransform.position, fireflyMon.player.position, Time.deltaTime * fireflyMon.speed);
+            else
+            {
+                animator.SetBool("Move", false);
+                animator.SetBool("Follow", false);
+            }
         }
-        else if (Vector2.Distance(fireflyMon.player.position, fireflyTransform.position) > 1f) //플레이어와의 거리가 1이하라면 대기
-        {
-            fireflyTransform.position = Vector2.MoveTowards(fireflyTransform.position, fireflyMon.player.position, Time.deltaTime * fireflyMon.speed);
-        }
-        else
-        {
-            animator.SetBool("Move", false);
-            animator.SetBool("Follow", false);
-        }
-        fireflyMon.DirectionFireflymonster(fireflyMon.player.position.x, fireflyTransform.position.x);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
