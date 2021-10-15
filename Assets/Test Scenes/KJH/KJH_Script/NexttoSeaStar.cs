@@ -20,7 +20,10 @@ public class NexttoSeaStar : MonoBehaviour
     public static Transform Spawn;
     //
     //전투도끼
-
+    public int A_Int;
+    float A_Damage;
+    bool A_AttackState = false;
+    public float A_ResetTimer;
     //
 
     public void Werewolf()
@@ -103,7 +106,83 @@ public class NexttoSeaStar : MonoBehaviour
 
     public void BattleAxe()
     {
+        A_Attack();
         Debug.Log("바토루-아쿠스");
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Debug.Log("맞");
+        //    if (col.gameObject.tag == "Monster")//임시
+        //    {
+        //        Debug.Log("았");
+        //        if (A_Int <= 4)
+        //        {
+        //            Debug.Log("다");
+        //            A_Int++;
+        //        }
+        //    }
+        //}
+    }
+    public void A_Attack()
+    {
+
+        float Reset = 10;
+        switch (A_Int)
+        {
+            case 0:
+                A_AttackState = false;
+                A_Damage = 0;
+                break;
+
+            case 1:
+                A_AttackState = true;
+                A_Damage = 100;//임시
+                A_ResetTimer -= Time.deltaTime;
+                if (A_ResetTimer <= 0)
+                {
+                    A_Int = 0;
+                    A_ResetTimer = Reset;
+                }
+                break;
+
+            case 2:
+                A_AttackState = true;
+                A_Damage = 100;
+                A_ResetTimer -= Time.deltaTime;
+                if (A_ResetTimer <= 0)
+                {
+                    A_Int = 0;
+                    A_ResetTimer = Reset;
+                }
+                break;
+
+            case 3:
+                A_AttackState = true;
+                A_Damage = 100;
+                A_ResetTimer -= Time.deltaTime;
+                if (A_ResetTimer <= 0)
+                {
+                    A_Int = 0;
+                    A_ResetTimer = Reset;
+                }
+                break;
+
+            case 4:
+                A_AttackState = true;
+                A_AttackState = true;
+                A_Damage = 150;//임시
+                A_ResetTimer -= Time.deltaTime;
+                if (A_ResetTimer <= 0)
+                {
+                    A_Int = 0;
+                    A_ResetTimer = Reset;
+                }
+                break;
+        }
+    }
+
+    public void RedBull()
+    {
+
     }
 
     public void Ability_E()

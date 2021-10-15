@@ -22,10 +22,10 @@ public class MentalChaild : MonoBehaviour
     
     void Update()
     {
-        Attack();
+        A_Attack();
     }
 
-    public void Attack()
+    public void A_Attack()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -67,7 +67,7 @@ public class MentalChaild : MonoBehaviour
             case 2:
 
                 P_AttackState = true;
-                Ani.SetInteger("AttackInt", 1);
+                Ani.SetInteger("AttackInt", 2);
                 Ani.SetBool("AttackState", true);
 
                 P_AttackResetTimer -= Time.deltaTime;
@@ -104,5 +104,6 @@ public class MentalChaild : MonoBehaviour
 
                 break;
         }
+
     }
 }

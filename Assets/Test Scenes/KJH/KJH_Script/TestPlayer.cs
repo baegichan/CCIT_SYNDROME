@@ -60,11 +60,14 @@ public class TestPlayer : MonoBehaviour
     public Ability ActiveAbility;
     public Ability PassiveAbility;
 
+    Animator Ani;
+
     void Awake()
     {
         Cam = Camera.main;//2021.10.12 ±Ë¿Á«Â
         AM = GetComponent<AbilityManager>();
         rigid = GetComponent<Rigidbody2D>();
+        Ani = GetComponent<Animator>();
         SelectChar = Char[0];
         ChangeCahr();
     }
@@ -128,12 +131,18 @@ public class TestPlayer : MonoBehaviour
     {
         float h = Input.GetAxis("Horizontal");
         transform.position += new Vector3(h * P_M_Speed * Time.deltaTime, 0);
+        if (h == 1)
+        {
+            Ani.SetFloat("Move", 1f);
+        }
+        
 
         switch (h)
         {
             case -1:
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
+                    
                     rigid.AddForce(Vector3.left * P_DashForce * 2);
                     P_DashInt = 0;
                 }
