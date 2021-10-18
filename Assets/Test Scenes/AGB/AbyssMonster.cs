@@ -5,16 +5,22 @@ using UnityEngine;
 public class AbyssMonster : MonoBehaviour
 {
     // Start is called before the first frame update
-   
-  
-    AbyssManager AbyssManager;
-    string names;
 
+
+    AbyssManager abyssManager;
    
+    public int abyssMonsterId = 0;
+    [Header("AbyssGage")]
+    public int giveAbyssGage = 5;
+    [Header("DarkFog")]
+    public int darkFog = 5;
+    int id;
+    string names;
+    AbyssManager.AbyssState state;
     private void Start()
     {
-        AbyssManager = GameObject.Find("AbyssManager").transform.GetComponent<AbyssManager>();
-          
+        abyssManager = GameObject.Find("AbyssManager").transform.GetComponent<AbyssManager>();
+
         names = this.name;
 
     }
@@ -22,8 +28,7 @@ public class AbyssMonster : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
-
-        {
+        { 
 
             Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -32,22 +37,35 @@ public class AbyssMonster : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
 
             if (hit.collider != null)
-
-            {
-               
                 MonsterDie();
+        }
 
-              
+        //if(state != abyssManager.abyssState)
+        //{
+        //    Debug.Log("스왑실행");
+        //    state = abyssManager.abyssState;
+        //    abyssManager.MonsterSwap(gameObject);
+        //     Destroy(this.gameObject);
+        //}
 
-            }
+    }
+    public void MonsterDie()
+    {
+        if (abyssManager.abyssState == AbyssManager.AbyssState.Reality)
+        {
+            abyssManager.AbyssMonsterAdd(names, transform.position);
+            abyssManager.GetAbyssGage(giveAbyssGage);
+            Destroy(this.gameObject);
 
         }
-    }
-    public  void MonsterDie()
-    {
+        else
+        {
+            abyssManager.GetDarkFog(darkFog);
+            Destroy(this.gameObject);
+        
+        }
 
-        AbyssManager.AbyssMonsterAdd(names, transform);
-        Destroy(gameObject);
-
     }
+
+  
 }
