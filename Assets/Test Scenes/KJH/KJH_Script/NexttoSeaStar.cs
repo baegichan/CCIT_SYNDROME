@@ -180,11 +180,6 @@ public class NexttoSeaStar : MonoBehaviour
         }
     }
 
-    public void RedBull()
-    {
-
-    }
-
     public void Ability_E()
     {
         EvilSword_Attack();
@@ -265,9 +260,26 @@ public class NexttoSeaStar : MonoBehaviour
         }
     }
 
-    public void Ability_F()
+    public GameObject B_Ball;
+    public GameObject Player;
+    public float B_Damage;
+    public float B_Speed;
+    //검은안개능력
+    public void BlackSmoke()
     {
-        Debug.Log("F");
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector2 MouseP = Input.mousePosition;
+            MouseP = camera.ScreenToWorldPoint(MouseP);
+            Vector2 Point = Player.transform.position;
+            Vector2 Dir = MouseP - Point;
+            Dir = Dir.normalized;
+
+            GameObject BB = Instantiate(B_Ball, Point, Quaternion.identity);
+            BB.GetComponent<Smoke>().Dir = Dir;
+            BB.GetComponent<Smoke>().PP = Point;
+
+        }
     }
     public void Double_Jump()
     {

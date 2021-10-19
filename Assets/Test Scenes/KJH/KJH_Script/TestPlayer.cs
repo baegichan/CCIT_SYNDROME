@@ -133,7 +133,7 @@ public class TestPlayer : MonoBehaviour
         transform.position += new Vector3(h * P_M_Speed * Time.deltaTime, 0);
         if (h == 1)
         {
-            Ani.SetFloat("Move", 1f);
+            Ani.SetInteger("Move", 1);
         }
         
 
@@ -193,11 +193,11 @@ public class TestPlayer : MonoBehaviour
 
         if (Mouse.x <= PlayerPosition.x)// 1920x1080 기준 중간지점
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            SelectChar.transform.localScale = new Vector3(-1, 1, 1);
         }
         else if (Mouse.x > PlayerPosition.x)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            SelectChar.transform.localScale = new Vector3(1, 1, 1);
         }
     }
     //

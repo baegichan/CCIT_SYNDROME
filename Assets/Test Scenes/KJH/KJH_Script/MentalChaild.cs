@@ -22,10 +22,10 @@ public class MentalChaild : MonoBehaviour
     
     void Update()
     {
-        A_Attack();
+        Attack();
     }
 
-    public void A_Attack()
+    public void Attack()
     {
         if (Input.GetMouseButtonDown(0))
         {
