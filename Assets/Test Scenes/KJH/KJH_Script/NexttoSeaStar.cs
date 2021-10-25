@@ -292,4 +292,9 @@ public class NexttoSeaStar : MonoBehaviour
         //if (pp.PassiveAbility.AbCode == 6) { pp.P_MaxJumpInt = 2; }
         //else { pp.P_MaxJumpInt = 1; }
     }
+    public bool RDP;
+    public void Redbull()
+    {
+        TestPlayer.RedBullDash = true;
+    }
 }

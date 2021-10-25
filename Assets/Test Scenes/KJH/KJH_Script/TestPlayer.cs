@@ -26,6 +26,7 @@ public class TestPlayer : MonoBehaviour
     //
     //¿Ãµø
     public int P_M_Speed;
+    public static bool RedBullDash = false;
     Vector2 Mouse;//2021.10.12 ±Ë¿Á«Â
     Vector2 PlayerPosition;//2021.10.12 ±Ë¿Á«Â
     //
@@ -116,10 +117,10 @@ public class TestPlayer : MonoBehaviour
 
         switch (SelectChar.transform.name)
         {
-            case "Defualt":
-                atk = SelectChar.GetComponent<child1>().Attack;
-                break;
             case "MainCharacter_Eden":
+                atk = SelectChar.GetComponent<MentalChaild>().Attack;
+                break;
+            case "Eden 10_18":
                 atk = SelectChar.GetComponent<MentalChaild>().Attack;
                 break;
         }
@@ -142,16 +143,28 @@ public class TestPlayer : MonoBehaviour
             case -1:
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    
+                    Physics2D.IgnoreLayerCollision(10, 11);
                     rigid.AddForce(Vector3.left * P_DashForce * 2);
                     P_DashInt = 0;
+                    if(RedBullDash = true)
+                    {
+                        Physics2D.IgnoreLayerCollision(10, 11);
+                        //Damage
+                    }
+
                 }
                 break;
             case 1:
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
+                    Physics2D.IgnoreLayerCollision(10, 11);
                     rigid.AddForce(Vector3.right * P_DashForce * 2);
                     P_DashInt = 0;
+                    if(RedBullDash = true)
+                    {
+                        Physics2D.IgnoreLayerCollision(10, 11);
+                        //Damage
+                    }
                 }
                 break;
         }
