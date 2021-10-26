@@ -14,10 +14,19 @@ public class AbilityManager : MonoBehaviour
     public int[] BoomAP = { 10, 13, 16, 20 };
     public int[] WolfAP = { 2, 3, 4, 5 };
 
-    void Start()
-    {
-
-    }
+    //마검
+    public float E_Attack_Damage;
+    public float E_Attack_Int = 0;
+    public float E_Attack_Range = 100;
+    public float E_ResetTimer = 0.8f;
+    public static Transform Spawn;
+    //
+    //전투도끼
+    public int A_Int;
+    float A_Damage;
+    bool A_AttackState = false;
+    public float A_ResetTimer;
+    //
 
     public void Werewolf()
     {
@@ -119,9 +128,182 @@ public class AbilityManager : MonoBehaviour
         Gizmos.DrawWireCube(py.transform.position + new Vector3(0.5f, 0), new Vector2(1, 1) * 0.5f);
     }
 
+    public void BattleAxe()
+    {
+        if (Input.GetMouseButtonDown(1)) { A_Attack(); }
+        Debug.Log("바토루-아쿠스");
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Debug.Log("맞");
+        //    if (col.gameObject.tag == "Monster")//임시
+        //    {
+        //        Debug.Log("았");
+        //        if (A_Int <= 4)
+        //        {
+        //            Debug.Log("다");
+        //            A_Int++;
+        //        }
+        //    }
+        //}
+    }
+    public void A_Attack()
+    {
+
+        float Reset = 10;
+        switch (A_Int)
+        {
+            case 0:
+                A_AttackState = false;
+                A_Damage = 0;
+                break;
+
+            case 1:
+                A_AttackState = true;
+                A_Damage = 100;//임시
+                A_ResetTimer -= Time.deltaTime;
+                if (A_ResetTimer <= 0)
+                {
+                    A_Int = 0;
+                    A_ResetTimer = Reset;
+                }
+                break;
+
+            case 2:
+                A_AttackState = true;
+                A_Damage = 100;
+                A_ResetTimer -= Time.deltaTime;
+                if (A_ResetTimer <= 0)
+                {
+                    A_Int = 0;
+                    A_ResetTimer = Reset;
+                }
+                break;
+
+            case 3:
+                A_AttackState = true;
+                A_Damage = 100;
+                A_ResetTimer -= Time.deltaTime;
+                if (A_ResetTimer <= 0)
+                {
+                    A_Int = 0;
+                    A_ResetTimer = Reset;
+                }
+                break;
+
+            case 4:
+                A_AttackState = true;
+                A_AttackState = true;
+                A_Damage = 150;//임시
+                A_ResetTimer -= Time.deltaTime;
+                if (A_ResetTimer <= 0)
+                {
+                    A_Int = 0;
+                    A_ResetTimer = Reset;
+                }
+                break;
+        }
+    }
+
     public void Ability_E()
     {
-        Debug.Log("E");
+        if (Input.GetMouseButtonDown(1)) { EvilSword_Attack(); }
+        EvilSwordResetAttack();
+        Debug.Log("이-부르 소-도");
+    }
+
+    public void EvilSword_Attack()
+    {
+        AttackPlus();
+        switch (E_Attack_Int)
+        {
+            case 0:
+                E_ResetTimer = 0.8f;
+                E_Attack_Damage = 0;
+                break;
+            case 1:
+                EvilSwordResetAttack();
+                E_ResetTimer -= Time.deltaTime;
+                E_Attack_Damage = 15;
+                break;
+            case 2:
+                EvilSwordResetAttack();
+                E_ResetTimer -= Time.deltaTime;
+                E_Attack_Damage = 15;
+                break;
+            case 3:
+                EvilSwordResetAttack();
+                E_ResetTimer -= Time.deltaTime;
+                E_Attack_Damage = 30;
+                break;
+        }
+
+    }
+
+    public void AttackPlus()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            E_Attack_Int++;
+        }
+
+        if (E_Attack_Int > 3)
+        {
+            E_Attack_Int = 0;
+        }
+    }
+
+    public void EvilSwordResetAttack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            E_ResetTimer = 0.8f;
+        }
+        switch (E_Attack_Int)
+        {
+            case 1:
+                if (E_ResetTimer <= 0)
+                {
+                    E_ResetTimer = 0.8f;
+                    E_Attack_Int = 0;
+                }
+                break;
+            case 2:
+                if (E_ResetTimer <= 0)
+                {
+                    E_ResetTimer = 0.8f;
+                    E_Attack_Int = 0;
+                }
+                break;
+            case 3:
+                if (E_ResetTimer <= 0)
+                {
+                    E_ResetTimer = 0.8f;
+                    E_Attack_Int = 0;
+                }
+                break;
+        }
+    }
+
+    public GameObject B_Ball;
+    public float B_Damage;
+    public float B_Speed;
+    //검은안개능력
+    public void BlackSmoke()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("부라쿠 스모쿠!!!");
+            Vector2 MouseP = Input.mousePosition;
+            MouseP = camera.ScreenToWorldPoint(MouseP);
+            Vector2 Point = py.transform.position;
+            Vector2 Dir = MouseP - Point;
+            Dir = Dir.normalized;
+
+            GameObject BB = Instantiate(B_Ball, Point, Quaternion.identity);
+            BB.GetComponent<Smoke_>().Dir = Dir;
+            BB.GetComponent<Smoke_>().PP = Point;
+
+        }
     }
 
     public void Ability_F()
