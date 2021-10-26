@@ -11,10 +11,11 @@ public class TestPlayer : MonoBehaviour
     [Tooltip("능력 정보 받아올 매니저")]
     public GameObject abilityManager;
     //Animation ani;
-    Rigidbody2D rigid;
+    public static Rigidbody2D rigid;
     AbilityManager AM;
     Camera Cam;
-    
+    Animator Ani;
+
     [Header("스테이터스")]
     ///플레이어 
     //스테이터스
@@ -25,6 +26,7 @@ public class TestPlayer : MonoBehaviour
     public bool P_OtherWorld = false;//2021.10.12 김재헌
     //
     //이동
+    public static float h;
     public int P_M_Speed;
     public static bool RedBullDash = false;
     Vector2 Mouse;//2021.10.12 김재헌
@@ -32,6 +34,7 @@ public class TestPlayer : MonoBehaviour
     //
     //점프
     public float P_JumpForce;
+    
     public float P_DefaultJumpInt = 1;
     public float P_MaxJumpInt
     {
@@ -47,21 +50,15 @@ public class TestPlayer : MonoBehaviour
             else { P_JumpInt = 1; }
         }
     }
-    float P_JumpInt = 10;
+    public float P_JumpInt;
     //
-    //대쉬
-    public float P_DashForce;
-    float P_DashInt = 1;
-    float P_DashTimer = 2;
-    //
+
     [Header("소지 물약&능력")]
     public int MulYakInt;
     public int AlYakInt;
     public int P_Money;
     public Ability ActiveAbility;
     public Ability PassiveAbility;
-
-    Animator Ani;
 
     void Awake()
     {
@@ -76,11 +73,12 @@ public class TestPlayer : MonoBehaviour
     void FixedUpdate()
     {
         Move();
+        
     }
 
     void Update()
     {
-        PlayerPosition = Cam.WorldToScreenPoint(transform.position);//마우스 포인터 좌표받기//2021.10.12 김재헌
+        PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);//마우스 포인터 좌표받기//2021.10.12 김재헌
         Mouse = Input.mousePosition;//2021.10.12 김재헌
         MouseFilp();//2021.10.12 김재헌
 
@@ -89,7 +87,7 @@ public class TestPlayer : MonoBehaviour
             UseSkill();
         }
         UseItem();
-        if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+        if (Input.GetKeyDown(KeyCode.Space)) { Jump();}
         if (Input.GetMouseButtonDown(0)) { atk(); }
         if (Input.GetKeyDown(KeyCode.Tab)) { ChangeCahr(); }
     }
@@ -113,7 +111,7 @@ public class TestPlayer : MonoBehaviour
             Char[1].SetActive(false);
         }
         rigid = SelectChar.GetComponent<Rigidbody2D>();
-        //ani = GetComponent<Animation>();
+        Ani = SelectChar.GetComponent<Animator>();
 
         switch (SelectChar.transform.name)
         {
@@ -130,58 +128,19 @@ public class TestPlayer : MonoBehaviour
     //이동
     public void Move()
     {
-        float h = Input.GetAxis("Horizontal");
+        h = Input.GetAxisRaw("Horizontal");
         transform.position += new Vector3(h * P_M_Speed * Time.deltaTime, 0);
-        if (h == 1)
-        {
-            Ani.SetInteger("Move", 1);
-        }
-        
-
         switch (h)
         {
-            case -1:
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    Physics2D.IgnoreLayerCollision(10, 11);
-                    rigid.AddForce(Vector3.left * P_DashForce * 2);
-                    P_DashInt = 0;
-                    if(RedBullDash = true)
-                    {
-                        Physics2D.IgnoreLayerCollision(10, 11);
-                        //Damage
-                    }
-
-                }
+            case 0:
+                Ani.SetBool("Move", false);
                 break;
-            case 1:
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    Physics2D.IgnoreLayerCollision(10, 11);
-                    rigid.AddForce(Vector3.right * P_DashForce * 2);
-                    P_DashInt = 0;
-                    if(RedBullDash = true)
-                    {
-                        Physics2D.IgnoreLayerCollision(10, 11);
-                        //Damage
-                    }
-                }
+
+            case -1: case 1:
+                Ani.SetBool("Move", true);
                 break;
         }
 
-        if (P_DashInt == 0)
-        {
-            P_DashForce = 0;
-            P_DashTimer -= Time.deltaTime;
-            Physics2D.IgnoreLayerCollision(10, 11);
-        }
-        if (P_DashTimer <= 0)
-        {
-            P_DashTimer = 2;
-            P_DashInt = 1;
-            P_DashForce = 300;
-            Physics2D.IgnoreLayerCollision(10, 11, false);
-        }
     }
     //
 
@@ -196,6 +155,7 @@ public class TestPlayer : MonoBehaviour
         if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0)
         {
+            Ani.SetBool("GroundState", false);
             rigid.AddForce(Vector3.up * P_JumpForce * 150 * Time.deltaTime);
             P_JumpInt -= 1;
         }
@@ -235,13 +195,6 @@ public class TestPlayer : MonoBehaviour
                 Instantiate(A, B.transform);
                 Destroy(B, 0f);
             }
-        }
-    }
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Ground")
-        {
-            P_JumpInt = P_MaxJumpInt;
         }
     }
     //

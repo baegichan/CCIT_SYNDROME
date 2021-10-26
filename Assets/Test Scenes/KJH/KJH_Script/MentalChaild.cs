@@ -11,6 +11,11 @@ public class MentalChaild : MonoBehaviour
     public bool P_AttackState = false;
     public float P_AttackResetTimer;
     //
+    //´ë½¬
+    public float P_DashForce;
+    public float P_DashInt = 1;
+    public float P_DashTimer = 2;
+    //
 
     Animator Ani;
 
@@ -19,10 +24,11 @@ public class MentalChaild : MonoBehaviour
         Ani = GetComponent<Animator>();
     }
 
-    
+
     void Update()
     {
         Attack();
+        Dash();
     }
 
     public void Attack()
@@ -60,7 +66,7 @@ public class MentalChaild : MonoBehaviour
                 }
                 if (P_AttackState == true)
                 {
-                    
+
                 }
                 break;
 
@@ -84,7 +90,7 @@ public class MentalChaild : MonoBehaviour
                 P_AttackState = true;
                 if (P_AttackState == true)
                 {
-                    
+
                 }
                 break;
 
@@ -106,4 +112,81 @@ public class MentalChaild : MonoBehaviour
         }
 
     }
+    public void Dash()
+    {
+        //switch (TestPlayer.h)
+        //{
+        //    case -1:
+
+        //        if (Input.GetKey(KeyCode.LeftShift))
+        //        {
+        //            Ani.SetBool("Dash", true);
+        //            Physics2D.IgnoreLayerCollision(10, 11);
+        //            TestPlayer.rigid.AddForce(Vector3.left * P_DashForce * 2);
+        //            P_DashInt = 0;
+        //            if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
+        //            if (TestPlayer.RedBullDash == true)
+        //            {
+        //                Physics2D.IgnoreLayerCollision(10, 11);
+        //                //Damage
+        //            }
+
+        //        }
+        //        break;
+        //    case 1:
+
+        //        if (Input.GetKeyDown(KeyCode.LeftShift))
+        //        {
+        //            Ani.SetBool("Dash", true);
+        //            Physics2D.IgnoreLayerCollision(10, 11);
+        //            TestPlayer.rigid.AddForce(Vector3.right * P_DashForce * 2);
+        //            P_DashInt = 0;
+        //            if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
+        //            if (TestPlayer.RedBullDash == true)
+        //            {
+        //                Physics2D.IgnoreLayerCollision(10, 11);
+        //                //Damage
+        //            }
+        //        }
+        //        break;
+        //}
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Ani.SetBool("Dash", true);
+            Physics2D.IgnoreLayerCollision(10, 11);
+            TestPlayer.rigid.AddForce(new Vector2(TestPlayer.h, 1) * P_DashForce * 2);
+            if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
+            P_DashInt = 0;
+            if (TestPlayer.RedBullDash == true)
+            {
+                Physics2D.IgnoreLayerCollision(10, 11);
+                //Damage
+            }
+        }
+
+        if (P_DashInt == 0)
+        {
+            P_DashForce = 0;
+            P_DashTimer -= Time.deltaTime;
+            Physics2D.IgnoreLayerCollision(10, 11);
+        }
+        if (P_DashTimer <= 0)
+        {
+            P_DashTimer = 2;
+            P_DashInt = 1;
+            P_DashForce = 300;
+            Physics2D.IgnoreLayerCollision(10, 11, false);
+        }
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Ground")
+        {
+            Ani.SetBool("GroundState", true);
+            GetComponentInParent<TestPlayer>().P_JumpInt = GetComponentInParent<TestPlayer>().P_MaxJumpInt;     
+        }
+    }
 }
+
+
+
