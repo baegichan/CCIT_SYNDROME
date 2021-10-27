@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Firefly_Attack : StateMachineBehaviour
 {
-    Transform fireflyTransform;
     FireflyMonster fireflyMon;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         fireflyMon = animator.GetComponent<FireflyMonster>();
-        fireflyTransform = animator.GetComponent<Transform>();
         //트리거 이기 때문에 여기서 공격을 받아야 됨
     }
 

@@ -29,6 +29,11 @@ public class FireflyMonster: MonoBehaviour
     public bool patroll;
     public bool trace;
     public bool Targeton = false;
+
+    [Header("Anim parameter")]
+    public int move;
+    public int follow;
+    public int attack; 
     //2D sight
 
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
@@ -62,6 +67,9 @@ public class FireflyMonster: MonoBehaviour
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        move = Animator.StringToHash("Move");
+        follow = Animator.StringToHash("Follow");
+        attack = Animator.StringToHash("Attack");
     }
 
     void Update()
@@ -71,7 +79,8 @@ public class FireflyMonster: MonoBehaviour
             Patroll();
         }
         //PlayerCheck();
-        first = transform.position;
+        //player = transform.position - player.transform.position;
+        first = transform.position; //만약 제자리로 돌아가야 한다면 없에면 된다.
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
         Up();
@@ -136,7 +145,7 @@ public class FireflyMonster: MonoBehaviour
 
     public void Up()
     {
-        RaycastHit2D upcheck = Physics2D.Raycast(upCheck.position, Vector2.up, 2f);
+        RaycastHit2D upcheck = Physics2D.Raycast(upCheck.position, Vector2.up, 1f);
         if(upcheck.collider == true)
         {
             rb.AddForce(transform.up * -5f);
@@ -144,7 +153,7 @@ public class FireflyMonster: MonoBehaviour
     }
     public void Down()
     {
-        RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 2f);
+        RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 1f);
         if (downcheck.collider == true)
         {
             rb.AddForce(transform.up * 5f);
@@ -219,7 +228,7 @@ public class FireflyMonster: MonoBehaviour
                     hitedTargetContainer.Add(hitedTarget); //맞은 타겟을 리스트에 저장
 
                     Targeton = true;
-
+                    
                     if (m_bDebugMode)
                         Debug.DrawLine(originPos, targetPos, Color.red); //타켓이 인식되었다면 빨간 레이캐스트
                 }

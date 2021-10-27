@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Firefly_Idle : StateMachineBehaviour
 {
-    Transform fireflyTransform;
     FireflyMonster fireflyMon;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         fireflyMon = animator.GetComponent<FireflyMonster>();
-        fireflyTransform = animator.GetComponent<Transform>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -18,11 +16,11 @@ public class Firefly_Idle : StateMachineBehaviour
     {
         if (fireflyMon.Targeton == false)
         {
-            animator.SetBool("Move", true);
+            animator.SetBool(fireflyMon.move, true);
         }
         else if (fireflyMon.Targeton == true)
         {
-            animator.SetBool("Follw", true);
+            animator.SetBool(fireflyMon.follow, true);
         }
     }
 

@@ -4,18 +4,32 @@ using UnityEngine;
 
 public class Firefly_Bullet : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [Header("Prameter")]
+    public float speed;
+    public Rigidbody2D rg;
+    
+    //public ParticleSystem destroy;
+
     void Start()
     {
-        //asdasdasdasdasdasadasdas/dasdasdasdasd
-        ////asdasdadasdasdasdasdasdasdasdasdasd
-        ///
-        /// /asdadsasdasdadasdasdadsadsasdsddadasa
+        rg.AddForce(new Vector3(15,0,0), ForceMode2D.Impulse);
+        Invoke("BulletDestroy", 2f);
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter2D(Collider2D col)
     {
-        
+        if (col.tag == "player" || col.tag == "ground")
+        {
+            Debug.Log("원거리 적 공격 적중");
+            BulletDestroy();
+
+            Dron.target = null;
+        }
+    }
+
+    void BulletDestroy()
+    {
+        Destroy(this.gameObject);
+        //Instantiate(destroy, transform.position, Quaternion.identity);
     }
 }

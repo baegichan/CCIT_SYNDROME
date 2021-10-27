@@ -33,6 +33,7 @@ public class Drill_Trace : StateMachineBehaviour
                 animator.SetBool("Follow", false);
             }
         }
+        drillMon.Directiondrillmonster(drillMon.player.position.x, drillTransform.position.x);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
