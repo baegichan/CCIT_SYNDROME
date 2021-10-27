@@ -6,6 +6,8 @@ public class Drill_Move : StateMachineBehaviour
 {
     Transform drillTransform;
     DrillMonster drillMon;
+    float Dis_;
+    float Dis2_;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,13 +19,16 @@ public class Drill_Move : StateMachineBehaviour
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    { 
-        if(drillMon.Targeton ==true)
+    {
+        Dis_ = drillMon.first.sqrMagnitude;
+        Dis2_ = drillTransform.position.sqrMagnitude - drillMon.player.position.sqrMagnitude;
+
+        if (drillMon.Targeton ==true)
         {
-            if (Vector2.Distance(drillMon.first, drillTransform.position) < 0.1f || Vector2.Distance(drillTransform.position, drillMon.player.position) > 10f)//Å½Áö ¹üÀ§
+            if (Dis_ < 0.01f || Mathf.Abs(Dis2_) > 100f)
             {
-                animator.SetBool("Move", false);
-                animator.SetBool("Follow", true);
+                animator.SetBool(drillMon.move, false);
+                animator.SetBool(drillMon.follow, true);
             }
             else
             {

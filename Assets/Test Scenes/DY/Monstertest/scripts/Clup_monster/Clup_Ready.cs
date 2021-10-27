@@ -6,6 +6,7 @@ public class Clup_Ready : StateMachineBehaviour
 {
     Transform clupTransform;
     ClupMonster clupmon;
+    float Dis_;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,12 +18,13 @@ public class Clup_Ready : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(clupmon.atkDelay <=0)
-        animator.SetTrigger("Attack");
+        Dis_ = clupmon.player.position.sqrMagnitude - clupTransform.position.sqrMagnitude;
+        if (clupmon.atkDelay <=0)
+        animator.SetTrigger(clupmon.attack);
         if(clupmon.Targeton == true)
         {
             if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 5f) //따가라가서 공격 하는 범위
-                animator.SetBool("Follow", true);
+                animator.SetBool(clupmon.follow, true);
         }
         
 

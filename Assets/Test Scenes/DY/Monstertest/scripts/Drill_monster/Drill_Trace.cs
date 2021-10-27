@@ -6,6 +6,7 @@ public class Drill_Trace : StateMachineBehaviour
 {
     Transform drillTransform;
     DrillMonster drillMon;
+    //float Dis_;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -23,9 +24,10 @@ public class Drill_Trace : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //Dis_ = drillMon.player.position.sqrMagnitude - drillTransform.position.sqrMagnitude;
         if (drillMon.Targeton == true)
         {
-            if (Vector2.Distance(drillMon.player.position, drillTransform.position) > 5f) //플레이어 따라 오는 함수
+            if (Vector2.Distance(drillMon.player.position, drillTransform.position) > 5f) //정확한 값을 가지고 플레이어를 따라가야되기에 사용 Distance
                 drillTransform.position = Vector2.MoveTowards(drillTransform.position, drillMon.player.position, Time.deltaTime * drillMon.speed);
             else
             {

@@ -6,6 +6,7 @@ public class Clup_Trace : StateMachineBehaviour
 {
     Transform clupTransform;
     ClupMonster clupmon;
+    //float Dis_;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -23,7 +24,28 @@ public class Clup_Trace : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        /*
+        //Dis_ = clupmon.player.position.sqrMagnitude - clupTransform.position.sqrMagnitude;
+        if (clupmon.Targeton == true)
+        {
+            if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 5f) //플레이어 따라 오는 함수
+                clupTransform.position = Vector2.MoveTowards(clupTransform.position, clupmon.player.position, Time.deltaTime * clupmon.speed);
+            else
+            {
+                animator.SetBool(clupmon.move, false);
+                animator.SetBool(clupmon.follow, false);
+            }
+        }
+       
+        //clupmon.DirectionClupmonster(clupmon.player.position.x, clupTransform.position.x);
+    }
+
+    //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+
+    }
+}
+/*
         clupmon.patroll = false; //몬스터의 패트롤을 끝낼 수 있는 함수를 생성하고 여기서 받는다.
         if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 15f) //플레이어와 몬스터의 거리 차이가 10이상이라면
         {
@@ -39,23 +61,3 @@ public class Clup_Trace : StateMachineBehaviour
         }
         clupmon.DirectionClupmonster(clupmon.player.position.x, clupTransform.position.x);
         */
-        if(clupmon.Targeton == true)
-        {
-            if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 5f) //플레이어 따라 오는 함수
-                clupTransform.position = Vector2.MoveTowards(clupTransform.position, clupmon.player.position, Time.deltaTime * clupmon.speed);
-            else
-            {
-                animator.SetBool("Move", false);
-                animator.SetBool("Follow", false);
-            }
-        }
-       
-        //clupmon.DirectionClupmonster(clupmon.player.position.x, clupTransform.position.x);
-    }
-
-    //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
-}

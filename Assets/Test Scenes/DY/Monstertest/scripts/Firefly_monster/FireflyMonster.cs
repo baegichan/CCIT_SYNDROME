@@ -34,8 +34,8 @@ public class FireflyMonster: MonoBehaviour
     public int move;
     public int follow;
     public int attack; 
-    //2D sight
 
+    //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
 
     [SerializeField] private bool m_bDebugMode = false;
@@ -70,6 +70,7 @@ public class FireflyMonster: MonoBehaviour
         move = Animator.StringToHash("Move");
         follow = Animator.StringToHash("Follow");
         attack = Animator.StringToHash("Attack");
+        Physics2D.IgnoreLayerCollision(0, 0);
     }
 
     void Update()

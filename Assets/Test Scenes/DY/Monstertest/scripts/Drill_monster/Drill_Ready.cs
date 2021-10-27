@@ -6,6 +6,7 @@ public class Drill_Ready : StateMachineBehaviour
 {
     Transform drillTransform;
     DrillMonster drillMon;
+    float Dis_;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -18,12 +19,13 @@ public class Drill_Ready : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Dis_ = drillMon.player.position.sqrMagnitude - drillTransform.position.sqrMagnitude;
         if (drillMon.atkDelay <= 0)
-            animator.SetTrigger("Attack");
+            animator.SetTrigger(drillMon.attack);
         if (drillMon.Targeton == true)
         {
             if (Vector2.Distance(drillMon.player.position, drillTransform.position) > 2f) //따가라가서 공격 하는 범위
-                animator.SetBool("Follow", true);
+                animator.SetBool(drillMon.follow, true);
         }
 
 

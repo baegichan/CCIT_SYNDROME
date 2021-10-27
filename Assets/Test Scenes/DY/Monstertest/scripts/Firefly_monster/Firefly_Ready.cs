@@ -7,6 +7,7 @@ public class Firefly_Ready : StateMachineBehaviour
     Transform fireflyTransform;
     FireflyMonster fireflyMon;
     float Dis_;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

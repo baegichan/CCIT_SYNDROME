@@ -28,6 +28,11 @@ public class ClupMonster : MonoBehaviour
     public bool trace;
     public bool Targeton = false;
 
+    [Header("Anim parameter")]
+    public int move;
+    public int follow;
+    public int attack;
+
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
     //SerializeField 쓴 이유는 인스펙터에선느 접근이 가능하지만 외부 스크립트에서 접근이 불가능하게 막으러고 사용했다. 몬스터마다 각각의 고유 범위가 있기 때문에 이는 참조가 되면 안된다고 생각
@@ -59,6 +64,10 @@ public class ClupMonster : MonoBehaviour
         trace = false;
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        move = Animator.StringToHash("Move");
+        follow = Animator.StringToHash("Follow");
+        attack = Animator.StringToHash("Attack");
+        Physics2D.IgnoreLayerCollision(0, 0);
     }
 
     void Update()

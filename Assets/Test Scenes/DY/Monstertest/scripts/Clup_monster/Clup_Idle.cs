@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class Clup_Idle : StateMachineBehaviour
 {
-    Transform clupTransform;
     ClupMonster clupmon;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         clupmon = animator.GetComponent<ClupMonster>();
-        clupTransform = animator.GetComponent<Transform>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -19,7 +17,7 @@ public class Clup_Idle : StateMachineBehaviour
     {
 
         if (clupmon.Targeton == true) //거리 상관 없이 인식된다면 따라가기
-            animator.SetBool("Follow", true);
+            animator.SetBool(clupmon.follow, true);
     }
 
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
