@@ -110,14 +110,6 @@ public class FireflyMonster: MonoBehaviour
                 atkpos.localPosition = new Vector2(Mathf.Abs(atkpos.localPosition.x * 1), atkpos.localPosition.y);
         }
         Instantiate(fireflybullet, atkpos.transform.position, Quaternion.identity);
-        //Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(atkpos.position, boxSize, 0);
-        //foreach (Collider2D col in collider2Ds)
-        //{
-        //    if (col.tag == "Player")
-        //    {
-        //        Debug.Log("damage1");
-        //    }
-        //}
     }
 
     public void Patroll()
