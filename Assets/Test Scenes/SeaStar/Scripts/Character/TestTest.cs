@@ -8,7 +8,7 @@ public class TestTest : Character
     [Tooltip("변신할 캐릭터 리스트")]
     public GameObject[] Char;
     public GameObject SelectChar;
-    //Animation ani;
+    public Animator Ani;
     public static Rigidbody2D rigid;
     AbilityManager AM;
     Camera Cam;
@@ -16,7 +16,9 @@ public class TestTest : Character
     [Header("플레이어 스테이터스")]
     public int DefaultHP;
     public int CharHP;
+    public int CharAP;
     public int CharDP;
+    public int CharSpeed;
     //점프
     public float P_JumpForce;
     float P_DefaultJumpInt = 1;
@@ -36,11 +38,18 @@ public class TestTest : Character
     }
     public float P_JumpInt;
     public static float h;
-    public static bool IsCharging;
     public bool P_OtherWorld = false;
     public static bool RedBullDash = false;
     Vector2 Mouse;//2021.10.12 김재헌
     Vector2 PlayerPosition;//2021.10.12 김재헌
+
+    //[Header("능력치 강화 수치")]
+    public int Enhance_Health;
+    public int Enhance_Strength;
+    public int Enhance_Speed;
+    public int[] Enhance_Health_Point = { 0, 1, 2, 3, 4, 5};
+    public int[] Enhance_Strength_Point = { 0, 1, 2, 3, 4, 5 };
+    public int[] Enhance_Speed_Point = { 0, 1, 2, 3, 4, 5 };
 
     [Header("소지 물약&능력")]
     public int MulYakInt;
@@ -65,19 +74,22 @@ public class TestTest : Character
 
     void Update()
     {
-        PlayerPosition = Cam.WorldToScreenPoint(transform.position);//마우스 포인터 좌표받기//2021.10.12 김재헌
+        PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);//마우스 포인터 좌표받기//2021.10.12 김재헌
         Mouse = Input.mousePosition;//2021.10.12 김재헌
-        //MouseFilp();//2021.10.12 김재헌
+        MouseFilp();//2021.10.12 김재헌
 
         if (ActiveAbility.AbSprite != null)
         {
             UseSkill();
         }
         UseItem();
-        if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
-        if (Input.GetMouseButtonDown(0)) { atk(); }
-        Move();
         ds();
+        if (Input.GetMouseButtonDown(0)) { atk(); }
+        if(Ani.GetBool("CanIThis"))
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+            Move();
+        }
     }
 
     //캐릭터 변경
@@ -94,7 +106,6 @@ public class TestTest : Character
             default:
                 SelectChar = Char[0];
                 break;
-
         }
         ChangeChar(SelectChar);
     }
@@ -120,7 +131,6 @@ public class TestTest : Character
                 ds = SelectChar.GetComponent<Char_Eden>().Dash;
                 CharHP = SelectChar.GetComponent<Char_Eden>().HP;
                 CharDP = SelectChar.GetComponent<Char_Eden>().DP;
-
                 break;
             case "Wolf":
                 atk = SelectChar.GetComponent<Char_Wolf>().Attack;
@@ -137,18 +147,32 @@ public class TestTest : Character
         }
 
         rigid = SelectChar.GetComponent<Rigidbody2D>();
-        Hp_Max = DefaultHP + CharHP;
+        Ani = SelectChar.GetComponent<Animator>();
+        Hp_Max = DefaultHP + CharHP + Enhance_Health_Point[Enhance_Health];
         DP = CharDP;
+        AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
+        speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
         AM.py = SelectChar;
+        CharScale = SelectChar.transform.localScale;
     }
     //
 
     //이동
     public void Move()
     {
-        h = Input.GetAxis("Horizontal");
-        if (!IsCharging)
-            transform.position += new Vector3(h * speed * Time.deltaTime, 0);
+        h = Input.GetAxisRaw("Horizontal");
+        transform.position += new Vector3(h * speed * Time.deltaTime, 0);
+
+        switch (h)
+        {
+            case 0:
+                Ani.SetBool("Move", false);
+                break;
+            case -1:
+            case 1:
+                Ani.SetBool("Move", true);
+                break;
+        }
     }
     //
 
@@ -170,24 +194,27 @@ public class TestTest : Character
         {
             rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
             P_JumpInt -= 1;
+            Ani.SetBool("Jump", true);
         }
     }
     //
 
     //마우스 플립
-    //public void MouseFilp()//2021.10.12 김재헌
-    //{
 
-    //    if (Mouse.x <= PlayerPosition.x)// 1920x1080 기준 중간지점
-    //    {
-    //        SelectChar.transform.localScale = new Vector3(-1, 1, 1);
-    //    }
-    //    else if (Mouse.x > PlayerPosition.x)
-    //    {
-    //        SelectChar.transform.localScale = new Vector3(1, 1, 1);
-    //    }
-    //}
-    //
+    Vector3 CharScale;
+
+    public void MouseFilp()//2021.10.12 김재헌
+    {
+        if (Mouse.x <= PlayerPosition.x)// 1920x1080 기준 중간지점
+        {
+            SelectChar.transform.localScale = new Vector3(-CharScale.x, CharScale.y, CharScale.z);
+        }
+        else if (Mouse.x > PlayerPosition.x)
+        {
+            SelectChar.transform.localScale = new Vector3(CharScale.x, CharScale.y, CharScale.z);
+        }
+    }
+
     public void WorldChange()//이면세계 전환 //2021.10.12 김재헌
     {
         GameObject A = GameObject.FindGameObjectWithTag("Player");
@@ -253,23 +280,11 @@ public class TestTest : Character
         switch (ActiveAbility.AbCode)
         {
             case 0:
-                active();
-                break;
             case 1:
-                active();
-                break;
             case 2:
-                active();
-                break;
             case 3:
-                active();
-                break;
             case 4:
-                active();
-                break;
             case 5:
-                active();
-                break;
             case 9:
                 active();
                 break;

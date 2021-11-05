@@ -9,7 +9,7 @@ public class Enhance_NPC : NPC
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        Enhance_UI = GameObject.Find("Canvas").transform.Find("Enhance").gameObject;
+        Enhance_UI = GameObject.Find("Canvas").transform.Find("Enhance_Ability").gameObject;
 
         Scale = transform.localScale;
         DefaultX = Scale.x;
@@ -22,8 +22,6 @@ public class Enhance_NPC : NPC
     {
         Flip();
         talkWithPlayer();
-
-        if (Input.GetKeyDown(KeyCode.T)) { SpeechBubble(SpeechBubbles[0]); }
     }
 
     void OpenEngance()

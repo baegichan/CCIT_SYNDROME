@@ -16,7 +16,7 @@ public class Char_Eden : MonoBehaviour
     public bool P_AttackState = false;
     public float P_AttackResetTimer;
 
-    Animator Ani;
+    public Animator Ani;
 
     public void Attack()
     {
@@ -33,13 +33,10 @@ public class Char_Eden : MonoBehaviour
         switch (P_AttackInt)
         {
             case 0:
-
                 P_AttackState = false;
                 P_AttackResetTimer = Reset;
                 break;
-
             case 1:
-
                 P_AttackState = true;
                 Ani.SetInteger("AttackInt", 1);
                 Ani.SetBool("AttackState", true);
@@ -56,9 +53,7 @@ public class Char_Eden : MonoBehaviour
 
                 }
                 break;
-
             case 2:
-
                 P_AttackState = true;
                 Ani.SetInteger("AttackInt", 2);
                 Ani.SetBool("AttackState", true);
@@ -80,9 +75,7 @@ public class Char_Eden : MonoBehaviour
 
                 }
                 break;
-
             case 3:
-
                 Ani.SetInteger("AttackInt", 3);
                 Ani.SetBool("AttackState", false);
 
@@ -93,11 +86,8 @@ public class Char_Eden : MonoBehaviour
                     P_AttackInt = 0;
                 }
                 P_AttackState = false;
-
-
                 break;
         }
-
     }
 
     public void Dash()

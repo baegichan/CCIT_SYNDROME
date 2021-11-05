@@ -9,25 +9,30 @@ public class Char_Wolf : MonoBehaviour
     public float WereWolf_Gauge = 0;
     public int power;
     IEnumerator wolf;
+    public Animator Ani;
 
     public void Attack()
     {
-        Debug.Log("공격 2번");
+        Ani.SetTrigger("Attack");
+        Ani.SetBool("CanIThis", false);
     }
 
     public void Dash()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            TestTest.IsCharging = true;
+            Ani.SetBool("Dash", true);
+            Ani.SetBool("CanIThis", false);
             wolf = WolfGauge();
             StartCoroutine(wolf);
             Debug.Log("카메하메,,,,,,,,");
+            Ani.SetBool("CanIThis", false);
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            TestTest.IsCharging = false;
+            Debug.Log("dasfsdfdsfsdf");
+            Ani.SetBool("Dash", false);
             StopAllCoroutines();
             Debug.Log(TestTest.h);
             TestTest.rigid.AddForce(new Vector2(TestTest.h * 4, 0.6f) * WereWolf_Gauge * power);
@@ -48,6 +53,7 @@ public class Char_Wolf : MonoBehaviour
         if (col.gameObject.tag == "Ground")
         {
             GetComponentInParent<TestTest>().P_JumpInt = GetComponentInParent<TestTest>().P_MaxJumpInt;
+            Ani.SetBool("Jump", false);
         }
     }
 }

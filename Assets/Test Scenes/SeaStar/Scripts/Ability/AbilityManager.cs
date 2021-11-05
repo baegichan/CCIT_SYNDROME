@@ -30,8 +30,10 @@ public class AbilityManager : MonoBehaviour
 
     public void Werewolf()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !py.GetComponentInParent<TestTest>().Ani.GetBool("Jump"))
         {
+            py.GetComponentInParent<TestTest>().Ani.SetTrigger("Ability");
+            py.GetComponentInParent<TestTest>().Ani.SetBool("CanIThis", false);
             Debug.Log("¾ä¾ä");
             Vector2 pp = py.transform.position + new Vector3(0.5f,0);
             Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, Physics2D.AllLayers);
@@ -120,12 +122,6 @@ public class AbilityManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(py.transform.position + new Vector3(0.5f, 0), new Vector2(1, 1) * 0.5f);
     }
 
     public void BattleAxe()

@@ -9,6 +9,7 @@ public class Char_RockMan : MonoBehaviour
     public float P_DashForce;
     float P_DashInt = 10;
     float P_DashTimer = 8;
+    public Animator Ani;
 
     public void Attack()
     {
