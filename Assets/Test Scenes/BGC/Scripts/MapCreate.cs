@@ -9,8 +9,6 @@ public class MapCreate : MonoBehaviour
     public GameObject[,] MapArray;
     public DFSRoom DFS;
     public GameObject BossImage;
-    public GameObject ShopImage;
-    public GameObject CraneImage;
     public MiniMap Minimap;
     public float distance;
     public int Level
@@ -36,9 +34,7 @@ public class MapCreate : MonoBehaviour
         FirstRoomSetting();
        
         Starting();
-        //별도로 지정가능하게 수정필요
-        SetSpecialRoom();
-        
+        SetBossRoom();
 
 
         //test code
@@ -50,15 +46,6 @@ public class MapCreate : MonoBehaviour
                 {
                     Instantiate(BossImage, MapArray[i, j].transform.position, Quaternion.identity, MapArray[i, j].transform);
                 }
-             if (MapArray[i, j].GetComponent<RoomData>().Cur_Roomtype == RoomData.RoomType.Shop)
-                {
-                    Instantiate(ShopImage, MapArray[i, j].transform.position, Quaternion.identity, MapArray[i, j].transform);
-                }
-                if (MapArray[i, j].GetComponent<RoomData>().Cur_Roomtype == RoomData.RoomType.Crane)
-                {
-                    Instantiate(CraneImage, MapArray[i, j].transform.position, Quaternion.identity, MapArray[i, j].transform);
-                }
-
             }
         }
 
@@ -124,8 +111,6 @@ public class MapCreate : MonoBehaviour
         MapArray[Level, Level].GetComponent<RoomData>().SetArroundRoom(RoomData.Roomdir.Left, MapArray[Level - 1, Level]);
         MapArray[Level, Level].GetComponent<RoomData>().SetArroundRoom(RoomData.Roomdir.Right, MapArray[Level + 1, Level]);
 
-
-
         //실적용시 맵오브젝트 로드
         Instantiate(DFS.Map_Image[MapArray[Level, Level].GetComponent<RoomData>().RoomCode], MapArray[Level, Level].transform);
     }
@@ -135,48 +120,25 @@ public class MapCreate : MonoBehaviour
         Test.name = Test.name + "{" + (x+Level) + "}{" + (y + Level) + "}";
         MapArray[(int)x + Level, (int)y + Level] = Test;
     }
-    public void SetSpecialRoom()
+    public void SetBossRoom()
     {
         List<GameObject> BoosRoomCandidate = new List<GameObject>();
-        List<GameObject> CraneCandidate = new List<GameObject>();
-        List<GameObject> ShopCandidate = new List<GameObject>();
+        
         for (int i = 0; i < Level * 2 + 1; i++)
         {
             for (int j = 0; j < Level * 2 + 1; j++)
             {
-                if ((Level / 2 >= i || Level / 2 + Level <= i) && (Level / 2 >= j || Level / 2 + Level <= j))
+                if((Level/2>=i|| Level / 2 +Level <= i) &&( Level / 2 >= j || Level / 2 + Level <= j))
                 {
-                    if (MapArray[i, j].GetComponent<RoomData>().Cur_Roomtype == RoomData.RoomType.Nomal && MapArray[i, j].GetComponent<RoomData>().IsCreated)
+                    if(MapArray[i,j].GetComponent<RoomData>().Cur_Roomtype == RoomData.RoomType.Nomal && MapArray[i, j].GetComponent<RoomData>().IsCreated)
                     {
                         BoosRoomCandidate.Add(MapArray[i, j]);
                         Debug.Log("Set candidate x:" + i + "   y:" + j);
-                    }
+                    } 
                 }
             }
         }
         BoosRoomCandidate[Random.Range(0, BoosRoomCandidate.Count)].GetComponent<RoomData>().ChangeRoomType(RoomData.RoomType.Boss);
-        for (int i = 0; i < Level * 2 + 1; i++)
-        {
-            for (int j = 0; j < Level * 2 + 1; j++)
-            {
-                if ((i!=Level&&j!=Level) && MapArray[i, j].GetComponent<RoomData>().Cur_Roomtype == RoomData.RoomType.Nomal && MapArray[i, j].GetComponent<RoomData>().IsCreated)
-                {
-                    CraneCandidate.Add(MapArray[i, j]);
-                }
-            }
-        }
-        CraneCandidate[Random.Range(0, CraneCandidate.Count)].GetComponent<RoomData>().ChangeRoomType(RoomData.RoomType.Crane);
-                    for (int i = 0; i < Level * 2 + 1; i++)
-        {
-            for (int j = 0; j < Level * 2 + 1; j++)
-            {
-                if ((i != Level && j != Level) && MapArray[i, j].GetComponent<RoomData>().Cur_Roomtype == RoomData.RoomType.Nomal && MapArray[i, j].GetComponent<RoomData>().IsCreated)
-                {
-                    ShopCandidate.Add(MapArray[i, j]);
-                }
-            }
-        }
-        ShopCandidate[Random.Range(0, CraneCandidate.Count)].GetComponent<RoomData>().ChangeRoomType(RoomData.RoomType.Shop);
     }
     public void SideMapProcess()
     {
