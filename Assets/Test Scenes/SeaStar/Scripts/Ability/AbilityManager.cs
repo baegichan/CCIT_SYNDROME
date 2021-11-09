@@ -30,10 +30,10 @@ public class AbilityManager : MonoBehaviour
 
     public void Werewolf()
     {
-        if (Input.GetMouseButtonDown(1) && !py.GetComponentInParent<TestTest>().Ani.GetBool("Jump"))
+        if (Input.GetMouseButtonDown(1) && !py.GetComponentInParent<Char_Parent>().Ani.GetBool("Jump"))
         {
-            py.GetComponentInParent<TestTest>().Ani.SetTrigger("Ability");
-            py.GetComponentInParent<TestTest>().Ani.SetBool("CanIThis", false);
+            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
+            py.GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", false);
             Debug.Log("¾ä¾ä");
             Vector2 pp = py.transform.position + new Vector3(0.5f,0);
             Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, Physics2D.AllLayers);
@@ -41,12 +41,12 @@ public class AbilityManager : MonoBehaviour
             {
                 if (hit[i].tag == "enemy")
                 {
-                    if (hit[i].GetComponent<Character>().Hp_Current < WolfAP[py.GetComponent<TestTest>().ActiveAbility.Enhance])
+                    if (hit[i].GetComponent<Character>().Hp_Current < WolfAP[py.GetComponent<Char_Parent>().ActiveAbility.Enhance])
                     {
                         py.GetComponentInParent<Character>().Hp_Current++;
                         Debug.Log("ÂÁÂÁ");
                     }
-                    Character.Damage(hit[i].gameObject, WolfAP[py.GetComponent<TestTest>().ActiveAbility.Enhance]);
+                    Character.Damage(hit[i].gameObject, WolfAP[py.GetComponent<Char_Parent>().ActiveAbility.Enhance]);
                 }
             }
         }
@@ -71,7 +71,7 @@ public class AbilityManager : MonoBehaviour
                     {
                         Debug.Log("ÆÄ¶ó¿Ë!#@!!@!@$@#@");
                         Debug.Log(Hit.transform.name + "ÀÌ(°¡) ÇÇÇØ¸¦ ¹ÞÀ½");
-                        Character.Damage(Hit.transform.gameObject, ParaoAP[py.GetComponent<TestTest>().ActiveAbility.Enhance]);
+                        Character.Damage(Hit.transform.gameObject, ParaoAP[py.GetComponent<Char_Parent>().ActiveAbility.Enhance]);
                     }
                 }
             }

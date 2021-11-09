@@ -20,7 +20,7 @@ public class Char_RockMan : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            TestTest.rigid.AddForce(new Vector2(TestTest.h, 1) * P_DashForce * 2);
+            Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 1) * P_DashForce * 2);
             P_DashInt = 0;
         }
 
@@ -43,7 +43,7 @@ public class Char_RockMan : MonoBehaviour
     {
         if (col.gameObject.tag == "Ground")
         {
-            GetComponentInParent<TestTest>().P_JumpInt = GetComponentInParent<TestTest>().P_MaxJumpInt;
+            GetComponentInParent<Char_Parent>().P_JumpInt = GetComponentInParent<Char_Parent>().P_MaxJumpInt;
         }
     }
 }

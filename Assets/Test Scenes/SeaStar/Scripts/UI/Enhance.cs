@@ -117,7 +117,7 @@ public class Enhance : MonoBehaviour
         }
     }
 
-    TestTest tt;
+    Char_Parent tt;
 
     public void EnhaceAbility()
     {
@@ -130,31 +130,31 @@ public class Enhance : MonoBehaviour
 
     void Enhance_Boom()
     {
-        tt = player.GetComponent<TestTest>();
+        tt = player.GetComponent<Char_Parent>();
         Active_Effect = "";
         Active_Effect += "공격력: " + am.BoomAP[tt.ActiveAbility.Enhance] + " -> " + am.BoomAP[tt.ActiveAbility.Enhance + 1] + "\n";
     }
 
     void Enhance_StoneMan()
     {
-        tt = player.GetComponent<TestTest>();
+        tt = player.GetComponent<Char_Parent>();
         Active_Effect = "";
         Active_Effect += "방어력: " + tt.SelectChar.GetComponent<Char_RockMan>().DP[tt.ActiveAbility.Enhance] + " -> " + tt.SelectChar.GetComponent<Char_RockMan>().DP[tt.ActiveAbility.Enhance + 1] + "\n";
-        player.GetComponent<TestTest>().UpdateStat();
+        player.GetComponent<Char_Parent>().UpdateStat();
     }
 
     void Enhance_Werewolf()
     {
-        tt = player.GetComponent<TestTest>();
+        tt = player.GetComponent<Char_Parent>();
         Active_Effect = "";
         Active_Effect += "공격력: " + am.WolfAP[tt.ActiveAbility.Enhance] + " -> " + am.WolfAP[tt.ActiveAbility.Enhance + 1] + "\n";
         Active_Effect += "체력: " + tt.SelectChar.GetComponent<Char_Wolf>().HP[tt.ActiveAbility.Enhance] + " -> " + tt.SelectChar.GetComponent<Char_Wolf>().HP[tt.ActiveAbility.Enhance + 1] + "\n";
-        player.GetComponent<TestTest>().UpdateStat();
+        player.GetComponent<Char_Parent>().UpdateStat();
     }
 
     void Enhance_Pharaoh()
     {
-        tt = player.GetComponent<TestTest>();
+        tt = player.GetComponent<Char_Parent>();
         Active_Effect = "";
         Active_Effect += "공격력: " + am.ParaoAP[tt.ActiveAbility.Enhance] + " -> " + am.ParaoAP[tt.ActiveAbility.Enhance + 1] + "\n";
     }

@@ -150,7 +150,7 @@ public class AbilityItem : MonoBehaviour
 
     void BuyItem()
     {
-        TestTest pt = Ply.GetComponentInParent<TestTest>();
+        Char_Parent pt = Ply.GetComponentInParent<Char_Parent>();
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -203,7 +203,7 @@ public class AbilityItem : MonoBehaviour
         {
             case 6:
                 passive = new usePassive(ability.Double_Jump);
-                Ply.GetComponentInParent<TestTest>().P_MaxJumpInt = 2;
+                Ply.GetComponentInParent<Char_Parent>().P_MaxJumpInt = 2;
                 break;
         }
     }

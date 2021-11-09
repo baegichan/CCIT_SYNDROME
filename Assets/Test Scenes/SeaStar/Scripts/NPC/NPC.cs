@@ -14,7 +14,7 @@ public class NPC : MonoBehaviour
 
     protected void Flip()
     {
-        GameObject player = Player.GetComponent<TestTest>().SelectChar;
+        GameObject player = Player.GetComponent<Char_Parent>().SelectChar;
         if(player.transform.position.x > transform.position.x) { Scale.x = DefaultX; }
         else { Scale.x = FlipX; }
 
