@@ -142,7 +142,7 @@ public class AddTiles : MonoBehaviour
         if(!PotalnameCheck("LeftPotal",false))
         {
             MapData.Save_Potal(PotalObjectCheck("LeftPotal"),0);
-            mapcode += 0b0001;
+            mapcode += 0b1000;
         }
         else
         {
@@ -151,7 +151,7 @@ public class AddTiles : MonoBehaviour
         if (!PotalnameCheck("RightPotal", false))
         {
             MapData.Save_Potal(PotalObjectCheck("RightPotal"), 1);
-            mapcode += 0b0010;
+            mapcode += 0b0100;
         }
         else
         {
@@ -160,7 +160,7 @@ public class AddTiles : MonoBehaviour
         if (!PotalnameCheck("TopPotal", false))
         {
             MapData.Save_Potal(PotalObjectCheck("TopPotal"), 2);
-            mapcode += 0b0100;
+            mapcode += 0b0010;
         }
         else
         {
@@ -169,7 +169,7 @@ public class AddTiles : MonoBehaviour
         if (!PotalnameCheck("BottomPotal", false))
         {
             MapData.Save_Potal(PotalObjectCheck("BottomPotal"), 3);
-            mapcode += 0b1000;
+            mapcode += 0b0001;
         }
         else
         {
