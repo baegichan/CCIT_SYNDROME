@@ -13,19 +13,14 @@ public class Addtilesinspecter : Editor
     int Monsterselected = 0;
     public override void OnInspectorGUI()
     {
-
         DrawDefaultInspector();
-
         EditorGUILayout.HelpBox("맵데이터를 넣은후 로드해주세요. \n미리 로드된 오브젝트들이있으면 초기화후 로드해주세요.", MessageType.Info);
-
         AddTiles map = (AddTiles)target;
         GUILayout.Label("");
         if (GUILayout.Button("맵데이터 세이브"))
         {
             map.Save_MapData();
         }
-
-
         if (GUILayout.Button("맵데이터 로드"))
         {
             if (map.Check_MapData())
@@ -61,6 +56,7 @@ public class Addtilesinspecter : Editor
             {
                 GameObject potal = Instantiate((GameObject)Resources.Load("Potal"), map.GetPotalsroots().transform);
                 potal.name = "LeftPotal";
+               // potal.GetComponent<PotalEvent>().PotalType = Potals.PotalType.L;
             }
 
         }
@@ -71,6 +67,7 @@ public class Addtilesinspecter : Editor
             {
                 GameObject potal = Instantiate((GameObject)Resources.Load("Potal"), map.GetPotalsroots().transform);
                 potal.name = "RightPotal";
+              //  potal.GetComponent<PotalEvent>().PotalType = Potals.PotalType.R;
             }
         }
         if (GUILayout.Button(new GUIContent("TopPotal"), GUILayout.Width(80)))
@@ -80,6 +77,7 @@ public class Addtilesinspecter : Editor
             {
                 GameObject potal = Instantiate((GameObject)Resources.Load("Potal"), map.GetPotalsroots().transform);
                 potal.name = "TopPotal";
+             //   potal.GetComponent<PotalEvent>().PotalType = Potals.PotalType.T;
             }
         }
         if (GUILayout.Button(new GUIContent("BottomPotal"), GUILayout.Width(80)))
@@ -89,6 +87,7 @@ public class Addtilesinspecter : Editor
             {
                 GameObject potal = Instantiate((GameObject)Resources.Load("Potal"), map.GetPotalsroots().transform);
                 potal.name = "BottomPotal";
+            //    potal.GetComponent<PotalEvent>().PotalType = Potals.PotalType.B;
             }
             //유형 변경추가
         }
