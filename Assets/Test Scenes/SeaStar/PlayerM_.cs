@@ -85,23 +85,33 @@ public class PlayerM_ : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         transform.position += new Vector3(h * P_M_Speed * Time.deltaTime, 0);
 
-        switch (h)
-        {
-            case -1:
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    rigid.AddForce(Vector3.left * P_DashForce * 2);
-                    P_DashInt = 0;
-                }
-                break;
-            case 1:
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    rigid.AddForce(Vector3.right * P_DashForce * 2);
-                    P_DashInt = 0;
-                }
-                break;
-        }
+
+        //if (Input.GetKeyDown(KeyCode.LeftShift))
+        //{
+        //    rigid.AddForce(new Vector2(h, 1) * P_DashForce * 2);
+        //    P_DashInt = 0;
+        //    Debug.Log(h);
+        //}
+
+        //switch (h)
+        //{
+        //    case -1:
+        //        if (Input.GetKey(KeyCode.LeftShift))
+        //        {
+        //            rigid.AddForce(Vector3.left * P_DashForce * 2);
+        //            P_DashInt = 0;
+        //            Debug.Log("ddd");
+        //        }
+        //        break;
+        //    case 1:
+        //        if (Input.GetKey(KeyCode.LeftShift))
+        //        {
+        //            rigid.AddForce(Vector3.right * P_DashForce * 2);
+        //            P_DashInt = 0;
+        //            Debug.Log("dddsss");
+        //        }
+        //        break;
+        //}
 
         if (P_DashInt == 0)
         {
@@ -113,14 +123,14 @@ public class PlayerM_ : MonoBehaviour
         {
             P_DashTimer = 2;
             P_DashInt = 1;
-            P_DashForce = 300;
+            P_DashForce = 100;
             Physics2D.IgnoreLayerCollision(10, 11, false);
         }
 
     }
     public void Jump()
     {
-        if(P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
+        if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0) { jump(); }
     }
 
