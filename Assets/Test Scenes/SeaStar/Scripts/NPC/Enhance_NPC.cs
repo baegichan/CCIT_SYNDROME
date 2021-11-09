@@ -27,7 +27,7 @@ public class Enhance_NPC : NPC
     void OpenEngance()
     {
         Enhance EH = Enhance_UI.GetComponent<Enhance>();
-        TestTest py = Player.GetComponent<TestTest>();
+        Char_Parent py = Player.GetComponent<Char_Parent>();
         EH.player = Player;
         EH.am = Player.GetComponent<AbilityManager>();
 
@@ -36,8 +36,8 @@ public class Enhance_NPC : NPC
         {
             Enhance_UI.SetActive(true);
             EH.ability.Clear();
-            EH.ability.Add(Player.GetComponent<TestTest>().ActiveAbility);
-            EH.ability.Add(Player.GetComponent<TestTest>().PassiveAbility);
+            EH.ability.Add(Player.GetComponent<Char_Parent>().ActiveAbility);
+            EH.ability.Add(Player.GetComponent<Char_Parent>().PassiveAbility);
         }
     }
 }
