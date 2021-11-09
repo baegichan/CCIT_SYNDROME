@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class AbilityManager : MonoBehaviour
 {
-    public List<Ability> AbList = new List<Ability>();
     public Camera camera;
     public GameObject py;
     public GameObject Bomber;
     public float WereWolf_Gauge = 0;
     IEnumerator wolf;
     Rigidbody2D rg;
-    public int power = 10;
+    public int power;
     public void Werewolf()
     {
-        Debug.Log("´Á´ë´Ù! ¹«¼·Âî!!");
-
         if (Input.GetMouseButtonDown(1))
         {
             rg = py.GetComponent<Rigidbody2D>();
             wolf = WolfGauge();
             StartCoroutine(wolf);
+            Debug.Log("Ä«¸ÞÇÏ¸Þ,,,,,,,,");
         }
 
         if (Input.GetMouseButtonUp(1))
@@ -28,6 +26,7 @@ public class AbilityManager : MonoBehaviour
             StopAllCoroutines();
             rg.AddForce(new Vector2(1,0.6f) * WereWolf_Gauge * power);
             WereWolf_Gauge = 0;
+            Debug.Log("ÇÏ¤¿¤¿¤¿¤¿¤¿¤¿¤¿");
         }
     }
 
@@ -64,15 +63,6 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(py.transform.position, new Vector2(5, 5));
-    }
-
-
-
-
     public void BomberMan()
     {
         if (Input.GetMouseButtonDown(1))
@@ -80,7 +70,9 @@ public class AbilityManager : MonoBehaviour
             Debug.Log("ÆøÅºÆøÅº");
             Vector2 pp = py.transform.position;
             Vector2 CursorPos = Input.mousePosition;
+            Debug.Log("Canvas: " + CursorPos);
             CursorPos = camera.ScreenToWorldPoint(CursorPos);
+            Debug.Log("WorldPosition " + CursorPos);
             Vector2 Dir = CursorPos - pp;
             Dir = Dir.normalized;
             GameObject Boom = Instantiate(Bomber, pp, Quaternion.identity);
@@ -99,7 +91,7 @@ public class AbilityManager : MonoBehaviour
     {
         Debug.Log("E");
     }
-
+    
     public void Ability_F()
     {
         Debug.Log("F");
