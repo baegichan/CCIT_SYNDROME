@@ -121,7 +121,7 @@ public class Addtilesinspecter : Editor
         EditorGUILayout.EndHorizontal();
 
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("내부 이벤트 구현 (몬스터 스폰)\r내부 이벤트 비구현 (포탈 이동)", MessageType.Info);
+        EditorGUILayout.HelpBox("내부 이벤트 구현 (심플 몬스터 스폰)\n내부 이벤트 비구현 (포탈 이동)", MessageType.Info);
 
         string[] options = new string[]
         {
