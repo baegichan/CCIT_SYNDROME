@@ -28,10 +28,6 @@ public class DrillMonster : MonoBehaviour
     public bool trace;
     public bool Targeton;
 
-    [Header("Anim parameter")]
-    public int move;
-    public int follow;
-    public int attack;
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
 
@@ -64,10 +60,6 @@ public class DrillMonster : MonoBehaviour
         Targeton = false;
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        move = Animator.StringToHash("Move");
-        follow = Animator.StringToHash("Follow");
-        attack = Animator.StringToHash("Attack");
-        Physics2D.IgnoreLayerCollision(0, 0);
     }
 
     void Update()

@@ -20,11 +20,11 @@ public class Drill_Idle : StateMachineBehaviour
     {
         if(drillMon.Targeton == false)
         {
-            animator.SetBool(drillMon.move, true);
+            animator.SetBool("Move", true);
         }
         else if(drillMon.Targeton == true)
         {
-            animator.SetBool(drillMon.follow, true);
+            animator.SetBool("Follw", true);
         }
     }
 

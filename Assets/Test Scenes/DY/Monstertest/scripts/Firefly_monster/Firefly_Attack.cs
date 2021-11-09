@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class Firefly_Attack : StateMachineBehaviour
 {
+    Transform fireflyTransform;
     FireflyMonster fireflyMon;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         fireflyMon = animator.GetComponent<FireflyMonster>();
-        //트리거 이기 때문에 여기서 공격을 받아야 됨
+        fireflyTransform = animator.GetComponent<Transform>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        //여기서 공격 가능한 인스턴시에이트가 가능하고 총알이 날라갈 수 있도록 한다.
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
