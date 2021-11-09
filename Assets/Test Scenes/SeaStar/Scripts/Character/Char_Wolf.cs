@@ -34,8 +34,8 @@ public class Char_Wolf : MonoBehaviour
             Debug.Log("dasfsdfdsfsdf");
             Ani.SetBool("Dash", false);
             StopAllCoroutines();
-            Debug.Log(TestTest.h);
-            TestTest.rigid.AddForce(new Vector2(TestTest.h * 4, 0.6f) * WereWolf_Gauge * power);
+            Debug.Log(Char_Parent.h);
+            Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h * 4, 0.6f) * WereWolf_Gauge * power);
             WereWolf_Gauge = 0;
             Debug.Log("馬たたたたたたた");
         }
@@ -52,7 +52,7 @@ public class Char_Wolf : MonoBehaviour
     {
         if (col.gameObject.tag == "Ground")
         {
-            GetComponentInParent<TestTest>().P_JumpInt = GetComponentInParent<TestTest>().P_MaxJumpInt;
+            GetComponentInParent<Char_Parent>().P_JumpInt = GetComponentInParent<Char_Parent>().P_MaxJumpInt;
             Ani.SetBool("Jump", false);
         }
     }

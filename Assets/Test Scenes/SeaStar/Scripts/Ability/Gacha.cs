@@ -10,9 +10,9 @@ public class Gacha : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && IsPlayer && player.GetComponentInParent<TestTest>().P_Money >= 10)
+        if (Input.GetKeyDown(KeyCode.F) && IsPlayer && player.GetComponentInParent<Char_Parent>().P_Money >= 10)
         {
-            player.GetComponentInParent<TestTest>().P_Money -= 10;
+            player.GetComponentInParent<Char_Parent>().P_Money -= 10;
             GameObject gacha = Instantiate(Item, transform.position, Quaternion.identity);
             gacha.GetComponent<AbilityItem>().IsBuy = true;
         }

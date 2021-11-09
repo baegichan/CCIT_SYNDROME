@@ -27,7 +27,7 @@ public class Stat_NPC : NPC
     void OpenEnhance()
     {
         Enhance_Stat ESH = Enhance_Stat_UI.GetComponent<Enhance_Stat>();
-        TestTest py = Player.GetComponent<TestTest>();
+        Char_Parent py = Player.GetComponent<Char_Parent>();
         ESH.player = Player;
         ESH.py = py;
 

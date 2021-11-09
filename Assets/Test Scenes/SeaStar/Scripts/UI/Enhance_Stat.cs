@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Enhance_Stat : MonoBehaviour
 {
     public GameObject player;
-    public TestTest py;
+    public Char_Parent py;
 
     [Header("체력 강화 UI")]
     public Text T_Level_Health;
