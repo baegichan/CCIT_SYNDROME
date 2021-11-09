@@ -10,6 +10,8 @@ public class MentalChaild : MonoBehaviour
     public float P_AttackTimer = 1;
     public bool P_AttackState = false;
     public float P_AttackResetTimer;
+    float P_CombatTimer= 5;
+    float P_CombatInt;
     //
     //대쉬
     public float P_DashForce;
@@ -18,99 +20,128 @@ public class MentalChaild : MonoBehaviour
     //
 
     Animator Ani;
-
+    Rigidbody2D rigid;
     void Start()
     {
         Ani = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
     }
 
 
     void Update()
     {
         Attack();
-        Dash();
+        if(Ani.GetBool("Possible") == true)
+        {
+            Dash();
+        }   
     }
 
     public void Attack()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (P_AttackInt <= 2)
+            rigid.AddForce(new Vector2(TestPlayer.h, 0) * 2500 * Time.deltaTime);
+            Ani.SetTrigger("Attack");
+            Ani.SetBool("Combat", true);
+            Ani.SetBool("Possible", false);
+            P_CombatTimer = 5;
+            P_CombatInt = 1;
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            P_CombatInt = 0; 
+        }
+        if(P_CombatInt == 0)
+        {
+            P_CombatTimer -= Time.deltaTime;
+            if (P_CombatTimer <= 0)
             {
-                P_AttackInt++;
+                Ani.SetBool("Combat", false);
             }
         }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    if (P_AttackInt <= 2)
+        //    {
+        //        P_AttackInt++;
+        //    }
+        //}
 
-        float Reset = 1;
+        //float Reset = 1;
 
-        switch (P_AttackInt)
-        {
-            case 0:
+        //switch (P_AttackInt)
+        //{
+        //    case 0:
 
-                P_AttackState = false;
-                P_AttackResetTimer = Reset;
-                break;
+        //        P_AttackState = false;
+        //        P_AttackResetTimer = Reset;
+        //        break;
 
-            case 1:
+        //    case 1:
 
-                P_AttackState = true;
-                Ani.SetInteger("AttackInt", 1);
-                Ani.SetBool("AttackState", true);
+        //        P_AttackState = true;
+        //        Ani.SetInteger("AttackInt", 1);
+        //        Ani.SetBool("AttackState", true);
 
-                P_AttackResetTimer -= Time.deltaTime;
+        //        P_AttackResetTimer -= Time.deltaTime;
 
-                if (P_AttackResetTimer <= 0)//공격하다가 중간에 멈추면 다시 1타로 초기화.
-                {
-                    P_AttackInt = 0;
-                    P_AttackResetTimer = Reset;
-                }
-                if (P_AttackState == true)
-                {
+        //        if (P_AttackResetTimer <= 0)//공격하다가 중간에 멈추면 다시 1타로 초기화.
+        //        {
+        //            P_AttackInt = 0;
+        //            P_AttackResetTimer = Reset;
+        //        }
+        //        if (P_AttackState == true)
+        //        {
 
-                }
-                break;
+        //        }
+        //        break;
 
-            case 2:
+        //    case 2:
 
-                P_AttackState = true;
-                Ani.SetInteger("AttackInt", 2);
-                Ani.SetBool("AttackState", true);
+        //        P_AttackState = true;
+        //        Ani.SetInteger("AttackInt", 2);
+        //        Ani.SetBool("AttackState", true);
 
-                P_AttackResetTimer -= Time.deltaTime;
+        //        P_AttackResetTimer -= Time.deltaTime;
 
-                if (Input.GetMouseButtonDown(0))
-                {
-                    P_AttackResetTimer = Reset;
-                }
-                if (P_AttackResetTimer <= 0)
-                {
-                    P_AttackInt = 0;
-                    P_AttackResetTimer = Reset;
-                }
-                P_AttackState = true;
-                if (P_AttackState == true)
-                {
+        //        if (Input.GetMouseButtonDown(0))
+        //        {
+        //            P_AttackResetTimer = Reset;
+        //        }
+        //        if (P_AttackResetTimer <= 0)
+        //        {
+        //            P_AttackInt = 0;
+        //            P_AttackResetTimer = Reset;
+        //        }
+        //        P_AttackState = true;
+        //        if (P_AttackState == true)
+        //        {
 
-                }
-                break;
+        //        }
+        //        break;
 
-            case 3:
+        //    case 3:
 
-                Ani.SetInteger("AttackInt", 3);
-                Ani.SetBool("AttackState", false);
+        //        Ani.SetInteger("AttackInt", 3);
+        //        Ani.SetBool("AttackState", false);
 
-                P_AttackResetTimer -= Time.deltaTime;
+        //        P_AttackResetTimer -= Time.deltaTime;
 
-                if (P_AttackResetTimer <= 0)
-                {
-                    P_AttackInt = 0;
-                }
-                P_AttackState = false;
+        //        if (P_AttackResetTimer <= 0)
+        //        {
+        //            P_AttackInt = 0;
+        //        }
+        //        P_AttackState = false;
 
 
-                break;
-        }
+        //        break;
+        //}
 
+    }
+    public void Event_Eden()
+    {
+        Ani.SetBool("Possible", true);
     }
     public void Dash()
     {
@@ -155,7 +186,6 @@ public class MentalChaild : MonoBehaviour
             Ani.SetBool("Dash", true);
             Physics2D.IgnoreLayerCollision(10, 11);
             TestPlayer.rigid.AddForce(new Vector2(TestPlayer.h, 1) * P_DashForce * 2);
-            if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
             P_DashInt = 0;
             if (TestPlayer.RedBullDash == true)
             {
@@ -163,6 +193,7 @@ public class MentalChaild : MonoBehaviour
                 //Damage
             }
         }
+        if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
 
         if (P_DashInt == 0)
         {
@@ -174,7 +205,7 @@ public class MentalChaild : MonoBehaviour
         {
             P_DashTimer = 2;
             P_DashInt = 1;
-            P_DashForce = 300;
+            P_DashForce = 100;
             Physics2D.IgnoreLayerCollision(10, 11, false);
         }
     }

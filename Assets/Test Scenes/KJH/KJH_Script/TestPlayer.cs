@@ -72,8 +72,10 @@ public class TestPlayer : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move();
-        
+        if (Ani.GetBool("Possible") == true)
+        {
+            Move();
+        }  
     }
 
     void Update()
@@ -87,7 +89,10 @@ public class TestPlayer : MonoBehaviour
             UseSkill();
         }
         UseItem();
-        if (Input.GetKeyDown(KeyCode.Space)) { Jump();}
+        if (Ani.GetBool("Possible") == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+        }
         if (Input.GetMouseButtonDown(0)) { atk(); }
         if (Input.GetKeyDown(KeyCode.Tab)) { ChangeCahr(); }
     }
@@ -154,10 +159,10 @@ public class TestPlayer : MonoBehaviour
     {
         if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0)
-        {
-            Ani.SetBool("GroundState", false);
+        {      
             rigid.AddForce(Vector3.up * P_JumpForce * 150 * Time.deltaTime);
             P_JumpInt -= 1;
+            Ani.SetBool("GroundState", false);
         }
     }
     //마우스 플립
