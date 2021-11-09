@@ -30,6 +30,7 @@ public class Pet_Attack : AttackModule
     {
         yield return new WaitForSeconds(BulletsInfo.time);
         GameObject bullet = Instantiate(BulletsInfo.bullet,transform.position,Quaternion.Euler(0,0,0 + BulletsInfo.Angle));
+        bullet.GetComponent<Pet_bullet>().Speed = BulletsInfo.Speed;
     }
 }
 [System.Serializable]
