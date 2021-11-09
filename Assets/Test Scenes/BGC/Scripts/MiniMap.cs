@@ -14,29 +14,47 @@ public class MiniMap : MonoBehaviour
     int[,] MapData = new int[,] { {1,1,1,1,1 },{ 0,0,1,0,1},{ 0,1,1,1,1},{ 0,1,1,1,0},{1,1,0,0,0 } };
     bool[,] MapEnable = new bool[,] { { true, true, true, false, false }, { false, false, true, false, false }, { false, true, false, false, true }, { false, false, true, true, false }, { true, false, false, false, false } };
     #endregion
+    public MapCreate MapCreateSC;
     GameObject[,] WorldMap;
     public int[,] WORLDMAP_DATA
     {
         get {return MapData; }
-        set { MapData = value; STAGELEVEL = ((int)Mathf.Sqrt(value.Length) - 1)/2; WorldMap = new GameObject[STAGELEVEL * 2 + 1, STAGELEVEL * 2 + 1]; }
+        set { MapData = value; STAGELEVEL = ((int)Mathf.Sqrt(value.Length) - 1)/2; WorldMap = new GameObject[MapCreateSC.Level * 2 + 1, MapCreateSC.Level * 2 + 1]; }
     }
     private void Start()
     {
         transform.parent.GetComponent<Canvas>().worldCamera = Camera.main;
-        WORLDMAP_DATA =new int[,] { { 1,1,1,1,1 },{ 0,0,1,0,1},{ 0,1,1,1,1},{ 0,1,1,1,0},{ 1,1,0,0,0 } };
-        LoadMiniMap(WORLDMAP_DATA);
-        MapUpdate();
-        Loaded = true;
+       
     }
-    /// <summary>
-    /// 레벨도 추후 세팅다시해야됨 프로퍼티사용바람
-    /// </summary>
-    int Level = 2;
-    public  int STAGELEVEL 
+    
+    public void MiniMapSetting()
     {
+        WORLDMAP_DATA = new int[(int)Mathf.Sqrt(MapCreateSC.MapArray.Length), (int)Mathf.Sqrt(MapCreateSC.MapArray.Length)];
+        Debug.Log("Worldmap clear" + WORLDMAP_DATA.Length);
+        MapEnable = new bool[(int)Mathf.Sqrt(MapCreateSC.MapArray.Length), (int)Mathf.Sqrt(MapCreateSC.MapArray.Length)];
+        Debug.Log("MapEnable clear" + MapEnable.Length);
+        WorldMap = new GameObject[(int)Mathf.Sqrt(MapCreateSC.MapArray.Length), (int)Mathf.Sqrt(MapCreateSC.MapArray.Length)];
+        WorldMapUpdate();
+        LoadMiniMap(WORLDMAP_DATA);
+        Debug.Log(WORLDMAP_DATA);
+    }
+    public void WorldMapUpdate()
+    {
+        for(int i = 0; i< Level*2;i++)
+        {
+            for(int j =0; j< Level*2;j++)
+            {
+                WORLDMAP_DATA[i, j] = MapCreateSC.MapArray[i, j].GetComponent<RoomData>().IsCreated?1:0;
+                MapEnable[i, j] = MapCreateSC.MapArray[i, j].GetComponent<RoomData>().VisitedRoom;
+            }
+        }
+    }
+    
+    int Level;
+    public  int STAGELEVEL 
+    {   
         set { Level = value; }
         get { return Level; }
-      
     }
    [Range(0,30)] public int distance = 15;
     public GameObject Target;
@@ -50,9 +68,6 @@ public class MiniMap : MonoBehaviour
         {
             if(Loaded==false)
             {
-                
-                LoadMiniMap(WORLDMAP_DATA);
-                Loaded = true;
                 WolrdMap.transform.localPosition = new Vector3(0, 0, 0);
                 MapUpdate();
             }
@@ -83,7 +98,7 @@ public class MiniMap : MonoBehaviour
     }
     public void LoadMiniMap(int[,] LoadMap)
     {  
-        int height= STAGELEVEL * distance;
+        int height= -STAGELEVEL * distance;
         int width= -STAGELEVEL * distance;
          for(int i = 0;i< STAGELEVEL * 2+1;i++)
         {
@@ -91,13 +106,15 @@ public class MiniMap : MonoBehaviour
             {
                 if(CheckMapData(LoadMap[i,j]))
                 {
-                    WorldMap[i,j]=Instantiate(Target,new Vector3(width+j*distance,height),Quaternion.identity, WolrdMap.transform).gameObject;
-                    WorldMap[i,j].transform.localScale = (new Vector3(1, 1, 1));
+                    WorldMap[j,i]=Instantiate(Target,new Vector3(width,height + j * distance),Quaternion.identity, WolrdMap.transform).gameObject;
+                    WorldMap[j,i].transform.localScale = (new Vector3(1, 1, 1));
                 }                 
             }
-           height -= distance;
-           width = -STAGELEVEL * distance;
+           height = -STAGELEVEL * distance;
+           width +=  distance;
         }
+        Loaded = true;
+        MapUpdate();
     }
     public bool CheckMapData(int test)
     {
