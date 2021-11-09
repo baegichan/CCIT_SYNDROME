@@ -9,23 +9,26 @@ public class PotalEvent : MonoBehaviour
     bool DoorIsLock=false;
 
 
-
+    public Potals.PotalType PotalType;
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        //이벤트 추가
+        Movement(other.gameObject);
     }
-    
-    IEnumerator BlackOutEvent()
+
+    public void Start()
     {
-        //블랙아웃 이벤트 만들어야됨
-        yield return new WaitForSeconds(1);
+        transform.parent.GetComponent<Potals>().SetPotal(PotalType,gameObject);
     }
     public void Movement(GameObject Player)
     {
             if(DoorIsLock==false)
             {
-            
+              if(ConnectedPotal!=null)
+                {
+                //연결된걸로 이동 ㅇㅇ
+               }
             }
     }
     public void Connecting(GameObject Potal)

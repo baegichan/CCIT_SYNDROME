@@ -40,9 +40,9 @@ public class MiniMap : MonoBehaviour
     }
     public void WorldMapUpdate()
     {
-        for(int i = 0; i< Level*2+1;i++)
+        for(int i = 0; i< Level*2;i++)
         {
-            for(int j =0; j< Level*2+1;j++)
+            for(int j =0; j< Level*2;j++)
             {
                 WORLDMAP_DATA[i, j] = MapCreateSC.MapArray[i, j].GetComponent<RoomData>().IsCreated?1:0;
                 MapEnable[i, j] = MapCreateSC.MapArray[i, j].GetComponent<RoomData>().VisitedRoom;
@@ -52,7 +52,7 @@ public class MiniMap : MonoBehaviour
     
     int Level;
     public  int STAGELEVEL 
-    {
+    {   
         set { Level = value; }
         get { return Level; }
     }

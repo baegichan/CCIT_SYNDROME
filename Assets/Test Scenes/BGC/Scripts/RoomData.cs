@@ -4,16 +4,57 @@ using UnityEngine;
 
 public class RoomData : MonoBehaviour
 {
-
+    //Ä¿³ØÆ® ½ÃÄÑ¾ßµÊ 
     public GameObject Room;
+    GameObject Potals;
+
     public int RoomindexX, RoomindexY;
     public bool IsCreated = false;
     public int RoomCode=0;
     public bool VisitedRoom = true;
-    public uint Test;
    public bool L_Brige, R_Brige, T_Brige, B_Brige;
     public GameObject L_Room, R_Room, T_Room, B_Room;
 
+
+    public GameObject Potal
+    {
+        get {return Potals; }
+        set {Potals=value; }
+    }
+    public enum RoomType
+    {
+        None,
+        Nomal,
+        Shop,
+        Crane,
+        Boss
+    }
+    public RoomType Cur_Roomtype = RoomType.Nomal;
+    public void ChangeRoomType(RoomType Roomtype)
+    {
+        switch (Roomtype)
+        {
+            case RoomType.Nomal:
+                Debug.Log("Nomal ROOM SET  :  " + gameObject.name);
+                break;
+            case RoomType.Shop:
+                Debug.Log("Shop ROOM SET  :  " + gameObject.name);
+                break;
+            case RoomType.Boss:
+                Debug.Log("BOSS ROOM SET  :  " + gameObject.name);
+                break;
+            case RoomType.Crane:
+                Debug.Log("CRANE ROOM SET  :  " + gameObject.name);
+                break;
+        }
+
+       
+        Cur_Roomtype = Roomtype;
+    }
+    public void Get_Potals()
+    {
+  
+    }
     public enum Roomdir
     {
         Left,
@@ -173,6 +214,35 @@ public class RoomData : MonoBehaviour
                 break;
         }
     }
+    public void SetRoomCode(int roomcode)
+    {
+        B_Brige = false;
+        T_Brige = false;
+        R_Brige = false;
+        L_Brige = false;
+        RoomCode = roomcode;
+        for (int i = 0; i < 4; i++)
+        {
+            if ((RoomCode >> i & 0b0001) == 1)
+            {
+                switch (i)
+                {
+                    case 0:
+                        B_Brige = true;
+                        break;
+                    case 1:
+                        T_Brige = true;
+                        break;
+                    case 2:
+                        R_Brige = true;
+                        break;
+                    case 3:
+                        L_Brige = true;
+                        break;
+                }
+            }
+        }
+    }
     public void StartRoomSetting()
     {       
         RoomCode=Random.Range(5, 16);
@@ -274,4 +344,71 @@ public class RoomData : MonoBehaviour
             return false;
         }
     }
+    public bool CheckRoomCode()
+    {
+        int b = 0;
+        if (L_Brige) b += 0b1000;
+        if (R_Brige) b += 0b0100;
+        if (T_Brige) b += 0b0010;
+        if (B_Brige) b += 0b0001;
+
+        int rb = 0;
+        if (L_Room != null) if (L_Room.GetComponent<RoomData>().IsCreated) rb += 0b1000;
+        if (R_Room != null) if (R_Room.GetComponent<RoomData>().IsCreated) rb += 0b0100;
+        if (T_Room != null) if (T_Room.GetComponent<RoomData>().IsCreated) rb += 0b0010;
+        if (B_Room != null) if (B_Room.GetComponent<RoomData>().IsCreated) rb += 0b0001;
+        if (b != RoomCode || rb !=RoomCode || rb!=b)
+
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+    }
+    public void AutoCunnecting()
+    {
+        B_Brige = false;
+        T_Brige = false;
+        R_Brige = false;
+        L_Brige = false;
+        int rb = 0;
+        if (L_Room != null) if (L_Room.GetComponent<RoomData>().IsCreated) rb += 0b1000;
+        if (R_Room != null) if (R_Room.GetComponent<RoomData>().IsCreated) rb += 0b0100;
+        if (T_Room != null) if (T_Room.GetComponent<RoomData>().IsCreated) rb += 0b0010;
+        if (B_Room != null) if (B_Room.GetComponent<RoomData>().IsCreated) rb += 0b0001;
+        RoomCode = rb;
+        for (int i = 0; i < 4; i++)
+        {
+            if ((RoomCode >> i & 0b0001) == 1)
+            {
+                switch (i)
+                {
+                    case 0:
+                        B_Brige = true;
+                        break;
+                    case 1:
+                        T_Brige = true;
+                        break;
+                    case 2:
+                        R_Brige = true;
+                        break;
+                    case 3:
+                        L_Brige = true;
+                        break;
+                }
+            }
+        }
+    }
+    public void RoomClear()
+    {
+   
+        IsCreated = false;
+         RoomCode = 0;
+        VisitedRoom = true;
+        L_Brige = false; R_Brige = false; T_Brige = false; B_Brige = false;
+        L_Room = null; R_Room = null; T_Room = null; B_Room = null;
+}
 }
