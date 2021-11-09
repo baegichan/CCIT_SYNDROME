@@ -4,26 +4,56 @@ using UnityEngine;
 
 public class RoomData : MonoBehaviour
 {
-
+    //Ä¿³ØÆ® ½ÃÄÑ¾ßµÊ 
     public GameObject Room;
+    GameObject Potals;
+
     public int RoomindexX, RoomindexY;
     public bool IsCreated = false;
     public int RoomCode=0;
     public bool VisitedRoom = true;
    public bool L_Brige, R_Brige, T_Brige, B_Brige;
     public GameObject L_Room, R_Room, T_Room, B_Room;
+
+
+    public GameObject Potal
+    {
+        get {return Potals; }
+        set {Potals=value; }
+    }
     public enum RoomType
     {
         None,
         Nomal,
         Shop,
+        Crane,
         Boss
     }
     public RoomType Cur_Roomtype = RoomType.Nomal;
     public void ChangeRoomType(RoomType Roomtype)
     {
-        Debug.Log("BOSS ROOM SET  :  " + gameObject.name);
+        switch (Roomtype)
+        {
+            case RoomType.Nomal:
+                Debug.Log("Nomal ROOM SET  :  " + gameObject.name);
+                break;
+            case RoomType.Shop:
+                Debug.Log("Shop ROOM SET  :  " + gameObject.name);
+                break;
+            case RoomType.Boss:
+                Debug.Log("BOSS ROOM SET  :  " + gameObject.name);
+                break;
+            case RoomType.Crane:
+                Debug.Log("CRANE ROOM SET  :  " + gameObject.name);
+                break;
+        }
+
+       
         Cur_Roomtype = Roomtype;
+    }
+    public void Get_Potals()
+    {
+  
     }
     public enum Roomdir
     {
