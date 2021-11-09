@@ -6,9 +6,11 @@ public class Room_data : MonoBehaviour
 {
 
     public int map_code;
-    public bool  Left, Right,Top, Bottom;
+    public bool  Top,Right,Bottom,Left;
     public bool Room_Created = false;
-    
+
+    SpriteRenderer spr;
+    public Sprite[] sp;
    
     public void SetMapData()
     {
@@ -100,94 +102,75 @@ public class Room_data : MonoBehaviour
         return Bottom;
 
     }
-  
+
+
     private void Start()
     {
-
+        spr = GetComponent<SpriteRenderer>();
     }
+    
     private void Update()
     {
-        if (this.Room_Created == true)
+        
+        if(map_code == 1)
         {
-            if (this.map_code == 1)
-            {
-                this.Top = true;
-            }
-            else if (this.map_code == 2)
-            {
-                this.Right = true;
-            }
-            else if (this.map_code == 3)
-            {
-                this.Bottom = true;
-            }
-            else if (this.map_code == 4)
-            {
-                this.Left = true;
-            }
-            else if (this.map_code == 5)
-            {
-                this.Top = true;
-                this.Right = true;
-            }
-            else if (this.map_code == 6)
-            {
-                this.Top = true;
-                this.Bottom = true;
-            }
-            else if (this.map_code == 7)
-            {
-                this.Top = true;
-                this.Left = true;
-            }
-            else if (this.map_code == 8)
-            {
-                this.Right = true;
-                this.Bottom = true;
-            }
-            else if (this.map_code == 9)
-            {
-                this.Right = true;
-                this.Left = true;
-            }
-            else if (this.map_code == 10)
-            {
-                this.Left = true;
-                this.Bottom = true;
-            }
-            else if (this.map_code == 11)
-            {
-                this.Right = true;
-                this.Top = true;
-                this.Bottom = true;
-            }
-            else if (this.map_code == 12)
-            {
-                this.Right = true;
-                this.Top = true;
-                this.Left = true;
-            }
-            else if (this.map_code == 13)
-            {
-                this.Left = true;
-                this.Top = true;
-                this.Bottom = true;
-            }
-            else if (this.map_code == 14)
-            {
-                this.Right = true;
-                this.Left = true;
-                this.Bottom = true;
-            }
-
-            else if (this.map_code == 15)
-            {
-                this.Right = true;
-                this.Bottom = true;
-                this.Top = true;
-                this.Left = true;
-            }
+            spr.sprite = sp[0];
         }
-
+        else if (map_code == 2)
+        {
+            spr.sprite = sp[1];
+        }
+        else if (map_code == 3)
+        {
+            spr.sprite = sp[2];
+        }
+        else if (map_code == 4)
+        {
+            spr.sprite = sp[3];
+        }
+        else if (map_code == 5)
+        {
+            spr.sprite = sp[4];
+        }
+        else if (map_code == 6)
+        {
+            spr.sprite = sp[5];
+        }
+        else if (map_code == 7)
+        {
+            spr.sprite = sp[6];
+        }
+        else if (map_code == 8)
+        {
+            spr.sprite = sp[7];
+        }
+        else if (map_code == 9)
+        {
+            spr.sprite = sp[8];
+        }
+        else if (map_code == 10)
+        {
+            spr.sprite = sp[9];
+        }
+        else if (map_code == 11)
+        {
+            spr.sprite = sp[10];
+        }
+        else if (map_code == 12)
+        {
+            spr.sprite = sp[11];
+        }
+        else if (map_code == 13)
+        {
+            spr.sprite = sp[12];
+        }
+        else if (map_code == 14)
+        {
+            spr.sprite = sp[13];
+        }
+        else if (map_code == 15)
+        {
+            spr.sprite = sp[14];
+        }
     }
 }

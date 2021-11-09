@@ -12,6 +12,7 @@ public class TestTest : MonoBehaviour
     public GameObject abilityManager;
     //Animation ani;
     Rigidbody2D rigid;
+    AbilityManager AM;
 
     [Header("스테이터스")]
     public int P_hp;
@@ -50,8 +51,11 @@ public class TestTest : MonoBehaviour
 
     void Awake()
     {
+        AM = GetComponent<AbilityManager>();
+        rigid = GetComponent<Rigidbody2D>();
         SelectChar = Char[0];
         ChangeCahr();
+        Debug.Log("dddd");
     }
 
     void FixedUpdate()
@@ -171,34 +175,32 @@ public class TestTest : MonoBehaviour
 
     //능력
     public delegate void useAbility();
-    useAbility ability;
+    useAbility active;
 
     public void SelectAbility()
     {
-        AbilityManager AM = abilityManager.GetComponent<AbilityManager>();
-
         switch (ActiveAbility.AbCode)
         {
             case 0:
-                ability = new useAbility(AM.Werewolf);
+                active = new useAbility(AM.Werewolf);
                 break;
             case 1:
-                ability = new useAbility(AM.Parao);
+                active = new useAbility(AM.Parao);
                 break;
             case 2:
-                ability = new useAbility(AM.BomberMan);
+                active = new useAbility(AM.BomberMan);
                 break;
             case 3:
-                ability = new useAbility(AM.Ability_D);
+                active = new useAbility(AM.Ability_D);
                 break;
             case 4:
-                ability = new useAbility(AM.Ability_E);
+                active = new useAbility(AM.Ability_E);
                 break;
             case 5:
-                ability = new useAbility(AM.Ability_F);
+                active = new useAbility(AM.Ability_F);
                 break;
             case 6:
-                ability = new useAbility(AM.Double_Jump);
+                active = new useAbility(AM.Double_Jump);
                 break;
         }
     }
@@ -208,13 +210,13 @@ public class TestTest : MonoBehaviour
         switch (ActiveAbility.AbName)
         {
             case "Werewolf":
-                ability();
+                active();
                 break;
             case "Parao":
-                ability();
+                active();
                 break;
             case "BomberMan":
-                ability();
+                active();
                 break;
         }
     }

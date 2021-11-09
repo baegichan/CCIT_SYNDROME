@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class DrillMonster : MonoBehaviour
 {
-    //prameter
+    [Header("Prameter")]
     public float speed;
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
 
-    //refernce
+    [Header("Refernce")]
     public Transform player;
     public Animator anim;
     public Vector2 first;
@@ -22,16 +22,17 @@ public class DrillMonster : MonoBehaviour
     public Vector2 direction;
     public float distance;
 
-    //turn state
+    [Header("Turn state")]
     public bool filp;
     public bool patroll;
     public bool trace;
-    public bool Targeton = false;
+    public bool Targeton;
+
     //2D sight
+    [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
 
     [SerializeField] private bool m_bDebugMode = false;
 
-    [Header("View Config")]
     [Range(0f, 360f)]
     [SerializeField] private float m_horizontalViewAngle = 0f; //시야각을 담은 변수
     [SerializeField] private float m_viewRadius = 1f;  //탐지 범위
@@ -56,6 +57,7 @@ public class DrillMonster : MonoBehaviour
         filp = true;
         patroll = true;
         trace = false;
+        Targeton = false;
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
@@ -127,9 +129,14 @@ public class DrillMonster : MonoBehaviour
             }
         }
     }
-    private Vector3 AngleToDirZ(float angleInDegree)
+
+    private Vector3 AngleToDirZ(float angleInDegree)// 입력한 -180~180의 값을 Up Vector 기준 Local Direction으로 변환시켜줌.
     {
         float radian = (angleInDegree - transform.eulerAngles.z) * Mathf.Deg2Rad;
+        //Angle에 eulerAngles.z를 빼주는 이유는 입력한 Angle을 Local Direction으로 변환 시켜주기 위해서입니다.
+        //Mathf.Deg2Rad : 각도를 라디안으로 변환하는, 변환 상수를 나타냅니다. 이 값은 (PI * 2) / 360 입니다.
+        //더하기가 아닌 빼기를 하는 이유는 우리가 만든 함수는 시계 방향(오른쪽)이 양수, 반시계 방향(왼쪽)이 음수라고 보고 계산을 하지만
+        //유니티에서 Z축은 시계 방향(오른쪽)이 음수, 반시계 방향(왼쪽)이 양수로 반대이기 때문에 빼기(-)를 통해 음수를 양수로, 양수를 음수로 만들어 연산해주는 것 입니다.
         return new Vector3(Mathf.Sin(radian), Mathf.Cos(radian), 0f);
     }
 
@@ -144,13 +151,13 @@ public class DrillMonster : MonoBehaviour
 
             Gizmos.DrawWireSphere(originPos, m_viewRadius);
 
-            Vector3 horizontalRightDir = AngleToDirZ(-m_horizontalViewHalfAngle + m_viewRotateZ);
-            Vector3 horizontalLeftDir = AngleToDirZ(m_horizontalViewHalfAngle + m_viewRotateZ);
-            Vector3 lookDir = AngleToDirZ(m_viewRotateZ);
+            Vector3 horizontalRightDir = AngleToDirZ(-m_horizontalViewHalfAngle + m_viewRotateZ);//(-시야각 + 회전값)
+            Vector3 horizontalLeftDir = AngleToDirZ(m_horizontalViewHalfAngle + m_viewRotateZ);//(시야각 + 회전값)
+            Vector3 lookDir = AngleToDirZ(m_viewRotateZ);//보는 방향
 
-            Debug.DrawRay(originPos, horizontalLeftDir * m_viewRadius, Color.cyan);
-            Debug.DrawRay(originPos, lookDir * m_viewRadius, Color.green);
-            Debug.DrawRay(originPos, horizontalRightDir * m_viewRadius, Color.cyan);
+            Debug.DrawRay(originPos, horizontalLeftDir * m_viewRadius, Color.cyan);//오른쪽 시야각
+            Debug.DrawRay(originPos, lookDir * m_viewRadius, Color.green);         //보는 방향
+            Debug.DrawRay(originPos, horizontalRightDir * m_viewRadius, Color.cyan);//왼쪽 시야각
 
             FindViewTargets();
         }
@@ -165,43 +172,43 @@ public class DrillMonster : MonoBehaviour
         hitedTargetContainer.Clear();
 
         Vector2 originPos = transform.position;
-        Collider2D[] hitedTargets = Physics2D.OverlapCircleAll(originPos, m_viewRadius, m_viewTargetMask); //원안에 들어온 타겟중 내가 원하는 타겟만 선별 가능
+        Collider2D[] hitedTargets = Physics2D.OverlapCircleAll(originPos, m_viewRadius, m_viewTargetMask); //원안 인식범위 안에 들어오는 대상이 있는지 확인하고 레이어 마스크를 통해 원하는 타겟만 선별 가능합니다
 
         foreach (Collider2D hitedTarget in hitedTargets)
         {
-            Vector2 targetPos = hitedTarget.transform.position;
-            Vector2 dir = (targetPos - originPos).normalized;
-            Vector2 lookDir = AngleToDirZ(m_viewRotateZ);
+            Vector2 targetPos = hitedTarget.transform.position; //타겟의 위치를 벡터로 받는다
+            Vector2 dir = (targetPos - originPos).normalized;   //타겟의 위치 - 현재 위치
+            Vector2 lookDir = AngleToDirZ(m_viewRotateZ);       //보는방향
 
             // float angle = Vector3.Angle(lookDir, dir)
             // 아래 두 줄은 위의 코드와 동일하게 동작함. 내부 구현도 동일
-            float dot = Vector2.Dot(lookDir, dir);
-            float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+            float dot = Vector2.Dot(lookDir, dir); // 두 벡터의 내적을 구한다
+            float angle = Mathf.Acos(dot) * Mathf.Rad2Deg; //구한 내적을 아크코사인에 넣어서 각도값으로 변환시켜주면 시야각이 바라보고 있는 방향에서 타켓의 위치까지의 각도가 나온다
 
-            if (angle <= m_horizontalViewHalfAngle)
+            if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget)
                 {
                     if (m_bDebugMode)
-                        Debug.DrawLine(originPos, rayHitedTarget.point, Color.yellow);
+                        Debug.DrawLine(originPos, rayHitedTarget.point, Color.yellow); //막혀있다면 노란 레이캐스트
                 }
                 else
                 {
-                    hitedTargetContainer.Add(hitedTarget);
+                    hitedTargetContainer.Add(hitedTarget); //맞은 타겟을 리스트에 저장
 
                     Targeton = true;
 
                     if (m_bDebugMode)
-                        Debug.DrawLine(originPos, targetPos, Color.red);
+                        Debug.DrawLine(originPos, targetPos, Color.red); //타켓이 인식되었다면 빨간 레이캐스트
                 }
             }
         }
 
-        if (hitedTargetContainer.Count > 0)
-            return hitedTargetContainer.ToArray();
+        if (hitedTargetContainer.Count > 0) //타겟들에 대한 모든 확인이 끝났을때
+            return hitedTargetContainer.ToArray(); //비어있지 않은경우
         else
-            return null;
+            return null; //비어 있다면
     }
 
 
