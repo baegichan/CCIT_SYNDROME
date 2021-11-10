@@ -2,19 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pet_Attack : AttackModule
+public class Bullet_Attack : AttackModule
 {
     // Start is called before the first frame update
     public int AttackCycle = 1;
     public float Cycle_Cooltime;
     public BulletInfo[] BulletsInfo;
-  
+    
+    
+
+    public void CycleAttack()
+    {
+        for (int i = 0; i < AttackCycle; i++)
+        {
+            Invoke("Attack", Cycle_Cooltime * i);
+        }      
+    }
     public override void Attack()
     {
     if(Active)
     {
             if (BulletsInfo != null)
-            {
+            {           
                 foreach (BulletInfo a in BulletsInfo)
                 {
                     StartCoroutine(Spawn_Bullet(a));
@@ -22,16 +31,14 @@ public class Pet_Attack : AttackModule
             }
         }  
     }
-    public void Start()
-    {
-        Attack();
-    }
+
     public IEnumerator Spawn_Bullet(BulletInfo BulletsInfo)
     {
         yield return new WaitForSeconds(BulletsInfo.time);
-        GameObject bullet = Instantiate(BulletsInfo.bullet,transform.position,Quaternion.Euler(0,0,0 + BulletsInfo.Angle));
-        bullet.GetComponent<Pet_bullet>().Speed = BulletsInfo.Speed;
+        GameObject bullet = Instantiate(BulletsInfo.bullet,transform.position,Quaternion.Euler(0,0,0 + BulletsInfo.Angle ));
+        bullet.GetComponent<new_Bullet>().Speed = BulletsInfo.Speed;
     }
+  
 }
 [System.Serializable]
 public class BulletInfo
