@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class MentalChaild : MonoBehaviour
 {
+    //Test
+    public int HP;
+    public int DP;
+    //
+
     //공격
     public float P_AttackForce;
     public int P_AttackInt = 0;
     public float P_AttackTimer = 1;
     public bool P_AttackState = false;
     public float P_AttackResetTimer;
-    float P_CombatTimer= 5;
-    float P_CombatInt;
+    public float P_CombatTimer= 5;
+    public float P_CombatInt;
     //
     //대쉬
     public float P_DashForce;
@@ -44,7 +49,7 @@ public class MentalChaild : MonoBehaviour
             rigid.AddForce(new Vector2(TestPlayer.h, 0) * 2500 * Time.deltaTime);
             Ani.SetTrigger("Attack");
             Ani.SetBool("Combat", true);
-            Ani.SetBool("Possible", false);
+            Ani.SetBool("CanIThis", false);
             P_CombatTimer = 5;
             P_CombatInt = 1;
         }
@@ -141,7 +146,7 @@ public class MentalChaild : MonoBehaviour
     }
     public void Event_Eden()
     {
-        Ani.SetBool("Possible", true);
+        Ani.SetBool("CanIThis", true);
     }
     public void Dash()
     {
@@ -213,7 +218,7 @@ public class MentalChaild : MonoBehaviour
     {
         if (col.gameObject.tag == "Ground")
         {
-            Ani.SetBool("GroundState", true);
+            Ani.SetBool("Jump", false);
             GetComponentInParent<TestPlayer>().P_JumpInt = GetComponentInParent<TestPlayer>().P_MaxJumpInt;     
         }
     }

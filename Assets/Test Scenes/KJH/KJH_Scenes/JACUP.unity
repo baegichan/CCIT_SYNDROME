@@ -242,6 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 167876236}
   - component: {fileID: 167876235}
+  - component: {fileID: 167876237}
   m_Layer: 0
   m_Name: Main System
   m_TagString: Untagged
@@ -261,24 +262,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e7a3668e46bb34fba612c42941f907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Hp_Max: 0
+  Hp_Current: 0
+  Shield: 0
+  AP: 0
+  DP: 0
+  speed: 5
   Char:
-  - {fileID: 1782499535179738319}
   - {fileID: 1723121676}
+  - {fileID: 1782499535179738319}
   SelectChar: {fileID: 0}
-  abilityManager: {fileID: 0}
-  P_hp: 0
-  AbilityHP: 0
-  DefualtHP: 0
-  P_OtherWorld: 0
-  P_M_Speed: 5
+  Ani: {fileID: 0}
+  Current_Use: {fileID: 0}
+  PharaoWand_Senaka: {fileID: 0}
+  PharaoWand: {fileID: 0}
+  EvilSword: {fileID: 1181898345}
+  DefaultHP: 0
+  CharHP: 0
+  CharAP: 0
+  CharDP: 0
+  CharSpeed: 5
   P_JumpForce: 250
-  P_DefaultJumpInt: 1
   P_JumpInt: 1
+  P_OtherWorld: 0
+  Enhance_Health: 0
+  Enhance_Strength: 0
+  Enhance_Speed: 0
+  Enhance_Health_Point: 000000000100000002000000030000000400000005000000
+  Enhance_Strength_Point: 000000000100000002000000030000000400000005000000
+  Enhance_Speed_Point: 000000000100000002000000030000000400000005000000
   MulYakInt: 0
   AlYakInt: 0
-  P_Money: 0
+  P_Money: 500000
   ActiveAbility:
-    AbCode: 0
+    AbCode: 5
     AbName: 
     AbType: 0
     AbGrade: 
@@ -290,7 +307,7 @@ MonoBehaviour:
     AbSprite: {fileID: 0}
     IsUsing: 0
   PassiveAbility:
-    AbCode: 0
+    AbCode: 5
     AbName: 
     AbType: 0
     AbGrade: 
@@ -313,11 +330,39 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2022104445231906993}
-  - {fileID: 1418756519}
   - {fileID: 1723121687}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &167876237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167876234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b4b159d66c61749a15bfca55073529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 1546557572}
+  py: {fileID: 0}
+  Bomb: {fileID: 0}
+  WereWolf_Gauge: 0
+  RockAP: 0
+  ParaoAP: 140000001e0000002800000032000000
+  BoomAP: 0a0000000d0000001000000014000000
+  WolfAP: 02000000030000000400000005000000
+  E_Attack_Damage: 0
+  A_Int: 0
+  A_ResetTimer: 0
+  EA: {fileID: 0}
+  PharaoEffect: {fileID: 0}
+  ShieldCool: 0
+  B_Ball: {fileID: 0}
+  B_Damage: 0
+  B_Speed: 0
 --- !u!1001 &687278269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -343,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 611119679773391375, guid: b2f17ca335f12ef45ae255a03aa1332d, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 611119679773391375, guid: b2f17ca335f12ef45ae255a03aa1332d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -387,7 +432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6189070164017294672, guid: b2f17ca335f12ef45ae255a03aa1332d, type: 3}
       propertyPath: m_Name
-      value: Eden 10_18
+      value: Defualt
       objectReference: {fileID: 0}
     - target: {fileID: 6189070164017294672, guid: b2f17ca335f12ef45ae255a03aa1332d, type: 3}
       propertyPath: m_TagString
@@ -401,13 +446,49 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e4c57e8511389dd439d37278336eca27, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 463961545694012223, guid: b2f17ca335f12ef45ae255a03aa1332d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b2f17ca335f12ef45ae255a03aa1332d, type: 3}
---- !u!4 &1418756519 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6086689654735695936, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
+--- !u!1 &1181898345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6086689654735695937, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
   m_PrefabInstance: {fileID: 1765604446}
   m_PrefabAsset: {fileID: 0}
+--- !u!70 &1181898346
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181898345}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.3, y: 1.2}
+  m_Direction: 0
+--- !u!95 &1181898347
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181898345}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8813cd9430efb5c47b76b02b0136958f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1523297243
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,23 +752,27 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 167876236}
+    m_TransformParent: {fileID: 1723121687}
     m_Modifications:
-    - target: {fileID: 6086689654735695936, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
-      propertyPath: m_RootOrder
+    - target: {fileID: 4764111586521381442, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6086689654735695936, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6086689654735695936, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.72999954
+      value: -1.05
       objectReference: {fileID: 0}
     - target: {fileID: 6086689654735695936, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.784081
+      value: 0.74
       objectReference: {fileID: 0}
     - target: {fileID: 6086689654735695936, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.034989
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6086689654735695936, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -721,7 +806,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: DevilSword
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6724364462468007082, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6086689654735695939, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 83266049d8f0a5f4997257f4846d203d, type: 3}
 --- !u!4 &12898596204898665
 Transform:
@@ -920,11 +1010,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e635e858b88a97d48a6b86a9e4bdd749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
+  DP: 0
   P_AttackForce: 0
   P_AttackInt: 0
   P_AttackTimer: 1
   P_AttackState: 0
   P_AttackResetTimer: 0
+  P_CombatTimer: 5
   P_DashForce: 0
   P_DashInt: 1
   P_DashTimer: 2
