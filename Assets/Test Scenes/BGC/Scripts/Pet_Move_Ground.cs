@@ -5,9 +5,8 @@ using UnityEngine;
 public class Pet_Move_Ground : MoveModule
 {
     // Start is called before the first frame update
-    
-    GameObject Player;
-    Rigidbody2D Rigid;
+
+    public bool jumpable = true;
     public float jumpforce;
     public float jumpcooltime;
     private float jumpcool;
@@ -27,6 +26,7 @@ public class Pet_Move_Ground : MoveModule
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         Rigid = GetComponent<Rigidbody2D>();
+        Pet_Sprite = GetComponent < SpriteRenderer> ();
         Set_Module();
     }
     public override void Move()
@@ -41,16 +41,30 @@ public class Pet_Move_Ground : MoveModule
                 {
                     MoveToP = 0;
                 }
+                if (Player.transform.position.y - transform.position.y > distace)
+                {
+                    Jump();
+                }
             }
-            if (Player.transform.position.y - transform.position.y > distace)
-            {
-                Jump();
-            }
+           
             else
             {
 
             }
             jumpcool = Mathf.Clamp(jumpcool - Time.deltaTime, 0, jumpcool);
+        }
+    }
+
+    public override void Flip(GameObject target)
+    {
+        //defalut
+        if(target.transform.position.x>transform.position.x)
+        {
+            Pet_Sprite.flipX = false;
+        }
+        else
+        {
+            Pet_Sprite.flipX = true;
         }
     }
 }
