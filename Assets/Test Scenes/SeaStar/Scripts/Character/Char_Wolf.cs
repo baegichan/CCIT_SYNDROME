@@ -13,8 +13,11 @@ public class Char_Wolf : MonoBehaviour
 
     public void Attack()
     {
-        Ani.SetTrigger("Attack");
-        Ani.SetBool("CanIThis", false);
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ani.SetTrigger("Attack");
+            Ani.SetBool("CanIThis", false);
+        }
     }
 
     public void Dash()
