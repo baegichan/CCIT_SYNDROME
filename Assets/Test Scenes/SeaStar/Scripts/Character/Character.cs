@@ -40,7 +40,7 @@ public class Character : MonoBehaviour
         //쉴드에 데미지
         if(Defender.GetComponent<Character>().Shield > 0)
         Defender.GetComponent<Character>().Shield -= firstDamge - Defender.GetComponent<Character>().DP;
-
+        //Load_Damage_Text(Defender.GetComponent<Character>(),DamageValue);
     }
 
     /* 데미지 예시 (몬스터랑 플레이어랑 닿은 상황)
@@ -49,4 +49,34 @@ public class Character : MonoBehaviour
         Damage(col.gameObject, AP);
     }
     */
+    public  void Heal(Character target , int Healint)
+    {
+        if(target.Hp_Current>0 && target.Hp_Max>target.Hp_Current)
+        {
+            target.Hp_Current = Mathf.Clamp(target.Hp_Current+Healint, 0, target.Hp_Max);
+            Load_Heal_Text(target,Healint);
+        }
+    }
+    public  void Load_Heal_Text(Character target,int Healint)
+    {
+        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), target.transform.position + Vector3.up * 3+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+        Text.GetComponent<DamageOBJ>().HealText(Healint);
+    }
+    public  void Load_Damage_Text(Character target,int Damage)
+    {
+        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), target.transform.position + Vector3.up * 3+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+        Text.GetComponent<DamageOBJ>().DamageText(Damage);
+    }
+    public void Damage( int DamageValue) 
+    {
+        int firstDamge = DamageValue;
+        int secondDamge = firstDamge - Shield;
+        if (secondDamge > 0)
+        {
+            Hp_Current -= secondDamge - DP;
+        }       
+        if (Shield > 0)
+           Shield -= firstDamge - DP;
+        Load_Damage_Text(this,DamageValue);
+    }
 }

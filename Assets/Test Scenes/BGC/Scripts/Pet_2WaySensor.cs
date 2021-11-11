@@ -11,7 +11,7 @@ public class Pet_2WaySensor : Sensol
     }
     private void FixedUpdate()
     {
-        Left_hit = Physics2D.Raycast(transform.position, Vector2.left*Ray_Range);
+        Left_hit = Physics2D.Raycast(transform.position, Vector2.left, Ray_Range);
         if(Left_hit.collider!=null)
         {
             Debug.DrawRay(transform.position, Vector2.left * Ray_Range,Color.red);
@@ -29,7 +29,7 @@ public class Pet_2WaySensor : Sensol
             }
             Debug.DrawRay(transform.position, Vector2.left * Ray_Range, Color.white);
         }
-        Right_hit = Physics2D.Raycast(transform.position, Vector2.right * Ray_Range);
+        Right_hit = Physics2D.Raycast(transform.position, Vector2.right, Ray_Range);
         if (Right_hit.collider != null)
         {
             Debug.DrawRay(transform.position, Vector2.right * Ray_Range, Color.red);

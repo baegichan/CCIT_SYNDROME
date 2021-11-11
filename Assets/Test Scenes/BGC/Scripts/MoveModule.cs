@@ -4,6 +4,10 @@ using UnityEngine;
 
 public abstract class MoveModule : Modules
 {
+
+    protected GameObject Player;
+    protected SpriteRenderer Pet_Sprite;
+    protected Rigidbody2D Rigid;
     public void Set_Module()
     {
         if (GetComponent<Module_Set>().MoveModule == null)
@@ -15,6 +19,7 @@ public abstract class MoveModule : Modules
             Destroy(this);
         }
     }
+    public abstract void Flip(GameObject target);
     public abstract void Move();
     public abstract void Jump();
 }
