@@ -8,9 +8,12 @@ public class Bullet_Attack : AttackModule
     public int AttackCycle = 1;
     public float Cycle_Cooltime;
     public BulletInfo[] BulletsInfo;
-    
-    
 
+
+    private void Start()
+    {
+        CycleAttack();
+    }
     public void CycleAttack()
     {
         for (int i = 0; i < AttackCycle; i++)
