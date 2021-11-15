@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5252044684563573269
+--- !u!1 &4347582677624515809
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5595562457996951443}
-  - component: {fileID: 1923673344892214463}
-  - component: {fileID: 1148293478642358847}
-  - component: {fileID: 2218848773830523652}
-  - component: {fileID: 1107048995890798822}
-  - component: {fileID: 8410109161619097334}
+  - component: {fileID: 4112309629755324775}
+  - component: {fileID: 7927732885168101963}
+  - component: {fileID: 8888200678677191883}
+  - component: {fileID: 7673107428428889584}
+  - component: {fileID: 8929426996423206418}
   m_Layer: 0
-  m_Name: speacialBullet
+  m_Name: TestBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5595562457996951443
+--- !u!4 &4112309629755324775
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252044684563573269}
+  m_GameObject: {fileID: 4347582677624515809}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.6126454, y: 0.54233074, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1923673344892214463
+--- !u!212 &7927732885168101963
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252044684563573269}
+  m_GameObject: {fileID: 4347582677624515809}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -86,14 +85,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &1148293478642358847
+--- !u!50 &8888200678677191883
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252044684563573269}
+  m_GameObject: {fileID: 4347582677624515809}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -107,13 +106,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &2218848773830523652
+--- !u!58 &7673107428428889584
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252044684563573269}
+  m_GameObject: {fileID: 4347582677624515809}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -123,74 +122,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &1107048995890798822
+--- !u!114 &8929426996423206418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252044684563573269}
+  m_GameObject: {fileID: 4347582677624515809}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94821d1a048a30348885963afd0e3f87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 0
   rigid: {fileID: 0}
   Curve: 0
+  bulletDMG: 77
   Curvedir: 0
-  CurvePower: 0
-  Bullet_LifeTime: 3
+  CurvePower: 1
+  Bullet_LifeTime: 9
   Bullet_Target: 0
---- !u!114 &8410109161619097334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5252044684563573269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17fde9c29c89fef459e1aa9dccb41f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 1
-  AttackCycle: 1
-  Cycle_Cooltime: 0
-  BulletsInfo:
-  - bullet: {fileID: 4347582677624515809, guid: ff88beeedc0b910419d5e7e0152fa399, type: 3}
-    Angle: 0
-    Speed: 7
-    time: 2.9
-  - bullet: {fileID: 4347582677624515809, guid: ff88beeedc0b910419d5e7e0152fa399, type: 3}
-    Angle: 40
-    Speed: 7
-    time: 2.9
-  - bullet: {fileID: 4347582677624515809, guid: ff88beeedc0b910419d5e7e0152fa399, type: 3}
-    Angle: 80
-    Speed: 7
-    time: 2.9
-  - bullet: {fileID: 4347582677624515809, guid: ff88beeedc0b910419d5e7e0152fa399, type: 3}
-    Angle: 120
-    Speed: 7
-    time: 2.9
-  - bullet: {fileID: 4347582677624515809, guid: ff88beeedc0b910419d5e7e0152fa399, type: 3}
-    Angle: 160
-    Speed: 7
-    time: 2.9
-  - bullet: {fileID: 4347582677624515809, guid: ff88beeedc0b910419d5e7e0152fa399, type: 3}
-    Angle: 200
-    Speed: 7
-    time: 2.9
-  - bullet: {fileID: 4347582677624515809, guid: ff88beeedc0b910419d5e7e0152fa399, type: 3}
-    Angle: 240
-    Speed: 7
-    time: 2.9
-  - bullet: {fileID: 4347582677624515809, guid: ff88beeedc0b910419d5e7e0152fa399, type: 3}
-    Angle: 280
-    Speed: 7
-    time: 2.9
-  - bullet: {fileID: 4347582677624515809, guid: ff88beeedc0b910419d5e7e0152fa399, type: 3}
-    Angle: 320
-    Speed: 7
-    time: 2.9
