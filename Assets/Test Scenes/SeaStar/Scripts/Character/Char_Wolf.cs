@@ -28,19 +28,15 @@ public class Char_Wolf : MonoBehaviour
             Ani.SetBool("CanIThis", false);
             wolf = WolfGauge();
             StartCoroutine(wolf);
-            Debug.Log("朝五馬五,,,,,,,,");
-            Ani.SetBool("CanIThis", false);
+            Ani.SetBool("CanIThis", true);
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            Debug.Log("dasfsdfdsfsdf");
             Ani.SetBool("Dash", false);
             StopAllCoroutines();
-            Debug.Log(Char_Parent.h);
             Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h * 4, 0.6f) * WereWolf_Gauge * power);
             WereWolf_Gauge = 0;
-            Debug.Log("馬たたたたたたた");
         }
     }
 
