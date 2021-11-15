@@ -8,6 +8,7 @@ public class new_Bullet : MonoBehaviour
     public float Speed;
     public Rigidbody2D rigid;
     public bool Curve;
+    public int bulletDMG=0;
     public enum CurveDir
     {
     Top,
@@ -61,7 +62,7 @@ public class new_Bullet : MonoBehaviour
         {
             if (collision.tag == "Player")
             {
-                collision.GetComponent<Character>().Damage(7);
+                collision.GetComponent<Character>().Damage(bulletDMG);
                 Destroy(gameObject);
             }
             
@@ -70,7 +71,7 @@ public class new_Bullet : MonoBehaviour
         {
             if (collision.tag == "enemy")
             {
-                collision.GetComponent<Character>().Damage(7);
+                collision.GetComponent<Character>().Damage(bulletDMG);
                 Destroy(gameObject);
             }
         }

@@ -13,6 +13,12 @@ public class Char_Parent : Character
     AbilityManager AM;
     Camera Cam;
 
+    [Header("플레이어 장비")]
+    public GameObject Current_Use;
+    public GameObject PharaoWand_Senaka;
+    public GameObject PharaoWand;
+    public GameObject EvilSword;
+
     [Header("플레이어 스테이터스")]
     public int DefaultHP;
     public int CharHP;
@@ -40,6 +46,8 @@ public class Char_Parent : Character
     public static float h;
     public bool P_OtherWorld = false;
     public static bool RedBullDash = false;
+    public static float Active_Cool_Max;
+    public static float Active_Cool = 0f;
     Vector2 Mouse;//2021.10.12 김재헌
     Vector2 PlayerPosition;//2021.10.12 김재헌
 
@@ -63,7 +71,7 @@ public class Char_Parent : Character
         AM = GetComponent<AbilityManager>();
         Cam = Camera.main;
         rigid = GetComponent<Rigidbody2D>();
-        SelectChar = Char[1];
+        SelectChar = Char[0];
         ChangeChar(SelectChar);
     }
 
@@ -84,12 +92,13 @@ public class Char_Parent : Character
         }
         UseItem();
         ds();
-        if (Input.GetMouseButtonDown(0)) { atk(); }
+        atk();
         if(Ani.GetBool("CanIThis"))
         {
             if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
             Move();
         }
+        if(Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
     }
 
     //캐릭터 변경
@@ -154,6 +163,7 @@ public class Char_Parent : Character
         speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
         AM.py = SelectChar;
         CharScale = SelectChar.transform.localScale;
+        switchItem(ActiveAbility.AbCode);
     }
     //
 
@@ -287,6 +297,7 @@ public class Char_Parent : Character
             case 5:
             case 9:
                 active();
+                Ani.SetInteger("AbilityNum", ActiveAbility.AbCode);
                 break;
         }
     }
@@ -305,4 +316,43 @@ public class Char_Parent : Character
         }
     }
     //
+
+    public void switchItem(int AbilityCode)
+    {
+        if(Current_Use != null) { Current_Use.SetActive(false); }
+        switch (AbilityCode)
+        {
+            case 0:
+                Active_Cool_Max = 4f;
+                break;
+            case 1:
+                PharaoWandSwitch();
+                Current_Use = PharaoWand_Senaka;
+                Active_Cool_Max = 4f;
+                break;
+            case 2:
+                Active_Cool_Max = 4f;
+                break;
+            case 3:
+                Active_Cool_Max = 4f;
+                break;
+            case 4:
+                Active_Cool_Max = 4f;
+                break;
+            case 5:
+                Active_Cool_Max = 4f;
+                AM.EA = Current_Use.GetComponent<Animator>();
+                break;
+            case 9:
+                Active_Cool_Max = 4f;
+                break;
+        }
+        Active_Cool = Active_Cool_Max;
+    }
+
+    public void PharaoWandSwitch()
+    {
+        if (PharaoWand_Senaka.activeSelf) { PharaoWand_Senaka.SetActive(false); }
+        else { PharaoWand_Senaka.SetActive(true); }
+    }
 }

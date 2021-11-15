@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    GameObject target;
-    public float speed;
+    Transform target;
+    public float bullet_speed;
     //Rigidbody2D bulletRB;
     Vector2 targetPos;
 
+    private void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+    public void Update()
+    {
+        //transform.position = Vector3.MoveTowards(transform.position, new Vector3(target.position.x, transform.position.y, transform.position.z), Time.deltaTime * bullet_speed);
+
+    }
+
+
+
+    /*
     void Start()
     {
         //bulletRB = GetComponent<Rigidbody2D>();
