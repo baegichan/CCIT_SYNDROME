@@ -8,18 +8,35 @@ public class Bullet_Attack : AttackModule
     public int AttackCycle = 1;
     public float Cycle_Cooltime;
     public BulletInfo[] BulletsInfo;
+    public GameObject target;
 
 
+    #region 테스트존
     private void Start()
     {
-        CycleAttack();
+        //CycleAttack();   //n Cycle Attack Non Target
+        //CycleAttack(target); //n Cycle Attack to Target
+        //Attack( target); //1Cycle Attack to Target
+        //Attack();   //1Cycle Attack Non Target
+
     }
+    #endregion
+
+
     public void CycleAttack()
     {
         for (int i = 0; i < AttackCycle; i++)
         {
             Invoke("Attack", Cycle_Cooltime * i);
-        }      
+        }     
+        
+    }
+    public void CycleAttack(GameObject Target)
+    {
+        for (int i = 0; i < AttackCycle; i++)
+        {
+            Attack(target, Cycle_Cooltime*i);
+        }
     }
     public override void Attack()
     {
@@ -34,14 +51,52 @@ public class Bullet_Attack : AttackModule
             }
         }  
     }
-
+    public void Attack(GameObject target)
+    {
+        if (Active)
+        {
+            if (BulletsInfo != null)
+            {
+                foreach (BulletInfo a in BulletsInfo)
+                {
+                    StartCoroutine(Spawn_Bullet(a, target));
+                }
+            }
+        }
+    }
+    public void Attack(GameObject target,float time)
+    {
+        if (Active)
+        {
+            if (BulletsInfo != null)
+            {
+                foreach (BulletInfo a in BulletsInfo)
+                {
+                    StartCoroutine(Spawn_Bullet(a, target,time));
+                }
+            }
+        }
+    }
     public IEnumerator Spawn_Bullet(BulletInfo BulletsInfo)
     {
         yield return new WaitForSeconds(BulletsInfo.time);
         GameObject bullet = Instantiate(BulletsInfo.bullet,transform.position,Quaternion.Euler(0,0,0 + BulletsInfo.Angle ));
         bullet.GetComponent<new_Bullet>().Speed = BulletsInfo.Speed;
     }
-  
+    public IEnumerator Spawn_Bullet(BulletInfo BulletsInfo,GameObject target)
+    {
+        yield return new WaitForSeconds(BulletsInfo.time);
+        GameObject bullet = Instantiate(BulletsInfo.bullet, transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(target.transform.position.y - transform.position.y, target.transform.position.x - transform.position.x) * 180 / Mathf.PI + BulletsInfo.Angle));
+        bullet.GetComponent<new_Bullet>().Speed = BulletsInfo.Speed;
+    }
+    public IEnumerator Spawn_Bullet(BulletInfo BulletsInfo, GameObject target, float time)
+    {
+        yield return new WaitForSeconds(BulletsInfo.time+time);
+        GameObject bullet = Instantiate(BulletsInfo.bullet, transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(target.transform.position.y - transform.position.y, target.transform.position.x - transform.position.x) * 180 / Mathf.PI + BulletsInfo.Angle));
+        bullet.GetComponent<new_Bullet>().Speed = BulletsInfo.Speed;
+    }
+
+
 }
 [System.Serializable]
 public class BulletInfo

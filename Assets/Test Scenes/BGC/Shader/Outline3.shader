@@ -1,4 +1,4 @@
-Shader "Unlit/Outline2"
+Shader "Unlit/Outline3"
 {
   Properties
     {
@@ -60,7 +60,7 @@ Shader "Unlit/Outline2"
  
 				fixed outline = (1 - leftPixel * upPixel * rightPixel * bottomPixel) * col.a;
                
-                return outline*_OutlineColor;
+                return lerp(col, _OutlineColor, outline);
                
             }
             ENDCG
