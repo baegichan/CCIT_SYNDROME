@@ -70,6 +70,10 @@ public class Character : MonoBehaviour
     public void Damage( int DamageValue) 
     {
         int firstDamge = DamageValue;
+        if(DamageValue>20)
+        {
+            CameraShake.Shake(70, 0.4f);
+        }
         int secondDamge = firstDamge - Shield;
         if (secondDamge > 0)
         {

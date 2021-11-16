@@ -5,35 +5,57 @@ using UnityEngine;
 public class PotalEvent : MonoBehaviour
 {
     
-    GameObject ConnectedPotal;
+  //방 정도 싱글톤으로 저장  그대이터에 따라 다음방 탐색 후 이동 
+  //방 클로즈 될때마다 현재방 잠금
     bool DoorIsLock=false;
-
+    
 
     public Potals.PotalType PotalType;
 
     private void OnTriggerEnter(Collider other)
     {
         //이벤트 추가
-        Movement(other.gameObject);
+        if(!DoorIsLock)
+        {
+            Movement(other.gameObject);
+        }
+      
     }
-
-    public void Start()
+  
+    public void Potal_setting(Potal.Potal_type PotalTypes)
     {
-        transform.parent.GetComponent<Potals>().SetPotal(PotalType,gameObject);
+        switch (PotalTypes)
+        {
+            case Potal.Potal_type.LeftPotal:
+                PotalType = Potals.PotalType.L;
+                break;
+            case Potal.Potal_type.RightPotal:
+                PotalType = Potals.PotalType.R;
+                break;
+            case Potal.Potal_type.TopPotal:
+                PotalType = Potals.PotalType.T;
+                break;
+            case Potal.Potal_type.BottomPotal:
+                PotalType = Potals.PotalType.B;
+                break;
+
+                
+        }
+        if(PotalTypes!=Potal.Potal_type.None)
+        {
+            transform.parent.GetComponent<Potals>().SetPotal(PotalType, gameObject);
+        }
+
     }
+ 
     public void Movement(GameObject Player)
     {
-            if(DoorIsLock==false)
-            {
-              if(ConnectedPotal!=null)
-                {
-                //연결된걸로 이동 ㅇㅇ
-               }
-            }
+         
+
     }
     public void Connecting(GameObject Potal)
     {
-        ConnectedPotal = Potal;
+     
     }
     public void OpenDoor()
     {
