@@ -17,6 +17,8 @@ public class TestPlayer : Character
     public GameObject Current_Use;
     public GameObject PharaoWand_Senaka;
     public GameObject PharaoWand;
+    public GameObject BattleAxe_Senaka;
+    public GameObject BattleAxe;
     public GameObject EvilSword;
 
     [Header("«√∑π¿ÃæÓ Ω∫≈◊¿Ã≈ÕΩ∫")]
@@ -47,7 +49,7 @@ public class TestPlayer : Character
     public bool P_OtherWorld = false;
     public static bool RedBullDash = false;
     public static float Active_Cool_Max;
-    public static float Active_Cool = 0f;
+    public static float Active_Cool = 0f;  
     Vector2 Mouse;//2021.10.12 ±Ë¿Á«Â
     Vector2 PlayerPosition;//2021.10.12 ±Ë¿Á«Â
 
@@ -95,7 +97,7 @@ public class TestPlayer : Character
         {
             if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
             Move();
-        }
+        }        
         if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
     }
 
@@ -212,13 +214,16 @@ public class TestPlayer : Character
 
     public void MouseFilp()//2021.10.12 ±Ë¿Á«Â
     {
-        if (Mouse.x <= PlayerPosition.x)// 1920x1080 ±‚¡ÿ ¡ﬂ∞£¡ˆ¡°
+        if (Ani.GetBool("CanIThis"))
         {
-            SelectChar.transform.localScale = new Vector3(-CharScale.x, CharScale.y, CharScale.z);
-        }
-        else if (Mouse.x > PlayerPosition.x)
-        {
-            SelectChar.transform.localScale = new Vector3(CharScale.x, CharScale.y, CharScale.z);
+            if (Mouse.x <= PlayerPosition.x)
+            {
+                SelectChar.transform.localScale = new Vector3(-CharScale.x, CharScale.y, CharScale.z);
+            }
+            else if (Mouse.x > PlayerPosition.x)
+            {
+                SelectChar.transform.localScale = new Vector3(CharScale.x, CharScale.y, CharScale.z);
+            }
         }
     }
 
@@ -334,6 +339,8 @@ public class TestPlayer : Character
                 Active_Cool_Max = 4f;
                 break;
             case 4:
+                BattleAxeSwith();
+                Current_Use = BattleAxe_Senaka;
                 Active_Cool_Max = 4f;
                 break;
             case 5:
@@ -353,4 +360,11 @@ public class TestPlayer : Character
         if (PharaoWand_Senaka.activeSelf) { PharaoWand_Senaka.SetActive(false); }
         else { PharaoWand_Senaka.SetActive(true); }
     }
+
+    public void BattleAxeSwith()
+    {
+        if (BattleAxe_Senaka.activeSelf) { BattleAxe_Senaka.SetActive(false); }
+        else { BattleAxe_Senaka.SetActive(true); }
+    }
+   
 }

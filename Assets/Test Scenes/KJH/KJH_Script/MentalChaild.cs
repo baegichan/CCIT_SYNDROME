@@ -13,7 +13,7 @@ public class MentalChaild : MonoBehaviour
     public float P_AttackForce;
     public int P_AttackInt = 0;
     public float P_AttackTimer = 1;
-    public bool P_AttackState = false;
+    public bool P_Attack_State = false;
     public float P_AttackResetTimer;
     public float P_CombatTimer= 5;
     public float P_CombatInt;
@@ -21,7 +21,8 @@ public class MentalChaild : MonoBehaviour
     //´ë½¬
     public float P_DashForce;
     public float P_DashInt = 1;
-    public float P_DashTimer = 2;
+    public float P_DashTimer = 5;
+    int AnimeInt = 1;
     //
 
     Animator Ani;
@@ -35,11 +36,9 @@ public class MentalChaild : MonoBehaviour
 
     void Update()
     {
-        Attack();
-        if(Ani.GetBool("Possible") == true)
-        {
-            Dash();
-        }   
+        Attack();   
+        Dash();
+         
     }
 
     public void Attack()
@@ -52,16 +51,19 @@ public class MentalChaild : MonoBehaviour
             Ani.SetBool("CanIThis", false);
             P_CombatTimer = 5;
             P_CombatInt = 1;
+            P_Attack_State = true;
         }
         if(Input.GetMouseButtonUp(0))
         {
-            P_CombatInt = 0; 
+            P_CombatInt = 0;
+           
         }
         if(P_CombatInt == 0)
         {
             P_CombatTimer -= Time.deltaTime;
             if (P_CombatTimer <= 0)
             {
+                P_Attack_State = false;
                 Ani.SetBool("Combat", false);
             }
         }
@@ -148,68 +150,47 @@ public class MentalChaild : MonoBehaviour
     {
         Ani.SetBool("CanIThis", true);
     }
+   
     public void Dash()
-    {
-        //switch (TestPlayer.h)
-        //{
-        //    case -1:
-
-        //        if (Input.GetKey(KeyCode.LeftShift))
-        //        {
-        //            Ani.SetBool("Dash", true);
-        //            Physics2D.IgnoreLayerCollision(10, 11);
-        //            TestPlayer.rigid.AddForce(Vector3.left * P_DashForce * 2);
-        //            P_DashInt = 0;
-        //            if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
-        //            if (TestPlayer.RedBullDash == true)
-        //            {
-        //                Physics2D.IgnoreLayerCollision(10, 11);
-        //                //Damage
-        //            }
-
-        //        }
-        //        break;
-        //    case 1:
-
-        //        if (Input.GetKeyDown(KeyCode.LeftShift))
-        //        {
-        //            Ani.SetBool("Dash", true);
-        //            Physics2D.IgnoreLayerCollision(10, 11);
-        //            TestPlayer.rigid.AddForce(Vector3.right * P_DashForce * 2);
-        //            P_DashInt = 0;
-        //            if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
-        //            if (TestPlayer.RedBullDash == true)
-        //            {
-        //                Physics2D.IgnoreLayerCollision(10, 11);
-        //                //Damage
-        //            }
-        //        }
-        //        break;
-        //}
+    {              
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Ani.SetBool("Dash", true);
-            Physics2D.IgnoreLayerCollision(10, 11);
-            TestPlayer.rigid.AddForce(new Vector2(TestPlayer.h, 1) * P_DashForce * 2);
-            P_DashInt = 0;
-            if (TestPlayer.RedBullDash == true)
+            if (P_DashInt == 0)
             {
-                Physics2D.IgnoreLayerCollision(10, 11);
-                //Damage
+                if(AnimeInt == 1)
+                {
+                    Ani.SetBool("Dash", true);
+                    Ani.SetBool("CanIThis", false);
+                    AnimeInt = 0;
+                }                
             }
+            // Ani.SetBool("Dash", true);
+            // Ani.SetBool("CanIThis", false);
+            Physics2D.IgnoreLayerCollision(10, 11);
+                TestPlayer.rigid.AddForce(new Vector2(TestPlayer.h * 4, 1.6f) * P_DashForce);
+                P_DashInt = 0;                             
+                if (TestPlayer.RedBullDash == true)
+                {
+                    Physics2D.IgnoreLayerCollision(10, 11);
+                    //Damage
+                }            
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            Ani.SetBool("Dash", false);
+        }
 
         if (P_DashInt == 0)
-        {
+        {         
             P_DashForce = 0;
             P_DashTimer -= Time.deltaTime;
             Physics2D.IgnoreLayerCollision(10, 11);
         }
         if (P_DashTimer <= 0)
         {
-            P_DashTimer = 2;
+            P_DashTimer = 5;
             P_DashInt = 1;
+            AnimeInt = 1;
             P_DashForce = 100;
             Physics2D.IgnoreLayerCollision(10, 11, false);
         }

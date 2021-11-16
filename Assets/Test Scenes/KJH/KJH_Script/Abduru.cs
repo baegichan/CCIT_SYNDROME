@@ -16,12 +16,12 @@ public class Abduru : MonoBehaviour
 
     //마검
     public float E_Attack_Damage;
+    public bool E_Attack_State = false;
     //
     //전투도끼
     public int A_Int;
     float A_Damage;
-    bool A_AttackState = false;
-    public float A_ResetTimer;
+    bool A_Attack_State = false;  
     //
     public Animator EA;
     public GameObject PharaoEffect;
@@ -136,78 +136,19 @@ public class Abduru : MonoBehaviour
 
     public void BattleAxe()
     {
-        if (Input.GetMouseButtonDown(1)) { A_Attack(); }
+        py.GetComponentInParent<TestPlayer>().Ani.SetInteger("AbilityNum", 4);
+        if (Input.GetMouseButtonDown(1))
+        {
+            A_Attack();
+        }
         Debug.Log("바토루-아쿠스");
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Debug.Log("맞");
-        //    if (col.gameObject.tag == "Monster")//임시
-        //    {
-        //        Debug.Log("았");
-        //        if (A_Int <= 4)
-        //        {
-        //            Debug.Log("다");
-        //            A_Int++;
-        //        }
-        //    }
-        //}
+        //if 몬스터 와 충돌하면 A_int + 1;
     }
     public void A_Attack()
     {
-        py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Ability");
-        float Reset = 10;
-        switch (A_Int)
-        {
-            case 0:
-                A_AttackState = false;
-                A_Damage = 0;
-                break;
-
-            case 1:
-                A_AttackState = true;
-                A_Damage = 100;//임시
-                A_ResetTimer -= Time.deltaTime;
-                if (A_ResetTimer <= 0)
-                {
-                    A_Int = 0;
-                    A_ResetTimer = Reset;
-                }
-                break;
-
-            case 2:
-                A_AttackState = true;
-                A_Damage = 100;
-                A_ResetTimer -= Time.deltaTime;
-                if (A_ResetTimer <= 0)
-                {
-                    A_Int = 0;
-                    A_ResetTimer = Reset;
-                }
-                break;
-
-            case 3:
-                A_AttackState = true;
-                A_Damage = 100;
-                A_ResetTimer -= Time.deltaTime;
-                if (A_ResetTimer <= 0)
-                {
-                    A_Int = 0;
-                    A_ResetTimer = Reset;
-                }
-                break;
-
-            case 4:
-                A_AttackState = true;
-                A_AttackState = true;
-                A_Damage = 150;//임시
-                A_ResetTimer -= Time.deltaTime;
-                if (A_ResetTimer <= 0)
-                {
-                    A_Int = 0;
-                    A_ResetTimer = Reset;
-                }
-                break;
-        }
+        py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("AxeAttack");
+        py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Abililty");
+        //py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);   
     }
 
     public void Ability_E()
@@ -215,8 +156,13 @@ public class Abduru : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("이-부르 소-도");
-            EvilSword_Attack();     
+            EvilSword_Attack();
+            GetComponent<MentalChaild>().P_CombatInt = 1;
         }  
+        if(Input.GetMouseButtonUp(1))
+        {
+            GetComponent<MentalChaild>().P_CombatInt = 0;
+        }
     }
 
     public void EvilSword_Attack()

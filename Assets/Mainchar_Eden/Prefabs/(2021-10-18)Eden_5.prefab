@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3733315480962454868}
+  - component: {fileID: 7565970753390597148}
+  - component: {fileID: 3835711639773261291}
   m_Layer: 0
   m_Name: Bone_Eden_Waepon
   m_TagString: Untagged
@@ -30,6 +32,45 @@ Transform:
   m_Father: {fileID: 703884207650449308}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7565970753390597148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62412916589759381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd94fadf2af2a31488a42199f6aa63fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  D: 0
+--- !u!61 &3835711639773261291
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62412916589759381}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.32, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.19, y: 0.24}
+  m_EdgeRadius: 0
 --- !u!1 &108645548436652839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1396,7 +1437,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3362616466470369062}
   m_LocalRotation: {x: 0, y: -0, z: -0.9940093, w: 0.10929566}
-  m_LocalPosition: {x: 0.016871927, y: -0.1070678, z: -0.01}
+  m_LocalPosition: {x: 0.039336734, y: -0.105757445, z: -0.00999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6594121514532716050}
@@ -1841,8 +1882,8 @@ MonoBehaviour:
   - {fileID: 349084631491393190}
   - {fileID: 574347216004981081}
   m_Bounds:
-    m_Center: {x: -0.062899366, y: -0.20686871, z: -0.060000002}
-    m_Extent: {x: 0.10389589, y: 0.11321628, z: 0.02000004}
+    m_Center: {x: -0.06290032, y: -0.19561726, z: -0.060000002}
+    m_Extent: {x: 0.10389684, y: 0.11321628, z: 0.02000004}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!114 &7524352162503266736
@@ -2438,7 +2479,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 1762664672391215604}
   m_Bounds:
-    m_Center: {x: -0.0041887313, y: -0.3175847, z: -0.00999999}
+    m_Center: {x: -0.0041887313, y: -0.30633324, z: -0.00999999}
     m_Extent: {x: 0.064815074, y: 0.067500055, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -3110,11 +3151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e635e858b88a97d48a6b86a9e4bdd749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
+  DP: 0
   P_AttackForce: 0
   P_AttackInt: 0
   P_AttackTimer: 1
   P_AttackState: 0
   P_AttackResetTimer: 0
+  P_CombatTimer: 5
+  P_CombatInt: 0
   P_DashForce: 0
   P_DashInt: 1
   P_DashTimer: 2
@@ -3975,7 +4020,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &176596675246048087
 Transform:
   m_ObjectHideFlags: 0
@@ -4058,8 +4103,8 @@ MonoBehaviour:
   - {fileID: 703884207650449308}
   - {fileID: 3733315480962454868}
   m_Bounds:
-    m_Center: {x: -1.2538371, y: -0.7624474, z: 0.11500001}
-    m_Extent: {x: 0.4482481, y: 0.24066609, z: 0.004999999}
+    m_Center: {x: -0.6881798, y: -0.8423183, z: 0.11500001}
+    m_Extent: {x: 0.481314, y: 0.13283983, z: 0.0050001144}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!114 &5734100632542789306
