@@ -10,11 +10,8 @@ public class Char_Eden : MonoBehaviour
     float P_DashInt = 10;
     float P_DashTimer = 2;
 
-        public float P_AttackForce;
-    public int P_AttackInt = 0;
-    public float P_AttackTimer = 1;
-    public bool P_AttackState = false;
-    public float P_AttackResetTimer;
+    float P_CombatTimer = 5;
+    float P_CombatInt;
 
     public Animator Ani;
 
@@ -22,81 +19,45 @@ public class Char_Eden : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (P_AttackInt <= 2)
+            Char_Parent.rigid.AddForce(new Vector2(TestPlayer.h, 0) * 2500 * Time.deltaTime);
+            Ani.SetTrigger("Attack");
+            Ani.SetBool("Combat", true);
+            Ani.SetBool("CanIThis", false);
+            P_CombatTimer = 5;
+            P_CombatInt = 1;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            P_CombatInt = 0;
+        }
+        if (P_CombatInt <= 0)
+        {
+            P_CombatTimer -= Time.deltaTime;
+            if (P_CombatTimer <= 0)
             {
-                P_AttackInt++;
+                Ani.SetBool("Combat", false);
             }
         }
-
-        float Reset = 1;
-
-        switch (P_AttackInt)
-        {
-            case 0:
-                P_AttackState = false;
-                P_AttackResetTimer = Reset;
-                break;
-            case 1:
-                P_AttackState = true;
-                Ani.SetInteger("AttackInt", 1);
-                Ani.SetBool("AttackState", true);
-
-                P_AttackResetTimer -= Time.deltaTime;
-
-                if (P_AttackResetTimer <= 0)//공격하다가 중간에 멈추면 다시 1타로 초기화.
-                {
-                    P_AttackInt = 0;
-                    P_AttackResetTimer = Reset;
-                }
-                if (P_AttackState == true)
-                {
-
-                }
-                break;
-            case 2:
-                P_AttackState = true;
-                Ani.SetInteger("AttackInt", 2);
-                Ani.SetBool("AttackState", true);
-
-                P_AttackResetTimer -= Time.deltaTime;
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    P_AttackResetTimer = Reset;
-                }
-                if (P_AttackResetTimer <= 0)
-                {
-                    P_AttackInt = 0;
-                    P_AttackResetTimer = Reset;
-                }
-                P_AttackState = true;
-                if (P_AttackState == true)
-                {
-
-                }
-                break;
-            case 3:
-                Ani.SetInteger("AttackInt", 3);
-                Ani.SetBool("AttackState", false);
-
-                P_AttackResetTimer -= Time.deltaTime;
-
-                if (P_AttackResetTimer <= 0)
-                {
-                    P_AttackInt = 0;
-                }
-                P_AttackState = false;
-                break;
-        }
+    }
+    public void Event_Eden()
+    {
+        Ani.SetBool("CanIThis", true);
     }
 
     public void Dash()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            Ani.SetBool("Dash", true);
+            Physics2D.IgnoreLayerCollision(10, 11);
             Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 1) * P_DashForce * 2);
             P_DashInt = 0;
+            if (Char_Parent.RedBullDash == true)
+            {
+                Physics2D.IgnoreLayerCollision(10, 11);
+            }
         }
+        if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
 
         if (P_DashInt == 0)
         {
@@ -118,6 +79,21 @@ public class Char_Eden : MonoBehaviour
         if (col.gameObject.tag == "Ground")
         {
             GetComponentInParent<Char_Parent>().P_JumpInt = GetComponentInParent<Char_Parent>().P_MaxJumpInt;
+            Ani.SetBool("Jump", false);
         }
+    }
+
+    public void PharaoWandSwitch()
+    {
+        if (GetComponentInParent<Char_Parent>().PharaoWand_Senaka.activeSelf) { GetComponentInParent<Char_Parent>().PharaoWand_Senaka.SetActive(false); }
+        else { GetComponentInParent<Char_Parent>().PharaoWand_Senaka.SetActive(true); }
+    }
+
+    public delegate void Active();
+    public Active active;
+    
+    public void UseActive()
+    {
+        active();
     }
 }

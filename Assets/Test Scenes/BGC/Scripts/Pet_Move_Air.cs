@@ -6,8 +6,7 @@ public class Pet_Move_Air : MoveModule
 {
     
    
-    GameObject Player;
-    Rigidbody2D Rigid;
+   
     public Vector2 target_distace;
  
     public float Speed;
@@ -18,16 +17,23 @@ public class Pet_Move_Air : MoveModule
         Set_Module();
         Player = GameObject.FindGameObjectWithTag("Player");
         Rigid = GetComponent<Rigidbody2D>();
-       
+        Pet_Sprite = GetComponent<SpriteRenderer>();
         Move();
-
-
     }
+
+
+    #region 타겟으로 이동 테스트
+    /*
     public void Update()
     {
+    
         Move_To_Target(); 
        
-    }
+    }*/
+    #endregion
+
+
+
     public override void Move()
     {
         if (Active)
@@ -89,5 +95,18 @@ public class Pet_Move_Air : MoveModule
     {
         //No jump ^^
         throw new System.NotImplementedException();
+    }
+
+    public override void Flip(GameObject target)
+    {
+        //defalut
+        if (target.transform.position.x > transform.position.x)
+        {
+            Pet_Sprite.flipX = false;
+        }
+        else
+        {
+            Pet_Sprite.flipX = true;
+        }
     }
 }
