@@ -15,13 +15,12 @@ public class Abduru : MonoBehaviour
     public int[] WolfAP = { 2, 3, 4, 5 };
 
     //마검
-    public float E_Attack_Damage;
     public bool E_Attack_State = false;
     //
     //전투도끼
     public int A_Int;
     float A_Damage;
-    bool A_Attack_State = false;  
+    public static bool A_Attack_State = false;  
     //
     public Animator EA;
     public GameObject PharaoEffect;
@@ -139,30 +138,30 @@ public class Abduru : MonoBehaviour
         py.GetComponentInParent<TestPlayer>().Ani.SetInteger("AbilityNum", 4);
         if (Input.GetMouseButtonDown(1))
         {
-            A_Attack();
-        }
-        Debug.Log("바토루-아쿠스");
-        //if 몬스터 와 충돌하면 A_int + 1;
+            A_Attack();  
+        }        
     }
     public void A_Attack()
-    {
-        py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("AxeAttack");
+    {       
         py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Abililty");
+        py.GetComponentInParent<TestPlayer>().Ani.SetBool("CanIThis", false);
         //py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);   
     }
-
+       
     public void Ability_E()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("이-부르 소-도");
             EvilSword_Attack();
-            GetComponent<MentalChaild>().P_CombatInt = 1;
+            EvilSwordAniEvent.intup();
+            py.GetComponent<MentalChaild>().P_CombatInt = 1;
+            E_Attack_State = true;
         }  
         if(Input.GetMouseButtonUp(1))
         {
-            GetComponent<MentalChaild>().P_CombatInt = 0;
-        }
+            py.GetComponent<MentalChaild>().P_CombatInt = 0;
+            py.GetComponent<MentalChaild>().P_CombatTimer = 5;
+        }     
     }
 
     public void EvilSword_Attack()

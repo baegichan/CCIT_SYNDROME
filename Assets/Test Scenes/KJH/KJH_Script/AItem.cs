@@ -117,7 +117,7 @@ public class AItem : MonoBehaviour
         SelectAbility();
     }
 
-    void SelectAbility()
+    public void SelectAbility()
     {
         for (int i = 0; i < AbList.Count; i++)
         {

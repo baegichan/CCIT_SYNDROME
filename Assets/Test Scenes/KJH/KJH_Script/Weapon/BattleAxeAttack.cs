@@ -7,14 +7,19 @@ public class BattleAxeAttack : MonoBehaviour
     public int D;
     int Attack_int = 0;
     public GameObject Current;
+    public GameObject YourParent;
+
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Monster")
+        if(Abduru.A_Attack_State == true)
         {
-            Current = col.gameObject;
-            Attack_int++;
-            Fourth();          
-        }
+            if (col.tag == "Monster")
+            {
+                Current = col.gameObject;
+                Attack_int++;
+                Fourth();
+            }
+        }       
     }
 
     private void Fourth()

@@ -99,6 +99,7 @@ public class TestPlayer : Character
             Move();
         }        
         if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
+        if (Input.GetKeyDown(KeyCode.O)) { DecideChar(); SelectAbility(); }
     }
 
     //캐릭터 변경
@@ -198,10 +199,14 @@ public class TestPlayer : Character
     //점프
     public void Jump()
     {
-        if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
+        if (P_JumpInt == 0)
+        {
+            rigid.AddForce(Vector3.up * 0);         
+        }
         else if (P_JumpInt > 0)
         {
             rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
+            rigid.velocity = new Vector2(0, 0);
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);
         }
@@ -339,7 +344,7 @@ public class TestPlayer : Character
                 Active_Cool_Max = 4f;
                 break;
             case 4:
-                BattleAxeSwith();
+                OffBattleAxe();
                 Current_Use = BattleAxe_Senaka;
                 Active_Cool_Max = 4f;
                 break;
@@ -361,10 +366,21 @@ public class TestPlayer : Character
         else { PharaoWand_Senaka.SetActive(true); }
     }
 
-    public void BattleAxeSwith()
+    public void OffBattleAxe()
     {
-        if (BattleAxe_Senaka.activeSelf) { BattleAxe_Senaka.SetActive(false); }
-        else { BattleAxe_Senaka.SetActive(true); }
+        BattleAxe_Senaka.SetActive(true);
+        BattleAxe.SetActive(false);
     }
-   
+    
+    public void OnBattleAxe()
+    {
+        BattleAxe_Senaka.SetActive(false);
+        BattleAxe.SetActive(true);
+    }
+
+    public void EvillSwordSwitch()
+    {
+        if (EvilSword.activeSelf) { EvilSword.SetActive(false); }
+        else { EvilSword.SetActive(true); }
+    }
 }

@@ -38,7 +38,7 @@ public class MentalChaild : MonoBehaviour
     {
         Attack();   
         Dash();
-         
+        BattleAxeSwithMove();
     }
 
     public void Attack()
@@ -203,7 +203,30 @@ public class MentalChaild : MonoBehaviour
             GetComponentInParent<TestPlayer>().P_JumpInt = GetComponentInParent<TestPlayer>().P_MaxJumpInt;     
         }
     }
+
+    void BattleAxeEvent()
+    {
+        Abduru.A_Attack_State = false;
+        GetComponentInParent<TestPlayer>().Ani.SetBool("CanIThis", true);
+    }
+    void BattleAxeAttackEvent()
+    {
+        Abduru.A_Attack_State = true;
+        GetComponentInParent<TestPlayer>().Ani.SetBool("CanIThis", false);
+    }
+    void OnBattleAxeSwith()
+    {
+        GetComponentInParent<TestPlayer>().OnBattleAxe();
+    }
+    void OffBattleAxeSwith()
+    {
+        GetComponentInParent<TestPlayer>().OffBattleAxe();
+    }
+    void BattleAxeSwithMove()
+    {
+        if (Ani.GetBool("CanIThis") && !GetComponentInParent<TestPlayer>().BattleAxe_Senaka.activeSelf && Ani.GetBool("Move"))
+        {
+            GetComponentInParent<TestPlayer>().OffBattleAxe();
+        }
+    }
 }
-
-
-

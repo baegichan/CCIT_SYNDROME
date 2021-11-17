@@ -6,15 +6,19 @@ public class Weapon : MonoBehaviour
 {
     public int D;
     public GameObject YourWeapon;
-
+    public GameObject YourParent;
+    public GameObject Current;
+   
     void OnTriggerEnter2D(Collider2D col)
     {
-        //if (YourWeapon.GetComponent<MentalChaild>().P_Attack_State == true)
-        //{
+        Current = col.gameObject;
+
+        if (YourParent.GetComponent<MentalChaild>().P_Attack_State == true)
+        {
             if (col.tag == "Monster")
             {
-                col.GetComponent<Character>().Damage(D);
+                col.GetComponent<Character>().Damage(D);                
             }
-        //}
+        }
     } 
 }
