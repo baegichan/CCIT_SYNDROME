@@ -211,11 +211,13 @@ public class MentalChaild : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D col)
     {
+        
         if (col.gameObject.tag == "Ground")
         {
             Ani.SetBool("GroundState", true);
             GetComponentInParent<TestPlayer>().P_JumpInt = GetComponentInParent<TestPlayer>().P_MaxJumpInt;     
         }
+        
     }
 }
 
