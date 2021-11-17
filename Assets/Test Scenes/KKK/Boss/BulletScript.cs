@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    public GameObject Boss;//Component받아와야함
+    //public GameObject Boss;//Component받아와야함
 
     Transform target;
     public float bullet_speed;
@@ -39,8 +39,13 @@ public class BulletScript : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 collision.transform.GetComponent<Character>().Damage(10);
+                
+                Destroy(this.gameObject);
             }
-            Destroy(this.gameObject);
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 

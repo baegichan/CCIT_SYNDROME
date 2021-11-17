@@ -22,12 +22,12 @@ public class Bomb : MonoBehaviour
     {
         if (collision.CompareTag("Player") || collision.CompareTag("Ground"))
         {
-
-            //터지는 애니메이션
-
-
-
-            Destroy(this.gameObject);
+            if (collision.CompareTag("Player"))
+            {
+                //터지는 애니메이션
+                collision.GetComponent<Character>().Damage(50);
+                //Destroy(this.gameObject, 5);플레이어가 밟으면 터지는거 애니메이션 끝나면 없애줄꺼임// 5초는 그냥 설정
+            }
         }
     }
 }
