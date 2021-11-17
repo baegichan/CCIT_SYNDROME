@@ -12,17 +12,25 @@ public class MonsterSpawnEvent : MapEvent
     }
     public float SpawnDelay = 0.5f;
     public bool UseSpawner = false;
+    public bool OneTimeSpawn = false;
     int count = 0;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (UseSpawner != true)
+        if (collision.tag == "Player")
         {
-            if (collision.tag == "Player")
-            {
-                StartCoroutine(Spawn_Monster_Inorder());
-                //Spawn_Monster();
+                  if (UseSpawner != true)
+                  {
+                    if(OneTimeSpawn)
+                  {
+                    Spawn_Monster();
+                  }
+                  else
+                  {
+                    StartCoroutine(Spawn_Monster_Inorder());
+                  }
+              
             }
-        }
+          }
     }
     private void Start()
     {

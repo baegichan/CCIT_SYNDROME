@@ -106,12 +106,12 @@ public class Room_data : MonoBehaviour
 
     private void Start()
     {
-        spr = GetComponent<SpriteRenderer>();
+     //   spr = GetComponent<SpriteRenderer>();
     }
     
     private void Update()
     {
-        
+        /*
         if(map_code == 1)
         {
             spr.sprite = sp[0];
@@ -171,6 +171,6 @@ public class Room_data : MonoBehaviour
         else if (map_code == 15)
         {
             spr.sprite = sp[14];
-        }
+        }*/
     }
 }

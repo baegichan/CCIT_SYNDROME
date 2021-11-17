@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class MapLoadTest : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public MapData testmap;
-    private void Start()
+    
+    
+     MapData testmap;
+    public Map_data_Set Mapset;
+     GameObject Target_Room;
+     
+  
+    public void Starting_Setting()
     {
-        testmap.Load_MapData(gameObject);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Target_Room = transform.GetChild(i).gameObject;
+            if (Target_Room.GetComponent<Room_data>().Room_Created)
+            {
+                testmap = Mapset.Get_RandomRoom(Target_Room.GetComponent<Room_data>().map_code);
+                testmap.Load_MapData(Target_Room);
+            }
+        }
     }
-
     public void Loading_Map(int mapcode)
     {
         //분별코드
@@ -19,8 +31,4 @@ public class MapLoadTest : MonoBehaviour
         testmap.Load_MapData(gameObject);
     }
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

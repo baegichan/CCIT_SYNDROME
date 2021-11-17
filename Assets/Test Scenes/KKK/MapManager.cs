@@ -4,11 +4,50 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
+    public static MapManager s_Instace;
+    public void instace()
+    {
+    if(s_Instace==null)
+    {
+            s_Instace = this;
+    }
+    else
+    {
+            Destroy(gameObject);
+    }
+    
+    }
+    public Vector2 Current_Room = new Vector2(0,0);
+   
+     public void PotalMove(Potals.PotalType  potalType)
+    {
+        switch (potalType)
+        {
+            case Potals.PotalType.L:
+                Current_Room = new Vector2( Current_Room.x - 1, Current_Room.y);
+                //이동구현
+            break;
+            case Potals.PotalType.R:
+                Current_Room = new Vector2(Current_Room.x+ 1, Current_Room.y);
+                //이동구현
+                break;
+            case Potals.PotalType.T:
+                Current_Room = new Vector2(Current_Room.x , Current_Room.y+1);
+                //이동구현
+                break;
+            case Potals.PotalType.B:
+                Current_Room = new Vector2(Current_Room.x , Current_Room.y-1);
+                //이동구현
+                break;
+
+        }
+       
+    }
     [SerializeField]
     int Level;
-
     int map_index;
-    int width = 500;//사이 간격
+    [Header("간격 default = 500")]
+    public int width = 500;//사이 간격
 
     public GameObject room;
     public GameObject Maps;
@@ -28,7 +67,7 @@ public class MapManager : MonoBehaviour
     Vector2 Gacha_Room_Index;
     [SerializeField]
     Vector2 Store_Room_Index;
-
+    
     public Vector2 BOSS_ROOM
     {
         get
@@ -54,7 +93,7 @@ public class MapManager : MonoBehaviour
     }
     private void Start()
     {
-
+        instace();
 
         GameObject room = GameObject.FindGameObjectWithTag("Room");
         Start_Room_Index = new Vector2(Level, Level);
@@ -80,6 +119,8 @@ public class MapManager : MonoBehaviour
         Map_Move();
         
         bbb();
+        Current_Room = new Vector2(Level, Level);
+        Maps.GetComponent<MapLoadTest>().Starting_Setting();
     }
     void bbb()//맵 최소 개수 
     {

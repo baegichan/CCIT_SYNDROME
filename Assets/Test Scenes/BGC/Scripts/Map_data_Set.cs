@@ -8,6 +8,10 @@ public class Map_data_Set : ScriptableObject
     // Start is called before the first frame update
     public Maps[] Maps = null;
     
+    public MapData Get_RandomRoom(int code)
+    {
+        return Maps[code].MapData[Random.Range(0,Maps[code].MapData.Length)];
+    }
 }
 [System.Serializable]
 public class Maps
