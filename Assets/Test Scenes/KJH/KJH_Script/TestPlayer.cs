@@ -2,34 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestPlayer : Character
+public class TestPlayer : MonoBehaviour
 {
     [Header("게임 오브젝트")]
     [Tooltip("변신할 캐릭터 리스트")]
     public GameObject[] Char;
     public GameObject SelectChar;
-    public Animator Ani;
+    [Tooltip("능력 정보 받아올 매니저")]
+    public GameObject abilityManager;
+    //Animation ani;
     public static Rigidbody2D rigid;
-    Abduru AM;
+    AbilityManager AM;
     Camera Cam;
+    Animator Ani;
 
-    [Header("플레이어 장비")]
-    public GameObject Current_Use;
-    public GameObject PharaoWand_Senaka;
-    public GameObject PharaoWand;
-    public GameObject BattleAxe_Senaka;
-    public GameObject BattleAxe;
-    public GameObject EvilSword;
-
-    [Header("플레이어 스테이터스")]
-    public int DefaultHP;
-    public int CharHP;
-    public int CharAP;
-    public int CharDP;
-    public int CharSpeed;
+    [Header("스테이터스")]
+    ///플레이어 
+    //스테이터스
+    public int P_hp;
+    public int AbilityHP;
+    public int DefualtHP;
+    public int P_Maxhp { get { return AbilityHP + DefualtHP; } }
+    public bool P_OtherWorld = false;//2021.10.12 김재헌
+    //
+    //이동
+    public static float h;
+    public int P_M_Speed;
+    public static bool RedBullDash = false;
+    Vector2 Mouse;//2021.10.12 김재헌
+    Vector2 PlayerPosition;//2021.10.12 김재헌
+    //
     //점프
     public float P_JumpForce;
-    float P_DefaultJumpInt = 1;
+    
+    public float P_DefaultJumpInt = 1;
     public float P_MaxJumpInt
     {
         get
@@ -45,21 +51,7 @@ public class TestPlayer : Character
         }
     }
     public float P_JumpInt;
-    public static float h;
-    public bool P_OtherWorld = false;
-    public static bool RedBullDash = false;
-    public static float Active_Cool_Max;
-    public static float Active_Cool = 0f;  
-    Vector2 Mouse;//2021.10.12 김재헌
-    Vector2 PlayerPosition;//2021.10.12 김재헌
-
-    //[Header("능력치 강화 수치")]
-    public int Enhance_Health;
-    public int Enhance_Strength;
-    public int Enhance_Speed;
-    public int[] Enhance_Health_Point = { 0, 1, 2, 3, 4, 5 };
-    public int[] Enhance_Strength_Point = { 0, 1, 2, 3, 4, 5 };
-    public int[] Enhance_Speed_Point = { 0, 1, 2, 3, 4, 5 };
+    //
 
     [Header("소지 물약&능력")]
     public int MulYakInt;
@@ -70,17 +62,20 @@ public class TestPlayer : Character
 
     void Awake()
     {
-        AM = GetComponent<Abduru>();
-        Cam = Camera.main;
+        Cam = Camera.main;//2021.10.12 김재헌
+        AM = GetComponent<AbilityManager>();
         rigid = GetComponent<Rigidbody2D>();
+        Ani = GetComponent<Animator>();
         SelectChar = Char[0];
-        ChangeChar(SelectChar);
-        SelectAbility();
+        ChangeCahr();
     }
 
     void FixedUpdate()
     {
-
+        if (Ani.GetBool("Possible") == true)
+        {
+            Move();
+        }  
     }
 
     void Update()
@@ -89,82 +84,49 @@ public class TestPlayer : Character
         Mouse = Input.mousePosition;//2021.10.12 김재헌
         MouseFilp();//2021.10.12 김재헌
 
-        UseSkill();
+        if (ActiveAbility.AbSprite != null)
+        {
+            UseSkill();
+        }
         UseItem();
-        ds();
-        atk();
-        if (Ani.GetBool("CanIThis"))
+        if (Ani.GetBool("Possible") == true)
         {
             if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
-            Move();
-        }        
-        if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
-        if (Input.GetKeyDown(KeyCode.O)) { DecideChar(); SelectAbility(); }
+        }
+        if (Input.GetMouseButtonDown(0)) { atk(); }
+        if (Input.GetKeyDown(KeyCode.Tab)) { ChangeCahr(); }
     }
 
     //캐릭터 변경
-    public void DecideChar()
+    void ChangeCahr()
     {
-        switch (ActiveAbility.AbCode)
+        //임시 캐릭터 교체
+        if (SelectChar == Char[0])
         {
-            case 0:
-                SelectChar = Char[1];
-                break;
-            case 3:
-                SelectChar = Char[2];
-                break;
-            default:
-                SelectChar = Char[0];
-                break;
+            Char[1].SetActive(true);
+            Char[1].transform.position = Char[0].transform.position;
+            SelectChar = Char[1];
+            Char[0].SetActive(false);
         }
-        ChangeChar(SelectChar);
-    }
-
-    void ChangeChar(GameObject Char)
-    {
-        for (int i = 0; i < this.Char.Length; i++)
+        else if (SelectChar == Char[1])
         {
-            this.Char[i].SetActive(false);
+            Char[0].SetActive(true);
+            Char[0].transform.position = Char[1].transform.position;
+            SelectChar = Char[0];
+            Char[1].SetActive(false);
         }
-        Char.transform.position = Char.transform.position;
-        Char.SetActive(true);
-
-        UpdateStat();
-    }
-
-    public void UpdateStat()
-    {
-        switch (SelectChar.transform.name)
-        {
-            case "Defualt":
-                atk = SelectChar.GetComponent<MentalChaild>().Attack;
-                ds = SelectChar.GetComponent<MentalChaild>().Dash;
-                CharHP = SelectChar.GetComponent<MentalChaild>().HP;
-                CharDP = SelectChar.GetComponent<MentalChaild>().DP;
-                break;
-            case "Wolf":
-                atk = SelectChar.GetComponent<Char_Wolf>().Attack;
-                ds = SelectChar.GetComponent<Char_Wolf>().Dash;
-                CharHP = SelectChar.GetComponent<Char_Wolf>().HP[ActiveAbility.Enhance];
-                CharDP = SelectChar.GetComponent<Char_Wolf>().DP;
-                break;
-            case "RockHuman":
-                atk = SelectChar.GetComponent<Char_RockMan>().Attack;
-                ds = SelectChar.GetComponent<Char_RockMan>().Dash;
-                CharHP = SelectChar.GetComponent<Char_RockMan>().HP;
-                CharDP = SelectChar.GetComponent<Char_RockMan>().DP[ActiveAbility.Enhance];
-                break;
-        }
-
         rigid = SelectChar.GetComponent<Rigidbody2D>();
         Ani = SelectChar.GetComponent<Animator>();
-        Hp_Max = DefaultHP + CharHP + Enhance_Health_Point[Enhance_Health];
-        DP = CharDP;
-        AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
-        speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
-        AM.py = SelectChar;
-        CharScale = SelectChar.transform.localScale;
-        switchItem(ActiveAbility.AbCode);
+
+        switch (SelectChar.transform.name)
+        {
+            case "MainCharacter_Eden":
+                atk = SelectChar.GetComponent<MentalChaild>().Attack;
+                break;
+            case "Eden 10_18":
+                atk = SelectChar.GetComponent<MentalChaild>().Attack;
+                break;
+        }
     }
     //
 
@@ -172,66 +134,51 @@ public class TestPlayer : Character
     public void Move()
     {
         h = Input.GetAxisRaw("Horizontal");
-        transform.position += new Vector3(h * speed * Time.deltaTime, 0);
-
+        transform.position += new Vector3(h * P_M_Speed * Time.deltaTime, 0);
         switch (h)
         {
             case 0:
                 Ani.SetBool("Move", false);
                 break;
+
             case -1: case 1:
                 Ani.SetBool("Move", true);
                 break;
         }
+
     }
     //
 
-    //대쉬
-    public delegate void dash();
-    dash ds;
-    //
-
     //공격
-    public delegate void attack();
-    attack atk;
+    public delegate void Attack();
+    Attack atk;
     //
 
     //점프
     public void Jump()
     {
-        if (P_JumpInt == 0)
-        {
-            rigid.AddForce(Vector3.up * 0);         
-        }
+        if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0)
-        {
-            rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
-            rigid.velocity = new Vector2(0, 0);
+        {      
+            rigid.AddForce(Vector3.up * P_JumpForce * 150 * Time.deltaTime);
             P_JumpInt -= 1;
-            Ani.SetBool("Jump", true);
+            Ani.SetBool("GroundState", false);
+        }
+    }
+    //마우스 플립
+    public void MouseFilp()//2021.10.12 김재헌
+    {
+
+        if (Mouse.x <= PlayerPosition.x)// 1920x1080 기준 중간지점
+        {
+            SelectChar.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (Mouse.x > PlayerPosition.x)
+        {
+            SelectChar.transform.localScale = new Vector3(1, 1, 1);
         }
     }
     //
-
-    //마우스 플립
-
-    Vector3 CharScale;
-
-    public void MouseFilp()//2021.10.12 김재헌
-    {
-        if (Ani.GetBool("CanIThis"))
-        {
-            if (Mouse.x <= PlayerPosition.x)
-            {
-                SelectChar.transform.localScale = new Vector3(-CharScale.x, CharScale.y, CharScale.z);
-            }
-            else if (Mouse.x > PlayerPosition.x)
-            {
-                SelectChar.transform.localScale = new Vector3(CharScale.x, CharScale.y, CharScale.z);
-            }
-        }
-    }
-
     public void WorldChange()//이면세계 전환 //2021.10.12 김재헌
     {
         GameObject A = GameObject.FindGameObjectWithTag("Player");
@@ -255,6 +202,7 @@ public class TestPlayer : Character
             }
         }
     }
+    //
 
     //능력
     public delegate void useAbility();
@@ -275,36 +223,31 @@ public class TestPlayer : Character
                 break;
             case 3:
                 active = new useAbility(AM.Ability_D);
-
                 break;
             case 4:
-                active = new useAbility(AM.BattleAxe);
+                active = new useAbility(AM.Ability_E);
                 break;
             case 5:
-                active = new useAbility(AM.Ability_E);
+                active = new useAbility(AM.Ability_F);
                 break;
             case 6:
                 active = new useAbility(AM.Double_Jump);
-                break;
-            case 9:
-                active = new useAbility(AM.BlackSmoke);
                 break;
         }
     }
 
     void UseSkill()
     {
-        switch (ActiveAbility.AbCode)
+        switch (ActiveAbility.AbName)
         {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 9:
+            case "Werewolf":
                 active();
-                Ani.SetInteger("AbilityNum", ActiveAbility.AbCode);
+                break;
+            case "Parao":
+                active();
+                break;
+            case "BomberMan":
+                active();
                 break;
         }
     }
@@ -323,64 +266,4 @@ public class TestPlayer : Character
         }
     }
     //
-
-    public void switchItem(int AbilityCode)
-    {
-        if (Current_Use != null) { Current_Use.SetActive(false); }
-        switch (AbilityCode)
-        {
-            case 0:
-                Active_Cool_Max = 4f;
-                break;
-            case 1:
-                PharaoWandSwitch();
-                Current_Use = PharaoWand_Senaka;
-                Active_Cool_Max = 4f;
-                break;
-            case 2:
-                Active_Cool_Max = 4f;
-                break;
-            case 3:
-                Active_Cool_Max = 4f;
-                break;
-            case 4:
-                OffBattleAxe();
-                Current_Use = BattleAxe_Senaka;
-                Active_Cool_Max = 4f;
-                break;
-            case 5:
-                Current_Use = EvilSword;
-                AM.EA = Current_Use.GetComponent<Animator>();
-                Active_Cool_Max = 4f; 
-                break;
-            case 9:
-                Active_Cool_Max = 4f;
-                break;
-        }
-        Active_Cool = Active_Cool_Max;
-    }
-
-    public void PharaoWandSwitch()
-    {
-        if (PharaoWand_Senaka.activeSelf) { PharaoWand_Senaka.SetActive(false); }
-        else { PharaoWand_Senaka.SetActive(true); }
-    }
-
-    public void OffBattleAxe()
-    {
-        BattleAxe_Senaka.SetActive(true);
-        BattleAxe.SetActive(false);
-    }
-    
-    public void OnBattleAxe()
-    {
-        BattleAxe_Senaka.SetActive(false);
-        BattleAxe.SetActive(true);
-    }
-
-    public void EvillSwordSwitch()
-    {
-        if (EvilSword.activeSelf) { EvilSword.SetActive(false); }
-        else { EvilSword.SetActive(true); }
-    }
 }
