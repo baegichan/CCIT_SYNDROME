@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6800509251580022125}
   - component: {fileID: -1352354028552953878}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Circle 2
   m_TagString: ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 5563890303437370399}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.2112, y: -0.8234, z: 0}
-  m_LocalScale: {x: 0.7624, y: 0.6732, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -101,7 +101,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.75
 --- !u!50 &1250770451471182658
 Rigidbody2D:
   serializedVersion: 4
@@ -139,6 +139,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   Curve: 0
   bulletDMG: 0
+  DestroyBullet: 1
   Bullet_LifeTime: 10
   Bullet_Target: 0
 --- !u!114 &-1352354028552953878
@@ -155,46 +156,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   AttackCycle: 1
-  Cycle_Cooltime: 2
+  Cycle_Cooltime: 10
+  Attack_CycleStart: 1
+  Attack_Type: 2
   BulletsInfo:
-  - bullet: {fileID: 5563890303437370399}
+  - bullet: {fileID: 5563890303437370399, guid: b3371da5f3acd9140b664561677b252f, type: 3}
     Angle: 0
     Speed: 10
-    time: 1
-  - bullet: {fileID: 5563890303437370399}
-    Angle: 0
+    time: 2
+  - bullet: {fileID: 5563890303437370399, guid: b3371da5f3acd9140b664561677b252f, type: 3}
+    Angle: 90
     Speed: 10
-    time: 1
-  - bullet: {fileID: 5563890303437370399}
-    Angle: 0
+    time: 2
+  - bullet: {fileID: 5563890303437370399, guid: b3371da5f3acd9140b664561677b252f, type: 3}
+    Angle: 180
     Speed: 10
-    time: 1
-  - bullet: {fileID: 5563890303437370399}
-    Angle: 0
+    time: 2
+  - bullet: {fileID: 5563890303437370399, guid: b3371da5f3acd9140b664561677b252f, type: 3}
+    Angle: 270
     Speed: 10
-    time: 1
-  - bullet: {fileID: 5563890303437370399}
-    Angle: 0
-    Speed: 10
-    time: 1
-  - bullet: {fileID: 5563890303437370399}
-    Angle: 0
-    Speed: 10
-    time: 1
-  - bullet: {fileID: 5563890303437370399}
-    Angle: 0
-    Speed: 10
-    time: 1
-  - bullet: {fileID: 5563890303437370399}
-    Angle: 0
-    Speed: 10
-    time: 1
-  - bullet: {fileID: 5563890303437370399}
-    Angle: 0
-    Speed: 10
-    time: 1
-  - bullet: {fileID: 5563890303437370399}
-    Angle: 0
-    Speed: 10
-    time: 1
+    time: 2
   target: {fileID: 0}

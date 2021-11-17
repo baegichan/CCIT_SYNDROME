@@ -8,7 +8,7 @@ public class new_Bullet : MonoBehaviour
     public float Speed;
     public Rigidbody2D rigid;
     public bool Curve;
-    public int bulletDMG=0;
+    public int bulletDMG=10;
     public bool DestroyBullet = false;
     /*
     public enum CurveDir

@@ -38,7 +38,7 @@ public class BulletScript : MonoBehaviour
         {
             if (collision.CompareTag("Player"))
             {
-                collision.transform.GetComponent<Character>().Damage(10);
+                collision.transform.GetComponent<Character>().Damage(15);
                 
                 Destroy(this.gameObject);
             }
