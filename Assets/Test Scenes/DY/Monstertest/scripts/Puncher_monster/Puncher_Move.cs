@@ -2,30 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Firefly_Attack : StateMachineBehaviour
+public class Puncher_Move : StateMachineBehaviour
 {
-    Transform fireflyTransform;
-    FireflyMonster fireflyMon;
+    Transform puncherTransform;
+    Punchermonster puncherMon;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        fireflyMon = animator.GetComponent<FireflyMonster>();
-        fireflyTransform = animator.GetComponent<Transform>();
-        //Instantiate(fireflyMon.fireflybullet, fireflyMon.atkpos.transform.position, Quaternion.identity);
+        puncherMon = animator.GetComponent<Punchermonster>();
+        puncherTransform = animator.GetComponent<Transform>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (fireflyMon.atkDelay <= 0)
+        if (Vector2.Distance(puncherMon.first, puncherTransform.position) < 0.1f || Vector2.Distance(puncherTransform.position, puncherMon.player.position) > 4f)
         {
-            //Instantiate(fireflyMon.fireflybullet, fireflyMon.atkpos.transform.position, Quaternion.identity);
+            animator.SetBool("Move", false);
+        }
+        else
+        {
+            puncherMon.DirectionPunchermonster(puncherMon.first.x, puncherTransform.position.x);
+            puncherTransform.position = Vector2.MoveTowards(puncherTransform.position, puncherMon.first, Time.deltaTime * puncherMon.speed);
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        fireflyMon.atkDelay = fireflyMon.atkCooltime;
+
     }
 }

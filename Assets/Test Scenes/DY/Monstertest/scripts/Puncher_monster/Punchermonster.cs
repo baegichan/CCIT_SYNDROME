@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrillMonster : MonoBehaviour
+public class Punchermonster : MonoBehaviour
 {
     [Header("Prameter")]
     public float speed;
@@ -11,14 +11,15 @@ public class DrillMonster : MonoBehaviour
     public float atkDelay;
 
     [Header("Refernce")]
+    public GameObject puncherbullet;
     public Transform player;
     public Animator anim;
     public Vector2 first;
-    public Vector2 boxSize;
     public Rigidbody2D rb;
+    public Transform wallCheck;// 지상 벽도 있다고 가정
     public Transform groundCheck;
     public Transform playerCheck;
-    public Transform boxpos;
+    public Transform atkpos;
     public Vector2 direction;
     public float distance;
 
@@ -60,7 +61,6 @@ public class DrillMonster : MonoBehaviour
         Targeton = false;
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        Physics.IgnoreLayerCollision(0, 0);
     }
 
     void Update()
@@ -76,7 +76,7 @@ public class DrillMonster : MonoBehaviour
 
     }
 
-    public void Directiondrillmonster(float target, float baseobj)
+    public void DirectionPunchermonster(float target, float baseobj)
     {
         if (target < baseobj)
             anim.SetFloat("Direction", -1);
@@ -84,27 +84,19 @@ public class DrillMonster : MonoBehaviour
             anim.SetFloat("Direction", 1);
     }
 
-    public void DrillAttack()
+    public void PuncherAttack()
     {
         if (anim.GetFloat("Direction") == -1)
         {
-            if (boxpos.localPosition.x > 0)
-                boxpos.localPosition = new Vector2(boxpos.localPosition.x * -1, boxpos.localPosition.y);
+            if (atkpos.localPosition.x > 0)
+                atkpos.localPosition = new Vector2(atkpos.localPosition.x * -1, atkpos.localPosition.y);
         }
         else
         {
-            if (boxpos.localPosition.x < 0)
-                boxpos.localPosition = new Vector2(Mathf.Abs(boxpos.localPosition.x * 1), boxpos.localPosition.y);
+            if (atkpos.localPosition.x < 0)
+                atkpos.localPosition = new Vector2(Mathf.Abs(atkpos.localPosition.x * 1), atkpos.localPosition.y);
         }
-
-        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(boxpos.position, boxSize, 0);
-        foreach (Collider2D col in collider2Ds)
-        {
-            if (col.tag == "Player")
-            {
-                Debug.Log("damage1");
-            }
-        }
+        Instantiate(puncherbullet, atkpos.transform.position, Quaternion.identity);
     }
 
     public void Patroll()
