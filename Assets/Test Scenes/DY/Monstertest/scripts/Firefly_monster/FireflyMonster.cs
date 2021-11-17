@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireflyMonster: MonoBehaviour
+public class FireflyMonster:Character
 {
     [Header("Prameter")]
-    public float speed;
+    
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
@@ -19,7 +19,6 @@ public class FireflyMonster: MonoBehaviour
     public Transform wallCheck;// 공중 벽 체크로 변경해야 됨
     public Transform upCheck;
     public Transform downCheck;
-    public Transform playerCheck;
     public Transform atkpos; //공격 근접이면 가능이지만 원거리는 교체가 필요
     public Vector2 direction;
     public float distance;
@@ -60,9 +59,8 @@ public class FireflyMonster: MonoBehaviour
         patroll = true;
         trace = false;
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
-        Physics.IgnoreLayerCollision(0, 0);
+        
     }
 
     void Update()
@@ -71,7 +69,7 @@ public class FireflyMonster: MonoBehaviour
         {
             Patroll();
         }
-        //PlayerCheck();
+        
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
@@ -118,20 +116,24 @@ public class FireflyMonster: MonoBehaviour
     public void Filp()
     {
         RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 0.3f); //레이케스트를 옆으로 쏴서 확인 된다면 플립
-        if (wallcheck.collider == true)
+        if (wallcheck.collider != null)
         {
-            if (filp == true)
+            if (wallcheck.collider.CompareTag("Wall") == true)
             {
-                transform.eulerAngles = new Vector3(0, 180, 0);
-                filp = false;
-            }
-            else
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                filp = true;
+                if (filp == true)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    filp = false;
+                }
+                else
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    filp = true;
+                }
             }
         }
     }
+
 
     public void Up()
     {
@@ -207,6 +209,7 @@ public class FireflyMonster: MonoBehaviour
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
+                player = GameObject.FindGameObjectWithTag("Player").transform;
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if(rayHitedTarget != false)
                     Debug.Log(rayHitedTarget.collider.name);
