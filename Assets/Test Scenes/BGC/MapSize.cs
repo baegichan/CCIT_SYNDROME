@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class MapSize : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    float Map_X_size;
+    float Map_Y_size;
 
-    // Update is called once per frame
-    void Update()
+    public float X_Size
+     {
+        get { return Map_X_size; }
+        set {
+        if(Map_X_size<value) 
+        {
+        Map_X_size = value;
+        }
+        }
+     }
+    public float Y_Size
     {
-        
+        get { return Map_Y_size; }
+        set
+        {
+            if (Map_Y_size < value)
+            {
+                Map_Y_size = value;
+            }
+        }
     }
 }

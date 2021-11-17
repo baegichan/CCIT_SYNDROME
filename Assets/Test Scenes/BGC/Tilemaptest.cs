@@ -4,25 +4,31 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class Tilemaptest : MonoBehaviour
 {
+    public TilemapRenderer TilemapRen = null;
     public Tilemap tilemap;
     void Start()
     {
-     
-        Tilemap tilemap = GetComponent<Tilemap>();
-
+        
         BoundsInt bounds = tilemap.cellBounds;
         TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
 
+
         for (int x = 0; x < bounds.size.x; x++)
         {
-            TileBase tile = allTiles[x];
-            if (tile != null)
+            for (int y = 0; y < bounds.size.y; y++)
             {
-                Debug.Log("x:" + x + " tile:" + tile.name);
+                TileBase tile = allTiles[x + y * bounds.size.x];
+                if (tile != null)
+                {
+                    Debug.Log("x:" + x + " y:" + y +  " tile: "+tile.name);
+                    Debug.Log( tilemap.GetTile(new Vector3Int(0, 0,0)).name);
+                }
+                else
+                {
+                    Debug.Log("x:" + x + " y:" + y + " tile: (null)");
+                }
             }
-        }
-        for (int y = 0; y< bounds.size.y; y++)
-        {
+            //x ·çÆ¾
 
         }
     }
