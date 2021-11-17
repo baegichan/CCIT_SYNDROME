@@ -4,113 +4,18 @@ using UnityEngine;
 
 public class Boss : Character
 {
-    /*
-    [SerializeField] private bool m_bDebugMode = false;
-
-    [Header("View Config")]
-    [Range(0f, 360f)]
-    [SerializeField] private float m_horizontalViewAngle = 0f; //시야각을 담은 변수
-    [SerializeField] private float m_viewRadius = 1f;  //탐지 범위
-    [Range(-180f, 180f)]
-    [SerializeField] private float m_viewRotateZ = 0f; //회전 값
-
-    [SerializeField] private LayerMask m_viewTargetMask; //타겟레이어
-    [SerializeField] private LayerMask m_viewObstacleMask; //시야를 가로막는 오브젝트 레이어
-    private List<Collider2D> hitedTargetContainer = new List<Collider2D>();
-
-    private float m_horizontalViewHalfAngle = 0f;
-
-
-    private void Awake()
-    {
-        m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
-    }
-
-    private Vector3 AngleToDirZ(float angleInDegree)
-    {
-        float radian = (angleInDegree - transform.eulerAngles.z) * Mathf.Deg2Rad;
-        return new Vector3(Mathf.Sin(radian), Mathf.Cos(radian), 0f);
-    }
-
-
-    private void OnDrawGizmos()
-    {
-        if (m_bDebugMode)
-        {
-            m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
-
-            Vector3 originPos = transform.position;
-
-            Gizmos.DrawWireSphere(originPos, m_viewRadius);
-
-            Vector3 horizontalRightDir = AngleToDirZ(-m_horizontalViewHalfAngle + m_viewRotateZ);
-            Vector3 horizontalLeftDir = AngleToDirZ(m_horizontalViewHalfAngle + m_viewRotateZ);
-            Vector3 lookDir = AngleToDirZ(m_viewRotateZ);
-
-            Debug.DrawRay(originPos, horizontalLeftDir * m_viewRadius, Color.cyan);
-            Debug.DrawRay(originPos, lookDir * m_viewRadius, Color.green);
-            Debug.DrawRay(originPos, horizontalRightDir * m_viewRadius, Color.cyan);
-
-            FindViewTargets();
-        }
-    }
-    public Collider2D[] FindViewTargets() //대상을 인식하는 코드
-                                          //대상의 인식은 총 3단계의 확인 과정을 거쳐야 합니다.
-                                          //1. 나의 인식 범위 안에 들어온 대상이 있는가?
-                                          //2. 인식 범위 안에 들어온 대상이 나의 시야각 안에 있는가?
-                                          //3. 시야각 안에 들어온 대상을 볼 수 없게 가로 막는 장해물이 존재하는가?
-    {
-        hitedTargetContainer.Clear();
-
-        Vector2 originPos = transform.position;
-        Collider2D[] hitedTargets = Physics2D.OverlapCircleAll(originPos, m_viewRadius, m_viewTargetMask); //원안에 들어온 타겟중 내가 원하는 타겟만 선별 가능
-
-        foreach (Collider2D hitedTarget in hitedTargets)
-        {
-            Vector2 targetPos = hitedTarget.transform.position;
-            Vector2 dir = (targetPos - originPos).normalized;
-            Vector2 lookDir = AngleToDirZ(m_viewRotateZ);
-
-            // float angle = Vector3.Angle(lookDir, dir)
-            // 아래 두 줄은 위의 코드와 동일하게 동작함. 내부 구현도 동일
-            float dot = Vector2.Dot(lookDir, dir);
-            float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
-
-            if (angle <= m_horizontalViewHalfAngle)
-            {
-                RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
-                if (rayHitedTarget)
-                {
-                    if (m_bDebugMode)
-                        Debug.DrawLine(originPos, rayHitedTarget.point, Color.yellow);
-                }
-                else
-                {
-                    hitedTargetContainer.Add(hitedTarget);
-
-                    if (m_bDebugMode)
-                        Debug.DrawLine(originPos, targetPos, Color.red);
-                }
-            }
-        }
-
-        if (hitedTargetContainer.Count > 0)
-            return hitedTargetContainer.ToArray();
-        else
-            return null;
-    }
-    */
+    
     public bool Boss_Active_on;//플레이어가 보스 방에 들어오기 전까지 False 
                                //플레이어가 보스방에 입장하면 True
 
 
-
+    Animation anim;
 
 
     //var aa = GameManager.instance;
     float Attack_Cool = 1;
     public float Boss_Attack_Cooltime = 1;
-    public float Bullet_Delay = 0.2f;
+    public float Bullet_Delay = 0.1f;
 
 
     public float Distance_To_Player = 50f;//어느 정도 거리에서 멈출꺼노?
@@ -200,7 +105,7 @@ public class Boss : Character
             }
 
             //Debug.DrawRay(this.transform.position, transform.TransformDirection(Vector2.left) * 300f, Color.green);
-            Debug.DrawRay(this.transform.position, transform.TransformDirection(Vector2.right) * 300f, Color.green);
+            Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.TransformDirection(Vector2.right) * 300f, Color.green);
 
 
 
@@ -303,7 +208,7 @@ public class Boss : Character
 
         if (Player_Transform.position.x < this.transform.position.x)
         {
-            if (Physics2D.Raycast(this.transform.position, transform.TransformDirection(Vector2.left), 300f, m_viewTargetMask))
+            if (Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.TransformDirection(Vector2.left), 300f, m_viewTargetMask))
             {
                 Player_On_Ground = true;
             }
@@ -314,7 +219,7 @@ public class Boss : Character
         }
         else if (Player_Transform.position.x > this.transform.position.x)
         {
-            if (Physics2D.Raycast(this.transform.position, transform.TransformDirection(Vector2.right), 300f, m_viewTargetMask))
+            if (Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.TransformDirection(Vector2.right), 300f, m_viewTargetMask))
             {
                 Player_On_Ground = true;
             }
@@ -379,7 +284,7 @@ public class Boss : Character
         {
             if(Dis > Distance_To_Player)
             {
-                Invoke("Ins_Bullet", 0.3f);
+                Invoke("Ins_Bullet", 0.15f);
             }
             else if(Dis <= Distance_To_Player)
             {
@@ -401,22 +306,28 @@ public class Boss : Character
 
     void Left()//왼쪽으로 돌려이잇!
     {
-        this.transform.localScale = new Vector3(1, 1, 1);
+        this.transform.localScale = new Vector3(-1, 1, 1);
     }
     void Right()//오른쪽으로 돌려이잇!
     {
-        this.transform.localScale = new Vector3(-1, 1, 1);
+        this.transform.localScale = new Vector3(1, 1, 1);
     }
 
 
-
+    public Transform Left_Hand;
+    public Transform Right_Hand;
     void Ins_Bullet()//기본공격 총알 생성
     {
+
         Boss_State_Check = false;
         if (Normal_Atk_Count < 4)
         {
             speed = 0;
-            Instantiate(Boss_Bullet, Bullet_Transform.position, Quaternion.identity);//총알 생성 위치 조정 필요
+            if(Normal_Atk_Count == 0 || Normal_Atk_Count == 1)
+            Instantiate(Boss_Bullet, Left_Hand.position, Quaternion.identity);//총알 생성 위치 조정 필요
+            else if(Normal_Atk_Count == 2 || Normal_Atk_Count == 3)
+            Instantiate(Boss_Bullet, Left_Hand.position, Quaternion.identity);//총알 생성 위치 조정 필요
+
 
             Normal_Atk_Count++;
             Invoke("Ins_Bullet", Bullet_Delay);//1,2,3
@@ -426,8 +337,8 @@ public class Boss : Character
         {
             
             Normal_Atk_Count = 0;
-            Invoke("anim_off", 0.3f);
-            Invoke("speed_back", 0.3f);
+            Invoke("anim_off", 0.2f);
+            Invoke("speed_back", 0.2f);
 
         }
     }
@@ -497,9 +408,9 @@ public class Boss : Character
   
     void Bomb_Set(int a)//지뢰 날려주기
     {
-        if(transform.localScale.x == 1)
+        if(transform.localScale.x > 0)
         Bomb[a].GetComponent<Rigidbody2D>().AddForce(Bomb_transform[a].localPosition * 1.5f,ForceMode2D.Impulse);
-        else if(transform.localScale.x == -1)
+        else if(transform.localScale.x < 0)
         Bomb[a].GetComponent<Rigidbody2D>().AddForce(new Vector3(-Bomb_transform[a].localPosition.x, Bomb_transform[a].localPosition.y, Bomb_transform[a].localPosition.z) * 1.5f, ForceMode2D.Impulse);
         
         //일단 속도가 0인 상태에서 지뢰를 뿌리고 일반공격 발사 할 때까지 속도 0으로 해놓고 몬스터 딜레이를 줌
