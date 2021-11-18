@@ -6,23 +6,50 @@ public class ItemShop : MonoBehaviour
 {
     public List<GameObject> SellItem;
 
-    void Update()
+    AbilityItem Item_0, Item_1, Item_2;
+
+    void Start()
     {
-        if(SellItem[0].GetComponent<AbilityItem>().ThisCode == SellItem[1].GetComponent<AbilityItem>().ThisCode)
-        {
-            Debug.Log("0 : " + SellItem[1].name);
-            ChangeItem(SellItem[1]);
-        }
-        else if (SellItem[1].GetComponent<AbilityItem>().ThisCode == SellItem[2].GetComponent<AbilityItem>().ThisCode || SellItem[0].GetComponent<AbilityItem>().ThisCode == SellItem[2].GetComponent<AbilityItem>().ThisCode)
-        {
-            Debug.Log("1 : " + SellItem[2].name);
-            ChangeItem(SellItem[2]);
-        }
+        Item_0 = SellItem[0].GetComponent<AbilityItem>();
+        Item_1 = SellItem[1].GetComponent<AbilityItem>();
+        Item_2 = SellItem[2].GetComponent<AbilityItem>();
+
+        ItemOverlapCheck();
     }
 
     void ChangeItem(GameObject Item)
     {
         Item.GetComponent<AbilityItem>().AlyakList();
-        Item.GetComponent<AbilityItem>().dc();
+    }
+
+    void ItemOverlapCheck()
+    {
+        if (Item_0.ThisCode == Item_1.ThisCode)
+        {
+            for(int i = 0; i < Item_1.AbList.Count; i++)
+            {
+                if(Item_1.AbList[i].AbCode == Item_0.ThisCode) { Item_1.AbList.RemoveAt(i); break; }
+            }
+            ChangeItem(SellItem[1]);
+            ItemOverlapCheck();
+        }
+        else if (Item_1.ThisCode == Item_2.ThisCode)
+        {
+            for (int i = 0; i < Item_2.AbList.Count; i++)
+            {
+                if (Item_2.AbList[i].AbCode == Item_1.ThisCode) { Item_2.AbList.RemoveAt(i); break; }
+            }
+            ChangeItem(SellItem[2]);
+            ItemOverlapCheck();
+        }
+        else if (Item_0.ThisCode == Item_2.ThisCode)
+        {
+            for (int i = 0; i < Item_2.AbList.Count; i++)
+            {
+                if (Item_2.AbList[i].AbCode == Item_0.ThisCode) { Item_2.AbList.RemoveAt(i); break; }
+            }
+            ChangeItem(SellItem[2]);
+            ItemOverlapCheck();
+        }
     }
 }

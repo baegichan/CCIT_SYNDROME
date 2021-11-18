@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class Black_Fog : MonoBehaviour
 {
-    public GameObject Player;
+    public int Black_Fog_Damage = 15;
+    float Damage_Delay = 1.5f;
+
     private void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+        Destroy(this.gameObject, 1.5f);
+    }
+
+    private void Update()
+    {
+        if(Damage_Delay >= 0)
+        {
+            Damage_Delay = Mathf.Clamp(Damage_Delay + Time.deltaTime, 0, 0.5f);
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && Damage_Delay == 0.5f)
         {
-            //플레이어 hp감소 구현
-            Debug.Log(22);
+            collision.transform.GetComponent<Character>().Damage(Black_Fog_Damage);
+            Damage_Delay = 0;
         }
     }
 }

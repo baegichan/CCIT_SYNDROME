@@ -19,16 +19,11 @@ public class AbilityItem : MonoBehaviour
     void Awake()
     {
         AlyakList();
-        if (IsBuy) { dc = DecideCode_Gacha; }
-        else
-        {
-            dc = DecideCode_Shop;
-        }
     }
 
     void Start()
     {
-        dc();
+        if(transform.tag == "Pill") { DecideCode_Gacha(); }
     }
 
     void Update()
@@ -42,46 +37,20 @@ public class AbilityItem : MonoBehaviour
         {
             switch (AbList[i].AbGrade)
             {
-                case "common":
+                case Ability.ABGRADE.Common:
                     commonList.Add(AbList[i]);
                     break;
-                case "rare":
+                case Ability.ABGRADE.Rare:
                     rareList.Add(AbList[i]);
                     break;
-                case "unique":
+                case Ability.ABGRADE.Unique:
                     uniqueList.Add(AbList[i]);
                     break;
-                case "Drink":
+                case Ability.ABGRADE.Drink:
                     DrinkList.Add(AbList[i]);
                     break;
             }
         }
-    }
-
-    public delegate void Decide();
-    public Decide dc;
-
-    void DecideCode_Shop()
-    {
-        float SelectItem = Random.Range(0, 100.0f);
-        if(SelectItem <= 65)
-        {
-            int i = Random.Range(0, commonList.Count);
-            ThisCode = commonList[i].AbCode;
-        }
-        else if(SelectItem > 65 && SelectItem <= 70)
-        {
-            int i = Random.Range(0, rareList.Count);
-            ThisCode = rareList[i].AbCode;
-        }
-        else if (SelectItem > 70 && SelectItem <= 100)
-        {
-            int DecideDrink = Random.Range(0, 10000);
-            if (DecideDrink <= 8000) { ThisCode = DrinkList[0].AbCode; }
-            else { ThisCode = DrinkList[1].AbCode; }
-        }
-
-        SelectAbility();
     }
 
     void DecideCode_Gacha()
@@ -117,17 +86,20 @@ public class AbilityItem : MonoBehaviour
         SelectAbility();
     }
 
-    void SelectAbility()
+    public void SelectAbility()
     {
         for (int i = 0; i < AbList.Count; i++)
         {
             if (ThisCode == AbList[i].AbCode)
             {
-                SpriteRenderer spt = this.GetComponent<SpriteRenderer>();
-                spt.sprite = AbList[i].AbSprite;
-                gameObject.name = AbList[i].AbName;
-                ThisPrice = AbList[i].AbPrice;
-                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].IsUsing);
+                if(transform.tag == "Pill")
+                {
+                    SpriteRenderer spt = this.GetComponent<SpriteRenderer>();
+                    spt.sprite = AbList[i].AbSprite;
+                    gameObject.name = AbList[i].AbName;
+                    ThisPrice = AbList[i].AbPrice;
+                }
+                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].IsUsing, AbList[i].AbExplan);
                 AbList.RemoveAt(i);
             }
         }
@@ -138,7 +110,7 @@ public class AbilityItem : MonoBehaviour
         if (col.tag == "Player")
         {
             Ply = col.gameObject;
-            PlayerM_ pt = col.GetComponent<PlayerM_>();
+            Char_Parent pt = col.GetComponent<Char_Parent>();
             me.IsSelect = true;
         }
     }
@@ -158,19 +130,19 @@ public class AbilityItem : MonoBehaviour
             {
                 switch (me.AbType)
                 {
-                    case 0:
+                    case Ability.ABTYPE.Active:
                         pt.ActiveAbility = me;
                         pt.SelectAbility();
                         break;
-                    case 1:
+                    case Ability.ABTYPE.Passive:
                         pt.PassiveAbility = me;
-                        UsePassive();
-                        passive();
+                        pt.UsePassive();
+                        pt.passive();
                         break;
-                    case 2:
-                        pt.MulYakInt++;
+                    case Ability.ABTYPE.HPDrink:
+                        pt.MulYakInt++; 
                         break;
-                    case 3:
+                    case Ability.ABTYPE.APDrink:
                         pt.AlYakInt++;
                         break;
                 }
@@ -189,22 +161,6 @@ public class AbilityItem : MonoBehaviour
                     IsBuy = true;
                 }
             }
-        }
-    }
-
-    public delegate void usePassive();
-    usePassive passive;
-
-    void UsePassive()
-    {
-        ability = Ply.GetComponentInParent<AbilityManager>();
-
-        switch (me.AbCode)
-        {
-            case 6:
-                passive = new usePassive(ability.Double_Jump);
-                Ply.GetComponentInParent<Char_Parent>().P_MaxJumpInt = 2;
-                break;
         }
     }
 }

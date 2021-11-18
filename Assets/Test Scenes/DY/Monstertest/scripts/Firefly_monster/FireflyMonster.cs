@@ -62,6 +62,7 @@ public class FireflyMonster: MonoBehaviour
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        Physics.IgnoreLayerCollision(0, 0);
     }
 
     void Update()
@@ -92,22 +93,20 @@ public class FireflyMonster: MonoBehaviour
         if (anim.GetFloat("Direction") == -1)
         {
             if (atkpos.localPosition.x > 0)
+            {
                 atkpos.localPosition = new Vector2(atkpos.localPosition.x * -1, atkpos.localPosition.y);
+                
+            }
         }
         else
         {
             if (atkpos.localPosition.x < 0)
+            {
                 atkpos.localPosition = new Vector2(Mathf.Abs(atkpos.localPosition.x * 1), atkpos.localPosition.y);
+                
+            }
         }
         Instantiate(fireflybullet, atkpos.transform.position, Quaternion.identity);
-        //Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(atkpos.position, boxSize, 0);
-        //foreach (Collider2D col in collider2Ds)
-        //{
-        //    if (col.tag == "Player")
-        //    {
-        //        Debug.Log("damage1");
-        //    }
-        //}
     }
 
     public void Patroll()
@@ -118,7 +117,7 @@ public class FireflyMonster: MonoBehaviour
 
     public void Filp()
     {
-        RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 2f); //레이케스트를 옆으로 쏴서 확인 된다면 플립
+        RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 0.3f); //레이케스트를 옆으로 쏴서 확인 된다면 플립
         if (wallcheck.collider == true)
         {
             if (filp == true)
@@ -136,18 +135,18 @@ public class FireflyMonster: MonoBehaviour
 
     public void Up()
     {
-        RaycastHit2D upcheck = Physics2D.Raycast(upCheck.position, Vector2.up, 2f);
+        RaycastHit2D upcheck = Physics2D.Raycast(upCheck.position, Vector2.up, 0.2f);
         if(upcheck.collider == true)
         {
-            rb.AddForce(transform.up * -5f);
+            rb.AddForce(transform.up * -1f);
         }
     }
     public void Down()
     {
-        RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 2f);
+        RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 0.2f);
         if (downcheck.collider == true)
         {
-            rb.AddForce(transform.up * 5f);
+            rb.AddForce(transform.up * 1f);
         }
     }
 
@@ -209,6 +208,8 @@ public class FireflyMonster: MonoBehaviour
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
+                if(rayHitedTarget != false)
+                    Debug.Log(rayHitedTarget.collider.name);
                 if (rayHitedTarget)
                 {
                     if (m_bDebugMode)

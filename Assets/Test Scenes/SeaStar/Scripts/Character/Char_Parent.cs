@@ -274,7 +274,7 @@ public class Char_Parent : Character
                 active = new useAbility(AM.BattleAxe);
                 break;
             case 5:
-             active = new useAbility(AM.Ability_E);
+               active = new useAbility(AM.Ability_E);
                 break;
             case 6:
                 active = new useAbility(AM.Double_Jump);
@@ -298,6 +298,21 @@ public class Char_Parent : Character
             case 9:
                 active();
                 Ani.SetInteger("AbilityNum", ActiveAbility.AbCode);
+                break;
+        }
+    }
+
+    public delegate void usePassive();
+    public usePassive passive;
+
+    public void UsePassive()
+    {
+        switch (PassiveAbility.AbCode)
+        {
+            case 6:
+                Debug.Log("더블점프");
+                passive = new usePassive(AM.Double_Jump);
+                P_MaxJumpInt = 2;
                 break;
         }
     }
@@ -340,7 +355,7 @@ public class Char_Parent : Character
                 Active_Cool_Max = 4f;
                 break;
             case 5:
-                Active_Cool_Max = 4f;
+                Active_Cool_Max = 4f; 
                 AM.EA = Current_Use.GetComponent<Animator>();
                 break;
             case 9:

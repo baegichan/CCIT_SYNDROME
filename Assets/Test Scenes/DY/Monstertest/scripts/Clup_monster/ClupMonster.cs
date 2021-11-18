@@ -59,6 +59,7 @@ public class ClupMonster : MonoBehaviour
         trace = false;
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        Physics.IgnoreLayerCollision(0, 0);
     }
 
     void Update()
@@ -113,6 +114,7 @@ public class ClupMonster : MonoBehaviour
 
     public void Filp()
     {
+        //RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 2f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
         RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 2f);
         if (groundcheck.collider == false)
         {

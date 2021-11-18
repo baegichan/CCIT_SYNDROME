@@ -7,13 +7,51 @@ public class Bullet_Attack : AttackModule
     // Start is called before the first frame update
     public int AttackCycle = 1;
     public float Cycle_Cooltime;
+    public bool Attack_CycleStart=false;
+   
+    public AttackType Attack_Type=AttackType.Attack;
     public BulletInfo[] BulletsInfo;
     public GameObject target;
+   
+    public enum AttackType
+    {
+        Cycle,
+        Cycle_Target,
+        Attack,
+        Attack_Target
+    }
 
 
     #region 테스트존
     private void Start()
     {
+   
+        if (Attack_CycleStart){
+            switch (Attack_Type)
+            {
+                case AttackType.Attack:
+                    Attack();
+
+                    break;
+                case AttackType.Attack_Target:
+                    Attack(target);
+              
+                    break;
+                case AttackType.Cycle:
+                    CycleAttack();
+               
+                    break;
+                case AttackType.Cycle_Target:
+                    CycleAttack(target);
+                  
+                    break;
+        
+             
+
+            }
+           
+
+        }
         //CycleAttack();   //n Cycle Attack Non Target
         //CycleAttack(target); //n Cycle Attack to Target
         //Attack( target); //1Cycle Attack to Target
@@ -48,6 +86,7 @@ public class Bullet_Attack : AttackModule
                 {
                     StartCoroutine(Spawn_Bullet(a));
                 }
+
             }
         }  
     }

@@ -32,6 +32,25 @@ public class MapData : ScriptableObject
  
     public Potal[] Potals = new Potal[]{ new Potal(Potal.Potal_type.LeftPotal), new Potal(Potal.Potal_type.RightPotal), new Potal(Potal.Potal_type.TopPotal), new Potal(Potal.Potal_type.BottomPotal) };
 
+
+
+    public void Load_MapData(GameObject target)
+    {
+        Batch_map(target);
+        GameObject Potals_parents = (GameObject)Instantiate(Resources.Load("Potals"), target.transform.position,Quaternion.identity, target.transform);
+        SpawnPotal(Potals_parents);
+        Instantiate(Map_Event, target.transform);
+    }
+
+
+
+
+
+
+
+
+
+
     public void Map_Code_Save(int Mapcode)
     {
         MapTypeCode = Mapcode;
@@ -57,7 +76,7 @@ public class MapData : ScriptableObject
         {
             if (Potals[i].Potaltype != Potal.Potal_type.None)
             {
-                Potals[i].Spawn_Potal_Object(Parent);
+               Potals[i].Spawn_Potal_Object(Parent);
             }
         
         }
@@ -200,6 +219,112 @@ public class MapData : ScriptableObject
                 
             }
            
+        }
+    }
+
+    public void Batch_map(GameObject target)
+    {
+        if (Tile_Map == null)
+        {
+            Tile_Map = (GameObject)Resources.Load("Grid");
+        }
+        GameObject Grid = Instantiate(Tile_Map, target.transform.position, Quaternion.identity, target.transform);
+
+        for (int j = 0; j < BG.Length; j++)
+        {
+            if (BG[j].Tilemap == null)
+            {
+                BG[j].Tilemap = (GameObject)Resources.Load("Tilemap");
+            }
+            GameObject Tile = Instantiate(BG[j].Tilemap, target.transform.position, Quaternion.identity, Grid.transform);
+            Tile.AddComponent<TilemapCollider2D>();
+            if (BG[j].Its_Object)
+            {
+                Tile.GetComponent<TilemapCollider2D>().enabled = true;
+            }
+            else
+            {
+                Tile.GetComponent<TilemapCollider2D>().enabled = false;
+            }
+            Tile.name = BG[j].TilemapName;
+            int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].Layer.value, 2));
+            int Layer_count = 0;
+            for (int L = 0; L < 32; L++)
+            {
+
+                if (Layer_binary % 2 == 1)
+                {
+                    Tile.layer = Layer_count;
+                    break;
+                }
+                Layer_binary = Layer_binary / 10;
+
+                Layer_count++;
+            }
+            Tile.GetComponent<TilemapRenderer>().sortingOrder = BG[j].OrderInLayer;
+            float total = 0;
+            switch (direction)
+            {
+                case Map_Direction.x:
+                    total = Get_Total_Sprite_Width(j);
+
+                    break;
+                case Map_Direction.y:
+                    total = Get_Total_Sprite_Height(j);
+
+                    break;
+
+            }
+            for (int i = 0; i < BG[j].BackGround.Length; i++)
+            {
+                switch (direction)
+                {
+                    case Map_Direction.x:
+
+                        GameObject BackGround_x = Instantiate(BG[j].BackGround[i], new Vector3(total - BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.rect.width / (2 * BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit), 0, 0), Quaternion.identity, Center.transform);
+                        BackGround_x.GetComponent<SpriteRenderer>().sortingOrder = BG[j].OrderInLayer;
+
+                        /*
+                        int Layer_binary =Convert.ToInt32(Convert.ToString(BG[j].Layer.value,2));
+                        int Layer_count = 0;
+                        for (int L = 0; L < 32; L++)
+                        {
+                           
+                            if (Layer_binary % 2 == 1)
+                            {
+                                BackGround_x.layer = Layer_count;
+                                break;
+                            }
+                            Layer_binary = Layer_binary / 10;
+                            
+                            
+                            Layer_count++;
+                           // LayerMask Layer = (BG[j].Layer.value);
+                           // BackGround_x.layer = Layer;
+                        }
+                        */
+                        if (i + 1 < BG[j].BackGround.Length)
+                        {
+                            total -= BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.rect.width / BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+                        }
+                        break;
+                    case Map_Direction.y:
+
+                        GameObject BackGround_y = Instantiate(BG[j].BackGround[i], new Vector3(0, total - BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.rect.height / (2 * BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit), 0), Quaternion.identity, target.transform);
+                        BackGround_y.GetComponent<SpriteRenderer>().sortingOrder = BG[j].OrderInLayer;
+                        BackGround_y.layer = BG[j].Layer.value;
+                        if (i + 1 < BG[j].BackGround.Length)
+                        {
+                            total -= BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.rect.height / BG[j].BackGround[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+                        }
+                        break;
+
+                }
+                // Instantiate(Back_Ground_Sprite[i], new Vector3(total - Back_Ground_Sprite[i].GetComponent<SpriteRenderer>().sprite.rect.width / (2 * Back_Ground_Sprite[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit), 0, 0), Quaternion.identity,Center.transform);
+                //Back_Ground_Sprite[i].transform.localPosition = new Vector3(total-Back_Ground_Sprite[i].GetComponent<SpriteRenderer>().sprite.rect.width/2*Back_Ground_Sprite[i].GetComponent<SpriteRenderer>().sprite.pixelsPerUnit, 0, 0);
+
+            }
+
         }
     }
     #endregion
@@ -373,15 +498,17 @@ public class Potal
     {
         if (EnablePotal)
         {
-            GameObject potal = (GameObject)Resources.Load("Potal");
-            GameObject SpawnedPotal = GameObject.Instantiate(potal, Parent.transform);
+            //GameObject potal = (GameObject)Resources.Load("Potal");
+            GameObject SpawnedPotal = GameObject.Instantiate((GameObject)Resources.Load("Potal"), Parent.transform.position, Quaternion.identity, Parent.transform);
             SpawnedPotal.name = Potaltype.ToString();
-            SpawnedPotal.GetComponent<MapLineDraw>().T_Area = VertexPoints[0].y;
-            SpawnedPotal.GetComponent<MapLineDraw>().B_Area = VertexPoints[2].y;
-            SpawnedPotal.GetComponent<MapLineDraw>().L_Area = VertexPoints[0].x;
-            SpawnedPotal.GetComponent<MapLineDraw>().R_Area = VertexPoints[1].x;
+            var Potal = SpawnedPotal.GetComponent<MapLineDraw>();
+            Potal.T_Area = VertexPoints[0].y;
+            Potal.B_Area = VertexPoints[2].y;
+            Potal.L_Area = VertexPoints[0].x;
+            Potal.R_Area = VertexPoints[1].x;
             SpawnedPotal.GetComponent<EdgeCollider2D>().points = VertexPoints;
-            SpawnedPotal.transform.position = PotalLocation;
+            SpawnedPotal.transform.position = (Vector2)SpawnedPotal.transform.position+ PotalLocation;
+            SpawnedPotal.GetComponent<PotalEvent>().Potal_setting(Potaltype);
         }
     }
     
