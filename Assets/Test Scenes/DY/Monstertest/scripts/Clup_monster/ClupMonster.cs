@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClupMonster : MonoBehaviour
+public class ClupMonster : Character
 {
     [Header("Prameter")]
-    public float speed;
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
+    public int clupmonDamage;
 
     [Header("Refernce")]
     public Transform player;
@@ -17,7 +17,7 @@ public class ClupMonster : MonoBehaviour
     public Vector2 boxSize;
     public Rigidbody2D rb;
     public Transform groundCheck;
-    public Transform playerCheck;
+    public Transform wallCheck;
     public Transform boxpos;
     public Vector2 direction;
     public float distance;
@@ -101,7 +101,7 @@ public class ClupMonster : MonoBehaviour
         {
             if (col.tag == "Player")
             {
-                Debug.Log("damage1");
+                col.GetComponent<Character>().Damage(clupmonDamage);
             }
         }
     }
@@ -114,8 +114,26 @@ public class ClupMonster : MonoBehaviour
 
     public void Filp()
     {
-        //RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 2f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
-        RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 2f);
+        RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 0.3f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
+        if (wallcheck.collider != null)
+        {
+            if (wallcheck.collider.CompareTag("Wall") == true)
+            {
+                if (filp == true)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    filp = false;
+                }
+                else
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    filp = true;
+                }
+            }
+        }
+
+        RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.3f);
+
         if (groundcheck.collider == false)
         {
             if (filp == true)
@@ -188,6 +206,7 @@ public class ClupMonster : MonoBehaviour
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
+                player = GameObject.FindGameObjectWithTag("Player").transform;
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget)
                 {

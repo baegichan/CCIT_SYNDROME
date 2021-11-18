@@ -33,6 +33,7 @@ public class Firefly_Trace : StateMachineBehaviour
                 animator.SetBool("Follow", false);
             }
         }
+        fireflyMon.DirectionFireflymonster(fireflyMon.player.position.x, fireflyTransform.position.x);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

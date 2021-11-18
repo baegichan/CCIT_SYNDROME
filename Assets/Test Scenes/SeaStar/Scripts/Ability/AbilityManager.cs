@@ -38,7 +38,6 @@ public class AbilityManager : MonoBehaviour
             Char_Parent.Active_Cool = 0f;
             py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
             py.GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", false);
-            Debug.Log("¾ä¾ä");
             Vector2 pp = py.transform.position + new Vector3(0.5f,0);
             Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, Physics2D.AllLayers);
             for(int i = 0; i < hit.Length; i++)
@@ -48,7 +47,6 @@ public class AbilityManager : MonoBehaviour
                     if (hit[i].GetComponent<Character>().Hp_Current < WolfAP[py.GetComponent<Char_Parent>().ActiveAbility.Enhance])
                     {
                         py.GetComponentInParent<Character>().Hp_Current++;
-                        Debug.Log("ÂÁÂÁ");
                     }
                     Character.Damage(hit[i].gameObject, WolfAP[py.GetComponent<Char_Parent>().ActiveAbility.Enhance]);
                 }
@@ -80,13 +78,9 @@ public class AbilityManager : MonoBehaviour
             if (MonsterCol[i].tag == "enemy")
             {
                 Vector2 enemy = new Vector2(MonsterCol[i].transform.position.x, MonsterCol[i].transform.position.y) - pp;
-                //enemy = enemy.normalized;
                 RaycastHit2D Hit = Physics2D.Raycast(pp, enemy);
-                Debug.DrawRay(pp, enemy, Color.green);
-                Debug.Log(Hit.transform.name);
                 if (Hit.transform.tag == "enemy")
                 {
-                    Debug.Log("ÆÄ¶ó¿Ë!#@!!@!@$@#@");
                     Character.Damage(Hit.transform.gameObject, ParaoAP[py.GetComponentInParent<Char_Parent>().ActiveAbility.Enhance]);
                 }
             }
@@ -99,7 +93,6 @@ public class AbilityManager : MonoBehaviour
         {
             Char_Parent.Active_Cool = 0f;
             py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            Debug.Log("ÆøÅºÆøÅº");
             Vector2 pp = py.transform.position;
             Vector2 CursorPos = Input.mousePosition;
             CursorPos = cam.ScreenToWorldPoint(CursorPos);
@@ -115,7 +108,6 @@ public class AbilityManager : MonoBehaviour
     public float ShieldCool;
     public void Ability_D()
     {
-        Debug.Log("¹ÙÀ§Ã³·³ ´Ü´ÜÇÏ°Ô,,,,");
         if(ShieldCool > 0) { ShieldCool -= Time.deltaTime; }
         else if(ShieldCool <= 0) { py.GetComponentInParent<Character>().Shield = 0; }
 
@@ -123,7 +115,6 @@ public class AbilityManager : MonoBehaviour
         {
             Char_Parent.Active_Cool = 0f;
             py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            Debug.Log("ÅäÅ÷!! ´ëÁöµ¿ÇÙ!!!!!");
             Vector2 pp = py.transform.position + new Vector3(0.5f, 0);
             Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, Physics2D.AllLayers);
             for (int i = 0; i < hit.Length; i++)
@@ -134,7 +125,6 @@ public class AbilityManager : MonoBehaviour
                     if (i < 4)
                     {
                         py.GetComponentInParent<Character>().Shield += 10;
-                        Debug.Log("½¯µå È¹µæ");
                     }
                     Character.Damage(hit[i].gameObject, RockAP);
                 }
@@ -145,20 +135,6 @@ public class AbilityManager : MonoBehaviour
     public void BattleAxe()
     {
         if (Input.GetMouseButtonDown(1)) { A_Attack(); }
-        Debug.Log("¹ÙÅä·ç-¾ÆÄí½º");
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Debug.Log("¸Â");
-        //    if (col.gameObject.tag == "Monster")//ÀÓ½Ã
-        //    {
-        //        Debug.Log("¾Ò");
-        //        if (A_Int <= 4)
-        //        {
-        //            Debug.Log("´Ù");
-        //            A_Int++;
-        //        }
-        //    }
-        //}
     }
     public void A_Attack()
     {
@@ -222,7 +198,6 @@ public class AbilityManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1)) { EvilSword_Attack(); }
         EvilSwordResetAttack();
-        Debug.Log("ÀÌ-ºÎ¸£ ¼Ò-µµ");
     }
 
     public void EvilSword_Attack()
@@ -309,7 +284,6 @@ public class AbilityManager : MonoBehaviour
         {
             Char_Parent.Active_Cool = 0f;
             py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            Debug.Log("ºÎ¶óÄí ½º¸ðÄí!!!");
             Vector2 MouseP = Input.mousePosition;
             MouseP = cam.ScreenToWorldPoint(MouseP);
             Vector2 Point = py.transform.position;
@@ -322,15 +296,11 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
-    public void Ability_F()
-    {
-        Debug.Log("F");
-    }
-
     public void Double_Jump()
     {
-        Debug.Log("G");
+
     }
+
     public void Change_Jump_int()
     {
         //pp = py.GetComponent<PlayerM_>();

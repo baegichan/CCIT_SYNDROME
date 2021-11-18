@@ -37,17 +37,38 @@ public class Enhance_Stat : MonoBehaviour
         T_Level_Strength.text = "LV " + py.Enhance_Strength;
         T_Level_Speed.text = "LV " + py.Enhance_Speed;
 
-        if (py.Enhance_Health < 5) { T_Cost_Health.text = Cost_Health[py.Enhance_Health].ToString(); }
-        else { T_Cost_Health.text = "Max"; }
+        if (py.Enhance_Health < 5)
+        {
+            T_Cost_Health.text = Cost_Health[py.Enhance_Health].ToString();
+            T_Effect_Health.text = py.Enhance_Health_Point[py.Enhance_Health].ToString() + " > " + py.Enhance_Health_Point[py.Enhance_Health + 1].ToString();
+        }
+        else
+        {
+            T_Cost_Health.text = "Max";
+            T_Effect_Health.text = "Max";
+        }
 
-        if (py.Enhance_Strength < 5) { T_Cost_Strength.text = Cost_Strength[py.Enhance_Strength].ToString(); }
-        else { T_Cost_Strength.text = "Max"; }
+        if (py.Enhance_Strength < 5)
+        {
+            T_Cost_Strength.text = Cost_Strength[py.Enhance_Strength].ToString();
+            T_Effect_Strength.text = py.Enhance_Strength_Point[py.Enhance_Strength].ToString() + " > " + py.Enhance_Strength_Point[py.Enhance_Strength + 1].ToString();
+        }
+        else
+        {
+            T_Cost_Strength.text = "Max";
+            T_Effect_Strength.text = "Max";
+        }
 
-        if (py.Enhance_Speed < 5) { T_Cost_Speed.text = Cost_Speed[py.Enhance_Speed].ToString(); }
-        else { T_Cost_Speed.text = "Max"; }
-
-        T_Cost_Strength.text = Cost_Strength[py.Enhance_Strength].ToString();
-        T_Cost_Speed.text = Cost_Speed[py.Enhance_Speed].ToString();
+        if (py.Enhance_Speed < 5)
+        {
+            T_Cost_Speed.text = Cost_Speed[py.Enhance_Speed].ToString();
+            T_Effect_Speed.text = py.Enhance_Speed_Point[py.Enhance_Speed].ToString() + " > " + py.Enhance_Speed_Point[py.Enhance_Speed + 1].ToString();
+        }
+        else
+        {
+            T_Cost_Speed.text = "Max";
+            T_Effect_Speed.text = "Max";
+        }
     }
 
     public void Enhance_Health()

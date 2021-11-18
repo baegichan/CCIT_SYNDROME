@@ -6,6 +6,7 @@ public class Firefly_Bullet : MonoBehaviour
 {
     [Header("Prameter")]
     public float bullet_speed;
+    public int bullet_Damage;
 
     [Header("Refernce")]
     GameObject Player;
@@ -29,30 +30,34 @@ public class Firefly_Bullet : MonoBehaviour
     }
     private void Update()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(dir.x, dir.y + 1);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(dir.x * bullet_speed, dir.y + 1);
 
         if (GetComponent<Rigidbody2D>().velocity.x > 0.1f)
         {
-            float Left_Dir = -0.5f;
+            float Left_Dir = -0.1f;
             transform.localScale = new Vector3(Left_Dir, transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            float Right_Dir = 0.5f;
+            float Right_Dir = 0.1f;
             transform.localScale = new Vector3(Right_Dir, transform.localScale.y, transform.localScale.z);
         }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-            if (col.tag == "player")
-            {
-                Debug.Log("");
-                BulletDestroy();
-            }
-        if (col.tag == "ground")
+        if (col.tag == "Player")
+        {
+            col.GetComponent<Character>().Damage(bullet_Damage);
+            BulletDestroy();
+        }
+        if (col.tag == "Ground")
         {
             Debug.Log("");
+            BulletDestroy();
+        }
+        if(col.tag == "Wall")
+        {
             BulletDestroy();
         }
     }
