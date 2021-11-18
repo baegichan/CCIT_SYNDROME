@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Punchermonster : MonoBehaviour
+public class Punchermonster : Character
 {
     [Header("Prameter")]
-    public float speed;
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
@@ -18,8 +17,8 @@ public class Punchermonster : MonoBehaviour
     public Rigidbody2D rb;
     public Transform wallCheck;// 지상 벽도 있다고 가정
     public Transform groundCheck;
-    public Transform playerCheck;
     public Transform atkpos;
+    public Transform atkpos1;
     public Vector2 direction;
     public float distance;
 
@@ -60,7 +59,6 @@ public class Punchermonster : MonoBehaviour
         trace = false;
         Targeton = false;
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
@@ -69,7 +67,6 @@ public class Punchermonster : MonoBehaviour
         {
             Patroll();
         }
-        //PlayerCheck();
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
@@ -90,13 +87,20 @@ public class Punchermonster : MonoBehaviour
         {
             if (atkpos.localPosition.x > 0)
                 atkpos.localPosition = new Vector2(atkpos.localPosition.x * -1, atkpos.localPosition.y);
+
+            if (atkpos1.localPosition.x > 0)
+                atkpos1.localPosition = new Vector2(atkpos1.localPosition.x * -1, atkpos1.localPosition.y);
         }
         else
         {
             if (atkpos.localPosition.x < 0)
                 atkpos.localPosition = new Vector2(Mathf.Abs(atkpos.localPosition.x * 1), atkpos.localPosition.y);
+
+            if (atkpos1.localPosition.x < 0)
+                atkpos1.localPosition = new Vector2(Mathf.Abs(atkpos1.localPosition.x * 1), atkpos1.localPosition.y);
         }
         Instantiate(puncherbullet, atkpos.transform.position, Quaternion.identity);
+        Instantiate(puncherbullet, atkpos1.transform.position, Quaternion.identity);
     }
 
     public void Patroll()
@@ -107,8 +111,24 @@ public class Punchermonster : MonoBehaviour
 
     public void Filp()
     {
-        //RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 2f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
-        RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 2f);
+        RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 0.3f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
+        if (wallcheck.collider != null)
+        {
+            if (wallcheck.collider.CompareTag("Wall") == true)
+            {
+                if (filp == true)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    filp = false;
+                }
+                else
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    filp = true;
+                }
+            }
+        }
+        RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.3f);
         if (groundcheck.collider == false)
         {
             if (filp == true)
@@ -181,6 +201,7 @@ public class Punchermonster : MonoBehaviour
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
+                player = GameObject.FindGameObjectWithTag("Player").transform;
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget)
                 {

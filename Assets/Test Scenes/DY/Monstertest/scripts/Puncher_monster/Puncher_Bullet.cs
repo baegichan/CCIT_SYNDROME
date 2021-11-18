@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Firefly_Bullet : MonoBehaviour
+public class Puncher_Bullet : MonoBehaviour
 {
     [Header("Prameter")]
     public float bullet_speed;
@@ -34,12 +34,12 @@ public class Firefly_Bullet : MonoBehaviour
 
         if (GetComponent<Rigidbody2D>().velocity.x > 0.1f)
         {
-            float Left_Dir = -0.1f;
+            float Left_Dir = -0.7f;
             transform.localScale = new Vector3(Left_Dir, transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            float Right_Dir = 0.1f;
+            float Right_Dir = 0.7f;
             transform.localScale = new Vector3(Right_Dir, transform.localScale.y, transform.localScale.z);
         }
     }
@@ -56,7 +56,7 @@ public class Firefly_Bullet : MonoBehaviour
             Debug.Log("");
             BulletDestroy();
         }
-        if(col.tag == "Wall")
+        if (col.tag == "Wall")
         {
             BulletDestroy();
         }
