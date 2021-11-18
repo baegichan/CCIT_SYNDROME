@@ -42,16 +42,16 @@ public class AItem : MonoBehaviour
         {
             switch (AbList[i].AbGrade)
             {
-                case "common":
+                case Ability.ABGRADE.Common:
                     commonList.Add(AbList[i]);
                     break;
-                case "rare":
+                case Ability.ABGRADE.Rare:
                     rareList.Add(AbList[i]);
                     break;
-                case "unique":
+                case Ability.ABGRADE.Unique:
                     uniqueList.Add(AbList[i]);
                     break;
-                case "Drink":
+                case Ability.ABGRADE.Drink:
                     DrinkList.Add(AbList[i]);
                     break;
             }
@@ -123,11 +123,14 @@ public class AItem : MonoBehaviour
         {
             if (ThisCode == AbList[i].AbCode)
             {
-                SpriteRenderer spt = this.GetComponent<SpriteRenderer>();
-                spt.sprite = AbList[i].AbSprite;
-                gameObject.name = AbList[i].AbName;
-                ThisPrice = AbList[i].AbPrice;
-                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].IsUsing);
+                if (transform.tag == "Pill")
+                {
+                    SpriteRenderer spt = this.GetComponent<SpriteRenderer>();
+                    spt.sprite = AbList[i].AbSprite;
+                    gameObject.name = AbList[i].AbName;
+                    ThisPrice = AbList[i].AbPrice;
+                }
+                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].IsUsing, AbList[i].AbExplan);
                 AbList.RemoveAt(i);
             }
         }
@@ -138,7 +141,7 @@ public class AItem : MonoBehaviour
         if (col.tag == "Player")
         {
             Ply = col.gameObject;
-            PlayerM_ pt = col.GetComponent<PlayerM_>();
+            TestPlayer pt = col.GetComponent<TestPlayer>();
             me.IsSelect = true;
         }
     }
@@ -158,19 +161,17 @@ public class AItem : MonoBehaviour
             {
                 switch (me.AbType)
                 {
-                    case 0:
+                    case Ability.ABTYPE.Active:
                         pt.ActiveAbility = me;
                         pt.SelectAbility();
                         break;
-                    case 1:
-                        pt.PassiveAbility = me;
-                        UsePassive();
-                        passive();
+                    case Ability.ABTYPE.Passive:
+                        pt.PassiveAbility = me;                  
                         break;
-                    case 2:
+                    case Ability.ABTYPE.HPDrink:
                         pt.MulYakInt++;
                         break;
-                    case 3:
+                    case Ability.ABTYPE.APDrink:
                         pt.AlYakInt++;
                         break;
                 }
@@ -191,6 +192,7 @@ public class AItem : MonoBehaviour
             }
         }
     }
+
 
     public delegate void usePassive();
     usePassive passive;
