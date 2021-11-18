@@ -7,8 +7,10 @@ public class Ability
 {
     public int AbCode;
     public string AbName;
-    public int AbType;
-    public string AbGrade;
+    public enum ABTYPE { Active, Passive, APDrink, HPDrink }
+    public ABTYPE AbType;
+    public enum ABGRADE { Common, Rare, Unique, Drink}
+    public ABGRADE AbGrade;
     public int Enhance;
     public int[] Enhance_Cost;
     public int AbPrice;
@@ -16,8 +18,10 @@ public class Ability
     public Sprite AbIcon;
     public Sprite AbSprite;
     public bool IsUsing;
-
-    public Ability(int AbCode, string AbName, int AbType, string AbGrade, int Enhance, int[] Enhance_Cost, int AbPrice, bool IsSelect,Sprite AbIcon, Sprite AbSprite, bool IsUsing)
+    [TextArea]
+    public string AbExplan;
+    
+    public Ability(int AbCode, string AbName, ABTYPE AbType, ABGRADE AbGrade, int Enhance, int[] Enhance_Cost, int AbPrice, bool IsSelect,Sprite AbIcon, Sprite AbSprite, bool IsUsing, string AbExplan)
     {
         this.AbCode = AbCode;
         this.AbName = AbName;
@@ -30,5 +34,6 @@ public class Ability
         this.AbIcon = AbIcon;
         this.AbSprite = AbSprite;
         this.IsUsing = IsUsing;
+        this.AbExplan = AbExplan;
     }
 }
