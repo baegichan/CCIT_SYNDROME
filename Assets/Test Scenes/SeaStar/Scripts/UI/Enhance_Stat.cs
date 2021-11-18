@@ -80,6 +80,7 @@ public class Enhance_Stat : MonoBehaviour
                 py.Enhance_Health++;
                 py.UpdateStat();
                 py.P_Money -= Cost_Health[py.Enhance_Health];
+                py.Save_StateEnhance();
             }
         }
     }
@@ -93,6 +94,7 @@ public class Enhance_Stat : MonoBehaviour
                 py.Enhance_Strength++;
                 py.UpdateStat();
                 py.P_Money -= Cost_Strength[py.Enhance_Strength];
+                py.Save_StateEnhance();
             }
         }
     }
@@ -106,6 +108,7 @@ public class Enhance_Stat : MonoBehaviour
                 py.Enhance_Speed++;
                 py.UpdateStat();
                 py.P_Money -= Cost_Speed[py.Enhance_Speed];
+                py.Save_StateEnhance();
             }
         }
     }

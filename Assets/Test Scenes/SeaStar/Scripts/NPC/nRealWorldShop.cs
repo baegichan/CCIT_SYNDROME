@@ -5,15 +5,12 @@ using UnityEngine;
 public class nRealWorldShop : NPC
 {
     public GameObject RealWorldShop_UI;
-    public AbilityItem item;
-    public Ability[] SellItem;
-    public bool[] IsSell;
+    public Ability[] item;
 
-    void Start()
+    void Awake()
     {
         ply = GameObject.FindGameObjectWithTag("Player");
-        RealWorldShop_UI = GameObject.Find("Canvas").transform.Find("Enhance_Ability").gameObject;
-        item = GetComponent<AbilityItem>();
+        RealWorldShop_UI = GameObject.Find("Canvas").transform.Find("RWS").gameObject;
 
         Scale = transform.localScale;
         DefaultX = Scale.x;
@@ -26,18 +23,15 @@ public class nRealWorldShop : NPC
     {
         Flip();
         talkWithPlayer();
-    }
-
-    public Char_Parent py;
+    } 
 
     void OpenShop()
     {
         RealWorldShop RS = RealWorldShop_UI.GetComponent<RealWorldShop>();
-        py = ply.GetComponent<Char_Parent>();
-        //EH.CP = py;
-        //EH.EnhanceNPC = gameObject;
-        //Enhance_UI.SetActive(true);
-        //EH.SettingShop();
-        //EH.SettingAbility();
+        RS.CP = ply.GetComponent<Char_Parent>();
+        RealWorldShop_UI.SetActive(true);
+        RS.HPItem = item[0];
+        RS.APItem = item[1];
+        RS.SettingBox();
     }
 }
