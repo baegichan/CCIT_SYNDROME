@@ -48,7 +48,7 @@ public class Puncher_Bullet : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            col.GetComponent<Character>().Damage(bullet_Damage);
+            col.GetComponentInParent<Character>().Damage(bullet_Damage);
             BulletDestroy();
         }
         if (col.tag == "Ground")

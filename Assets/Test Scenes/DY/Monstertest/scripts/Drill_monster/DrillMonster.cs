@@ -9,7 +9,8 @@ public class DrillMonster : Character
     public float atkCooltime = 4;
     public float atkDelay;
     public int drillmonDamage;
-
+    
+    
     [Header("Refernce")]
     public Transform player;
     public Animator anim;
@@ -27,6 +28,7 @@ public class DrillMonster : Character
     public bool patroll;
     public bool trace;
     public bool Targeton;
+    public bool Dead;
 
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
@@ -58,6 +60,7 @@ public class DrillMonster : Character
         patroll = true;
         trace = false;
         Targeton = false;
+        Dead = false;
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         Physics.IgnoreLayerCollision(0, 0);
@@ -73,7 +76,27 @@ public class DrillMonster : Character
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
+        if(Hp_Current <= 0)
+        {
+            Dead = true;
+            patroll = false;
+            trace = false;
+            anim.SetTrigger("Dead");
+        }
 
+    }
+
+    private void FixedUpdate()
+    {
+        m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+
+        Vector3 originPos = transform.position;
+
+        Vector3 horizontalRightDir = AngleToDirZ(-m_horizontalViewHalfAngle + m_viewRotateZ);//(-시야각 + 회전값)
+        Vector3 horizontalLeftDir = AngleToDirZ(m_horizontalViewHalfAngle + m_viewRotateZ);//(시야각 + 회전값)
+        Vector3 lookDir = AngleToDirZ(m_viewRotateZ);//보는 방향
+
+        FindViewTargets();
     }
 
     public void Directiondrillmonster(float target, float baseobj)
@@ -102,7 +125,7 @@ public class DrillMonster : Character
         {
             if (col.tag == "Player")
             {
-                col.GetComponent<Character>().Damage(drillmonDamage);
+                col.GetComponentInParent<Character>().Damage(drillmonDamage);
             }
         }
     }
@@ -111,6 +134,10 @@ public class DrillMonster : Character
     {
         transform.Translate(Vector2.right * patrolSpeed * Time.deltaTime);
         Filp();
+    }
+    public void DrillDestroy()
+    {
+        Destroy(gameObject);
     }
 
     public void Filp()
@@ -161,6 +188,7 @@ public class DrillMonster : Character
 
     private void OnDrawGizmos()
     {
+
         if (m_bDebugMode)
         {
             m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
@@ -177,7 +205,7 @@ public class DrillMonster : Character
             Debug.DrawRay(originPos, lookDir * m_viewRadius, Color.green);         //보는 방향
             Debug.DrawRay(originPos, horizontalRightDir * m_viewRadius, Color.cyan);//왼쪽 시야각
 
-            FindViewTargets();
+
         }
     }
 
@@ -229,6 +257,4 @@ public class DrillMonster : Character
         else
             return null; //비어 있다면
     }
-
-
 }

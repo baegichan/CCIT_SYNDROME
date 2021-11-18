@@ -16,10 +16,10 @@ public class Firefly_Dead : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        fireflyMon.DirectionFireflymonster(fireflyMon.player.position.x, fireflyTransform.position.x);
         //아직 죽는 모션이 없음
 
-       //현재 죽는 애니메이션이 없기 때문에 아직 구현 X
+        //현재 죽는 애니메이션이 없기 때문에 아직 구현 X
 
     }
 

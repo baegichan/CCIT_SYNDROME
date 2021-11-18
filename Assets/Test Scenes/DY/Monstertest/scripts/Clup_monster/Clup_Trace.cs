@@ -41,7 +41,7 @@ public class Clup_Trace : StateMachineBehaviour
         */
         if(clupmon.Targeton == true)
         {
-            if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 1.4f) //플레이어 따라 오는 함수
+            if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 1.7f) //플레이어 따라 오는 함수
                 clupTransform.position = Vector2.MoveTowards(clupTransform.position, clupmon.player.position, Time.deltaTime * clupmon.speed);
             else
             {

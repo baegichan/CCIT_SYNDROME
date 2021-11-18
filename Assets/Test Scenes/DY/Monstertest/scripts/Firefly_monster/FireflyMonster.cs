@@ -28,6 +28,7 @@ public class FireflyMonster:Character
     public bool patroll;
     public bool trace;
     public bool Targeton = false;
+    public bool Dead;
     //2D sight
 
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
@@ -75,7 +76,29 @@ public class FireflyMonster:Character
             atkDelay -= Time.deltaTime;
         Up();
         Down();
+        if (Hp_Current <= 0)
+        {
+            Dead = true;
+            patroll = false;
+            trace = false;
+            anim.SetTrigger("Dead");
+        }
+    }
+    private void FixedUpdate()
+    {
+        m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
 
+        Vector3 originPos = transform.position;
+
+
+
+        Vector3 horizontalRightDir = AngleToDirZ(-m_horizontalViewHalfAngle + m_viewRotateZ);//(-시야각 + 회전값)
+        Vector3 horizontalLeftDir = AngleToDirZ(m_horizontalViewHalfAngle + m_viewRotateZ);//(시야각 + 회전값)
+        Vector3 lookDir = AngleToDirZ(m_viewRotateZ);//보는 방향
+
+
+
+        FindViewTargets();
     }
 
     public void DirectionFireflymonster(float target, float baseobj)
@@ -111,6 +134,11 @@ public class FireflyMonster:Character
     {
         transform.Translate(Vector2.right * patrolSpeed * Time.deltaTime);
         Filp();
+    }
+
+    public void FireflyDestroy()
+    {
+        Destroy(gameObject);
     }
 
     public void Filp()

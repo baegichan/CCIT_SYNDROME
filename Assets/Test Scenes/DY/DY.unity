@@ -855,6 +855,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_RobotFirefly
       objectReference: {fileID: 0}
+    - target: {fileID: 8503760637275833740, guid: e32a9b5fc9d2d0f4dac04b2a2031ddfa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8503760637275833745, guid: e32a9b5fc9d2d0f4dac04b2a2031ddfa, type: 3}
       propertyPath: player
       value: 
@@ -3217,12 +3221,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2856775760139026042, guid: ecdcbff01a08adf42b6677a95d62bf02, type: 3}
+      propertyPath: Hp_Current
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2856775760139026042, guid: ecdcbff01a08adf42b6677a95d62bf02, type: 3}
       propertyPath: atkCooltime
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2856775760139026042, guid: ecdcbff01a08adf42b6677a95d62bf02, type: 3}
       propertyPath: patrolSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2856775760139026042, guid: ecdcbff01a08adf42b6677a95d62bf02, type: 3}
+      propertyPath: m_bDebugMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2856775760139026042, guid: ecdcbff01a08adf42b6677a95d62bf02, type: 3}
       propertyPath: m_viewRadius
@@ -5333,7 +5345,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5155095488664883181, guid: 2b81b676618520a41be4da5471ef8ab3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155095488664883182, guid: 2b81b676618520a41be4da5471ef8ab3, type: 3}
+      propertyPath: speed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155095488664883182, guid: 2b81b676618520a41be4da5471ef8ab3, type: 3}
+      propertyPath: patrolSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155095488664883182, guid: 2b81b676618520a41be4da5471ef8ab3, type: 3}
+      propertyPath: m_viewRadius
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b81b676618520a41be4da5471ef8ab3, type: 3}
@@ -6132,7 +6156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8194283058659843116, guid: a35d58541bc2ba648bcbb6b1c3d24ac8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a35d58541bc2ba648bcbb6b1c3d24ac8, type: 3}
@@ -7142,11 +7166,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e635e858b88a97d48a6b86a9e4bdd749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
+  DP: 0
   P_AttackForce: 0
   P_AttackInt: 0
   P_AttackTimer: 1
-  P_AttackState: 0
+  P_Attack_State: 0
   P_AttackResetTimer: 0
+  P_CombatTimer: 5
+  P_CombatInt: 0
   P_DashForce: 100
   P_DashInt: 1
   P_DashTimer: 2
