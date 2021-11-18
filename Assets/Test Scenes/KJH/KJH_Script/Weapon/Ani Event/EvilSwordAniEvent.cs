@@ -24,7 +24,6 @@ public class EvilSwordAniEvent : MonoBehaviour
     void AI()
     {
         Attack_int = 0;
-        Debug.Log("000000");
     }
 
     public void HI()
@@ -35,12 +34,10 @@ public class EvilSwordAniEvent : MonoBehaviour
     public void int1()
     {
         Attack_int = 1;
-        Debug.Log("111111");
     }
     public void int2()
     {
         Attack_int = 2;
-        Debug.Log("222222");
     }
 
     void OnAttakcState()

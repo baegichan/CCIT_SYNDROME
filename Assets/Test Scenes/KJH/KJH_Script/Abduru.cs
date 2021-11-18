@@ -19,7 +19,6 @@ public class Abduru : MonoBehaviour
     //
     //¿¸≈ıµµ≥¢
     public int A_Int;
-    float A_Damage;
     public static bool A_Attack_State = false;  
     //
     public Animator EA;
@@ -138,14 +137,20 @@ public class Abduru : MonoBehaviour
         py.GetComponentInParent<TestPlayer>().Ani.SetInteger("AbilityNum", 4);
         if (Input.GetMouseButtonDown(1))
         {
-            A_Attack();  
-        }        
+            A_Attack();
+            py.GetComponent<MentalChaild>().P_CombatInt = 1;
+        }
+        if(Input.GetMouseButtonUp(1))
+        {
+            py.GetComponent<MentalChaild>().P_CombatInt = 0;
+            py.GetComponent<MentalChaild>().P_CombatTimer = 5;
+        }
     }
     public void A_Attack()
     {       
         py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Abililty");
         py.GetComponentInParent<TestPlayer>().Ani.SetBool("CanIThis", false);
-        //py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);   
+        py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);   
     }
        
     public void Ability_E()
@@ -164,7 +169,7 @@ public class Abduru : MonoBehaviour
 
     public void EvilSword_Attack()
     {
-        py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Ability");
+        py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Abililty");
         py.GetComponentInParent<TestPlayer>().Ani.SetInteger("AbilityNum", 5);
         py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);
         EA.SetTrigger("Attack");
