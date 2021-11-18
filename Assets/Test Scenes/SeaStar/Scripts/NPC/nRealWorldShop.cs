@@ -12,7 +12,7 @@ public class nRealWorldShop : NPC
     void Start()
     {
         ply = GameObject.FindGameObjectWithTag("Player");
-        Enhance_UI = GameObject.Find("Canvas").transform.Find("Enhance_Ability").gameObject;
+        RealWorldShop_UI = GameObject.Find("Canvas").transform.Find("Enhance_Ability").gameObject;
         item = GetComponent<AbilityItem>();
 
         Scale = transform.localScale;
