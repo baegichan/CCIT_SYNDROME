@@ -509,6 +509,9 @@ public class Potal
             SpawnedPotal.GetComponent<EdgeCollider2D>().points = VertexPoints;
             SpawnedPotal.transform.position = (Vector2)SpawnedPotal.transform.position+ PotalLocation;
             SpawnedPotal.GetComponent<PotalEvent>().Potal_setting(Potaltype);
+            SpawnedPotal.GetComponent<PotalEvent>().SetinterBlock();
+
+
         }
     }
     

@@ -23,12 +23,6 @@ public class MapLoadTest : MonoBehaviour
             }
         }
     }
-    public void Loading_Map(int mapcode)
-    {
-        //분별코드
-        
-        Resources.Load(mapcode+"/");
-        testmap.Load_MapData(gameObject);
-    }
+  
     // Update is called once per frame
 }

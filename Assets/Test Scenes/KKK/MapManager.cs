@@ -5,6 +5,7 @@ using UnityEngine;
 public class MapManager : MonoBehaviour
 {
     public static MapManager s_Instace;
+    public bool Map_Lock = false;
     public void instace()
     {
     if(s_Instace==null)
@@ -18,25 +19,65 @@ public class MapManager : MonoBehaviour
     
     }
     public Vector2 Current_Room = new Vector2(0,0);
-   
-     public void PotalMove(Potals.PotalType  potalType)
+    public Vector2 PCurrent_Room
+    {
+        get { return Current_Room; }
+        set
+        {
+            if (Current_Room != value)
+            {
+            
+                MapOn(value);
+                MapOff(Current_Room);
+                Current_Room = value;
+            }
+        ;
+        }
+    }
+    public void MapLoack()
+    {
+        Map_Lock = true;
+    }
+    public void MapAllOff()
+    {
+    for(int i =0; i<Maps.transform.childCount;i++)
+    {
+            Maps.transform.GetChild(i).gameObject.SetActive(false);
+
+    }
+    }
+    public int currentindexreturner()
+    {
+        return (int)PCurrent_Room.x * (Level * 2 + 1) + (int)PCurrent_Room.y;
+    }
+    public void MapOn(Vector2 Mapindex)
+    {
+        Maps.transform.GetChild((int)Mapindex.x * (Level * 2 + 1)+(int)Mapindex.y).gameObject.SetActive(true);
+
+    }
+    public void MapOff(Vector2 Mapindex)
+    {
+        Maps.transform.GetChild((int)Mapindex.x * (Level * 2 + 1) + (int)Mapindex.y).gameObject.SetActive(false);
+
+    }
+    public void PotalMove(Potals.PotalType  potalType)
     {
         switch (potalType)
         {
             case Potals.PotalType.L:
-                Current_Room = new Vector2( Current_Room.x - 1, Current_Room.y);
+                Current_Room = new Vector2( Current_Room.x , Current_Room.y);
                 //이동구현
             break;
             case Potals.PotalType.R:
-                Current_Room = new Vector2(Current_Room.x+ 1, Current_Room.y);
+                Current_Room = new Vector2(Current_Room.x, Current_Room.y);
                 //이동구현
                 break;
             case Potals.PotalType.T:
-                Current_Room = new Vector2(Current_Room.x , Current_Room.y+1);
+                Current_Room = new Vector2(Current_Room.x , Current_Room.y);
                 //이동구현
                 break;
             case Potals.PotalType.B:
-                Current_Room = new Vector2(Current_Room.x , Current_Room.y-1);
+                Current_Room = new Vector2(Current_Room.x , Current_Room.y);
                 //이동구현
                 break;
 
@@ -91,6 +132,21 @@ public class MapManager : MonoBehaviour
 
         }
     }
+
+    public void RoomSetting()
+    {
+        List<GameObject> RoomCroods = new List<GameObject>();
+        for(int i =0; i< Level*2+1;i++)
+        {
+            for (int j = 0; j < Level * 2 + 1; j++)
+            {
+                if(map[i,j].GetComponent<Room_data>().Room_Created)
+                {
+                    RoomCroods.Add(map[i, j]);
+                }
+            }
+        }
+    }
     private void Start()
     {
         instace();
@@ -101,26 +157,16 @@ public class MapManager : MonoBehaviour
         map_index = (2 * Level + 1) * (2 * Level + 1);
         //map[Level, Level].transform.position = new Vector2(0, 0);
         //Start_Map = map[Level, Level].transform.position;
-        if (Level == 3)
-        {
-            Boss_Room_Index = new Vector2(Level + (Random.Range(0, 2) == 0 ? Random.Range(2, Level + 1) : -Random.Range(2, Level + 1)), Level + (Random.Range(0, 2) == 0 ? +Random.Range(2, Level + 1) : -Random.Range(2, Level + 1)));
-
-        }
-        else
-        {
-            Boss_Room_Index = new Vector2(Level + (Random.Range(0, 2) == 0 ? Random.Range(Level / 2, Level + 1) : -Random.Range(Level / 2, Level + 1)), Level + (Random.Range(0, 2) == 0 ? +Random.Range(Level / 2, Level + 1) : -Random.Range(Level / 2, Level + 1)));
-
-        }
-        //Level은 3보다 높아야 함
-
-
+        
 
         make_map();
         Map_Move();
-        
-        bbb();
-        Current_Room = new Vector2(Level, Level);
-        Maps.GetComponent<MapLoadTest>().Starting_Setting();
+        bbb();       
+        Maps.GetComponent<MapLoadTest>().Starting_Setting();      
+        MapAllOff();
+        PCurrent_Room = new Vector2(Level, Level);
+
+      
     }
     void bbb()//맵 최소 개수 
     {
@@ -162,6 +208,7 @@ public class MapManager : MonoBehaviour
             Map_Move();
             map[a, b].transform.parent = GameObject.Find("Maps").transform;
             map[a, b].name = "room_index    " + "[ " + a + " ]" + "[ " + b + " ]";
+            map[a, b].GetComponent<Room_data>().Map_index = new Vector2(a, b);
             b++;
             if (b == ((2 * Level) + 1))
             {
