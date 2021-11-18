@@ -17,6 +17,8 @@ public class Char_Parent : Character
     public GameObject Current_Use;
     public GameObject PharaoWand_Senaka;
     public GameObject PharaoWand;
+    public GameObject BattleAxe_Senaka;
+    public GameObject BattleAxe;
     public GameObject EvilSword;
 
     [Header("플레이어 스테이터스")]
@@ -48,8 +50,8 @@ public class Char_Parent : Character
     public static bool RedBullDash = false;
     public static float Active_Cool_Max;
     public static float Active_Cool = 0f;
-    Vector2 Mouse;//2021.10.12 김재헌
-    Vector2 PlayerPosition;//2021.10.12 김재헌
+    Vector2 Mouse;
+    Vector2 PlayerPosition;
 
     //[Header("능력치 강화 수치")]
     public int Enhance_Health;
@@ -68,6 +70,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
+        Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
         Cam = Camera.main;
         rigid = GetComponent<Rigidbody2D>();
@@ -99,6 +102,9 @@ public class Char_Parent : Character
             Move();
         }
         if(Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
+
+        if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); }
+        if (AP_Timer > 0) { AP_Time(); }
     }
 
     //캐릭터 변경
@@ -203,6 +209,7 @@ public class Char_Parent : Character
         else if (P_JumpInt > 0)
         {
             rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
+            rigid.velocity = new Vector2(0, 0);
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);
         }
@@ -213,27 +220,30 @@ public class Char_Parent : Character
 
     Vector3 CharScale;
 
-    public void MouseFilp()//2021.10.12 김재헌
+    public void MouseFilp()
     {
-        if (Mouse.x <= PlayerPosition.x)// 1920x1080 기준 중간지점
+        if (Ani.GetBool("CanIThis"))
         {
-            SelectChar.transform.localScale = new Vector3(-CharScale.x, CharScale.y, CharScale.z);
-        }
-        else if (Mouse.x > PlayerPosition.x)
-        {
-            SelectChar.transform.localScale = new Vector3(CharScale.x, CharScale.y, CharScale.z);
+            if (Mouse.x <= PlayerPosition.x)
+            {
+                SelectChar.transform.localScale = new Vector3(-CharScale.x, CharScale.y, CharScale.z);
+            }
+            else if (Mouse.x > PlayerPosition.x)
+            {
+                SelectChar.transform.localScale = new Vector3(CharScale.x, CharScale.y, CharScale.z);
+            }
         }
     }
 
-    public void WorldChange()//이면세계 전환 //2021.10.12 김재헌
+    public void WorldChange()
     {
         GameObject A = GameObject.FindGameObjectWithTag("Player");
-        GameObject B = GameObject.FindGameObjectWithTag("OtherPlayer");//임시
+        GameObject B = GameObject.FindGameObjectWithTag("OtherPlayer");
         if (P_OtherWorld == false)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                P_OtherWorld = true;//이면세계 진입 구현 필요            
+                P_OtherWorld = true;
                 Instantiate(B, A.transform);
                 Destroy(A, 0f);
             }
@@ -242,7 +252,7 @@ public class Char_Parent : Character
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                P_OtherWorld = false;//기본세계 진입 구현 필요
+                P_OtherWorld = false;
                 Instantiate(A, B.transform);
                 Destroy(B, 0f);
             }
@@ -310,25 +320,32 @@ public class Char_Parent : Character
         switch (PassiveAbility.AbCode)
         {
             case 6:
-                Debug.Log("더블점프");
                 passive = new usePassive(AM.Double_Jump);
                 P_MaxJumpInt = 2;
                 break;
         }
     }
 
+    float AP_Duration = 120f;
+    float AP_Timer;
+
     void UseItem()
     {
         if (MulYakInt > 0 && Input.GetKeyDown(KeyCode.E))
         {
             MulYakInt--;
-            Debug.Log("물약 사용");
+            Hp_Current += 50;
         }
         else if (AlYakInt > 0 && Input.GetKeyDown(KeyCode.Q))
         {
             AlYakInt--;
-            Debug.Log("알약 사용");
+            AP_Timer = AP_Duration;
         }
+    }
+
+    void AP_Time()
+    {
+        AP_Timer -= Time.deltaTime;
     }
     //
 
@@ -352,11 +369,15 @@ public class Char_Parent : Character
                 Active_Cool_Max = 4f;
                 break;
             case 4:
+                OffBattleAxe();
+                Current_Use = BattleAxe_Senaka;
                 Active_Cool_Max = 4f;
                 break;
             case 5:
-                Active_Cool_Max = 4f; 
+                EvillSwordSwitch();
+                Current_Use = EvilSword;
                 AM.EA = Current_Use.GetComponent<Animator>();
+                Active_Cool_Max = 4f; 
                 break;
             case 9:
                 Active_Cool_Max = 4f;
@@ -369,5 +390,37 @@ public class Char_Parent : Character
     {
         if (PharaoWand_Senaka.activeSelf) { PharaoWand_Senaka.SetActive(false); }
         else { PharaoWand_Senaka.SetActive(true); }
+    }
+
+    public void OffBattleAxe()
+    {
+        BattleAxe_Senaka.SetActive(true);
+        BattleAxe.SetActive(false);
+    }
+
+    public void OnBattleAxe()
+    {
+        BattleAxe_Senaka.SetActive(false);
+        BattleAxe.SetActive(true);
+    }
+
+    public void EvillSwordSwitch()
+    {
+        if (EvilSword.activeSelf) { EvilSword.SetActive(false); }
+        else { EvilSword.SetActive(true); }
+    }
+
+    void Load_StateEnhance()
+    {
+        Enhance_Health = PlayerPrefs.HasKey("E_Health") ? PlayerPrefs.GetInt("E_Health") : 0;
+        Enhance_Strength = PlayerPrefs.HasKey("E_Strength") ? PlayerPrefs.GetInt("E_Strength") : 0;
+        Enhance_Speed = PlayerPrefs.HasKey("E_Speed") ? PlayerPrefs.GetInt("E_Speed") : 0;
+    }
+
+    public void Save_StateEnhance()
+    {
+        PlayerPrefs.SetInt("E_Health", Enhance_Health);
+        PlayerPrefs.SetInt("E_Strength", Enhance_Strength);
+        PlayerPrefs.SetInt("E_Speed", Enhance_Speed);
     }
 }

@@ -9,10 +9,10 @@ public class OtherWorldShop : NPC
     public Ability[] SellItem;
     public bool[] IsSell;
 
-    void Start()
+    void Awake()
     {
         ply = GameObject.FindGameObjectWithTag("Player");
-        Enhance_UI = GameObject.Find("Canvas").transform.Find("Enhance_Ability").gameObject;
+        Enhance_UI = GameObject.Find("Canvas").transform.Find("OWS").gameObject;
         item = GetComponent<AbilityItem>();
         sellItem();
 
