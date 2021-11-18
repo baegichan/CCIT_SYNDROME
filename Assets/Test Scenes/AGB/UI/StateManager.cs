@@ -1,50 +1,72 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StateManager : MonoBehaviour
 {
     #region 변수
-    float maxHp;
-    float hp;
-    float darkeFog;
-    float avssGage;
-    
-    float beforeHp;
-    float beforeMaxhp;
-    float beforeDark;
-    float beforeAvss;
-    
+    int maxHp;
+    int hp;
+
+    int avssGage;
+
+  
+
 
     public AbyssManager abyssManager;
 
+    [SerializeField]
+    private Image HpBar;
+
+    [SerializeField]
+    private Image AbyssBar;
+
     #endregion
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
-    void Update()
-    {
-        if(beforeAvss != avssGage)
-    }
+
 
     #region 리소스 가져오기
-
-    public float MaxHp
+    private void Start()
     {
-        set { maxHp = value; }
+
     }
-   public float Hp
+    public int MaxHp
     {
-        set { hp = value; }
+        set
+        {
+            //max 추후에 증가본 추가
+            maxHp = value;
+
+        }
+    }
+    public int Hp
+    {
+        set
+        {
+            hp = value;
+            HpBar.fillAmount = Convert.ToSingle(hp) /Convert.ToSingle(maxHp);
+           
+        
+        }
     }
 
+    public int AbyssGage
+    {
+        set
+        {
+            avssGage = value;
+            AbyssBar.fillAmount = Convert.ToSingle(avssGage) / Convert.ToSingle(100);
 
+        }
+    }
     #endregion
 
     #region
+  
     #endregion
 }

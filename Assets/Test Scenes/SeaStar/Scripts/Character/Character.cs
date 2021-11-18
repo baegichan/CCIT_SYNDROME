@@ -18,6 +18,16 @@ public class Character : MonoBehaviour
     [Tooltip("기본 이동속도")]
     public float speed;
 
+    [Header("State Manager")]
+    public StateManager stateManagers;
+
+   
+    private void Start()
+    {
+     
+      
+        Hp_Current = Hp_Max;
+    }
     void Update()
     {
         if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
@@ -54,6 +64,8 @@ public class Character : MonoBehaviour
         if(target.Hp_Current>0 && target.Hp_Max>target.Hp_Current)
         {
             target.Hp_Current = Mathf.Clamp(target.Hp_Current+Healint, 0, target.Hp_Max);
+            stateManagers.MaxHp = target.Hp_Max;
+            stateManagers.Hp = target.Hp_Current;
             Load_Heal_Text(target,Healint);
         }
     }
@@ -78,9 +90,14 @@ public class Character : MonoBehaviour
         if (secondDamge > 0)
         {
             Hp_Current -= secondDamge - DP;
+            stateManagers.MaxHp = Hp_Max;
+            stateManagers.Hp = Hp_Current;
+          
         }       
         if (Shield > 0)
            Shield -= firstDamge - DP;
         Load_Damage_Text(this,DamageValue);
     }
+
+  
 }

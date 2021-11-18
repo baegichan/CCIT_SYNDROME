@@ -73,14 +73,11 @@ public class Char_Parent : Character
         rigid = GetComponent<Rigidbody2D>();
         SelectChar = Char[0];
         ChangeChar(SelectChar);
-    }
 
-    void FixedUpdate()
-    {
 
     }
-
-    void Update()
+ 
+        void Update()
     {
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);//∏∂øÏΩ∫ ∆˜¿Œ≈Õ ¡¬«•πﬁ±‚//2021.10.12 ±Ë¿Á«Â
         Mouse = Input.mousePosition;//2021.10.12 ±Ë¿Á«Â
