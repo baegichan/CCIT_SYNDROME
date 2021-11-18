@@ -152,10 +152,8 @@ public class Abduru : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            EvilSword_Attack();
-            EvilSwordAniEvent.intup();
+            EvilSword_Attack();     
             py.GetComponent<MentalChaild>().P_CombatInt = 1;
-            E_Attack_State = true;
         }  
         if(Input.GetMouseButtonUp(1))
         {

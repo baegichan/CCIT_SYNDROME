@@ -5,27 +5,46 @@ using UnityEngine;
 public class EvilSwordAniEvent : MonoBehaviour
 {
     public static int Attack_int = 0;
-    public static List<GameObject> hit = new List<GameObject>();
+    public List<GameObject> hit = new List<GameObject>();
+    public GameObject ply;
 
-    public void EvilSwordEvent()
+    void Update()
     {
-        GetComponent<Abduru>().E_Attack_State = false;
+        if (Attack_int >= 3)
+        {
+            Attack_int = 0;
+        }
     }
 
-    void AttackInitialization()
+    public void Statefalse()
+    {
+        ply.GetComponent<Abduru>().E_Attack_State = false;
+    }
+
+    void AI()
     {
         Attack_int = 0;
-        Debug.Log("세탁기: " + Attack_int);
+        Debug.Log("000000");
     }
 
-    void HitInitializtion()
-    {
-        hit.Clear();
-        Debug.Log("내 야추 길애" + hit.Count);
+    public void HI()
+    { 
+        hit = new List<GameObject>();
     }
 
-    public static void intup()
+    public void int1()
     {
-        Attack_int++;
+        Attack_int = 1;
+        Debug.Log("111111");
+    }
+    public void int2()
+    {
+        Attack_int = 2;
+        Debug.Log("222222");
+    }
+
+    void OnAttakcState()
+    {
+        ply.GetComponent<Abduru>().E_Attack_State = true;
     }
 }
