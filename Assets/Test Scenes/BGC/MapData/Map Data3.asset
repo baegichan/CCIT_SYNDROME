@@ -12,41 +12,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d390fb5042a8d458d39488bd5a5fb0, type: 3}
   m_Name: Map Data3
   m_EditorClassIdentifier: 
-  MapCode: 0
-  MapTypeCode: 0
+  MonsterSet: {fileID: 0}
+  MapTypeCode: 12
+  TileCollider: {fileID: 6658981164897216416, guid: db6a0063098161742bc46b48b2210470, type: 3}
   BG:
   - BackGround: []
-    Tilemap: {fileID: 2016188887, guid: 5cdcbfe40bd92f743a03496bb5f68d3c, type: 3}
-    Its_Object: 0
+    Tilemap: {fileID: 1497310735299223330, guid: 302fb55deddeff543bf8d097ef9117b7, type: 3}
+    Its_Object: 1
     TilemapName: Test_Map_1
     OrderInLayer: -33
     Layer:
       serializedVersion: 2
-      m_Bits: 512
+      m_Bits: 64
   - BackGround: []
-    Tilemap: {fileID: 589728505, guid: bb4a00ad3c4f9204590d404354f8a5ae, type: 3}
+    Tilemap: {fileID: 1301238927224597167, guid: 04783d46702f12941829b75f5f18b56c, type: 3}
     Its_Object: 1
     TilemapName: Test__Map_2
     OrderInLayer: -34
     Layer:
       serializedVersion: 2
       m_Bits: 128
-  Map_Event:
-  - MapEventType: 0
-    VertexPoints: []
-    EventLocation: {x: 0, y: 0}
-  - MapEventType: 0
-    VertexPoints: []
-    EventLocation: {x: 0, y: 0}
+  Map_Event: {fileID: 830888183, guid: 738641938afe70e42bd2021b5cd0b78f, type: 3}
   Potals:
-  - EnablePotal: 0
+  - EnablePotal: 1
     Potaltype: 1
-    VertexPoints: []
-    PotalLocation: {x: 0, y: 0}
-  - EnablePotal: 0
+    VertexPoints:
+    - {x: -1, y: 1}
+    - {x: 1, y: 1}
+    - {x: 1, y: -1}
+    - {x: -1, y: -1}
+    - {x: -1, y: 1}
+    PotalLocation: {x: -17.4, y: -8.8}
+  - EnablePotal: 1
     Potaltype: 2
-    VertexPoints: []
-    PotalLocation: {x: 0, y: 0}
+    VertexPoints:
+    - {x: -1, y: 1}
+    - {x: 1, y: 1}
+    - {x: 1, y: -1}
+    - {x: -1, y: -1}
+    - {x: -1, y: 1}
+    PotalLocation: {x: 29.6, y: -9}
   - EnablePotal: 0
     Potaltype: 4
     VertexPoints: []

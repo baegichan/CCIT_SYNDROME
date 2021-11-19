@@ -25,14 +25,15 @@ public class Firefly_Trace : StateMachineBehaviour
     {
         if (fireflyMon.Targeton == true)
         {
-            if (Vector2.Distance(fireflyMon.player.position, fireflyTransform.position) > 4f) //플레이어 따라 오는 함수
-                fireflyTransform.position = Vector2.MoveTowards(fireflyTransform.position, fireflyMon.player.position, Time.deltaTime * fireflyMon.speed);
+            if (Vector2.Distance(fireflyMon.playerTransform.position, fireflyTransform.position) > 4f) //플레이어 따라 오는 함수
+                fireflyTransform.position = Vector2.MoveTowards(fireflyTransform.position, fireflyMon.playerTransform.position, Time.deltaTime * fireflyMon.speed);
             else
             {
                 animator.SetBool("Move", false);
                 animator.SetBool("Follow", false);
             }
         }
+        fireflyMon.DirectionFireflymonster(fireflyMon.playerTransform.position.x, fireflyTransform.position.x);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,162 +6,219 @@ using UnityEngine.UI;
 
 public class Enhance : MonoBehaviour
 {
-    public GameObject[] Lock;
-    public List<Ability> ability;
-    public GameObject player;
+    public Char_Parent CP;
 
-    public Ability SelectAbility;
+    public GameObject Ability_Shop;
+    public GameObject Ability_Enhance;
+    public GameObject EnhanceNPC;
+    public GameObject[] PageButton;
 
-    string Active_Name, Active_Grade, Active_Effect;
-    string Passive_Name, Passive_Grade, Passive_Effect;
 
+    [Header("Sell Items")]
+    public Image[] Icon_Image;
+    public Text[] Explan_Text;
+    public Text[] Price_Text;
+    public Text[] Type_Text;
+    public GameObject[] BuyButton;
 
     [Header("Active_Ability")]
-    public Text Active_Name_Text;
-    public Text Active_Grade_Text;
-    public Text Active_Effect_Text;
-    public RawImage Active_Image;
+    public GameObject ActiveBox;
+    public GameObject ActiveEnhance;
+    public Image Active_Icon_Image;
+    public Text Active_Level_Text;
+    public Text Active_Explan_Text;
+    public Text Active_Price_Text;
 
     [Header("Passive_Ability")]
-    public Text Passive_Name_Text;
-    public Text Passive_Grade_Text;
-    public Text Passive_Effect_Text;
-    public RawImage Passive_Image;
+    public GameObject PassiveBox;
+    public GameObject PassiveEnhance;
+    public Image Passive_Icon_Image;
+    public Text Passive_Level_Text;
+    public Text Passive_Explan_Text;
+    public Text Passive_Price_Text;
 
-    void Update()
+    [Header("오브젝트 위치")]
+    public Vector2[] BoxPosition;
+    public float[] LevelTextPosition;
+
+    void LevelTextPos(int AbilityNum, Text LevelText)
     {
-        SwitchAbility();
-        SettingAbility();
+        switch(AbilityNum)
+        {
+            case 0:
+                LevelText.transform.localPosition = new Vector3(LevelTextPosition[0], LevelText.transform.localPosition.y, LevelText.transform.localPosition.z);
+                break;
+            case 1:
+                LevelText.transform.localPosition = new Vector3(LevelTextPosition[1], LevelText.transform.localPosition.y, LevelText.transform.localPosition.z);
+                break;
+            case 4:
+                LevelText.transform.localPosition = new Vector3(LevelTextPosition[4], LevelText.transform.localPosition.y, LevelText.transform.localPosition.z);
+                break;
+            case 5:
+                LevelText.transform.localPosition = new Vector3(LevelTextPosition[3], LevelText.transform.localPosition.y, LevelText.transform.localPosition.z);
+                break;
+            case 6:
+                LevelText.transform.localPosition = new Vector3(LevelTextPosition[2], LevelText.transform.localPosition.y, LevelText.transform.localPosition.z);
+                break;
+        }
     }
 
-    void SettingAbility()
+    public void SettingAbility()
     {
-        if (ability[0].AbSprite != null)
+        if (CP.ActiveAbility.AbSprite != null)
         {
-            Lock[0].GetComponent<Image>().color = new Color(0, 0, 0, 0);
-            Lock[0].transform.GetChild(0).gameObject.SetActive(false);
-            Active_Name = ability[0].AbName;
-            Active_Grade = ability[0].Enhance + "  ->  " + (ability[0].Enhance + 1);
-            EH_Ability();
+            ActiveBox.transform.localPosition = BoxPosition[0];
+            PassiveBox.transform.localPosition = BoxPosition[1];
+            LevelTextPos(CP.ActiveAbility.AbCode, Active_Level_Text);
 
-            Active_Name_Text.text = Active_Name;
-            Active_Grade_Text.text = Active_Grade;
-            Active_Effect_Text.text = Active_Effect;
-            Active_Image.GetComponent<RawImage>().texture = ability[0].AbIcon.texture;
+            ActiveEnhance.SetActive(true);
+            Active_Level_Text.enabled = true;
+            Active_Explan_Text.enabled = true;
+
+            Active_Icon_Image.sprite = CP.ActiveAbility.AbIcon;
+            Active_Level_Text.text = "LV." + CP.ActiveAbility.Enhance.ToString();
+            Active_Explan_Text.text = CP.ActiveAbility.AbExplan;
+            if (CP.ActiveAbility.Enhance < 3) { Active_Price_Text.text = CP.ActiveAbility.Enhance_Cost[CP.ActiveAbility.Enhance].ToString(); }
+            else { Active_Price_Text.text = "MAX"; }
         }
-        if (ability[1].AbSprite != null)
+        else
         {
-            Lock[1].GetComponent<Image>().color = new Color(0, 0, 0, 0);
-            Lock[1].transform.GetChild(0).gameObject.SetActive(false);
-            Passive_Name = ability[1].AbName;
-            Passive_Grade = ability[1].Enhance + "  ->  " + (ability[1].Enhance + 1);
-            EH_Passive();
+            ActiveBox.transform.localPosition = BoxPosition[1];
+            PassiveBox.transform.localPosition = BoxPosition[0];
 
-            Passive_Name_Text.text = Passive_Name;
-            Passive_Grade_Text.text = Passive_Grade;
-            Passive_Effect_Text.text = Passive_Effect;
-            Passive_Image.GetComponent<RawImage>().texture = ability[1].AbIcon.texture;
+            ActiveEnhance.SetActive(false);
+            Active_Level_Text.enabled = false;
+            Active_Explan_Text.enabled = false;
+        }
+
+        if (CP.PassiveAbility.AbSprite != null)
+        {
+            LevelTextPos(CP.PassiveAbility.AbCode, Passive_Level_Text);
+
+            PassiveEnhance.SetActive(true);
+            Passive_Level_Text.enabled = true;
+            Passive_Explan_Text.enabled = true;
+
+            Passive_Icon_Image.sprite = CP.PassiveAbility.AbIcon;
+            Passive_Level_Text.text = "LV." + CP.PassiveAbility.Enhance.ToString();
+            Passive_Explan_Text.text = CP.PassiveAbility.AbExplan;
+            if (CP.PassiveAbility.Enhance < 3) { Passive_Price_Text.text = CP.PassiveAbility.Enhance_Cost[CP.ActiveAbility.Enhance].ToString(); }
+            else { Passive_Price_Text.text = "MAX"; }
+        }
+        else
+        {
+            PassiveEnhance.SetActive(false);
+            Passive_Level_Text.enabled = false;
+            Passive_Explan_Text.enabled = false;
+        }
+    }
+
+    OtherWorldShop EHNPC;
+
+    public void SettingShop()
+    {
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.selectedSprite;
+
+        EHNPC = EnhanceNPC.GetComponent<OtherWorldShop>();
+        for(int i = 0; i < EHNPC.SellItem.Length; i++)
+        {
+            Icon_Image[i].sprite = EHNPC.SellItem[i].AbIcon;
+            if(EHNPC.IsSell[i])
+            {
+                Explan_Text[i].text = "이미 구입했습니다.";
+                BuyButton[i].SetActive(false);
+            }
+            else
+            {
+                Explan_Text[i].text = EHNPC.SellItem[i].AbExplan;
+                BuyButton[i].SetActive(true);
+            }
+            Price_Text[i].text = EHNPC.SellItem[i].AbPrice.ToString();
         }
     }
 
     public void Exit()
     {
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.disabledSprite;
+        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Toggle>().spriteState.disabledSprite;
+
+        Ability_Enhance.SetActive(false);
+        Ability_Shop.SetActive(true);
         gameObject.SetActive(false);
     }
 
-    public void selectAbility()
-    {
-        switch(gameObject.name)
-        {
-            case "Lock_0":
-                SelectAbility = ability[0];
-                break;
-            case "Lock_1":
-                SelectAbility = ability[1];
-                break;
-        }
-    }
-
-    delegate void enhance();
-    enhance EH_Ability;
-    enhance EH_Passive;
-    public AbilityManager am;
-
-    void SwitchAbility()
-    {
-        switch(ability[0].AbCode)
-        {
-            case 0:
-                EH_Ability = Enhance_Werewolf;
-                Debug.Log("0");
-                break;
-            case 1:
-                EH_Ability = Enhance_Pharaoh;
-                Debug.Log("1");
-                break;
-            case 2:
-                EH_Ability = Enhance_Boom;
-                Debug.Log("2");
-                break;
-            case 3:
-                EH_Ability = Enhance_StoneMan;
-                Debug.Log("4");
-                break;
-        }
-
-        switch (ability[1].AbCode)
-        {
-            case 6:
-                EH_Passive = Enhance_Doublejump;
-                Debug.Log("3");
-                break;
-        }
-    }
-
-    Char_Parent tt;
-
     public void EnhaceAbility()
     {
-        //플레이어의 재화가 충분하다면
-        //재화 -= SelectAbility.EnhanceCost[SelectAbility.Enhance];
-        //SelectAbility.Enhance++;
-        ability[0].Enhance++;
-        //돈 부족하면 재화 글자 색 뻘겋게
+        if(CP.ActiveAbility.Enhance < 3 && CP.P_Money >= CP.ActiveAbility.Enhance_Cost[CP.ActiveAbility.Enhance])
+        {
+            CP.P_Money -= CP.ActiveAbility.Enhance_Cost[CP.ActiveAbility.Enhance];
+            CP.ActiveAbility.Enhance++;
+            SettingAbility();
+        }
     }
 
-    void Enhance_Boom()
+    public void EnhacePassive()
     {
-        tt = player.GetComponent<Char_Parent>();
-        Active_Effect = "";
-        Active_Effect += "공격력: " + am.BoomAP[tt.ActiveAbility.Enhance] + " -> " + am.BoomAP[tt.ActiveAbility.Enhance + 1] + "\n";
+        if (CP.PassiveAbility.Enhance < 3 && CP.P_Money >= CP.PassiveAbility.Enhance_Cost[CP.PassiveAbility.Enhance])
+        {
+            CP.P_Money -= CP.PassiveAbility.Enhance_Cost[CP.PassiveAbility.Enhance];
+            CP.PassiveAbility.Enhance++;
+            SettingAbility();
+        }
     }
 
-    void Enhance_StoneMan()
+    public void OpenShop()
     {
-        tt = player.GetComponent<Char_Parent>();
-        Active_Effect = "";
-        Active_Effect += "방어력: " + tt.SelectChar.GetComponent<Char_RockMan>().DP[tt.ActiveAbility.Enhance] + " -> " + tt.SelectChar.GetComponent<Char_RockMan>().DP[tt.ActiveAbility.Enhance + 1] + "\n";
-        player.GetComponent<Char_Parent>().UpdateStat();
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.selectedSprite;
+        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Toggle>().spriteState.disabledSprite;
+
+        Ability_Shop.SetActive(true);
+        Ability_Enhance.SetActive(false);
     }
 
-    void Enhance_Werewolf()
+    public void OpenEnhance()
     {
-        tt = player.GetComponent<Char_Parent>();
-        Active_Effect = "";
-        Active_Effect += "공격력: " + am.WolfAP[tt.ActiveAbility.Enhance] + " -> " + am.WolfAP[tt.ActiveAbility.Enhance + 1] + "\n";
-        Active_Effect += "체력: " + tt.SelectChar.GetComponent<Char_Wolf>().HP[tt.ActiveAbility.Enhance] + " -> " + tt.SelectChar.GetComponent<Char_Wolf>().HP[tt.ActiveAbility.Enhance + 1] + "\n";
-        player.GetComponent<Char_Parent>().UpdateStat();
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.disabledSprite;
+        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Toggle>().spriteState.selectedSprite;
+
+        Ability_Shop.SetActive(false);
+        Ability_Enhance.SetActive(true);
+        SettingAbility();
     }
 
-    void Enhance_Pharaoh()
+    public void BuyItem_0()
     {
-        tt = player.GetComponent<Char_Parent>();
-        Active_Effect = "";
-        Active_Effect += "공격력: " + am.ParaoAP[tt.ActiveAbility.Enhance] + " -> " + am.ParaoAP[tt.ActiveAbility.Enhance + 1] + "\n";
+        BuyItem(0);
+    }
+    public void BuyItem_1()
+    {
+        BuyItem(1);
+    }
+    public void BuyItem_2()
+    {
+        BuyItem(2);
     }
 
-    void Enhance_Doublejump()
+    void BuyItem(int index)
     {
-
+        if (CP.P_Money >= EHNPC.SellItem[index].AbPrice)
+        {
+            CP.P_Money -= EHNPC.SellItem[index].AbPrice;
+            if (EHNPC.SellItem[index].AbType == Ability.ABTYPE.Active)
+            {
+                EHNPC.py.ActiveAbility = EHNPC.SellItem[index];
+                EHNPC.py.SelectAbility();
+                EHNPC.py.DecideChar();
+            }
+            else if (EHNPC.SellItem[index].AbType == Ability.ABTYPE.Passive)
+            {
+                EHNPC.py.PassiveAbility = EHNPC.SellItem[index];
+                CP.UsePassive();
+                CP.passive();
+            }
+            EHNPC.IsSell[index] = true;
+            SettingShop();
+            SettingAbility();
+        }
     }
 }

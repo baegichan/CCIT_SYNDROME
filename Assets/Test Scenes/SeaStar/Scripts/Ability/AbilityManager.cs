@@ -23,34 +23,31 @@ public class AbilityManager : MonoBehaviour
     //
     //ÀüÅõµµ³¢
     public int A_Int;
-    float A_Damage;
-    bool A_AttackState = false;
-    public float A_ResetTimer;
+    public static bool A_Attack_State = false;
     //
 
     public GameObject PharaoEffect;
     public Animator EA;
+    public Char_Parent CP;
 
     public void Werewolf()
     {
-        if (Input.GetMouseButtonDown(1) && !py.GetComponentInParent<Char_Parent>().Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if (Input.GetMouseButtonDown(1) && !CP.Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            py.GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", false);
-            Debug.Log("¾ä¾ä");
+            CP.Ani.SetTrigger("Ability");
+            CP.Ani.SetBool("CanIThis", false);
             Vector2 pp = py.transform.position + new Vector3(0.5f,0);
             Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, Physics2D.AllLayers);
             for(int i = 0; i < hit.Length; i++)
             {
-                if (hit[i].tag == "enemy")
+                if (hit[i].tag == "Monster")
                 {
-                    if (hit[i].GetComponent<Character>().Hp_Current < WolfAP[py.GetComponent<Char_Parent>().ActiveAbility.Enhance])
+                    if (hit[i].GetComponent<Character>().Hp_Current < WolfAP[CP.ActiveAbility.Enhance])
                     {
-                        py.GetComponentInParent<Character>().Hp_Current++;
-                        Debug.Log("ÂÁÂÁ");
+                        CP.Hp_Current++;
                     }
-                    Character.Damage(hit[i].gameObject, WolfAP[py.GetComponent<Char_Parent>().ActiveAbility.Enhance]);
+                    hit[i].GetComponent<Character>().Damage(WolfAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
                 }
             }
         }
@@ -61,10 +58,10 @@ public class AbilityManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().PharaoWandSwitch();
+            CP.PharaoWandSwitch();
             py.GetComponent<Char_Eden>().active = Pharao;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            py.GetComponentInParent<Char_Parent>().Ani.SetBool("Combat", true);
+            CP.Ani.SetTrigger("Ability");
+            CP.Ani.SetBool("Combat", true);
         }
     }
 
@@ -77,17 +74,13 @@ public class AbilityManager : MonoBehaviour
         Collider2D[] MonsterCol = Physics2D.OverlapBoxAll(pp, new Vector2(5, 5), 0, Physics2D.AllLayers);
         for (int i = 0; i < MonsterCol.Length; i++)
         {
-            if (MonsterCol[i].tag == "enemy")
+            if (MonsterCol[i].tag == "Monster")
             {
                 Vector2 enemy = new Vector2(MonsterCol[i].transform.position.x, MonsterCol[i].transform.position.y) - pp;
-                //enemy = enemy.normalized;
                 RaycastHit2D Hit = Physics2D.Raycast(pp, enemy);
-                Debug.DrawRay(pp, enemy, Color.green);
-                Debug.Log(Hit.transform.name);
-                if (Hit.transform.tag == "enemy")
+                if (Hit.transform.tag == "Monster")
                 {
-                    Debug.Log("ÆÄ¶ó¿Ë!#@!!@!@$@#@");
-                    Character.Damage(Hit.transform.gameObject, ParaoAP[py.GetComponentInParent<Char_Parent>().ActiveAbility.Enhance]);
+                    Hit.transform.GetComponent<Character>().Damage(ParaoAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
                 }
             }
         }
@@ -98,8 +91,7 @@ public class AbilityManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            Debug.Log("ÆøÅºÆøÅº");
+            CP.Ani.SetTrigger("Ability");
             Vector2 pp = py.transform.position;
             Vector2 CursorPos = Input.mousePosition;
             CursorPos = cam.ScreenToWorldPoint(CursorPos);
@@ -115,28 +107,25 @@ public class AbilityManager : MonoBehaviour
     public float ShieldCool;
     public void Ability_D()
     {
-        Debug.Log("¹ÙÀ§Ã³·³ ´Ü´ÜÇÏ°Ô,,,,");
         if(ShieldCool > 0) { ShieldCool -= Time.deltaTime; }
-        else if(ShieldCool <= 0) { py.GetComponentInParent<Character>().Shield = 0; }
+        else if(ShieldCool <= 0) { CP.Shield = 0; }
 
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            Debug.Log("ÅäÅ÷!! ´ëÁöµ¿ÇÙ!!!!!");
+            CP.Ani.SetTrigger("Ability");
             Vector2 pp = py.transform.position + new Vector3(0.5f, 0);
             Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, Physics2D.AllLayers);
             for (int i = 0; i < hit.Length; i++)
             {
-                if (hit[i].tag == "enemy")
+                if (hit[i].tag == "Monster")
                 {
                     ShieldCool = 4;
                     if (i < 4)
                     {
-                        py.GetComponentInParent<Character>().Shield += 10;
-                        Debug.Log("½¯µå È¹µæ");
+                        CP.Shield += 10;
                     }
-                    Character.Damage(hit[i].gameObject, RockAP);
+                    hit[i].GetComponent<Character>().Damage(RockAP, CP.UseApPostion);
                 }
             }
         }
@@ -144,159 +133,45 @@ public class AbilityManager : MonoBehaviour
 
     public void BattleAxe()
     {
-        if (Input.GetMouseButtonDown(1)) { A_Attack(); }
-        Debug.Log("¹ÙÅä·ç-¾ÆÄí½º");
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Debug.Log("¸Â");
-        //    if (col.gameObject.tag == "Monster")//ÀÓ½Ã
-        //    {
-        //        Debug.Log("¾Ò");
-        //        if (A_Int <= 4)
-        //        {
-        //            Debug.Log("´Ù");
-        //            A_Int++;
-        //        }
-        //    }
-        //}
+        CP.Ani.SetInteger("AbilityNum", 4);
+        if (Input.GetMouseButtonDown(1))
+        {
+            A_Attack();
+            py.GetComponent<Char_Eden>().P_CombatInt = 1;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            py.GetComponent<Char_Eden>().P_CombatInt = 0;
+            py.GetComponent<Char_Eden>().P_CombatTimer = 5;
+        }
     }
     public void A_Attack()
     {
-        py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-        float Reset = 10;
-        switch (A_Int)
-        {
-            case 0:
-                A_AttackState = false;
-                A_Damage = 0;
-                break;
-
-            case 1:
-                A_AttackState = true;
-                A_Damage = 100;//ÀÓ½Ã
-                A_ResetTimer -= Time.deltaTime;
-                if (A_ResetTimer <= 0)
-                {
-                    A_Int = 0;
-                    A_ResetTimer = Reset;
-                }
-                break;
-
-            case 2:
-                A_AttackState = true;
-                A_Damage = 100;
-                A_ResetTimer -= Time.deltaTime;
-                if (A_ResetTimer <= 0)
-                {
-                    A_Int = 0;
-                    A_ResetTimer = Reset;
-                }
-                break;
-
-            case 3:
-                A_AttackState = true;
-                A_Damage = 100;
-                A_ResetTimer -= Time.deltaTime;
-                if (A_ResetTimer <= 0)
-                {
-                    A_Int = 0;
-                    A_ResetTimer = Reset;
-                }
-                break;
-
-            case 4:
-                A_AttackState = true;
-                A_AttackState = true;
-                A_Damage = 150;//ÀÓ½Ã
-                A_ResetTimer -= Time.deltaTime;
-                if (A_ResetTimer <= 0)
-                {
-                    A_Int = 0;
-                    A_ResetTimer = Reset;
-                }
-                break;
-        }
+        CP.Ani.SetTrigger("Ability");
+        CP.Ani.SetBool("CanIThis", false);
+        CP.Ani.SetBool("Combat", true);
     }
 
     public void Ability_E()
     {
-        if (Input.GetMouseButtonDown(1)) { EvilSword_Attack(); }
-        EvilSwordResetAttack();
-        Debug.Log("ÀÌ-ºÎ¸£ ¼Ò-µµ");
+        if (Input.GetMouseButtonDown(1))
+        {
+            EvilSword_Attack();
+            py.GetComponent<Char_Eden>().P_CombatInt = 1;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            py.GetComponent<Char_Eden>().P_CombatInt = 0;
+            py.GetComponent<Char_Eden>().P_CombatTimer = 5;
+        }
     }
 
     public void EvilSword_Attack()
     {
-        py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-        AttackPlus();
-        switch (E_Attack_Int)
-        {
-            case 0:
-                E_ResetTimer = 0.8f;
-                E_Attack_Damage = 0;
-                break;
-            case 1:
-                EvilSwordResetAttack();
-                E_ResetTimer -= Time.deltaTime;
-                E_Attack_Damage = 15;
-                break;
-            case 2:
-                EvilSwordResetAttack();
-                E_ResetTimer -= Time.deltaTime;
-                E_Attack_Damage = 15;
-                break;
-            case 3:
-                EvilSwordResetAttack();
-                E_ResetTimer -= Time.deltaTime;
-                E_Attack_Damage = 30;
-                break;
-        }
-
-    }
-
-    public void AttackPlus()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            E_Attack_Int++; 
-        }
-
-        if (E_Attack_Int > 3)
-        {
-            E_Attack_Int = 0;
-        }
-    }
-
-    public void EvilSwordResetAttack()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            E_ResetTimer = 0.8f;
-        }
-        switch (E_Attack_Int)
-        {
-            case 1:
-                if (E_ResetTimer <= 0)
-                {
-                    E_ResetTimer = 0.8f;
-                    E_Attack_Int = 0;
-                }
-                break;
-            case 2:
-                if (E_ResetTimer <= 0)
-                {
-                    E_ResetTimer = 0.8f;
-                    E_Attack_Int = 0;
-                }
-                break;
-            case 3:
-                if (E_ResetTimer <= 0)
-                {
-                    E_ResetTimer = 0.8f;
-                    E_Attack_Int = 0;
-                }
-                break;
-        }
+        CP.Ani.SetTrigger("Ability");
+        CP.Ani.SetInteger("AbilityNum", 5);
+        CP.Ani.SetBool("Combat", true);
+        EA.SetTrigger("Attack");
     }
 
     public GameObject B_Ball;
@@ -308,8 +183,7 @@ public class AbilityManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            Debug.Log("ºÎ¶óÄí ½º¸ðÄí!!!");
+            CP.Ani.SetTrigger("Ability");
             Vector2 MouseP = Input.mousePosition;
             MouseP = cam.ScreenToWorldPoint(MouseP);
             Vector2 Point = py.transform.position;
@@ -322,15 +196,11 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
-    public void Ability_F()
-    {
-        Debug.Log("F");
-    }
-
     public void Double_Jump()
     {
-        Debug.Log("G");
+
     }
+
     public void Change_Jump_int()
     {
         //pp = py.GetComponent<PlayerM_>();

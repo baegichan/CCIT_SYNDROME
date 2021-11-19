@@ -11,26 +11,28 @@ public class Puncher_Trace : StateMachineBehaviour
     {
         puncherMon = animator.GetComponent<Punchermonster>();
         puncherTransform = animator.GetComponent<Transform>();
+
+        puncherMon.patroll = false; //몬스터의 패트롤을 끝낼 수 있는 함수를 생성하고 여기서 받는다.
+        if (puncherMon.filp == false || puncherMon.patroll == false)
+        {
+            puncherMon.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Vector2.Distance(puncherMon.player.position, puncherTransform.position) > 4f) //4 이하라면 다시 되돌아 가기
+        if (puncherMon.Targeton == true)
         {
-            animator.SetBool("Move", true);
-            animator.SetBool("Follow", false);
+            if (Vector2.Distance(puncherMon.playerTransform.position, puncherTransform.position) > 4f) //플레이어 따라 오는 함수
+                puncherTransform.position = Vector2.MoveTowards(puncherTransform.position, puncherMon.playerTransform.position, Time.deltaTime * puncherMon.speed);
+            else
+            {
+                animator.SetBool("Move", false);
+                animator.SetBool("Follow", false);
+            }
         }
-        else if (Vector2.Distance(puncherMon.player.position, puncherTransform.position) > 1f) //플레이어와의 거리가 1이하라면 대기
-        {
-            puncherTransform.position = Vector2.MoveTowards(puncherTransform.position, puncherMon.player.position, Time.deltaTime * puncherMon.speed);
-        }
-        else
-        {
-            animator.SetBool("Move", false);
-            animator.SetBool("Follow", false);
-        }
-        puncherMon.DirectionPunchermonster(puncherMon.player.position.x, puncherTransform.position.x);
+        puncherMon.DirectionPunchermonster(puncherMon.playerTransform.position.x, puncherTransform.position.x);
     }
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

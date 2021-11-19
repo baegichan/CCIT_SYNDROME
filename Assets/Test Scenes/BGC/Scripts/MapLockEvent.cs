@@ -9,7 +9,13 @@ public class MapLockEvent : MapEvent
     {
         base.EventType = MapEvent.Event.MapLock;
     }
-    
-    
-    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            MapManager.s_Instace.MapLoack();
+        }
+    }
+
 }

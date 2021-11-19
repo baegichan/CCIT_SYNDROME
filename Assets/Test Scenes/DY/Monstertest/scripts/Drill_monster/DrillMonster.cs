@@ -2,22 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrillMonster : MonoBehaviour
+public class DrillMonster : Character
 {
     [Header("Prameter")]
-    public float speed;
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
-
+    public int drillmonDamage;
+    
+    
     [Header("Refernce")]
-    public Transform player;
+    public GameObject player;
+    public Transform PlayerT;
     public Animator anim;
     public Vector2 first;
     public Vector2 boxSize;
     public Rigidbody2D rb;
     public Transform groundCheck;
-    public Transform playerCheck;
+    public Transform wallCheck;
     public Transform boxpos;
     public Vector2 direction;
     public float distance;
@@ -27,6 +29,7 @@ public class DrillMonster : MonoBehaviour
     public bool patroll;
     public bool trace;
     public bool Targeton;
+    public bool Dead;
 
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
@@ -58,8 +61,8 @@ public class DrillMonster : MonoBehaviour
         patroll = true;
         trace = false;
         Targeton = false;
+        Dead = false;
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         Physics.IgnoreLayerCollision(0, 0);
     }
 
@@ -73,7 +76,27 @@ public class DrillMonster : MonoBehaviour
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
+        if(Hp_Current <= 0)
+        {
+            Dead = true;
+            patroll = false;
+            trace = false;
+            anim.SetTrigger("Dead");
+        }
 
+    }
+
+    private void FixedUpdate()
+    {
+        m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+
+        Vector3 originPos = transform.position;
+
+        Vector3 horizontalRightDir = AngleToDirZ(-m_horizontalViewHalfAngle + m_viewRotateZ);//(-시야각 + 회전값)
+        Vector3 horizontalLeftDir = AngleToDirZ(m_horizontalViewHalfAngle + m_viewRotateZ);//(시야각 + 회전값)
+        Vector3 lookDir = AngleToDirZ(m_viewRotateZ);//보는 방향
+
+        FindViewTargets();
     }
 
     public void Directiondrillmonster(float target, float baseobj)
@@ -102,7 +125,7 @@ public class DrillMonster : MonoBehaviour
         {
             if (col.tag == "Player")
             {
-                Debug.Log("damage1");
+                col.GetComponentInParent<Character>().Damage(drillmonDamage);
             }
         }
     }
@@ -112,11 +135,31 @@ public class DrillMonster : MonoBehaviour
         transform.Translate(Vector2.right * patrolSpeed * Time.deltaTime);
         Filp();
     }
+    public void DrillDestroy()
+    {
+        Destroy(gameObject);
+    }
 
     public void Filp()
     {
-        //RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 2f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
-        RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 2f);
+        RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 0.3f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
+        if (wallcheck.collider != null)
+        {
+            if (wallcheck.collider.CompareTag("Wall") == true)
+            {
+                if (filp == true)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    filp = false;
+                }
+                else
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    filp = true;
+                }
+            }
+        }
+        RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.3f);
         if (groundcheck.collider == false)
         {
             if (filp == true)
@@ -145,6 +188,7 @@ public class DrillMonster : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+
         if (m_bDebugMode)
         {
             m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
@@ -161,7 +205,7 @@ public class DrillMonster : MonoBehaviour
             Debug.DrawRay(originPos, lookDir * m_viewRadius, Color.green);         //보는 방향
             Debug.DrawRay(originPos, horizontalRightDir * m_viewRadius, Color.cyan);//왼쪽 시야각
 
-            FindViewTargets();
+
         }
     }
 
@@ -189,6 +233,9 @@ public class DrillMonster : MonoBehaviour
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
+                //player = GameObject.FindGameObjectWithTag("Player").transform;
+                player = GameObject.FindGameObjectWithTag("Player");
+                PlayerT = player.GetComponent<TestPlayer>().SelectChar.transform;
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget)
                 {
@@ -212,6 +259,4 @@ public class DrillMonster : MonoBehaviour
         else
             return null; //비어 있다면
     }
-
-
 }

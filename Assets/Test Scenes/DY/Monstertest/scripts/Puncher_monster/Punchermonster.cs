@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Punchermonster : MonoBehaviour
+public class Punchermonster : Character
 {
     [Header("Prameter")]
-    public float speed;
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
 
     [Header("Refernce")]
     public GameObject puncherbullet;
-    public Transform player;
+    public GameObject player;
+    public Transform playerTransform;
     public Animator anim;
     public Vector2 first;
     public Rigidbody2D rb;
     public Transform wallCheck;// 지상 벽도 있다고 가정
     public Transform groundCheck;
-    public Transform playerCheck;
     public Transform atkpos;
+    public Transform atkpos1;
     public Vector2 direction;
     public float distance;
 
@@ -28,6 +28,7 @@ public class Punchermonster : MonoBehaviour
     public bool patroll;
     public bool trace;
     public bool Targeton;
+    public bool Dead;
 
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
@@ -60,7 +61,6 @@ public class Punchermonster : MonoBehaviour
         trace = false;
         Targeton = false;
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
@@ -69,11 +69,35 @@ public class Punchermonster : MonoBehaviour
         {
             Patroll();
         }
-        //PlayerCheck();
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
 
+        if (Hp_Current <= 0)
+        {
+            Dead = true;
+            patroll = false;
+            trace = false;
+            anim.SetTrigger("Dead");
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
+        m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+
+        Vector3 originPos = transform.position;
+
+
+
+        Vector3 horizontalRightDir = AngleToDirZ(-m_horizontalViewHalfAngle + m_viewRotateZ);//(-시야각 + 회전값)
+        Vector3 horizontalLeftDir = AngleToDirZ(m_horizontalViewHalfAngle + m_viewRotateZ);//(시야각 + 회전값)
+        Vector3 lookDir = AngleToDirZ(m_viewRotateZ);//보는 방향
+
+
+
+        FindViewTargets();
     }
 
     public void DirectionPunchermonster(float target, float baseobj)
@@ -90,13 +114,20 @@ public class Punchermonster : MonoBehaviour
         {
             if (atkpos.localPosition.x > 0)
                 atkpos.localPosition = new Vector2(atkpos.localPosition.x * -1, atkpos.localPosition.y);
+
+            if (atkpos1.localPosition.x > 0)
+                atkpos1.localPosition = new Vector2(atkpos1.localPosition.x * -1, atkpos1.localPosition.y);
         }
         else
         {
             if (atkpos.localPosition.x < 0)
                 atkpos.localPosition = new Vector2(Mathf.Abs(atkpos.localPosition.x * 1), atkpos.localPosition.y);
+
+            if (atkpos1.localPosition.x < 0)
+                atkpos1.localPosition = new Vector2(Mathf.Abs(atkpos1.localPosition.x * 1), atkpos1.localPosition.y);
         }
         Instantiate(puncherbullet, atkpos.transform.position, Quaternion.identity);
+        Instantiate(puncherbullet, atkpos1.transform.position, Quaternion.identity);
     }
 
     public void Patroll()
@@ -105,10 +136,31 @@ public class Punchermonster : MonoBehaviour
         Filp();
     }
 
+    public void PuncherDestroy()
+    {
+        Destroy(gameObject);
+    }
+
     public void Filp()
     {
-        //RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 2f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
-        RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 2f);
+        RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 0.3f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
+        if (wallcheck.collider != null)
+        {
+            if (wallcheck.collider.CompareTag("Wall") == true)
+            {
+                if (filp == true)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    filp = false;
+                }
+                else
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    filp = true;
+                }
+            }
+        }
+        RaycastHit2D groundcheck = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.3f);
         if (groundcheck.collider == false)
         {
             if (filp == true)
@@ -181,6 +233,9 @@ public class Punchermonster : MonoBehaviour
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
+                //player = GameObject.FindGameObjectWithTag("Player").transform;
+                player = GameObject.FindGameObjectWithTag("Player");//플레이어 피봇 위치 트러짐 떄문에 사용
+                playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget)
                 {
