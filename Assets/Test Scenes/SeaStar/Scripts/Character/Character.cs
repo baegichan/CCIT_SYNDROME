@@ -18,24 +18,18 @@ public class Character : MonoBehaviour
     [Tooltip("기본 이동속도")]
     public float speed;
 
-<<<<<<< HEAD
+
     [Header("State Manager")]
     public StateManager stateManagers;
 
    
-    private void Start()
-    {
-     
-      
-        Hp_Current = Hp_Max;
-    }
-=======
+
     void Awake()
     {
         Hp_Current = Hp_Max;
     }
 
->>>>>>> 9e2f4a135c0515c644574b431c3fff7cd00b154a
+
     void Update()
     {
         if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
@@ -107,9 +101,7 @@ public class Character : MonoBehaviour
         Load_Damage_Text(this,DamageValue);
     }
 
-<<<<<<< HEAD
-  
-=======
+
     public void Damage(int DamageValue, bool IsBuffOn)
     {
         int firstDamage = IsBuffOn ? DamageValue + Mathf.RoundToInt(DamageValue * 0.2f) : DamageValue;
@@ -127,5 +119,5 @@ public class Character : MonoBehaviour
             Shield -= firstDamage - DP;
         Load_Damage_Text(this, firstDamage);
     }
->>>>>>> 9e2f4a135c0515c644574b431c3fff7cd00b154a
+
 }

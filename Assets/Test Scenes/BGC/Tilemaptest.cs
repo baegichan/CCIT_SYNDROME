@@ -25,10 +25,7 @@ public class Tilemaptest : MonoBehaviour
                     Debug.Log("x:" + x + " y:" + y +  " tile: ");
                     Debug.Log( tilemap.GetTile(new Vector3Int(x, y,0)).name);
                 }
-                else
-                {
-                    Debug.Log("x:" + x + " y:" + y + " tile: (null)");
-                }
+              
             }
             //x ∑Á∆æ
 

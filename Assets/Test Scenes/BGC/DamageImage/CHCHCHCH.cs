@@ -18,5 +18,7 @@ public class CHCHCHCH : Character
         Damage(this.gameObject, 20);
         StartCoroutine(test());
     }*/
+
+   
 }
 #endregion 

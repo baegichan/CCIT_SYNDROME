@@ -23,6 +23,9 @@ public class MapData : ScriptableObject
     /// </summary>
    // public int MapCode;
     public int MapTypeCode;
+
+    public GameObject TileCollider;
+
     [Header("로드전 조정해주세요")]
     public BackGroundSprites[] BG;
     float Width;
@@ -33,7 +36,20 @@ public class MapData : ScriptableObject
     public Potal[] Potals = new Potal[]{ new Potal(Potal.Potal_type.LeftPotal), new Potal(Potal.Potal_type.RightPotal), new Potal(Potal.Potal_type.TopPotal), new Potal(Potal.Potal_type.BottomPotal) };
 
 
-
+    public void Save_TileCollider(GameObject TileCollider)
+    {
+        GameObject tile =  PrefabUtility.SaveAsPrefabAsset(TileCollider, "Assets/Test Scenes/BGC/TileMap/TileColliders/" + this.name+"_Tilecol" + ".prefab");
+        Debug.Log(tile.name+"               adfafs");
+        TileCollider = tile;
+    }
+    public GameObject Load_TileCollider(GameObject target)
+    {
+       return Instantiate(TileCollider, target.transform.position, Quaternion.identity, target.transform);
+    }
+    public GameObject Load_DefaultTileCollider(GameObject target)
+    {
+       return (GameObject)Instantiate(Resources.Load("DefaultTile"), target.transform.position, Quaternion.identity, target.transform);
+    }
     public void Load_MapData(GameObject target)
     {
         Batch_map(target);

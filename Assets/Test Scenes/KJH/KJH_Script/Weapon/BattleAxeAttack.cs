@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleAxeAttack : MonoBehaviour
 {
     public int D;
-    int Attack_int = 0;
+    public static int Attack_int = 0;
     public GameObject Current;
     public GameObject YourParent;
 

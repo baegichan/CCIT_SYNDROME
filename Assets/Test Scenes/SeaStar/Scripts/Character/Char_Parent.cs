@@ -77,11 +77,9 @@ public class Char_Parent : Character
         rigid = GetComponent<Rigidbody2D>();
         SelectChar = Char[0];
         ChangeChar(SelectChar);
-<<<<<<< HEAD
-=======
+
         AM.CP = this;
-    }
->>>>>>> 9e2f4a135c0515c644574b431c3fff7cd00b154a
+    
 
 
     }
