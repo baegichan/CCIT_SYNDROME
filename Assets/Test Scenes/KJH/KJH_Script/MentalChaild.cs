@@ -168,6 +168,7 @@ public class MentalChaild : MonoBehaviour
             // Ani.SetBool("CanIThis", false);
             Physics2D.IgnoreLayerCollision(10, 11);
                 TestPlayer.rigid.AddForce(new Vector2(TestPlayer.h * 4, 1.6f) * P_DashForce);
+            TestPlayer.rigid.velocity = new Vector2(0, 0);
                 P_DashInt = 0;                             
                 if (TestPlayer.RedBullDash == true)
                 {

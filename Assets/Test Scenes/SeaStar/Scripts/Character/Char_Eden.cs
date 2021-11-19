@@ -10,8 +10,10 @@ public class Char_Eden : MonoBehaviour
     float P_DashInt = 10;
     float P_DashTimer = 2;
 
-    float P_CombatTimer = 5;
-    float P_CombatInt;
+    public int P_AttackInt = 0;
+    public bool P_Attack_State = false;
+    public float P_CombatTimer = 5;
+    public float P_CombatInt;
 
     public Animator Ani;
 
@@ -95,5 +97,46 @@ public class Char_Eden : MonoBehaviour
     public void UseActive()
     {
         active();
+    }
+
+    void BattleAxeEvent()
+    {
+        AbilityManager.A_Attack_State = false;
+        GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", true);
+    }
+    void BattleAxeAttackEvent()
+    {
+        AbilityManager.A_Attack_State = true;
+        GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", false);
+    }
+    void OnBattleAxeSwith()
+    {
+        GetComponentInParent<Char_Parent>().OnBattleAxe();
+    }
+    void OffBattleAxeSwith()
+    {
+        GetComponentInParent<Char_Parent>().OffBattleAxe();
+    }
+    void BattleAxeSwithMove()
+    {
+        if (Ani.GetBool("CanIThis") && !GetComponentInParent<Char_Parent>().BattleAxe_Senaka.activeSelf && Ani.GetBool("Move"))
+        {
+            GetComponentInParent<Char_Parent>().OffBattleAxe();
+        }
+    }
+    void BattleAxeintInitalization()
+    {
+        BattleAxeAttack.Attack_int = 0;
+    }
+    void TestBa()
+    {
+        if (BattleAxeAttack.Attack_int > 4)
+        {
+            BattleAxeAttack.Attack_int = 1;
+        }
+    }
+    void BAI()//Battle Axe Attack Int <-- 기계도끼 애니메이션
+    {
+        GetComponentInParent<Char_Parent>().Ani.SetInteger("BAI", BattleAxeAttack.Attack_int);
     }
 }

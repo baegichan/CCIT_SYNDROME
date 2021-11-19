@@ -18,9 +18,9 @@ public class AbyssManager : MonoBehaviour
     private int darkfog = 0;
     public int maxAbyssGage = 100;
     //어비스 게이지
-    public int abyssGage = 100;
+    public int abyssGage = 0;
     //hp 게이지
-    public int hpGage = 30;
+    public int hpGage = 0;
 
     //어비스 게이지 줄어드는 값
 
@@ -49,7 +49,8 @@ public class AbyssManager : MonoBehaviour
     public int realLayer;
     public int abyssLayer;
 
-
+    [Header("StateManager")]
+    public StateManager stateManager;
 
 
 
@@ -58,11 +59,6 @@ public class AbyssManager : MonoBehaviour
 
 
     [Header("Temporary")]
-
-    public Text hpText;
-    public Text AbyssGageText;
-    public Text StateText;
-    public Text lifeText;
     public Text fogText;
 
     public AbyssState abyssState = new AbyssState();
@@ -84,21 +80,13 @@ public class AbyssManager : MonoBehaviour
     {
         AbyssBox.SetActive(false);
         abyssState = AbyssState.Reality;
+        fogText.text = Convert.ToString(darkfog);
         //보이게
         MainCamera.cullingMask = 1 << 11;
         //안보이게 하기
         MainCamera.cullingMask = ~(1 << 12);
 
-        #region 임시 삭제요망
-        hpText.text = Convert.ToString(hpGage);
-        AbyssGageText.text = Convert.ToString(AbyssGage);
-
-        StateText.text = "메인";
-
-        fogText.text = Convert.ToString(Darkfog);
-
-
-        #endregion
+      
     }
 
 
@@ -134,32 +122,17 @@ public class AbyssManager : MonoBehaviour
             {
                 if (hpGage < 0)
                     hpGage = 0;
-                #region 임시 삭제요망
-                hpText.text = Convert.ToString(hpGage);
-                StateText.text = "메인";
-                lifeText.text = "사망";
-                #endregion
+            
                 isAbyssStay = false;
                 abyssState = AbyssState.Reality;
                 break;
 
             }
-            #region 임시 삭제요망
-
-            hpText.text = Convert.ToString(hpGage);
-            AbyssGageText.text = Convert.ToString(abyssGage);
-            if (isAbyssStay == false)
-            {
-                break;
-            }
-
-            #endregion
+       
             yield return new WaitForSeconds(abyssConsumptionTime);
         }
         abyssState = AbyssState.Reality;
-        #region 임시 삭제요망
-        StateText.text = "메인";
-        #endregion
+       
         isAbyssEnd = true;
     }
 
@@ -178,7 +151,7 @@ public class AbyssManager : MonoBehaviour
 
         isAbyssStay = true;
         abyssState = AbyssState.Abyss; // enum에 상태값 입력
-        StateText.text = "심연"; // 임시
+       
         AbyssMonsterSpawn(); // 심연 몬스터가 있을경우 실행
         AbyssBox.SetActive(true);// 심연 몬스터 그룹  활성화
         RealBox.SetActive(false);// 현실 몬스터 그룹 비활성화
@@ -197,7 +170,6 @@ public class AbyssManager : MonoBehaviour
         AbyssBox.SetActive(false);// 현실 몬스터 그룹  활성화
         RealBox.SetActive(true);  // 심연 몬스터 그룹 비활성화
         abyssState = AbyssState.Reality;
-        StateText.text = "메인";
         isAbyssStay = false;
     }
 
@@ -209,12 +181,15 @@ public class AbyssManager : MonoBehaviour
     {
         get
         {
+            fogText.text = Convert.ToString(darkfog);
             return darkfog;
         }
 
         set
         {
             darkfog = value;
+            fogText.text = Convert.ToString(darkfog);
+            
         }
     }
 
@@ -228,6 +203,7 @@ public class AbyssManager : MonoBehaviour
         set
         {
             abyssGage = value;
+            stateManager.AbyssGage = abyssGage;
         }
     }
 
@@ -277,17 +253,7 @@ public class AbyssManager : MonoBehaviour
     #region 리소스 관리
 
 
-    /// <summary>
-    /// 어둠 안개 게이지 획득
-    /// </summary>
-    /// 
-    public void GetDarkFog(int gage)
-    {
-        Darkfog += gage;
-        #region 임시 삭제요망
-        fogText.text = Convert.ToString(Darkfog);
-        #endregion
-    }
+   
 
     /// <summary>
     /// 심연게이지 습득
@@ -300,12 +266,8 @@ public class AbyssManager : MonoBehaviour
             abyssGage = maxAbyssGage;
         else
             abyssGage += gage;
-        #region 임시 삭제요망
-        AbyssGageText.text = Convert.ToString(abyssGage);
-        #endregion
+   
 
     }
-
     #endregion
-
 }

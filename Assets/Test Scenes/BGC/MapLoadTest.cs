@@ -20,15 +20,10 @@ public class MapLoadTest : MonoBehaviour
             {
                 testmap = Mapset.Get_RandomRoom(Target_Room.GetComponent<Room_data>().map_code);
                 testmap.Load_MapData(Target_Room);
+                testmap.Load_TileCollider(Target_Room);
             }
         }
     }
-    public void Loading_Map(int mapcode)
-    {
-        //분별코드
-        
-        Resources.Load(mapcode+"/");
-        testmap.Load_MapData(gameObject);
-    }
+  
     // Update is called once per frame
 }

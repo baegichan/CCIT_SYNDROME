@@ -19,7 +19,6 @@ public class Abduru : MonoBehaviour
     //
     //ÀüÅõµµ³¢
     public int A_Int;
-    float A_Damage;
     public static bool A_Attack_State = false;  
     //
     public Animator EA;
@@ -44,7 +43,8 @@ public class Abduru : MonoBehaviour
                         py.GetComponentInParent<Character>().Hp_Current++;
                         Debug.Log("ÂÁÂÁ");
                     }
-                    Character.Damage(hit[i].gameObject, WolfAP[py.GetComponent<TestPlayer>().ActiveAbility.Enhance]);
+                    hit[i].GetComponent<Character>().Damage(WolfAP[py.GetComponent<TestPlayer>().ActiveAbility.Enhance]);
+
                 }
             }
         }
@@ -78,7 +78,7 @@ public class Abduru : MonoBehaviour
                 if (Hit.transform.tag == "enemy")
                 {
                     Debug.Log("ÆÄ¶ó¿Ë!#@!!@!@$@#@");
-                    Character.Damage(Hit.transform.gameObject, ParaoAP[py.GetComponentInParent<TestPlayer>().ActiveAbility.Enhance]);
+                    Hit.transform.GetComponent<Character>().Damage(ParaoAP[py.GetComponent<TestPlayer>().ActiveAbility.Enhance]);
                 }
             }
         }
@@ -127,7 +127,7 @@ public class Abduru : MonoBehaviour
                         py.GetComponentInParent<Character>().Shield += 10;
                         Debug.Log("½¯µå È¹µæ");
                     }
-                    Character.Damage(hit[i].gameObject, RockAP);
+                    hit[i].GetComponent<Character>().Damage(RockAP);
                 }
             }
         }
@@ -138,24 +138,28 @@ public class Abduru : MonoBehaviour
         py.GetComponentInParent<TestPlayer>().Ani.SetInteger("AbilityNum", 4);
         if (Input.GetMouseButtonDown(1))
         {
-            A_Attack();  
-        }        
+            A_Attack();
+            py.GetComponent<MentalChaild>().P_CombatInt = 1;
+        }
+        if(Input.GetMouseButtonUp(1))
+        {
+            py.GetComponent<MentalChaild>().P_CombatInt = 0;
+            py.GetComponent<MentalChaild>().P_CombatTimer = 5;
+        }
     }
     public void A_Attack()
     {       
         py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Abililty");
         py.GetComponentInParent<TestPlayer>().Ani.SetBool("CanIThis", false);
-        //py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);   
+        py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);   
     }
        
     public void Ability_E()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            EvilSword_Attack();
-            EvilSwordAniEvent.intup();
+            EvilSword_Attack();     
             py.GetComponent<MentalChaild>().P_CombatInt = 1;
-            E_Attack_State = true;
         }  
         if(Input.GetMouseButtonUp(1))
         {
@@ -166,7 +170,7 @@ public class Abduru : MonoBehaviour
 
     public void EvilSword_Attack()
     {
-        py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Ability");
+        py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Abililty");
         py.GetComponentInParent<TestPlayer>().Ani.SetInteger("AbilityNum", 5);
         py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);
         EA.SetTrigger("Attack");

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    protected GameObject Player;
+    public GameObject ply;
     public List<GameObject> SpeechBubbles;
     public bool IsPlayer;
 
@@ -14,7 +14,7 @@ public class NPC : MonoBehaviour
 
     protected void Flip()
     {
-        GameObject player = Player.GetComponent<Char_Parent>().SelectChar;
+        GameObject player = ply.GetComponent<Char_Parent>().SelectChar;
         if(player.transform.position.x > transform.position.x) { Scale.x = DefaultX; }
         else { Scale.x = FlipX; }
 
@@ -37,7 +37,7 @@ public class NPC : MonoBehaviour
 
     protected void talkWithPlayer()
     {
-        float Distance = Vector2.Distance(transform.position, Player.transform.position);
+        float Distance = Vector2.Distance(transform.position, ply.transform.position);
         if(Distance <= 2f) { IsPlayer = true; }
         else { IsPlayer = false; }
 

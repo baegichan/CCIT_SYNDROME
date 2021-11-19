@@ -43,10 +43,6 @@ public class MonsterSpawnEvent : MapEvent
         for (int i = 0; i < count; i++)
         {
             
-     
-            Debug.Log(transform.GetChild(0).gameObject.name + " Spawned");
-
-
             Instantiate(Resources.Load(transform.GetChild(0).gameObject.name), transform.GetChild(0).position, Quaternion.identity, this.gameObject.transform);
             Destroy(transform.GetChild(0).gameObject);
             yield return new WaitForSeconds(SpawnDelay);
@@ -59,7 +55,7 @@ public class MonsterSpawnEvent : MapEvent
         {
             for(int i =0; i< count; i++)
             {
-                Debug.Log(transform.GetChild(i).gameObject.name + " Spawned");
+            
                 Instantiate(Resources.Load(transform.GetChild(i).gameObject.name), transform.GetChild(i).position,Quaternion.identity,this.gameObject.transform);
                 Destroy(transform.GetChild(i).gameObject);
             }

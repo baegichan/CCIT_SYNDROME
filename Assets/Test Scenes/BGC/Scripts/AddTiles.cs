@@ -11,12 +11,35 @@ public class AddTiles : MonoBehaviour
     public Vector2 BaseTileSize;
     GameObject Base_Tile;
 
-
+   public GameObject tileSet;
     GameObject Potals;
     GameObject Event;
     int mapcode=0;
-  
-   
+    public Dictionary<int, int> RoomConverter = new Dictionary<int, int>();
+    //0b 1111
+    //   LRTB
+    public void RoomConverterset()
+    {
+        RoomConverter.Clear();
+        RoomConverter.Add(0, 0);
+        RoomConverter.Add(1,3);
+        RoomConverter.Add(2,1);
+        RoomConverter.Add(3, 6);
+        RoomConverter.Add(4, 2);
+        RoomConverter.Add(5, 8);
+        RoomConverter.Add(6, 5);
+        RoomConverter.Add(7, 11);
+        RoomConverter.Add(8, 4);
+        RoomConverter.Add(9, 10);
+        RoomConverter.Add(10, 7);
+        RoomConverter.Add(11, 13);
+        RoomConverter.Add(12, 9);
+        RoomConverter.Add(13, 14);
+        RoomConverter.Add(14, 12);
+        RoomConverter.Add(15, 15);
+
+    }
+
     public GameObject PotalObjectCheck(string potalname)
     {
        
@@ -133,7 +156,7 @@ public class AddTiles : MonoBehaviour
             EventObjectCheck();
         }
         MapData.SpawnEvent(Event);
-
+       tileSet=MapData.Load_TileCollider(Editor);
     }
     public void Save_MapData()
     {
@@ -177,8 +200,10 @@ public class AddTiles : MonoBehaviour
         }
         //배열 초기화 생각해야됨
         MapData.MapDataLengthSet(Event.transform.childCount);
-     
-        MapData.Map_Code_Save(mapcode);
+        RoomConverterset();
+        RoomConverter.TryGetValue(mapcode, out int ChangedRoomcode);
+        MapData.Map_Code_Save(ChangedRoomcode);
+        MapData.Save_TileCollider(tileSet);
     }
     public  void Save_EventData()
     {

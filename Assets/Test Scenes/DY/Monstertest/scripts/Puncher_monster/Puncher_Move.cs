@@ -16,14 +16,19 @@ public class Puncher_Move : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Vector2.Distance(puncherMon.first, puncherTransform.position) < 0.1f || Vector2.Distance(puncherTransform.position, puncherMon.player.position) > 4f)
+        if (puncherMon.Targeton == true)
         {
-            animator.SetBool("Move", false);
-        }
-        else
-        {
-            puncherMon.DirectionPunchermonster(puncherMon.first.x, puncherTransform.position.x);
-            puncherTransform.position = Vector2.MoveTowards(puncherTransform.position, puncherMon.first, Time.deltaTime * puncherMon.speed);
+            if (Vector2.Distance(puncherMon.first, puncherTransform.position) < 0.1f || Vector2.Distance(puncherTransform.position, puncherMon.playerTransform.position) > 10f)//Å½Áö ¹üÀ§
+            {
+                animator.SetBool("Move", false);
+                animator.SetBool("Follow", true);
+            }
+            else
+            {
+                puncherMon.DirectionPunchermonster(puncherMon.first.x, puncherTransform.position.x);
+                puncherTransform.position = Vector2.MoveTowards(puncherTransform.position, puncherMon.first, Time.deltaTime * puncherMon.speed);
+
+            }
         }
     }
 

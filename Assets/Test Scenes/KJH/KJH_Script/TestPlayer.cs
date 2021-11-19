@@ -80,7 +80,11 @@ public class TestPlayer : Character
 
     void FixedUpdate()
     {
-
+        if (Ani.GetBool("CanIThis"))
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+            Move();
+        }
     }
 
     void Update()
@@ -93,11 +97,11 @@ public class TestPlayer : Character
         UseItem();
         ds();
         atk();
-        if (Ani.GetBool("CanIThis"))
-        {
-            if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
-            Move();
-        }        
+        //if (Ani.GetBool("CanIThis"))
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+        //    Move();
+        //}        
         if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
         if (Input.GetKeyDown(KeyCode.O)) { DecideChar(); SelectAbility(); }
     }
@@ -205,8 +209,9 @@ public class TestPlayer : Character
         }
         else if (P_JumpInt > 0)
         {
-            rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
-            rigid.velocity = new Vector2(0, 0);
+            rigid.AddForce(Vector3.up * P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
+            Debug.Log("점프는 1번만");
+            //rigid.velocity = new Vector2(0, 0);
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);
         }
@@ -349,6 +354,7 @@ public class TestPlayer : Character
                 Active_Cool_Max = 4f;
                 break;
             case 5:
+                EvillSwordSwitch();
                 Current_Use = EvilSword;
                 AM.EA = Current_Use.GetComponent<Animator>();
                 Active_Cool_Max = 4f; 

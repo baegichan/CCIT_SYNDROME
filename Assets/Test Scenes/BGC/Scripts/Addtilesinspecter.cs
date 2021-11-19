@@ -11,6 +11,7 @@ public class Addtilesinspecter : Editor
     int selected = 0;
     int Eventselected = 0;
     int Monsterselected = 0;
+    private GameObject Tilecol;
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
@@ -44,8 +45,25 @@ public class Addtilesinspecter : Editor
             map.MapData = null;
 
         }
+
+
+
+
+
+
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("포탈 이동 구현해야됨", MessageType.Info);
+        if (GUILayout.Button("카메라 범위 컬라이더 스폰"))
+        {
+          if (map.MapData != null)
+          {
+           if(GameObject.Find("Grid(Clone)")!=null)
+           {
+                   map.tileSet = map.MapData.Load_DefaultTileCollider(map.Editor);
+           }
+          }
+        }
+        GUILayout.Label("");
+        EditorGUILayout.HelpBox("포탈 이름 및 이동방향 설치시 확인 요망", MessageType.Info);
 
         GUILayout.Label("포탈추가");
         EditorGUILayout.BeginHorizontal();
@@ -120,7 +138,7 @@ public class Addtilesinspecter : Editor
         EditorGUILayout.EndHorizontal();
 
         GUILayout.Label("");
-        EditorGUILayout.HelpBox("내부 이벤트 구현 (심플 몬스터 스폰)\n내부 이벤트 비구현 (포탈 이동)", MessageType.Info);
+        EditorGUILayout.HelpBox("이벤트 범위 확인요망", MessageType.Info);
 
         string[] options = new string[]
         {
