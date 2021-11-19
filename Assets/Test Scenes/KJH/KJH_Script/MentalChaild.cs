@@ -8,7 +8,6 @@ public class MentalChaild : MonoBehaviour
     public int HP;
     public int DP;
     //
-    public GameObject BAX;
     [Header("АјАн")]
     public float P_AttackForce;
     public int P_AttackInt = 0;
