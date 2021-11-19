@@ -8,25 +8,64 @@ public class BulletScript : MonoBehaviour
 
     Transform target;
     public float bullet_speed;
+    public int Bullet_Damage;
+    public bool left;
+    public bool right;
 
-    //Transform Boss_Trasnform;
-    Vector2 First_transform;
-
+    Vector3 aa;
     private void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        First_transform = this.transform.position;
+        aa = target.position - transform.position;
+
+        if (target.position.x > transform.position.x)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            //right = true;
+        }
+        if (target.position.x < transform.position.x)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            //left = true;
+        }
+
     }
     public void Update()
     {
-        if (target.position.x > First_transform.x)
+        /*
+        if (target.position.x > transform.position.x)
         {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.right, ForceMode2D.Impulse);
+            GetComponent<Rigidbody2D>().AddForce(Vector2.right * bullet_speed, ForceMode2D.Impulse);
         }
-        if (target.position.x < First_transform.x)
+        if (target.position.x < transform.position.x)
         {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.left, ForceMode2D.Impulse);
+            GetComponent<Rigidbody2D>().AddForce(Vector2.left * bullet_speed, ForceMode2D.Impulse);
         }
+        */
+        /*
+        if (target.position.x > transform.position.x)
+        {
+            GetComponent<Rigidbody2D>().AddForce(Vector2.left * bullet_speed, ForceMode2D.Impulse);
+        }
+        if (target.position.x < transform.position.x)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        */
+        if(left == true)
+        {
+            GetComponent<Rigidbody2D>().AddForce(Vector2.left * bullet_speed, ForceMode2D.Impulse);
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        if (right == true)
+        {
+            GetComponent<Rigidbody2D>().AddForce(Vector2.right * bullet_speed, ForceMode2D.Impulse);
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+
+
+
+
 
     }
 
@@ -38,7 +77,7 @@ public class BulletScript : MonoBehaviour
         {
             if (collision.CompareTag("Player"))
             {
-                collision.transform.GetComponent<Character>().Damage(15);
+                collision.transform.parent.GetComponent<Character>().Damage(Bullet_Damage);
                 
                 Destroy(this.gameObject);
             }
