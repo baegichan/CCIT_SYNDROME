@@ -11,6 +11,7 @@ public class Enhance : MonoBehaviour
     public GameObject Ability_Shop;
     public GameObject Ability_Enhance;
     public GameObject EnhanceNPC;
+    public GameObject[] PageButton;
 
 
     [Header("Sell Items")]
@@ -116,6 +117,8 @@ public class Enhance : MonoBehaviour
 
     public void SettingShop()
     {
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.selectedSprite;
+
         EHNPC = EnhanceNPC.GetComponent<OtherWorldShop>();
         for(int i = 0; i < EHNPC.SellItem.Length; i++)
         {
@@ -131,12 +134,14 @@ public class Enhance : MonoBehaviour
                 BuyButton[i].SetActive(true);
             }
             Price_Text[i].text = EHNPC.SellItem[i].AbPrice.ToString();
-            //Type_Text[i].text = (EHNPC.SellItem[i].AbType == Ability.ABTYPE.Active) ? "A" : "P";
         }
     }
 
     public void Exit()
     {
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.disabledSprite;
+        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Toggle>().spriteState.disabledSprite;
+
         Ability_Enhance.SetActive(false);
         Ability_Shop.SetActive(true);
         gameObject.SetActive(false);
@@ -164,12 +169,18 @@ public class Enhance : MonoBehaviour
 
     public void OpenShop()
     {
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.selectedSprite;
+        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Toggle>().spriteState.disabledSprite;
+
         Ability_Shop.SetActive(true);
         Ability_Enhance.SetActive(false);
     }
 
     public void OpenEnhance()
     {
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.disabledSprite;
+        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Toggle>().spriteState.selectedSprite;
+
         Ability_Shop.SetActive(false);
         Ability_Enhance.SetActive(true);
         SettingAbility();

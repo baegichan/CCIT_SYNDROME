@@ -24,7 +24,7 @@ public class Character : MonoBehaviour
         if(Shield < 0) { Shield = 0; }
     }
 
-    public static void Damage(GameObject Defender, int DamageValue) //(맞는 애, 데미지값)
+    public void Damage(GameObject Defender, int DamageValue) //(맞는 애, 데미지값)
     {
         int firstDamge = DamageValue;
 
@@ -40,7 +40,7 @@ public class Character : MonoBehaviour
         //쉴드에 데미지
         if(Defender.GetComponent<Character>().Shield > 0)
         Defender.GetComponent<Character>().Shield -= firstDamge - Defender.GetComponent<Character>().DP;
-        //Load_Damage_Text(Defender.GetComponent<Character>(),DamageValue);
+        Load_Damage_Text(Defender.GetComponent<Character>(),DamageValue);
     }
 
     /* 데미지 예시 (몬스터랑 플레이어랑 닿은 상황)

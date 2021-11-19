@@ -57,13 +57,10 @@ public class EvilSwordAttack : MonoBehaviour
                 if (col.tag == "Monster")
                 {
                     Current = col.gameObject;
-                    Debug.Log("aa");
+                   
                     Current.GetComponent<Character>().Damage(D);
-                    Debug.Log("bb");
                     Current.GetComponent<Character>().Damage(D);
-                    Debug.Log("cc");
-                    Current.GetComponent<Character>().Damage(D);
-                    Debug.Log("dd");
+                    Current.GetComponent<Character>().Damage(D); 
                     Current.GetComponent<Character>().Damage(D);
                 }
             }

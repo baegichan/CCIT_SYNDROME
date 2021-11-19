@@ -8,6 +8,7 @@ public class Room_data : MonoBehaviour
     public int map_code;
     public bool  Top,Right,Bottom,Left;
     public bool Room_Created = false;
+    public Vector2 Map_index;
 
     SpriteRenderer spr;
     public Sprite[] sp;
