@@ -26,7 +26,7 @@ public class Abduru : MonoBehaviour
 
     public void Werewolf()
     {
-        if (Input.GetMouseButtonDown(1) && !py.GetComponentInParent<TestPlayer>().Ani.GetBool("Jump") )
+        if (Input.GetMouseButtonDown(1) && !py.GetComponentInParent<TestPlayer>().Ani.GetBool("Jump"))
         {
 
             py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Ability");
@@ -44,7 +44,6 @@ public class Abduru : MonoBehaviour
                         Debug.Log("ÂÁÂÁ");
                     }
                     hit[i].GetComponent<Character>().Damage(WolfAP[py.GetComponent<TestPlayer>().ActiveAbility.Enhance]);
-
                 }
             }
         }
@@ -52,7 +51,7 @@ public class Abduru : MonoBehaviour
 
     public void Parao()
     {
-        if (Input.GetMouseButtonDown(1) )
+        if (Input.GetMouseButtonDown(1))
         {
             py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Ability");
             py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);
@@ -86,9 +85,9 @@ public class Abduru : MonoBehaviour
 
     public void BomberMan()
     {
-        if (Input.GetMouseButtonDown(1) )
+        if (Input.GetMouseButtonDown(1))
         {
-            
+
             py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Ability");
             Debug.Log("ÆøÅºÆøÅº");
             Vector2 pp = py.transform.position;
@@ -110,9 +109,9 @@ public class Abduru : MonoBehaviour
         if (ShieldCool > 0) { ShieldCool -= Time.deltaTime; }
         else if (ShieldCool <= 0) { py.GetComponentInParent<Character>().Shield = 0; }
 
-        if (Input.GetMouseButtonDown(1) )
+        if (Input.GetMouseButtonDown(1))
         {
-            
+
             py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Ability");
             Debug.Log("ÅäÅ÷!! ´ëÁöµ¿ÇÙ!!!!!");
             Vector2 pp = py.transform.position + new Vector3(0.5f, 0);
@@ -132,6 +131,8 @@ public class Abduru : MonoBehaviour
             }
         }
     }
+
+
 
     public void BattleAxe()
     {
@@ -173,7 +174,13 @@ public class Abduru : MonoBehaviour
         py.GetComponentInParent<TestPlayer>().Ani.SetTrigger("Abililty");
         py.GetComponentInParent<TestPlayer>().Ani.SetInteger("AbilityNum", 5);
         py.GetComponentInParent<TestPlayer>().Ani.SetBool("Combat", true);
+        py.GetComponentInParent<TestPlayer>().Ani.SetBool("CanIThis", false);
         EA.SetTrigger("Attack");
+    }
+
+   public void EvilRe()
+    {
+        py.GetComponentInParent<TestPlayer>().Ani.SetBool("CanIThis", true);
     }
 
     public GameObject B_Ball;
