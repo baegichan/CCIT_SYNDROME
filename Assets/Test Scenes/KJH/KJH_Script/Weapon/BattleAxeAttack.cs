@@ -15,9 +15,12 @@ public class BattleAxeAttack : MonoBehaviour
         {
             if (col.tag == "Monster")
             {
-                Current = col.gameObject;
-                Attack_int++;
-                Fourth();
+                if(Attack_int <= 4)
+                {
+                    Current = col.gameObject;
+                    Attack_int += 1;
+                    Fourth();
+                }
             }
         }       
     }
@@ -39,14 +42,28 @@ public class BattleAxeAttack : MonoBehaviour
                 Current.GetComponent<Character>().Damage(D);
                 break;
             case 4:
-                Debug.Log("4 :" + Attack_int);
-                Current.GetComponent<Character>().Damage(D + 20);//´õ¹Ì ÇÃ·¯½º°ª ¾ðÁ¦µç º¯°æ°¡´É
+                Debug.Log("4 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:" + Attack_int);
+                CameraShake.Shake(10000, 50);     
+                Current.GetComponent<Character>().Damage(D + 20);//ë”ë¯¸ í”ŒëŸ¬ìŠ¤ê°’ ì–¸ì œë“  ë³€ê²½ê°€ëŠ¥
                 break;          
         }
 
-        if(Attack_int >= 5)
+        Debug.Log("í˜„ìž¬:" + Attack_int);
+        if (Abduru.A_Attack_State == false)
         {
-            Attack_int = 0;
+            if(Attack_int == 5)
+            {
+                Debug.Log("ì´ˆê¸°í™” í˜„ìž¬:" + Attack_int);
+                Attack_int = 0;
+            }   
+        }
+        if (Abduru.A_Attack_State == true)
+        {
+            if (Attack_int == 5)
+            {
+                Debug.Log("ì•ˆì´ˆê¸°í™”:" + Attack_int);
+                Attack_int = 0;
+            }
         }
     }
 }

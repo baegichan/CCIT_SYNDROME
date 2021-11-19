@@ -44,4 +44,9 @@ public class EvilSwordAniEvent : MonoBehaviour
     {
         ply.GetComponent<Abduru>().E_Attack_State = true;
     }
+
+    void IcanDoit()
+    {
+        ply.GetComponent<Abduru>().EvilRe();
+    }
 }
