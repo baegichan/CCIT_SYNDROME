@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class StateManager : MonoBehaviour
 {
+
+    public static StateManager state;
     #region º¯¼ö
     int maxHp;
     int hp;
