@@ -7,11 +7,11 @@ public class DarkEnergy : MonoBehaviour
     public GameObject player;
     private bool teststopper;
     public float speed;
-    private AbyssManager abyssManager;
+
     private void Start()
     {
         StartCoroutine(onsokunosonic());
-        abyssManager = GameObject.Find("GameManager").GetComponent<AbyssManager>();
+    
         player = GameObject.FindGameObjectWithTag("Player");
     }
     
@@ -35,7 +35,7 @@ void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Player")
         {
-            abyssManager.Darkfog += 10;
+            AbyssManager.abyss.Darkfog += 10;
             Destroy(transform.gameObject);
         }
 
