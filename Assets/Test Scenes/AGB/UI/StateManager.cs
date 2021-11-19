@@ -7,7 +7,39 @@ using UnityEngine.UI;
 public class StateManager : MonoBehaviour
 {
 
-    public static StateManager state;
+    private static StateManager _state;
+
+    public static StateManager state
+    {
+        get
+        {
+            // 인스턴스가 없는 경우에 접근하려 하면 인스턴스를 할당해준다.
+            if (!_state)
+            {
+                _state = FindObjectOfType(typeof(StateManager)) as StateManager;
+
+                if (_state == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return _state;
+        }
+    }
+
+    private void Awake()
+    {
+        if (_state == null)
+        {
+            _state = this;
+        }
+        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
+        else if (_state != this)
+        {
+            Destroy(gameObject);
+        }
+        // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
+        DontDestroyOnLoad(gameObject);
+    }
+
     #region 변수
     int maxHp;
     int hp;
