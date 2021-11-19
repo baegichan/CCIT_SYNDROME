@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-public class settingmanager : MonoBehaviour
+public class Settingmanager : MonoBehaviour
 {
-    public static settingmanager GM;
+    public static Settingmanager GM;
     public static GameObject CAN;
     public GameObject[] button_ar;
     public GameObject[] volume_ar;

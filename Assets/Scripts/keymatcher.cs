@@ -20,7 +20,8 @@ public class keymatcher : MonoBehaviour
         item1,
         item2,
         skillchange,
-        comu
+        comu,
+        abyss
     }
     public keyname key;
     // Start is called before the first frame update
