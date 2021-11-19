@@ -30,27 +30,30 @@ public class BattleAxeAttack : MonoBehaviour
         switch (Attack_int)
         {           
             case 1:
+                Debug.Log("1 :" + Attack_int);
                 Current.GetComponent<Character>().Damage(D);
                 break;
             case 2:
+                Debug.Log("2 :" + Attack_int);
                 Current.GetComponent<Character>().Damage(D);
                 break;
             case 3:
+                Debug.Log("3 :" + Attack_int);
                 Current.GetComponent<Character>().Damage(D);
                 break;
             case 4:
                 Debug.Log("4 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:" + Attack_int);
                 CameraShake.Shake(10000, 50);     
-                Current.GetComponent<Character>().Damage(D + 20);//´õ¹Ì ÇÃ·¯½º°ª ¾ğÁ¦µç º¯°æ°¡´É
+                Current.GetComponent<Character>().Damage(D + 20);//ë”ë¯¸ í”ŒëŸ¬ìŠ¤ê°’ ì–¸ì œë“  ë³€ê²½ê°€ëŠ¥
                 break;          
         }
 
-        Debug.Log("ÇöÀç:" + Attack_int);
+        Debug.Log("í˜„ì¬:" + Attack_int);
         if (Abduru.A_Attack_State == false)
         {
             if(Attack_int == 5)
             {
-                Debug.Log("ÃÊ±âÈ­ ÇöÀç:" + Attack_int);
+                Debug.Log("ì´ˆê¸°í™” í˜„ì¬:" + Attack_int);
                 Attack_int = 0;
             }   
         }
@@ -58,7 +61,7 @@ public class BattleAxeAttack : MonoBehaviour
         {
             if (Attack_int == 5)
             {
-                Debug.Log("¾ÈÃÊ±âÈ­:" + Attack_int);
+                Debug.Log("ì•ˆì´ˆê¸°í™”:" + Attack_int);
                 Attack_int = 0;
             }
         }

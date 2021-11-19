@@ -9,106 +9,101 @@ public class Enhance_Stat : MonoBehaviour
     public Char_Parent py;
 
     [Header("체력 강화 UI")]
-    public Text T_Level_Health;
-    public Text T_Effect_Health;
+    public Image Level_Health;
+    public Sprite[] Level_Health_Image;
     public Text T_Cost_Health;
-    int[] Cost_Health = { 1, 2, 3, 4, 5};
+    int[] Cost_Health = { 100, 200, 300, 400, 500};
+    public GameObject Health_Button;
 
     [Header("공격력 강화 UI")]
-    public Text T_Level_Strength;
-    public Text T_Effect_Strength;
+    public Image Level_Strength;
+    public Sprite[] Level_Strength_Image;
     public Text T_Cost_Strength;
-    int[] Cost_Strength = { 1, 2, 3, 4, 5 };
+    int[] Cost_Strength = { 100, 200, 300, 400, 500 };
+    public GameObject Strength_Button;
 
     [Header("스피드 강화 UI")]
-    public Text T_Level_Speed;
-    public Text T_Effect_Speed;
+    public Image Level_Speed;
+    public Sprite[] Level_Speed_Image;
     public Text T_Cost_Speed;
-    int[] Cost_Speed = { 1, 2, 3, 4, 5 };
+    int[] Cost_Speed = { 100, 200, 300, 400, 500 };
+    public GameObject Speed_Button;
 
-    void Update()
+    public void UpdateText()
     {
-        UpdateText();
-    }
+        Level_Health.sprite = Level_Health_Image[py.Enhance_Health];
+        Level_Strength.sprite = Level_Strength_Image[py.Enhance_Strength];
+        Level_Speed.sprite = Level_Speed_Image[py.Enhance_Speed];
 
-    void UpdateText()
-    {
-        T_Level_Health.text = "LV " + py.Enhance_Health;
-        T_Level_Strength.text = "LV " + py.Enhance_Strength;
-        T_Level_Speed.text = "LV " + py.Enhance_Speed;
-
-        if (py.Enhance_Health < 5)
-        {
+        if (py.Enhance_Health < 4)
             T_Cost_Health.text = Cost_Health[py.Enhance_Health].ToString();
-            T_Effect_Health.text = py.Enhance_Health_Point[py.Enhance_Health].ToString() + " > " + py.Enhance_Health_Point[py.Enhance_Health + 1].ToString();
-        }
         else
         {
             T_Cost_Health.text = "Max";
-            T_Effect_Health.text = "Max";
+            Health_Button.GetComponent<Image>().sprite = Health_Button.GetComponent<Button>().spriteState.disabledSprite;
+            Health_Button.GetComponent<Button>().enabled = false;
         }
 
-        if (py.Enhance_Strength < 5)
-        {
+        if (py.Enhance_Strength < 4)
             T_Cost_Strength.text = Cost_Strength[py.Enhance_Strength].ToString();
-            T_Effect_Strength.text = py.Enhance_Strength_Point[py.Enhance_Strength].ToString() + " > " + py.Enhance_Strength_Point[py.Enhance_Strength + 1].ToString();
-        }
         else
         {
             T_Cost_Strength.text = "Max";
-            T_Effect_Strength.text = "Max";
+            Strength_Button.GetComponent<Image>().sprite = Strength_Button.GetComponent<Button>().spriteState.disabledSprite;
+            Strength_Button.GetComponent<Button>().enabled = false;
         }
 
-        if (py.Enhance_Speed < 5)
-        {
+        if (py.Enhance_Speed < 4)
             T_Cost_Speed.text = Cost_Speed[py.Enhance_Speed].ToString();
-            T_Effect_Speed.text = py.Enhance_Speed_Point[py.Enhance_Speed].ToString() + " > " + py.Enhance_Speed_Point[py.Enhance_Speed + 1].ToString();
-        }
         else
         {
             T_Cost_Speed.text = "Max";
-            T_Effect_Speed.text = "Max";
+            Speed_Button.GetComponent<Image>().sprite = Speed_Button.GetComponent<Button>().spriteState.disabledSprite;
+            Speed_Button.GetComponent<Button>().enabled = false;
         }
     }
 
     public void Enhance_Health()
     {
-        if(py.P_Money > Cost_Health[py.Enhance_Health])
+        if (py.Enhance_Health < 4)
         {
-            if (py.Enhance_Health < 5)
+            if (py.P_Money > Cost_Health[py.Enhance_Health])
             {
                 py.Enhance_Health++;
                 py.UpdateStat();
                 py.P_Money -= Cost_Health[py.Enhance_Health];
                 py.Save_StateEnhance();
+                UpdateText();
             }
         }
     }
-
+    
     public void Enhance_Strength()
     {
-        if (py.P_Money > Cost_Strength[py.Enhance_Strength])
+        if (py.Enhance_Strength < 4)
         {
-            if (py.Enhance_Strength < 5)
+            if (py.P_Money > Cost_Strength[py.Enhance_Strength])
             {
                 py.Enhance_Strength++;
                 py.UpdateStat();
                 py.P_Money -= Cost_Strength[py.Enhance_Strength];
                 py.Save_StateEnhance();
+                UpdateText();
             }
         }
     }
-
+    
     public void Enhance_Speed()
     {
-        if (py.P_Money > Cost_Speed[py.Enhance_Speed])
+        if (py.Enhance_Speed < 4)
         {
-            if (py.Enhance_Speed < 5)
+            if (py.P_Money > Cost_Speed[py.Enhance_Speed])
             {
                 py.Enhance_Speed++;
                 py.UpdateStat();
                 py.P_Money -= Cost_Speed[py.Enhance_Speed];
                 py.Save_StateEnhance();
+                UpdateText();
             }
         }
     }

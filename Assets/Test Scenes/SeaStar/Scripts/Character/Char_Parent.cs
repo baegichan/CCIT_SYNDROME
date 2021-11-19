@@ -45,6 +45,7 @@ public class Char_Parent : Character
         }
     }
     public float P_JumpInt;
+    public bool UseApPostion;
     public static float h;
     public bool P_OtherWorld = false;
     public static bool RedBullDash = false;
@@ -53,7 +54,7 @@ public class Char_Parent : Character
     Vector2 Mouse;
     Vector2 PlayerPosition;
 
-    //[Header("능력치 강화 수치")]
+    [Header("능력치 강화 수치")]
     public int Enhance_Health;
     public int Enhance_Strength;
     public int Enhance_Speed;
@@ -76,6 +77,7 @@ public class Char_Parent : Character
         rigid = GetComponent<Rigidbody2D>();
         SelectChar = Char[0];
         ChangeChar(SelectChar);
+        AM.CP = this;
     }
 
     void FixedUpdate()
@@ -105,6 +107,7 @@ public class Char_Parent : Character
 
         if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); }
         if (AP_Timer > 0) { AP_Time(); }
+        else { if (UseApPostion) { UseApPostion = false; } }
     }
 
     //캐릭터 변경
@@ -345,6 +348,7 @@ public class Char_Parent : Character
 
     void AP_Time()
     {
+        if (!UseApPostion) { UseApPostion = true; }
         AP_Timer -= Time.deltaTime;
     }
     //
