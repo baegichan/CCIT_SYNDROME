@@ -22,12 +22,12 @@ public class Drill_Ready : StateMachineBehaviour
             animator.SetTrigger("Attack");
         if (drillMon.Targeton == true)
         {
-            if (Vector2.Distance(drillMon.player.position, drillTransform.position) > 0.5f) //따가라가서 공격 하는 범위
+            if (Vector2.Distance(drillMon.PlayerT.position, drillTransform.position) > 0.7f) //따가라가서 공격 하는 범위
                 animator.SetBool("Follow", true);
         }
 
 
-        drillMon.Directiondrillmonster(drillMon.player.position.x, drillTransform.position.x);
+        drillMon.Directiondrillmonster(drillMon.PlayerT.position.x, drillTransform.position.x);
     }
 }
 

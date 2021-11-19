@@ -24,15 +24,15 @@ public class Puncher_Trace : StateMachineBehaviour
     {
         if (puncherMon.Targeton == true)
         {
-            if (Vector2.Distance(puncherMon.player.position, puncherTransform.position) > 4f) //플레이어 따라 오는 함수
-                puncherTransform.position = Vector2.MoveTowards(puncherTransform.position, puncherMon.player.position, Time.deltaTime * puncherMon.speed);
+            if (Vector2.Distance(puncherMon.playerTransform.position, puncherTransform.position) > 4f) //플레이어 따라 오는 함수
+                puncherTransform.position = Vector2.MoveTowards(puncherTransform.position, puncherMon.playerTransform.position, Time.deltaTime * puncherMon.speed);
             else
             {
                 animator.SetBool("Move", false);
                 animator.SetBool("Follow", false);
             }
         }
-        puncherMon.DirectionPunchermonster(puncherMon.player.position.x, puncherTransform.position.x);
+        puncherMon.DirectionPunchermonster(puncherMon.playerTransform.position.x, puncherTransform.position.x);
     }
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

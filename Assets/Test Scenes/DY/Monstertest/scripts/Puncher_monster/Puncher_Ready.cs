@@ -20,10 +20,10 @@ public class Puncher_Ready : StateMachineBehaviour
             animator.SetTrigger("Attack");
         if (puncherMon.Targeton == true)
         {
-            if (Vector2.Distance(puncherMon.player.position, puncherTransform.position) > 4f) //따가라가서 공격 하는 범위
+            if (Vector2.Distance(puncherMon.playerTransform.position, puncherTransform.position) > 4f) //따가라가서 공격 하는 범위
                 animator.SetBool("Follow", true);
         }
-        puncherMon.DirectionPunchermonster(puncherMon.player.position.x, puncherTransform.position.x);
+        puncherMon.DirectionPunchermonster(puncherMon.playerTransform.position.x, puncherTransform.position.x);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

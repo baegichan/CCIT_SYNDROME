@@ -19,7 +19,7 @@ public class Firefly_Move : StateMachineBehaviour
     {
         if (fireflyMon.Targeton == true)
         {
-            if (Vector2.Distance(fireflyMon.first, fireflyTransform.position) < 0.1f || Vector2.Distance(fireflyTransform.position, fireflyMon.player.position) > 10f)//Å½Áö ¹üÀ§
+            if (Vector2.Distance(fireflyMon.first, fireflyTransform.position) < 0.1f || Vector2.Distance(fireflyTransform.position, fireflyMon.playerTransform.position) > 10f)//Å½Áö ¹üÀ§
             {
                 animator.SetBool("Move", false);
                 animator.SetBool("Follow", true);

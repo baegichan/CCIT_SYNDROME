@@ -11,7 +11,8 @@ public class ClupMonster : Character
     public int clupmonDamage;
 
     [Header("Refernce")]
-    public Transform player;
+    public GameObject player;
+    public Transform playerTransform;
     public Animator anim;
     public Vector2 first;
     public Vector2 boxSize;
@@ -27,6 +28,7 @@ public class ClupMonster : Character
     public bool patroll;
     public bool trace;
     public bool Targeton = false;
+    public bool Dead;
 
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
@@ -58,7 +60,6 @@ public class ClupMonster : Character
         patroll = true;
         trace = false;
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         Physics.IgnoreLayerCollision(0, 0);
     }
 
@@ -72,7 +73,32 @@ public class ClupMonster : Character
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
-        
+
+        if (Hp_Current <= 0)
+        {
+            Dead = true;
+            patroll = false;
+            trace = false;
+            anim.SetTrigger("Dead");
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
+        m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+
+        Vector3 originPos = transform.position;
+
+
+
+        Vector3 horizontalRightDir = AngleToDirZ(-m_horizontalViewHalfAngle + m_viewRotateZ);//(-시야각 + 회전값)
+        Vector3 horizontalLeftDir = AngleToDirZ(m_horizontalViewHalfAngle + m_viewRotateZ);//(시야각 + 회전값)
+        Vector3 lookDir = AngleToDirZ(m_viewRotateZ);//보는 방향
+
+
+
+        FindViewTargets();
     }
 
     public void DirectionClupmonster(float target, float baseobj)
@@ -101,7 +127,7 @@ public class ClupMonster : Character
         {
             if (col.tag == "Player")
             {
-                col.GetComponent<Character>().Damage(clupmonDamage);
+                col.GetComponentInParent<Character>().Damage(clupmonDamage);
             }
         }
     }
@@ -110,6 +136,11 @@ public class ClupMonster : Character
     {
         transform.Translate(Vector2.right * patrolSpeed * Time.deltaTime);
         Filp();
+    }
+
+    public void ClupDestroy()
+    {
+        Destroy(gameObject);
     }
 
     public void Filp()
@@ -206,7 +237,9 @@ public class ClupMonster : Character
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
-                player = GameObject.FindGameObjectWithTag("Player").transform;
+                //player = GameObject.FindGameObjectWithTag("Player").transform;
+                player = GameObject.FindGameObjectWithTag("Player");//플레이어 피봇 위치 트러짐 떄문에 사용
+                playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget)
                 {

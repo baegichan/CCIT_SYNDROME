@@ -9,21 +9,23 @@ public class Puncher_Bullet : MonoBehaviour
     public int bullet_Damage;
 
     [Header("Refernce")]
-    GameObject Player;
+    GameObject player;
+    Transform playerTransform;
     public Vector2 trans;
     public Vector3 dir;
 
     private void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
-        trans = new Vector2(Player.transform.position.x, Player.transform.position.y);
-        dir = Player.transform.position - transform.position;
-        float angle = Mathf.Atan2(Player.transform.position.y - transform.position.y, Player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
-        if (Player.transform.position.x < transform.position.x)
+        player = GameObject.FindGameObjectWithTag("Player");//플레이어 피봇 위치 트러짐 떄문에 사용
+        playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+        trans = new Vector2(playerTransform.position.x, playerTransform.position.y);
+        dir = playerTransform.position - transform.position;
+        float angle = Mathf.Atan2(playerTransform.position.y - transform.position.y, playerTransform.position.x - transform.position.x) * Mathf.Rad2Deg;
+        if (playerTransform.position.x < transform.position.x)
         {
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
-        if (Player.transform.position.x > transform.position.x)
+        if (playerTransform.position.x > transform.position.x)
         {
             transform.rotation = Quaternion.AngleAxis(angle - 180, Vector3.forward);
         }
@@ -48,7 +50,7 @@ public class Puncher_Bullet : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            col.GetComponent<Character>().Damage(bullet_Damage);
+            col.GetComponentInParent<Character>().Damage(bullet_Damage);
             BulletDestroy();
         }
         if (col.tag == "Ground")

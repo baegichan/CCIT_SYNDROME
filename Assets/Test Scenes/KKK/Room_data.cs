@@ -9,10 +9,11 @@ public class Room_data : MonoBehaviour
     public bool  Top,Right,Bottom,Left;
     public bool Room_Created = false;
     public Vector2 Map_index;
-
+    PolygonCollider2D MapPolygon=null;
     SpriteRenderer spr;
     public Sprite[] sp;
-   
+    public PolygonCollider2D MapPoly { get {return MapPolygon; } set {MapPolygon=value; } }
+
     public void SetMapData()
     {
         //Left = false; Right = false; Top = false; Bottom =false;

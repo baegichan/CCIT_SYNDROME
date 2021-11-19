@@ -124,4 +124,19 @@ public class Char_Eden : MonoBehaviour
             GetComponentInParent<Char_Parent>().OffBattleAxe();
         }
     }
+    void BattleAxeintInitalization()
+    {
+        BattleAxeAttack.Attack_int = 0;
+    }
+    void TestBa()
+    {
+        if (BattleAxeAttack.Attack_int > 4)
+        {
+            BattleAxeAttack.Attack_int = 1;
+        }
+    }
+    void BAI()//Battle Axe Attack Int <-- 기계도끼 애니메이션
+    {
+        GetComponentInParent<Char_Parent>().Ani.SetInteger("BAI", BattleAxeAttack.Attack_int);
+    }
 }
