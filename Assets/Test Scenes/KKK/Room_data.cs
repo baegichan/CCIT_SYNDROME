@@ -13,7 +13,7 @@ public class Room_data : MonoBehaviour
     SpriteRenderer spr;
     public Sprite[] sp;
     public PolygonCollider2D MapPoly { get {return MapPolygon; } set {MapPolygon=value; } }
-
+    
     public void SetMapData()
     {
         //Left = false; Right = false; Top = false; Bottom =false;

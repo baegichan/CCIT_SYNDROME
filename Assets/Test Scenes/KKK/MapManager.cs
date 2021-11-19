@@ -135,17 +135,18 @@ public class MapManager : MonoBehaviour
 
     public void RoomSetting()
     {
-        List<GameObject> RoomCroods = new List<GameObject>();
+        List<GameObject> RoomList = new List<GameObject>();
         for(int i =0; i< Level*2+1;i++)
         {
             for (int j = 0; j < Level * 2 + 1; j++)
             {
                 if(map[i,j].GetComponent<Room_data>().Room_Created)
                 {
-                    RoomCroods.Add(map[i, j]);
+                    RoomList.Add(map[i, j]);
                 }
             }
         }
+        
     }
     private void Start()
     {
