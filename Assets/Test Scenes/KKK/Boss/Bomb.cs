@@ -1,107 +1,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Bomb : MonoBehaviour
 {
-    /*
-    Rigidbody2D rig;
+    [Range(0, 1)]
+    public float Test;
+   
+
+    public Vector3 p1;
+    public Vector3 p2;
+    public Vector3 p3;
+    public Vector3 p4;
 
     public GameObject Player;
-    Transform aa;
 
-    Vector3 cc;
-
-    public float BombSpeed;
-    private void Start()
-    {
-        rig = GetComponent<Rigidbody2D>();
-        Player = GameObject.FindGameObjectWithTag("Player");
-        aa = Player.GetComponent<TestPlayer>().SelectChar.transform;
-        cc = new Vector2(aa.position.x, aa.position.y);
-
-        rig.AddForce(new Vector2(cc.x - this.transform.position.x, cc.y - this.transform.position.y) * BombSpeed);
-    }
-    private void FixedUpdate()
-    {
-        float angle = Mathf.Atan2(rig.velocity.y, rig.velocity.x) * Mathf.Rad2Deg;
-        transform.eulerAngles = new Vector3(0, 0, angle);
-    }
-    *
-    /*
-    public Transform Bomb_Dir;
-    public GameObject Player;
-    public Transform Player_Dir;
-    Transform aa;
-
-    Vector3 cc;
+    public int Weight;
+    public int Height;
 
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-
-        aa = Player.GetComponent<TestPlayer>().SelectChar.transform;
-
-
-        cc = new Vector2(aa.position.x, aa.position.y);
-
-    }
-    Vector3 bb;
-    void Lookat()
-    {
-        bb = new Vector2(cc.x - this.transform.position.x , cc.y - this.transform.position.y);
-
-        //Bomb_Dir.right = bb;
-
-    }
-    private void Update()
-    {
-        Lookat();
-        this.GetComponent<Rigidbody2D>().velocity = bb * 10;
-    }
-    */
-    
-    /*
-    public Transform sunrise; //포물선 시작위치
-    public Transform sunset; //포물선 종료위치
-    Vector3 aa;
-    public GameObject Player;
-    public float journeyTime = 1000f; //시작위치에서 종료위치까지 도달하는 시간, 값이 높을수록 느리게 간다.
-    private float startTime;
-    public float reduceHeight = 3f; //Center값을 줄이기, 해당 값이 높을수록 포물선의 높이는 낮아진다.
-
-    void Start()
-    {
-        Player = GameObject.FindGameObjectWithTag("Player");
-        startTime = Time.time;
-        sunrise = this.transform;
-        //sunset = Player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 위치 받아올수 있게
-        aa = Player.GetComponent<TestPlayer>().SelectChar.transform.position;
-
-
-
-    }
-    Vector3 before;
-    void Update()
-    {
-        Vector3 center = (sunrise.position + aa) * 0.01F; //Center 값만큼 위로 올라간다.
-        center -= new Vector3(0, 0.1f * reduceHeight, 0); //y값을 높이면 높이가 낮아진다.
-        Vector3 riseRelCenter = sunrise.position - center;
-        Vector3 setRelCenter = aa - center;
-        float fracComplete = (Time.time - startTime) / journeyTime;
-        transform.position = Vector3.Slerp(riseRelCenter, setRelCenter, 0.05f);
-        transform.position += center;
-         
-
-        if (Vector3.Distance(transform.position, setRelCenter) == 0)
-        {
-            Destroy(gameObject);
-        }
-
+        Transform Player_Transform = Player.GetComponent<TestPlayer>().SelectChar.transform;
         
+
+        p1 = transform.position;
+        p2 = new Vector3(p1.x, p1.y + Height, p1.z);
+        p3 = new Vector3(p2.x - Weight, p2.y, p2.z);
+        p4 = Player_Transform.position;
+
     }
-    
-    */
+
+    public void Update()
+    {
+        transform.position = BezirTest(p1, p2, p3, p4, Test);
+        Test += Time.deltaTime;
+    }
+    public Vector3 BezirTest(
+        Vector3 P_1,
+        Vector3 P_2,
+        Vector3 P_3,
+        Vector3 P_4,
+        float Value
+        )
+    {
+        Vector3 A = Vector3.Lerp(P_1, P_2, Value);
+        Vector3 B = Vector3.Lerp(P_2, P_3, Value);
+        Vector3 C = Vector3.Lerp(P_3, P_4, Value);
+
+        Vector3 D = Vector3.Lerp(A, B, Value);
+        Vector3 E = Vector3.Lerp(B, C, Value);
+
+        Vector3 F = Vector3.Lerp(D, E, Value);
+        return F;
+    }
+
+
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
