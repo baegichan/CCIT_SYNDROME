@@ -13,7 +13,15 @@ public class Room_data : MonoBehaviour
     SpriteRenderer spr;
     public Sprite[] sp;
     public PolygonCollider2D MapPoly { get {return MapPolygon; } set {MapPolygon=value; } }
-    
+    public enum RoomType
+    {
+    Nomal,
+    Boss,
+    Shop,
+    Crane
+    }
+    public RoomType Room_Type;
+
     public void SetMapData()
     {
         //Left = false; Right = false; Top = false; Bottom =false;
