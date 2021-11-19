@@ -7,7 +7,7 @@ public class AbyssMonster : MonoBehaviour
     // Start is called before the first frame update
 
 
-    AbyssManager abyssManager;
+    
 
     [Header("DarkFogPrefab")]
     public GameObject DarkFog;
@@ -15,23 +15,16 @@ public class AbyssMonster : MonoBehaviour
     public int giveAbyssGage = 5;
     [Header("Monster ID")]
     public int id = 0;
-    AbyssManager.AbyssState state;
-    private void Start()
-    {
-        abyssManager = GameObject.Find("AbyssManager").transform.GetComponent<AbyssManager>();
-
-
-
-    }
-
+ 
+  
    
   
     public void MonsterDie()
     {
-        if (abyssManager.abyssState == AbyssManager.AbyssState.Reality)
+        if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Reality)
         {
-            abyssManager.AbyssMonsterAdd(id, transform.position);
-            abyssManager.GetAbyssGage(giveAbyssGage);
+            AbyssManager.abyss.AbyssMonsterAdd(id, transform.position);
+            AbyssManager.abyss.GetAbyssGage(giveAbyssGage);
             Destroy(this.gameObject);
 
         }

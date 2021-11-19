@@ -7,6 +7,42 @@ using UnityEngine.UI;
 
 public class AbyssManager : MonoBehaviour
 {
+
+    #region 싱글톤
+
+    private static AbyssManager _abyss;
+
+    public static AbyssManager abyss
+    {
+        get
+        {
+            // 인스턴스가 없는 경우에 접근하려 하면 인스턴스를 할당해준다.
+            if (!_abyss)
+            {
+                _abyss = FindObjectOfType(typeof(AbyssManager)) as AbyssManager;
+
+                if (_abyss == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return _abyss;
+        }
+    }
+
+    private void Awake()
+    {
+        if (_abyss == null)
+        {
+            _abyss = this;
+        }
+        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
+        else if (_abyss != this)
+        {
+            Destroy(gameObject);
+        }
+        // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
+        DontDestroyOnLoad(gameObject);
+    }
+    #endregion
     #region 변수
 
 
@@ -69,12 +105,7 @@ public class AbyssManager : MonoBehaviour
 
     #endregion
 
-    private void Awake()
-    {
-        RealBox = GameObject.Find("RealMonsterBox").transform.gameObject;
-        AbyssBox = GameObject.Find("AbyssMonsterBox").transform.gameObject;
-    }
-
+  
     // Start is called before the first frame update
     void Start()
     {
