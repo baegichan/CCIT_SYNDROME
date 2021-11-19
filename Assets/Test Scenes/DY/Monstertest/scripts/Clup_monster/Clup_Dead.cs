@@ -16,7 +16,7 @@ public class Clup_Dead : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        clupmon.DirectionClupmonster(clupmon.player.position.x, clupTransform.position.x);
+        clupmon.DirectionClupmonster(clupmon.playerTransform.position.x, clupTransform.position.x);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

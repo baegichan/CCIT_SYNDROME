@@ -11,7 +11,8 @@ public class Punchermonster : Character
 
     [Header("Refernce")]
     public GameObject puncherbullet;
-    public Transform player;
+    public GameObject player;
+    public Transform playerTransform;
     public Animator anim;
     public Vector2 first;
     public Rigidbody2D rb;
@@ -232,7 +233,9 @@ public class Punchermonster : Character
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
-                player = GameObject.FindGameObjectWithTag("Player").transform;
+                //player = GameObject.FindGameObjectWithTag("Player").transform;
+                player = GameObject.FindGameObjectWithTag("Player");//플레이어 피봇 위치 트러짐 떄문에 사용
+                playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget)
                 {

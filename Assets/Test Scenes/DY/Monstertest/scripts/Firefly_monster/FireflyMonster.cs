@@ -75,8 +75,8 @@ public class FireflyMonster:Character
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
-        Up();
-        Down();
+        //Up();
+        //Down();
         if (Hp_Current <= 0)
         {
             Dead = true;
