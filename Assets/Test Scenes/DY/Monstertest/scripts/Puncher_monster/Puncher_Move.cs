@@ -18,7 +18,7 @@ public class Puncher_Move : StateMachineBehaviour
     {
         if (puncherMon.Targeton == true)
         {
-            if (Vector2.Distance(puncherMon.first, puncherTransform.position) < 0.1f || Vector2.Distance(puncherTransform.position, puncherMon.player.position) > 10f)//Å½Áö ¹üÀ§
+            if (Vector2.Distance(puncherMon.first, puncherTransform.position) < 0.1f || Vector2.Distance(puncherTransform.position, puncherMon.playerTransform.position) > 10f)//Å½Áö ¹üÀ§
             {
                 animator.SetBool("Move", false);
                 animator.SetBool("Follow", true);

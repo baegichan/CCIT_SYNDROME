@@ -32,5 +32,6 @@ public class Stat_NPC : NPC
         ESH.py = py;
 
         Enhance_Stat_UI.SetActive(true);
+        Enhance_Stat_UI.GetComponent<Enhance_Stat>().UpdateText();
     }
 }

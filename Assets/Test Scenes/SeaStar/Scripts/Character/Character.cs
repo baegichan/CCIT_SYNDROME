@@ -18,13 +18,18 @@ public class Character : MonoBehaviour
     [Tooltip("기본 이동속도")]
     public float speed;
 
+    void Awake()
+    {
+        Hp_Current = Hp_Max;
+    }
+
     void Update()
     {
         if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
         if(Shield < 0) { Shield = 0; }
     }
 
-    public static void Damage(GameObject Defender, int DamageValue) //(맞는 애, 데미지값)
+    public void Damage(GameObject Defender, int DamageValue) //(맞는 애, 데미지값)
     {
         int firstDamge = DamageValue;
 
@@ -40,7 +45,7 @@ public class Character : MonoBehaviour
         //쉴드에 데미지
         if(Defender.GetComponent<Character>().Shield > 0)
         Defender.GetComponent<Character>().Shield -= firstDamge - Defender.GetComponent<Character>().DP;
-        //Load_Damage_Text(Defender.GetComponent<Character>(),DamageValue);
+        Load_Damage_Text(Defender.GetComponent<Character>(),DamageValue);
     }
 
     /* 데미지 예시 (몬스터랑 플레이어랑 닿은 상황)
@@ -82,5 +87,23 @@ public class Character : MonoBehaviour
         if (Shield > 0)
            Shield -= firstDamge - DP;
         Load_Damage_Text(this,DamageValue);
+    }
+
+    public void Damage(int DamageValue, bool IsBuffOn)
+    {
+        int firstDamage = IsBuffOn ? DamageValue + Mathf.RoundToInt(DamageValue * 0.2f) : DamageValue;
+        Debug.Log(firstDamage);
+        if (DamageValue > 20)
+        {
+            CameraShake.Shake(70, 0.4f);
+        }
+        int secondDamge = firstDamage - Shield;
+        if (secondDamge > 0)
+        {
+            Hp_Current -= secondDamge - DP;
+        }
+        if (Shield > 0)
+            Shield -= firstDamage - DP;
+        Load_Damage_Text(this, firstDamage);
     }
 }
