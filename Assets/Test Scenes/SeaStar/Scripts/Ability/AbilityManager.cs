@@ -28,25 +28,26 @@ public class AbilityManager : MonoBehaviour
 
     public GameObject PharaoEffect;
     public Animator EA;
+    public Char_Parent CP;
 
     public void Werewolf()
     {
-        if (Input.GetMouseButtonDown(1) && !py.GetComponentInParent<Char_Parent>().Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if (Input.GetMouseButtonDown(1) && !CP.Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            py.GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", false);
+            CP.Ani.SetTrigger("Ability");
+            CP.Ani.SetBool("CanIThis", false);
             Vector2 pp = py.transform.position + new Vector3(0.5f,0);
             Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, Physics2D.AllLayers);
             for(int i = 0; i < hit.Length; i++)
             {
                 if (hit[i].tag == "Monster")
                 {
-                    if (hit[i].GetComponent<Character>().Hp_Current < WolfAP[py.GetComponent<Char_Parent>().ActiveAbility.Enhance])
+                    if (hit[i].GetComponent<Character>().Hp_Current < WolfAP[CP.ActiveAbility.Enhance])
                     {
-                        py.GetComponentInParent<Character>().Hp_Current++;
+                        CP.Hp_Current++;
                     }
-                    py.GetComponentInParent<Character>().Damage(hit[i].gameObject, WolfAP[py.GetComponent<Char_Parent>().ActiveAbility.Enhance]);
+                    hit[i].GetComponent<Character>().Damage(WolfAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
                 }
             }
         }
@@ -57,10 +58,10 @@ public class AbilityManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().PharaoWandSwitch();
+            CP.PharaoWandSwitch();
             py.GetComponent<Char_Eden>().active = Pharao;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-            py.GetComponentInParent<Char_Parent>().Ani.SetBool("Combat", true);
+            CP.Ani.SetTrigger("Ability");
+            CP.Ani.SetBool("Combat", true);
         }
     }
 
@@ -79,7 +80,7 @@ public class AbilityManager : MonoBehaviour
                 RaycastHit2D Hit = Physics2D.Raycast(pp, enemy);
                 if (Hit.transform.tag == "Monster")
                 {
-                    py.GetComponentInParent<Character>().Damage(Hit.transform.gameObject, ParaoAP[py.GetComponentInParent<Char_Parent>().ActiveAbility.Enhance]);
+                    Hit.transform.GetComponent<Character>().Damage(ParaoAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
                 }
             }
         }
@@ -90,7 +91,7 @@ public class AbilityManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
+            CP.Ani.SetTrigger("Ability");
             Vector2 pp = py.transform.position;
             Vector2 CursorPos = Input.mousePosition;
             CursorPos = cam.ScreenToWorldPoint(CursorPos);
@@ -107,12 +108,12 @@ public class AbilityManager : MonoBehaviour
     public void Ability_D()
     {
         if(ShieldCool > 0) { ShieldCool -= Time.deltaTime; }
-        else if(ShieldCool <= 0) { py.GetComponentInParent<Character>().Shield = 0; }
+        else if(ShieldCool <= 0) { CP.Shield = 0; }
 
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
+            CP.Ani.SetTrigger("Ability");
             Vector2 pp = py.transform.position + new Vector3(0.5f, 0);
             Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, Physics2D.AllLayers);
             for (int i = 0; i < hit.Length; i++)
@@ -122,9 +123,9 @@ public class AbilityManager : MonoBehaviour
                     ShieldCool = 4;
                     if (i < 4)
                     {
-                        py.GetComponentInParent<Character>().Shield += 10;
+                        CP.Shield += 10;
                     }
-                    py.GetComponentInParent<Character>().Damage(hit[i].gameObject, RockAP);
+                    hit[i].GetComponent<Character>().Damage(RockAP, CP.UseApPostion);
                 }
             }
         }
@@ -132,7 +133,7 @@ public class AbilityManager : MonoBehaviour
 
     public void BattleAxe()
     {
-        py.GetComponentInParent<Char_Parent>().Ani.SetInteger("AbilityNum", 4);
+        CP.Ani.SetInteger("AbilityNum", 4);
         if (Input.GetMouseButtonDown(1))
         {
             A_Attack();
@@ -146,9 +147,9 @@ public class AbilityManager : MonoBehaviour
     }
     public void A_Attack()
     {
-        py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-        py.GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", false);
-        py.GetComponentInParent<Char_Parent>().Ani.SetBool("Combat", true);
+        CP.Ani.SetTrigger("Ability");
+        CP.Ani.SetBool("CanIThis", false);
+        CP.Ani.SetBool("Combat", true);
     }
 
     public void Ability_E()
@@ -167,9 +168,9 @@ public class AbilityManager : MonoBehaviour
 
     public void EvilSword_Attack()
     {
-        py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
-        py.GetComponentInParent<Char_Parent>().Ani.SetInteger("AbilityNum", 5);
-        py.GetComponentInParent<Char_Parent>().Ani.SetBool("Combat", true);
+        CP.Ani.SetTrigger("Ability");
+        CP.Ani.SetInteger("AbilityNum", 5);
+        CP.Ani.SetBool("Combat", true);
         EA.SetTrigger("Attack");
     }
 
@@ -182,7 +183,7 @@ public class AbilityManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             Char_Parent.Active_Cool = 0f;
-            py.GetComponentInParent<Char_Parent>().Ani.SetTrigger("Ability");
+            CP.Ani.SetTrigger("Ability");
             Vector2 MouseP = Input.mousePosition;
             MouseP = cam.ScreenToWorldPoint(MouseP);
             Vector2 Point = py.transform.position;
