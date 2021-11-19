@@ -12,17 +12,25 @@ public class MonsterSpawnEvent : MapEvent
     }
     public float SpawnDelay = 0.5f;
     public bool UseSpawner = false;
+    public bool OneTimeSpawn = false;
     int count = 0;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (UseSpawner != true)
+        if (collision.tag == "Player")
         {
-            if (collision.tag == "Player")
-            {
-                StartCoroutine(Spawn_Monster_Inorder());
-                //Spawn_Monster();
+                  if (UseSpawner != true)
+                  {
+                    if(OneTimeSpawn)
+                  {
+                    Spawn_Monster();
+                  }
+                  else
+                  {
+                    StartCoroutine(Spawn_Monster_Inorder());
+                  }
+              
             }
-        }
+          }
     }
     private void Start()
     {
@@ -35,10 +43,6 @@ public class MonsterSpawnEvent : MapEvent
         for (int i = 0; i < count; i++)
         {
             
-     
-            Debug.Log(transform.GetChild(0).gameObject.name + " Spawned");
-
-
             Instantiate(Resources.Load(transform.GetChild(0).gameObject.name), transform.GetChild(0).position, Quaternion.identity, this.gameObject.transform);
             Destroy(transform.GetChild(0).gameObject);
             yield return new WaitForSeconds(SpawnDelay);
@@ -51,7 +55,7 @@ public class MonsterSpawnEvent : MapEvent
         {
             for(int i =0; i< count; i++)
             {
-                Debug.Log(transform.GetChild(i).gameObject.name + " Spawned");
+            
                 Instantiate(Resources.Load(transform.GetChild(i).gameObject.name), transform.GetChild(i).position,Quaternion.identity,this.gameObject.transform);
                 Destroy(transform.GetChild(i).gameObject);
             }

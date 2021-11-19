@@ -21,12 +21,12 @@ public class Clup_Ready : StateMachineBehaviour
         animator.SetTrigger("Attack");
         if(clupmon.Targeton == true)
         {
-            if (Vector2.Distance(clupmon.player.position, clupTransform.position) > 5f) //따가라가서 공격 하는 범위
+            if (Vector2.Distance(clupmon.playerTransform.position, clupTransform.position) > 0.7f) //따가라가서 공격 하는 범위
                 animator.SetBool("Follow", true);
         }
         
 
-        clupmon.DirectionClupmonster(clupmon.player.position.x, clupTransform.position.x);
+        clupmon.DirectionClupmonster(clupmon.playerTransform.position.x, clupTransform.position.x);
     }
 
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state

@@ -8,6 +8,7 @@ public class Room_data : MonoBehaviour
     public int map_code;
     public bool  Top,Right,Bottom,Left;
     public bool Room_Created = false;
+    public Vector2 Map_index;
 
     SpriteRenderer spr;
     public Sprite[] sp;
@@ -106,12 +107,12 @@ public class Room_data : MonoBehaviour
 
     private void Start()
     {
-        spr = GetComponent<SpriteRenderer>();
+     //   spr = GetComponent<SpriteRenderer>();
     }
     
     private void Update()
     {
-        
+        /*
         if(map_code == 1)
         {
             spr.sprite = sp[0];
@@ -171,6 +172,6 @@ public class Room_data : MonoBehaviour
         else if (map_code == 15)
         {
             spr.sprite = sp[14];
-        }
+        }*/
     }
 }

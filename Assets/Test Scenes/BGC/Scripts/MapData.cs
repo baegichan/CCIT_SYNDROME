@@ -37,12 +37,8 @@ public class MapData : ScriptableObject
     public void Load_MapData(GameObject target)
     {
         Batch_map(target);
-
-        GameObject Potals_parents = (GameObject)Instantiate(Resources.Load("Potals"), target.transform);
+        GameObject Potals_parents = (GameObject)Instantiate(Resources.Load("Potals"), target.transform.position,Quaternion.identity, target.transform);
         SpawnPotal(Potals_parents);
-        
-
-
         Instantiate(Map_Event, target.transform);
     }
 
@@ -232,7 +228,7 @@ public class MapData : ScriptableObject
         {
             Tile_Map = (GameObject)Resources.Load("Grid");
         }
-        GameObject Grid = Instantiate(Tile_Map, Vector3.zero, Quaternion.identity, target.transform);
+        GameObject Grid = Instantiate(Tile_Map, target.transform.position, Quaternion.identity, target.transform);
 
         for (int j = 0; j < BG.Length; j++)
         {
@@ -240,7 +236,7 @@ public class MapData : ScriptableObject
             {
                 BG[j].Tilemap = (GameObject)Resources.Load("Tilemap");
             }
-            GameObject Tile = Instantiate(BG[j].Tilemap, Vector3.zero, Quaternion.identity, Grid.transform);
+            GameObject Tile = Instantiate(BG[j].Tilemap, target.transform.position, Quaternion.identity, Grid.transform);
             Tile.AddComponent<TilemapCollider2D>();
             if (BG[j].Its_Object)
             {
@@ -502,8 +498,8 @@ public class Potal
     {
         if (EnablePotal)
         {
-            GameObject potal = (GameObject)Resources.Load("Potal");
-            GameObject SpawnedPotal = GameObject.Instantiate(potal, Parent.transform);
+            //GameObject potal = (GameObject)Resources.Load("Potal");
+            GameObject SpawnedPotal = GameObject.Instantiate((GameObject)Resources.Load("Potal"), Parent.transform.position, Quaternion.identity, Parent.transform);
             SpawnedPotal.name = Potaltype.ToString();
             var Potal = SpawnedPotal.GetComponent<MapLineDraw>();
             Potal.T_Area = VertexPoints[0].y;
@@ -511,8 +507,11 @@ public class Potal
             Potal.L_Area = VertexPoints[0].x;
             Potal.R_Area = VertexPoints[1].x;
             SpawnedPotal.GetComponent<EdgeCollider2D>().points = VertexPoints;
-            SpawnedPotal.transform.position = PotalLocation;
+            SpawnedPotal.transform.position = (Vector2)SpawnedPotal.transform.position+ PotalLocation;
             SpawnedPotal.GetComponent<PotalEvent>().Potal_setting(Potaltype);
+            SpawnedPotal.GetComponent<PotalEvent>().SetinterBlock();
+
+
         }
     }
     

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BossScript : MonoBehaviour
 {
+
     public enum Boss_state
     {
 
@@ -81,7 +82,7 @@ public class BossScript : MonoBehaviour
                 {
                     for (int i = 0; i < 10; i++)
                     {
-                        fr_ar.GetComponent<Frame_attack>().new_ball();
+                        //fr_ar.GetComponent<Frame_attack>().new_ball();
                     }
                     Attack2_h++;
                     Attack2_cool = 1f;
@@ -98,6 +99,7 @@ public class BossScript : MonoBehaviour
                 StartCoroutine(delete());
             }
         }
+        /*
         if (Ball.number_of_Tri == 40)//모든 구체 사라짐
         {
             Set_Skill = 0;
@@ -106,7 +108,7 @@ public class BossScript : MonoBehaviour
             Boss_speed = 1;//보스 몬스터 원거리 공격 끝나고 다시 원상태로 되돌리기
             fr_ar.SetActive(false);
             anim.SetBool("isSetSkill", false);
-        }
+        }*/
         if (player.position.x < transform.position.x && HP.value > 0) // 속도 늦춰야 할듯?
         {
             float Left_Dir = -2f;

@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireflyMonster: MonoBehaviour
+public class FireflyMonster:Character
 {
     [Header("Prameter")]
-    public float speed;
+    
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
 
     [Header("Refernce")]
     public GameObject fireflybullet;
-    public Transform player;
+    public GameObject player;//플레이어 피봇 위치 트러짐 떄문에 사용
+    public Transform playerTransform;//플레이어 피봇 위치 트러짐 떄문에 사용
     public Animator anim;
     public Vector2 first;
     public Rigidbody2D rb;
     public Transform wallCheck;// 공중 벽 체크로 변경해야 됨
     public Transform upCheck;
     public Transform downCheck;
-    public Transform playerCheck;
     public Transform atkpos; //공격 근접이면 가능이지만 원거리는 교체가 필요
     public Vector2 direction;
     public float distance;
@@ -29,6 +29,7 @@ public class FireflyMonster: MonoBehaviour
     public bool patroll;
     public bool trace;
     public bool Targeton = false;
+    public bool Dead;
     //2D sight
 
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
@@ -60,8 +61,8 @@ public class FireflyMonster: MonoBehaviour
         patroll = true;
         trace = false;
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        
     }
 
     void Update()
@@ -70,13 +71,35 @@ public class FireflyMonster: MonoBehaviour
         {
             Patroll();
         }
-        //PlayerCheck();
+        
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
-        Up();
-        Down();
+        //Up();
+        //Down();
+        if (Hp_Current <= 0)
+        {
+            Dead = true;
+            patroll = false;
+            trace = false;
+            anim.SetTrigger("Dead");
+        }
+    }
+    private void FixedUpdate()
+    {
+        m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
 
+        Vector3 originPos = transform.position;
+
+
+
+        Vector3 horizontalRightDir = AngleToDirZ(-m_horizontalViewHalfAngle + m_viewRotateZ);//(-시야각 + 회전값)
+        Vector3 horizontalLeftDir = AngleToDirZ(m_horizontalViewHalfAngle + m_viewRotateZ);//(시야각 + 회전값)
+        Vector3 lookDir = AngleToDirZ(m_viewRotateZ);//보는 방향
+
+
+
+        FindViewTargets();
     }
 
     public void DirectionFireflymonster(float target, float baseobj)
@@ -92,22 +115,20 @@ public class FireflyMonster: MonoBehaviour
         if (anim.GetFloat("Direction") == -1)
         {
             if (atkpos.localPosition.x > 0)
+            {
                 atkpos.localPosition = new Vector2(atkpos.localPosition.x * -1, atkpos.localPosition.y);
+                
+            }
         }
         else
         {
             if (atkpos.localPosition.x < 0)
+            {
                 atkpos.localPosition = new Vector2(Mathf.Abs(atkpos.localPosition.x * 1), atkpos.localPosition.y);
+                
+            }
         }
         Instantiate(fireflybullet, atkpos.transform.position, Quaternion.identity);
-        //Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(atkpos.position, boxSize, 0);
-        //foreach (Collider2D col in collider2Ds)
-        //{
-        //    if (col.tag == "Player")
-        //    {
-        //        Debug.Log("damage1");
-        //    }
-        //}
     }
 
     public void Patroll()
@@ -116,38 +137,47 @@ public class FireflyMonster: MonoBehaviour
         Filp();
     }
 
+    public void FireflyDestroy()
+    {
+        Destroy(gameObject);
+    }
+
     public void Filp()
     {
-        RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 2f); //레이케스트를 옆으로 쏴서 확인 된다면 플립
-        if (wallcheck.collider == true)
+        RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 0.3f); //레이케스트를 옆으로 쏴서 확인 된다면 플립
+        if (wallcheck.collider != null)
         {
-            if (filp == true)
+            if (wallcheck.collider.CompareTag("Wall") == true)
             {
-                transform.eulerAngles = new Vector3(0, 180, 0);
-                filp = false;
-            }
-            else
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                filp = true;
+                if (filp == true)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    filp = false;
+                }
+                else
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    filp = true;
+                }
             }
         }
     }
 
+
     public void Up()
     {
-        RaycastHit2D upcheck = Physics2D.Raycast(upCheck.position, Vector2.up, 2f);
+        RaycastHit2D upcheck = Physics2D.Raycast(upCheck.position, Vector2.up, 0.2f);
         if(upcheck.collider == true)
         {
-            rb.AddForce(transform.up * -5f);
+            rb.AddForce(transform.up * -1f);
         }
     }
     public void Down()
     {
-        RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 2f);
+        RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 0.2f);
         if (downcheck.collider == true)
         {
-            rb.AddForce(transform.up * 5f);
+            rb.AddForce(transform.up * 1f);
         }
     }
 
@@ -208,7 +238,12 @@ public class FireflyMonster: MonoBehaviour
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
+                //playerTransform = GameObject.FindGameObjectWithTag("Player").transform; -- 원래 사용했던 것
+                player = GameObject.FindGameObjectWithTag("Player");//플레이어 피봇 위치 트러짐 떄문에 사용
+                playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
+                if(rayHitedTarget != false)
+                    Debug.Log(rayHitedTarget.collider.name);
                 if (rayHitedTarget)
                 {
                     if (m_bDebugMode)

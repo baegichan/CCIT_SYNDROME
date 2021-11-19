@@ -6,14 +6,14 @@ public class Ball : MonoBehaviour
 {
     public Transform palyer;//플레이어 위치
     public float ball_speed;//구체 날라가는 속도
-    static public int number_of_Tri = 0;//충돌처리로 몇개 삭제 됬는지 
+    //static public int number_of_Tri = 0;//충돌처리로 몇개 삭제 됬는지 
     float ab;//아래로 쏴주는 부채꼴 랜덤 각도
     BossScript bs;
     private void Start()
     {
-        bs = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossScript>();
-        palyer = GameObject.FindGameObjectWithTag("Player").transform;
-        ab = Random.Range(-90.0f, 90.0f);
+        //bs = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossScript>();
+        //palyer = GameObject.FindGameObjectWithTag("Player").transform;
+        //ab = Random.Range(-90.0f, 90.0f);
 
     }
     private void Update()
@@ -36,8 +36,5 @@ public class Ball : MonoBehaviour
         }
         
     }
-    private void OnDestroy()
-    {
-        number_of_Tri++;
-    }
+   
 }

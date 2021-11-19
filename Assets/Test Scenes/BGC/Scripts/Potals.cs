@@ -15,7 +15,7 @@ public class Potals : MonoBehaviour
     {
         L,R,T,B
     }
-
+  
     public void SetPotal(PotalType potaltype,GameObject Potal)
     {
         switch (potaltype)

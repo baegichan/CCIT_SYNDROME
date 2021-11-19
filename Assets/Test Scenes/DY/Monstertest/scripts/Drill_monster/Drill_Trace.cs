@@ -25,14 +25,15 @@ public class Drill_Trace : StateMachineBehaviour
     {
         if (drillMon.Targeton == true)
         {
-            if (Vector2.Distance(drillMon.player.position, drillTransform.position) > 5f) //플레이어 따라 오는 함수
-                drillTransform.position = Vector2.MoveTowards(drillTransform.position, drillMon.player.position, Time.deltaTime * drillMon.speed);
+            if (Vector2.Distance(drillMon.PlayerT.position, drillTransform.position) > 1.7f) //플레이어 따라 오는 함수
+                drillTransform.position = Vector2.MoveTowards(drillTransform.position, drillMon.PlayerT.position, Time.deltaTime * drillMon.speed);
             else
             {
                 animator.SetBool("Move", false);
                 animator.SetBool("Follow", false);
             }
         }
+        drillMon.Directiondrillmonster(drillMon.PlayerT.position.x, drillTransform.position.x);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
