@@ -20,7 +20,7 @@ public class Drill_Move : StateMachineBehaviour
     { 
         if(drillMon.Targeton ==true)
         {
-            if (Vector2.Distance(drillMon.first, drillTransform.position) < 0.1f || Vector2.Distance(drillTransform.position, drillMon.player.position) > 10f)//Å½Áö ¹üÀ§
+            if (Vector2.Distance(drillMon.first, drillTransform.position) < 0.1f || Vector2.Distance(drillTransform.position, drillMon.PlayerT.position) > 10f)//Å½Áö ¹üÀ§
             {
                 animator.SetBool("Move", false);
                 animator.SetBool("Follow", true);
