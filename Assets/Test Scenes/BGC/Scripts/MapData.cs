@@ -18,6 +18,7 @@ public class MapData : ScriptableObject
     GameObject Tile_Map;
     GameObject Center;
    public MonsterSet MonsterSet;
+    
     /// <summary>
     /// 세이브 시에 변경되게 해야됨
     /// </summary>
@@ -147,14 +148,28 @@ public class MapData : ScriptableObject
                 BG[j].Tilemap = (GameObject)Resources.Load("Tilemap");
             }
             GameObject Tile = Instantiate(BG[j].Tilemap, Vector3.zero, Quaternion.identity, Grid.transform);
-            Tile.AddComponent<TilemapCollider2D>();
+
+            if(Tile.GetComponent<TilemapCollider2D>()==null )
+            {
+                Tile.AddComponent<TilemapCollider2D>();
+            }
+           
             if (BG[j].Its_Object)
             {
                 Tile.GetComponent<TilemapCollider2D>().enabled=true;
             }
             else
             {
+            
                 Tile.GetComponent<TilemapCollider2D>().enabled = false;
+            }
+            if(BG[j].isAbyss)
+            {
+             
+            }
+            else
+            {
+
             }
             Tile.name = BG[j].TilemapName;
             int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].Layer.value, 2));
@@ -394,6 +409,8 @@ public class BackGroundSprites
    public GameObject[] BackGround;
     [Tooltip("null 상태로 로드해도됩니다")]
    public GameObject Tilemap;
+    [Tooltip("어비스 레이어일경우 체크 배경일경우 False")]
+    public bool isAbyss;
     [Tooltip("오브젝트일경우 체크 배경일경우 False")]
     public bool Its_Object=false;
     public String TilemapName;
