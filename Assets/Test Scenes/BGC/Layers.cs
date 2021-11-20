@@ -14,14 +14,14 @@ public class Layers : MonoBehaviour
         {
             foreach (GameObject layer in AbyssLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = true;
                 }
             }
             foreach (GameObject layer in NomalLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = false;
                 }
@@ -31,14 +31,14 @@ public class Layers : MonoBehaviour
         {
             foreach (GameObject layer in AbyssLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent <LayerChecker>().isFiledObject!=true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = false;
                 }
             }
             foreach (GameObject layer in NomalLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = true;
                 }

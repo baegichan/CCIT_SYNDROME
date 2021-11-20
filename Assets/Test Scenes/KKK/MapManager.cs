@@ -325,7 +325,7 @@ public class MapManager : MonoBehaviour
             {
                 map[a, b].transform.position = new Vector2(Start_Map.x + ((a - Level) * width), Start_Map.y + ((b - Level) * width));
             }
-            else if (b <= Level)
+            else if (b <= Level)    
             {
                 map[a, b].transform.position = new Vector2(Start_Map.x + ((a - Level) * width), Start_Map.y - ((Level - b) * width));
             }

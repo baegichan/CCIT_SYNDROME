@@ -163,14 +163,8 @@ public class MapData : ScriptableObject
             
                 Tile.GetComponent<TilemapCollider2D>().enabled = false;
             }
-            if(BG[j].isAbyss)
-            {
-             
-            }
-            else
-            {
-
-            }
+        
+         
             Tile.name = BG[j].TilemapName;
             int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].Layer.value, 2));
             int Layer_count = 0;
@@ -261,6 +255,7 @@ public class MapData : ScriptableObject
         }
         GameObject Grid = Instantiate(Tile_Map, target.transform.position, Quaternion.identity, target.transform);
 
+
         for (int j = 0; j < BG.Length; j++)
         {
             if (BG[j].Tilemap == null)
@@ -269,14 +264,33 @@ public class MapData : ScriptableObject
             }
             GameObject Tile = Instantiate(BG[j].Tilemap, target.transform.position, Quaternion.identity, Grid.transform);
             Tile.AddComponent<TilemapCollider2D>();
+            
+            Tile.AddComponent<LayerChecker>();
+            
             if (BG[j].Its_Object)
             {
                 Tile.GetComponent<TilemapCollider2D>().enabled = true;
+                Tile.GetComponent<LayerChecker>().isFiledObject = true;
             }
             else
             {
                 Tile.GetComponent<TilemapCollider2D>().enabled = false;
+                Tile.GetComponent<LayerChecker>().isFiledObject = false;
             }
+
+
+           // if(Tile.GetComponent<LayerChecker>()!=null)
+         
+
+            if(BG[j].isAbyss)
+            {
+                Tile.GetComponent<LayerChecker>().isAbyssLayer = true;
+            }
+             else
+            {
+             Tile.GetComponent<LayerChecker>().isAbyssLayer = false;
+            }
+            
             Tile.name = BG[j].TilemapName;
             int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].Layer.value, 2));
             int Layer_count = 0;
