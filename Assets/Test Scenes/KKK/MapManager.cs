@@ -8,17 +8,17 @@ public class MapManager : MonoBehaviour
     public bool Map_Lock = false;
     public void instace()
     {
-    if(s_Instace==null)
-    {
+        if (s_Instace == null)
+        {
             s_Instace = this;
-    }
-    else
-    {
+        }
+        else
+        {
             Destroy(gameObject);
+        }
+
     }
-    
-    }
-    public Vector2 Current_Room = new Vector2(0,0);
+    public Vector2 Current_Room = new Vector2(0, 0);
     public Vector2 PCurrent_Room
     {
         get { return Current_Room; }
@@ -26,7 +26,7 @@ public class MapManager : MonoBehaviour
         {
             if (Current_Room != value)
             {
-            
+
                 MapOn(value);
                 MapOff(Current_Room);
                 Current_Room = value;
@@ -40,11 +40,11 @@ public class MapManager : MonoBehaviour
     }
     public void MapAllOff()
     {
-    for(int i =0; i<Maps.transform.childCount;i++)
-    {
+        for (int i = 0; i < Maps.transform.childCount; i++)
+        {
             Maps.transform.GetChild(i).gameObject.SetActive(false);
 
-    }
+        }
     }
     public int currentindexreturner()
     {
@@ -52,7 +52,7 @@ public class MapManager : MonoBehaviour
     }
     public void MapOn(Vector2 Mapindex)
     {
-        Maps.transform.GetChild((int)Mapindex.x * (Level * 2 + 1)+(int)Mapindex.y).gameObject.SetActive(true);
+        Maps.transform.GetChild((int)Mapindex.x * (Level * 2 + 1) + (int)Mapindex.y).gameObject.SetActive(true);
 
     }
     public void MapOff(Vector2 Mapindex)
@@ -60,29 +60,29 @@ public class MapManager : MonoBehaviour
         Maps.transform.GetChild((int)Mapindex.x * (Level * 2 + 1) + (int)Mapindex.y).gameObject.SetActive(false);
 
     }
-    public void PotalMove(Potals.PotalType  potalType)
+    public void PotalMove(Potals.PotalType potalType)
     {
         switch (potalType)
         {
             case Potals.PotalType.L:
-                Current_Room = new Vector2( Current_Room.x , Current_Room.y);
+                Current_Room = new Vector2(Current_Room.x, Current_Room.y);
                 //이동구현
-            break;
+                break;
             case Potals.PotalType.R:
                 Current_Room = new Vector2(Current_Room.x, Current_Room.y);
                 //이동구현
                 break;
             case Potals.PotalType.T:
-                Current_Room = new Vector2(Current_Room.x , Current_Room.y);
+                Current_Room = new Vector2(Current_Room.x, Current_Room.y);
                 //이동구현
                 break;
             case Potals.PotalType.B:
-                Current_Room = new Vector2(Current_Room.x , Current_Room.y);
+                Current_Room = new Vector2(Current_Room.x, Current_Room.y);
                 //이동구현
                 break;
 
         }
-       
+
     }
     [SerializeField]
     int Level;
@@ -108,7 +108,7 @@ public class MapManager : MonoBehaviour
     Vector2 Gacha_Room_Index;
     [SerializeField]
     Vector2 Store_Room_Index;
-    
+
     public Vector2 BOSS_ROOM
     {
         get
@@ -117,8 +117,22 @@ public class MapManager : MonoBehaviour
         }
 
     }
+    public void Set_AllRoom()
+    {
+        if (RoomList[Random.Range(0, RoomList.Count)].Room_Type == Room_data.RoomType.Nomal)
+        {
 
+        }
+        else
+        {
 
+        }
+    }
+    public void StartRoom()
+    {
+        map[Level, Level].GetComponent<Room_data>().Room_Type = Room_data.RoomType.StartRoom;
+
+    }
     public void Check_Room_Index(Vector2 One, Vector2 targetroom)
     {
 
@@ -132,41 +146,111 @@ public class MapManager : MonoBehaviour
 
         }
     }
-
-    public void RoomSetting()
+    private List<Room_data> RoomList = new List<Room_data>();
+    private List<Room_data> BossRoomList = new List<Room_data>();
+    public void AllCreatedRoom()
     {
-        List<GameObject> RoomCroods = new List<GameObject>();
-        for(int i =0; i< Level*2+1;i++)
+
+        for (int i = 0; i < Level * 2 + 1; i++)
         {
             for (int j = 0; j < Level * 2 + 1; j++)
             {
-                if(map[i,j].GetComponent<Room_data>().Room_Created)
+                if (map[i, j].GetComponent<Room_data>().Room_Created)
                 {
-                    RoomCroods.Add(map[i, j]);
+
+                    RoomList.Add(map[i, j].GetComponent<Room_data>());
+
+
+                }
+
+            }
+
+        }
+        for (int i = 0; i < Level * 2 + 1; i++)
+        {
+            for (int j = 0; j < Level * 2 + 1; j++)
+            {
+
+                if (map[i, j].GetComponent<Room_data>().Room_Created)
+                {
+                    if (Level % 2 == 1)
+                    {
+                        if ((i <= (Level / 2 + 1) || i >= (Level + (Level / 2 + 1))) && (j <= (Level / 2 + 1) || j >= (Level + (Level / 2 + 1))))
+                        {
+
+                            BossRoomList.Add(map[i, j].GetComponent<Room_data>());
+                        }
+
+                    }
+                    else
+                    {
+                        if ((i <= (Level / 2) || i >= (Level + (Level / 2))) && (j <= (Level / 2) || j >= (Level + (Level / 2))))
+                        {
+
+                            BossRoomList.Add(map[i, j].GetComponent<Room_data>());
+                        }
+                    }
+
                 }
             }
+
         }
+
+        BossRoomList[Random.Range(0, BossRoomList.Count)].Room_Type = Room_data.RoomType.Boss;
+        int CraneLimit = Random.Range(1, Level);
+        int ShopLimit = Random.Range(0, Level - 1);
+        for (int i = 0; i < ShopLimit; i++)
+        {
+            int RanShop = Random.Range(0, RoomList.Count);
+            if (RoomList[RanShop].Room_Type != Room_data.RoomType.Boss)
+            {
+                RoomList[RanShop].Room_Type = Room_data.RoomType.Shop;
+            }
+
+
+        }
+
+        for (int i = 0; i < CraneLimit; i++)
+        {
+
+            int RanCrane = Random.Range(0, RoomList.Count);
+            if (RoomList[RanCrane].Room_Type != Room_data.RoomType.Boss)
+            {
+                RoomList[RanCrane].Room_Type = Room_data.RoomType.Crane;
+            }
+        }
+
+        map[Level, Level].GetComponent<Room_data>().Room_Type = Room_data.RoomType.StartRoom;
+
     }
-    private void Start()
+    private void Awake()
     {
         instace();
-
         GameObject room = GameObject.FindGameObjectWithTag("Room");
         Start_Room_Index = new Vector2(Level, Level);
         map = new GameObject[(2 * Level) + 1, (2 * Level) + 1];
         map_index = (2 * Level + 1) * (2 * Level + 1);
         //map[Level, Level].transform.position = new Vector2(0, 0);
         //Start_Map = map[Level, Level].transform.position;
-        
-
         make_map();
         Map_Move();
-        bbb();       
-        Maps.GetComponent<MapLoadTest>().Starting_Setting();      
+        bbb();
+    }
+    private void Start()
+    {
+
+
+        StartCoroutine(test());
+    
+       
+    }
+    public IEnumerator test()
+    {
+        yield return new WaitForSeconds(1);
+        AllCreatedRoom();
+        Maps.GetComponent<MapLoadTest>().Starting_Setting();
         MapAllOff();
         PCurrent_Room = new Vector2(Level, Level);
-
-      
     }
     void bbb()//맵 최소 개수 
     {
@@ -241,7 +325,7 @@ public class MapManager : MonoBehaviour
             {
                 map[a, b].transform.position = new Vector2(Start_Map.x + ((a - Level) * width), Start_Map.y + ((b - Level) * width));
             }
-            else if (b <= Level)
+            else if (b <= Level)    
             {
                 map[a, b].transform.position = new Vector2(Start_Map.x + ((a - Level) * width), Start_Map.y - ((Level - b) * width));
             }
