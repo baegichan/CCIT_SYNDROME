@@ -48,6 +48,18 @@ public class MonsterSpawnEvent : MapEvent
             yield return new WaitForSeconds(SpawnDelay);
         }
     }
+
+    IEnumerator Spawn_Monster_Inorder(GameObject target)
+    {
+        UseSpawner = true;
+        for (int i = 0; i < count; i++)
+        {
+
+            Instantiate(Resources.Load(transform.GetChild(0).gameObject.name), target.transform.position, Quaternion.identity, target.transform);
+            Destroy(transform.GetChild(0).gameObject);
+            yield return new WaitForSeconds(SpawnDelay);
+        }
+    }
     public void Spawn_Monster()
     {
         
