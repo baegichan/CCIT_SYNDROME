@@ -293,6 +293,7 @@ public class MapData : ScriptableObject
             
             Tile.name = BG[j].TilemapName;
             int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].Layer.value, 2));
+            Debug.Log(Layer_binary);
             int Layer_count = 0;
             for (int L = 0; L < 32; L++)
             {
