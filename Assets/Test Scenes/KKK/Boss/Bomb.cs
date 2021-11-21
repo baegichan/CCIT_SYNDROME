@@ -18,6 +18,7 @@ public class Bomb : MonoBehaviour
 
     public int Weight;
     public int Height;
+    public int Height2;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class Bomb : MonoBehaviour
 
         p1 = transform.position;
         p2 = new Vector3(p1.x, p1.y + Height, p1.z);
-        p3 = new Vector3(p2.x - Weight, p2.y, p2.z);
+        p3 = new Vector3(Player_Transform.position.x, Player_Transform.position.y + Height2, Player_Transform.position.z);
         p4 = Player_Transform.position;
 
     }
@@ -66,8 +67,10 @@ public class Bomb : MonoBehaviour
         {
             if (collision.CompareTag("Player"))
             {
-                collision.transform.parent.GetComponent<Character>().Damage(20);
+               //ollision.transform.parent.GetComponent<Character>().Damage(20);
+               //생성
                 Destroy(gameObject);
+
                 //Destroy(this.gameObject, 5);플레이어가 밟으면 터지는거 애니메이션 끝나면 없애줄꺼임// 5초는 그냥 설정
             }
             if (collision.CompareTag("Ground"))
