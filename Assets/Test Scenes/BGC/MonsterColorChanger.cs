@@ -36,11 +36,5 @@ public class MonsterColorChanger : MonoBehaviour
             Materials[i].material.SetColor("_Color", colors[i]);
         }
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            Damaged();
-        }
-    }
+
 }
