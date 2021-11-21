@@ -168,7 +168,7 @@ public class MentalChaild : MonoBehaviour
     }
     void BAI()//Battle Axe Attack Int <-- 기계도끼 애니메이션
     {
-        GetComponentInParent<TestPlayer>().Ani.SetInteger("BAI", BattleAxeAttack.Attack_int);
+       Ani.SetInteger("BAI", BattleAxeAttack.Attack_int);
     }
     
 }
