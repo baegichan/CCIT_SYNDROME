@@ -13,6 +13,8 @@ public class MonsterColorChanger : MonoBehaviour
         for (int i = 0; i < Materials.Length; i++)
         {
             colors.Add(Materials[i].material.GetColor("_Color"));
+
+
         }
      
     }

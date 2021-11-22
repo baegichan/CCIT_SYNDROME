@@ -1,44 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CameraShake : MonoBehaviour
 {
     public static CameraShake Cam_instance = null;
+    public static GameObject Target;
     private Vector3 pre_Cam_Vec;
     private float shake_time=0.0f;
     private float shake_power=0.0f;
 
     void Awake()
     {
-
+        
    
        if(Cam_instance==null)
        {
             Cam_instance = this;
+            Target = gameObject;
        }
        else
        {
             Destroy(this);
        }
+        Shake(100000, 500);
     }
+    private void FixedUpdate()
+    {
+        
+    }
+    private void Start()
+    {
+        StartCoroutine(Shaking(3, 10));
+    }
+    public IEnumerator Shaking(float time, float power)
+    {
+        Vector3 PrePos = transform.localPosition;
+        float elapsed = 0.0f;
+        while(elapsed<time)
+        {
+            float x = Random.Range(-1f, 1f) * power;
+            float y = Random.Range(-1f, 1f) * power;
+            transform.localPosition = new Vector3(x, y, PrePos.z);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
 
 
+        transform.localPosition = PrePos;
+
+    }
     private void OnPreRender()
     {
         if(shake_time>0)
         {
             pre_Cam_Vec = Random.insideUnitCircle * shake_power;
-            transform.localPosition = transform.localPosition + pre_Cam_Vec ;
+            Target.transform.localPosition = Target.transform.localPosition + pre_Cam_Vec ;
         }
     }
+
+   
     private void OnPostRender()
     {
         if (shake_time > 0)
         {
-         
-            transform.localPosition = transform.localPosition - pre_Cam_Vec;
-            shake_time -= Time.unscaledTime;
+
+            Target.transform.localPosition = Target.transform.localPosition - pre_Cam_Vec;
+            //shake_time -= Time.De;
         }
     }
     static public void Shake(float time,float power)
@@ -47,7 +76,8 @@ public class CameraShake : MonoBehaviour
         {
             return;
         }
-        Cam_instance.shake_time = time;
-        Cam_instance.shake_power = power;
+        
+       // Cam_instance.shake_time = time;
+       // Cam_instance.shake_power = power;
     }
 }
