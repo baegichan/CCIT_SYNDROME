@@ -15,7 +15,8 @@ public class BattleAxeAttack : MonoBehaviour
         {
             if (col.tag == "Monster")
             {
-                if(Attack_int <= 4)
+                Debug.Log("현재:" + Attack_int);
+                if (Attack_int <= 4)
                 {
                     Current = col.gameObject;
                     Attack_int ++;
@@ -28,27 +29,24 @@ public class BattleAxeAttack : MonoBehaviour
     private void Fourth()
     {
         switch (Attack_int)
-        {           
+        {
+             
             case 1:
-                Debug.Log("1 :" + Attack_int);
                 Current.GetComponent<Character>().Damage(D);
                 break;
-            case 2:
-                Debug.Log("2 :" + Attack_int);
+            case 2:          
                 Current.GetComponent<Character>().Damage(D);
                 break;
-            case 3:
-                Debug.Log("3 :" + Attack_int);
+            case 3:               
                 Current.GetComponent<Character>().Damage(D);
                 break;
-            case 4:
-                Debug.Log("4 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:" + Attack_int);
-                CameraShake.Shake(1, 42.5f);     
+            case 4:              
+                //CameraShake.Cam_instance.Shake(1000, 500);     
                 Current.GetComponent<Character>().Damage(D + 20);//더미 플러스값 언제든 변경가능
                 break;          
         }
 
-        Debug.Log("현재:" + Attack_int);
+       
         if (Abduru.A_Attack_State == false)
         {
             if(Attack_int == 5)
