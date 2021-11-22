@@ -15,6 +15,7 @@ public class Bomb : MonoBehaviour
     public Vector3 p4;
 
     public GameObject Player;
+    public GameObject Explosion;
 
     public int Weight;
     public int Height;
@@ -67,18 +68,18 @@ public class Bomb : MonoBehaviour
         {
             if (collision.CompareTag("Player"))
             {
-               //ollision.transform.parent.GetComponent<Character>().Damage(20);
-               //생성
+                //ollision.transform.parent.GetComponent<Character>().Damage(20);
+                Instantiate(Explosion, this.transform.position, Quaternion.identity);
                 Destroy(gameObject);
 
                 //Destroy(this.gameObject, 5);플레이어가 밟으면 터지는거 애니메이션 끝나면 없애줄꺼임// 5초는 그냥 설정
             }
             if (collision.CompareTag("Ground"))
             {
-                
-                //Destroy(gameObject);
+                Instantiate(Explosion, this.transform.position, Quaternion.identity);
+                Destroy(gameObject);
             }
-        
+
         }
     }
 }

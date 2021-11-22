@@ -390,7 +390,7 @@ public class Boss : Character
                 if (Black_Fog_Ins_Count == 0)
                 {
                     anim.SetBool("Stomping", true);
-                    Invoke("Black_Fog_Ins", 1f);
+                    //Invoke("Black_Fog_Ins", 1f);
                 }
                 else if(Black_Fog_Ins_Count == 1 && Boss_Translate_Cooltime <= 0)
                 {
@@ -408,7 +408,7 @@ public class Boss : Character
                     else
                     {
                         anim.SetBool("Stomping", true);
-                        Invoke("Black_Fog_Ins", 1f);
+                        //Invoke("Black_Fog_Ins", 1f);
                     }
                 }
             }
@@ -418,14 +418,14 @@ public class Boss : Character
             if (Dis > Distance_To_Player2)
             {
                 anim.SetBool("Throw_Bomb", true);
-                Invoke("Throw_Bomb", 0.3f);
+                //Invoke("Throw_Bomb", 0.3f);
             }
             else if (Dis <= Distance_To_Player2)
             {
                 if (Black_Fog_Ins_Count == 0)
                 {
                     anim.SetBool("Stomping", true);
-                    Invoke("Black_Fog_Ins", 0.17f);
+                    //Invoke("Black_Fog_Ins", 0.17f);
                 }
                 else if (Black_Fog_Ins_Count == 1 && Boss_Translate_Cooltime <= 0)
                 {
@@ -439,12 +439,12 @@ public class Boss : Character
                     if (aa == 0)
                     {
                         anim.SetBool("Throw_Bomb", true);
-                        Invoke("Throw_Bomb", 0.17f);
+                        //Invoke("Throw_Bomb", 0.17f);
                     }
                     else
                     {
                         anim.SetBool("Stomping", true);
-                        Invoke("Black_Fog_Ins", 1f);
+                        //Invoke("Black_Fog_Ins", 1f);
                     }
                 }
             }
