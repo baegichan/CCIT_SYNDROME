@@ -27,6 +27,7 @@ public class keymatcher : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        //settingmanager = GameObject.Find("CANVAS").gameObject;
         settingmanager = GameObject.Find("SETTINGCANVAS").gameObject;
         updateui();
 
