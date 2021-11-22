@@ -14,6 +14,10 @@ public class PotalEvent : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+    if(MapManager.s_Instace.Map_Lock!=true)
+    {
+
+  
         if (!DoorIsLock)
         {
             if(Teleport_able==true)
@@ -23,6 +27,7 @@ public class PotalEvent : MonoBehaviour
             }
         
        
+        }
         }
     }
     public void SetinterBlock()

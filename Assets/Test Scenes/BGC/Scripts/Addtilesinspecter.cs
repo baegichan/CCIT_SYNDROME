@@ -12,6 +12,7 @@ public class Addtilesinspecter : Editor
     int Eventselected = 0;
     int Monsterselected = 0;
     private GameObject Tilecol;
+
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
@@ -61,6 +62,17 @@ public class Addtilesinspecter : Editor
                    map.tileSet = map.MapData.Load_DefaultTileCollider(map.Editor);
            }
           }
+        }
+
+        if (GUILayout.Button("몬스터오브젝트 스폰"))
+        {
+            if (map.GetEventObjectCheck() != null)
+            {
+
+                map.MapData.Load_AbyssMonsterParent(map.GetEventObjectCheck());
+                map.MapData.Load_NormalMonsterParent(map.GetEventObjectCheck());
+                
+            }
         }
         GUILayout.Label("");
         EditorGUILayout.HelpBox("포탈 이름 및 이동방향 설치시 확인 요망", MessageType.Info);

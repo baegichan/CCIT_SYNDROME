@@ -34,9 +34,13 @@ public class MapManager : MonoBehaviour
         ;
         }
     }
-    public void MapLoack()
+    public void MapLock()
     {
         Map_Lock = true;
+    }
+    public void MapUnLock()
+    {
+        Map_Lock = false;
     }
     public void MapAllOff()
     {

@@ -11,22 +11,22 @@ public class MonsterSpawnEvent : MapEvent
         base.EventType = MapEvent.Event.MonsterSpawn;
     }
     public float SpawnDelay = 0.5f;
-    public bool UseSpawner = false;
+    public bool UseSpawner = true;
     public bool OneTimeSpawn = false;
     int count = 0;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-                  if (UseSpawner != true)
+                  if (UseSpawner == true)
                   {
                     if(OneTimeSpawn)
                   {
-                    Spawn_Monster();
+                    Spawn_Monster(transform.parent.Find("NormalMonsterP(Clone)").gameObject);
                   }
                   else
                   {
-                    StartCoroutine(Spawn_Monster_Inorder());
+                    StartCoroutine(Spawn_Monster_Inorder(transform.parent.Find("NormalMonsterP(Clone)").gameObject)); ;
                   }
               
             }
@@ -55,7 +55,7 @@ public class MonsterSpawnEvent : MapEvent
         for (int i = 0; i < count; i++)
         {
 
-            Instantiate(Resources.Load(transform.GetChild(0).gameObject.name), target.transform.position, Quaternion.identity, target.transform);
+            Instantiate(Resources.Load(transform.GetChild(0).gameObject.name), transform.GetChild(0).transform.position, Quaternion.identity, target.transform);
             Destroy(transform.GetChild(0).gameObject);
             yield return new WaitForSeconds(SpawnDelay);
         }
@@ -74,6 +74,19 @@ public class MonsterSpawnEvent : MapEvent
         }
         UseSpawner = true;
     }
+    public void Spawn_Monster(GameObject target)
+    {
 
-   
+        if (transform.childCount > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+
+                Instantiate(Resources.Load(transform.GetChild(i).gameObject.name), transform.GetChild(i).position, Quaternion.identity, target.transform);
+                Destroy(transform.GetChild(i).gameObject);
+            }
+        }
+        UseSpawner = true;
+    }
+
 }
