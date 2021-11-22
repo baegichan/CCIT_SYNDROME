@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleAxeAttack : MonoBehaviour
 {
     public int D;
-    public static int Attack_int = 0;
+    public static int Attack_int;
     public GameObject Current;
     public GameObject YourParent;
 
@@ -18,7 +18,7 @@ public class BattleAxeAttack : MonoBehaviour
                 if(Attack_int <= 4)
                 {
                     Current = col.gameObject;
-                    Attack_int += 1;
+                    Attack_int ++;
                     Fourth();
                 }
             }
@@ -43,7 +43,7 @@ public class BattleAxeAttack : MonoBehaviour
                 break;
             case 4:
                 Debug.Log("4 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:" + Attack_int);
-                CameraShake.Shake(10000, 50);     
+                CameraShake.Shake(1, 42.5f);     
                 Current.GetComponent<Character>().Damage(D + 20);//더미 플러스값 언제든 변경가능
                 break;          
         }
