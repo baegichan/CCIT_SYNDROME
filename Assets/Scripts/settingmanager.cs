@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-public class Settingmanager : MonoBehaviour
+public class settingmanager : MonoBehaviour
 {
-    public static Settingmanager GM;
+    public static settingmanager GM;
     public static GameObject CAN;
     public GameObject[] button_ar;
     public GameObject[] volume_ar;
@@ -28,6 +28,7 @@ public class Settingmanager : MonoBehaviour
     public KeyCode comunication { get; set; }
     public KeyCode nomalattack { get; set; }
     public KeyCode skillattack { get; set; }
+    public KeyCode abyss { get; set; }
     void Awake()
     {
         PlayerPrefs.DeleteAll();
@@ -95,6 +96,7 @@ public class Settingmanager : MonoBehaviour
         nomalattack = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("nomalattack"));
         dash = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("dash"));
         skillattack = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("skillattack"));
+        abyss = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("abyss"));
         volume_ar[0].GetComponent<Slider>().value = PlayerPrefs.GetFloat("BGMvolume");
         volume_ar[1].GetComponent<Slider>().value = PlayerPrefs.GetFloat("EFFECTvolume");
 
@@ -190,6 +192,11 @@ public class Settingmanager : MonoBehaviour
         {
             PlayerPrefs.SetString("skillattack", "Mouse1");
             skillattack = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("skillattack", "Mouse1").ToString());
+        }
+        if (PlayerPrefs.GetString("abyss").ToString() == "")
+        {
+            PlayerPrefs.SetString("abyss", "Q");
+            abyss = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("abyss", "Q").ToString());
         }
         if (PlayerPrefs.GetInt("PlayerHP").ToString() == "0")
         {

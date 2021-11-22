@@ -26,7 +26,7 @@ public class keychanger : MonoBehaviour
             button.transform.GetChild(1).gameObject.SetActive(true);
             if (Input.GetKey(KeyCode.Mouse0))
             {
-                button.transform.GetChild(0).GetComponent<Text>().text = "Mouse0";
+                button.transform.GetChild(0).GetComponent<Text>().text = "Mouse-L";
                 button.transform.GetChild(0).GetComponent<Text>().color = new Color(0, 254, 254, 255);
                 button.transform.GetChild(1).gameObject.SetActive(false);
                 break;
@@ -34,7 +34,7 @@ public class keychanger : MonoBehaviour
             else if (Input.GetKey(KeyCode.Mouse1))
             {
 
-                button.transform.GetChild(0).GetComponent<Text>().text = "Mouse1";
+                button.transform.GetChild(0).GetComponent<Text>().text = "Mouse-R";
                 button.transform.GetChild(0).GetComponent<Text>().color = new Color(0, 254, 254, 255);
                 button.transform.GetChild(1).gameObject.SetActive(false);
                 break;

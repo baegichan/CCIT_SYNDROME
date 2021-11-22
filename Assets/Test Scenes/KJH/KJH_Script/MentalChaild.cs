@@ -23,8 +23,7 @@ public class MentalChaild : MonoBehaviour
     public float P_DashTimer = 5;
     int AnimeInt = 1;
     //
-
-    Animator Ani;
+    public  Animator Ani;
     Rigidbody2D rigid;
 
     void Start()
@@ -118,20 +117,32 @@ public class MentalChaild : MonoBehaviour
             Physics2D.IgnoreLayerCollision(10, 11, false);
         }
     }
-    void OnCollisionEnter2D(Collision2D col)
+    //void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    if (col.gameObject.tag == "Ground")
+    //    {
+    //        Ani.SetBool("Jump", false);
+    //        GetComponentInParent<TestPlayer>().P_JumpInt = GetComponentInParent<TestPlayer>().P_MaxJumpInt;
+    //    }
+    //}
+    /// <기본무기>
+    void AttackStart()
     {
-        
-        if (col.gameObject.tag == "Ground")
-        {
-            Ani.SetBool("Jump", false);
-            GetComponentInParent<TestPlayer>().P_JumpInt = GetComponentInParent<TestPlayer>().P_MaxJumpInt;     
-        }
-        
+        P_Attack_State = true;
     }
+    void AttackEnd()
+    {
+        P_Attack_State = false;
+    }
+    ///
 
+    /// <전투도끼>
     void BattleAxeEvent()
     {
         Abduru.A_Attack_State = false;
+    }
+    void CanMoving()
+    {
         GetComponentInParent<TestPlayer>().Ani.SetBool("CanIThis", true);
     }
     void BattleAxeAttackEvent()
@@ -161,14 +172,14 @@ public class MentalChaild : MonoBehaviour
     }
     void TestBa()
     {
-        if(BattleAxeAttack.Attack_int > 4)
+        if(BattleAxeAttack.Attack_int >= 5)
         {
             BattleAxeAttack.Attack_int = 1;
         }
     }
     void BAI()//Battle Axe Attack Int <-- 기계도끼 애니메이션
     {
-        GetComponentInParent<TestPlayer>().Ani.SetInteger("BAI", BattleAxeAttack.Attack_int);
+       Ani.SetInteger("BAI", BattleAxeAttack.Attack_int);
     }
-    
+    ///
 }
