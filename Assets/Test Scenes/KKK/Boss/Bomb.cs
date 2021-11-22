@@ -38,6 +38,13 @@ public class Bomb : MonoBehaviour
     {
         transform.position = BezirTest(p1, p2, p3, p4, Test);
         Test += Time.deltaTime;
+
+        if(Test >= 1)
+        {
+            Instantiate(Explosion, this.transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+
     }
     public Vector3 BezirTest(
         Vector3 P_1,

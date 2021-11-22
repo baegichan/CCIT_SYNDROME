@@ -79,21 +79,6 @@ public class Boss : Character
 
 
 
-
-
-
-        //sunset = Player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 위치 받아올수 있게
-
-
-
-
-
-
-
-
-
-
-
     }
 
     // Update is called once per frame
@@ -111,7 +96,7 @@ public class Boss : Character
             //Dis = Vector2.SqrMagnitude(Distance);//플레이어와 몬스터 거리 받아옴
             Dis = Vector3.Distance(Player_Transform.position , transform.position);
 
-            Cool_Control();//쿨 cool.....
+            //Cool_Control();//쿨 cool.....
 
             Trace_Player();
 
@@ -126,10 +111,34 @@ public class Boss : Character
 
 
 
+            if (Player_On_Ground == true)
+            {
+                if (Dis > Distance_To_Player)
+                {
+                    //anim.SetBool("Check_Idle", false);
+                    anim.SetBool("Distance_Check", false);
+                }
+                else if (Dis <= Distance_To_Player)
+                {
+                    anim.SetBool("Distance_Check", true);
+                }
+            }
+            else
+            {
+                if (Dis > Distance_To_Player2)
+                {
+                    //anim.SetBool("Check_Idle", false);
+                    anim.SetBool("Distance_Check", false);
+                }
+                else if (Dis <= Distance_To_Player2)
+                {
+                    anim.SetBool("Distance_Check", true);
+                }
 
-            
-         
-            
+            }
+
+
+
 
             if (Stom_Count == 1)
             {
@@ -168,8 +177,18 @@ public class Boss : Character
 
 
             */
+            if (Boss_HP_Half == true)
+            {
+                if(speed != 0)
+                {
 
-           
+                }
+            }
+            else
+            {
+                Cool_Control();
+            }
+
 
         }
     }
@@ -335,31 +354,7 @@ public class Boss : Character
 
                 if(Attack_Cool <= 0)
                 {
-                    if (Player_On_Ground == true)
-                    {
-                        if (Dis > Distance_To_Player)
-                        {
-                            //anim.SetBool("Check_Idle", false);
-                            anim.SetBool("Distance_Check", false);
-                        }
-                        else if (Dis <= Distance_To_Player)
-                        {
-                            anim.SetBool("Distance_Check", true);
-                        }
-                    }
-                    else
-                    {
-                        if (Dis > Distance_To_Player2)
-                        {
-                            //anim.SetBool("Check_Idle", false);
-                            anim.SetBool("Distance_Check", false);
-                        }
-                        else if (Dis <= Distance_To_Player2)
-                        {
-                            anim.SetBool("Distance_Check", true);
-                        }
-
-                    }
+                   
                     
 
                     Select_Pattern();
@@ -624,18 +619,10 @@ public class Boss : Character
     }
 
 
-
-    void Bomb_Set(int a)//지뢰 날려주기
+    public GameObject Dark_Syclone_Obj;
+    void Dark_Syclone()
     {
-        Debug.Log(23);
-        //Bomb[a].transform.position = Vector3.Slerp(transform.position, Player_Transform.position, 3f);
-
-
-        //일단 속도가 0인 상태에서 지뢰를 뿌리고 일반공격 발사 할 때까지 속도 0으로 해놓고 몬스터 딜레이를 줌
-
-
-
-        //Bomb_Target
+        Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x,transform.position.y +1,transform.position.z), Quaternion.identity); 
     }
 
 
