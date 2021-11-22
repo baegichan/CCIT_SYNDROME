@@ -11,6 +11,7 @@ public class Boss : Character
 
     public bool Player_On_Ground = true;// 
     bool Boss_State_Check = true;//무언가를 하는중이면 false
+    bool Boss_HP_Frame_Check;
     bool Boss_HP_Half;
 
 
@@ -100,6 +101,11 @@ public class Boss : Character
 
             Trace_Player();
 
+
+            if(Frame_Count_Check == 0)
+            Monster_HP_Frame_Check();
+
+            if(Half_Count_Check == 0)
             Monster_HP_Check();
 
 
@@ -139,7 +145,7 @@ public class Boss : Character
 
 
 
-
+            /*
             if (Stom_Count == 1)
             {
                 if (Hp_Current <= Hp_Max * 0.5)
@@ -154,7 +160,7 @@ public class Boss : Character
                     Stom_Count++;
                 }
             }
-
+            */
             /*
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("Boss_Move"))//현재 걷는 애니메이션이 돌아가는 상황이어야 할때
             {
@@ -177,12 +183,10 @@ public class Boss : Character
 
 
             */
-            if (Boss_HP_Half == true)
+            if (Boss_HP_Frame_Check == true)
             {
-                if(speed != 0)
-                {
-                    anim.SetBool("Syclone", true);
-                }
+                speed = 0;
+                anim.SetBool("Syclone", true);
             }
             else
             {
@@ -190,11 +194,36 @@ public class Boss : Character
             }
 
 
+            /*
+            if(Boss_HP_Half == true)
+            {
+                speed = 0;
+                anim
+            }
+            */
+
+
+
         }
     }
+    int Frame_Count_Check;
+    void Monster_HP_Frame_Check()
+    {
+        if (Hp_Current <= Hp_Max * 0.75f)
+        {
+            if (Boss_HP_Frame_Check == false)
+            {
+                Boss_HP_Frame_Check = true;
+                //StartCoroutine(Respawn_Monster());
+            }
 
-
-
+            if(Frame_Count_Check == 0)
+            {
+                Frame_Count_Check++;
+            }
+        }
+    }
+    int Half_Count_Check;
     void Monster_HP_Check()
     {
         if (Hp_Current <= Hp_Max * 0.5f)
@@ -202,8 +231,12 @@ public class Boss : Character
             if (Boss_HP_Half == false)
             {
                 Boss_HP_Half = true;
-                StartCoroutine(Respawn_Monster());
+                //StartCoroutine(Respawn_Monster());
             }
+
+            if (Half_Count_Check == 0)
+                Half_Count_Check++;
+
         }
     }
     IEnumerator Respawn_Monster()//몬스터 리스폰 쿨타임 25초로 잡아놈
@@ -211,10 +244,10 @@ public class Boss : Character
 
         if (FireFly_Monster != null)
         {
-            Instantiate(FireFly_Monster, new Vector3(-20, 10, 0), Quaternion.identity);
-            Instantiate(FireFly_Monster, new Vector3(20, 10, 0), Quaternion.identity);
-            Instantiate(FireFly_Monster, new Vector3(-30, 0, 0), Quaternion.identity);
-            Instantiate(FireFly_Monster, new Vector3(30, 0, 0), Quaternion.identity);
+            Instantiate(FireFly_Monster, new Vector3(5, 7, 0), Quaternion.identity);
+            Instantiate(FireFly_Monster, new Vector3(-5, 7, 0), Quaternion.identity);
+            Instantiate(FireFly_Monster, new Vector3(-7, 4, 0), Quaternion.identity);
+            Instantiate(FireFly_Monster, new Vector3(7, 4, 0), Quaternion.identity);
         }
 
         yield return new WaitForSeconds(25f);
@@ -323,32 +356,6 @@ public class Boss : Character
         {
             if(Attack_Cool > 0)
             {
-                /*
-                if (Stom_Count == 0)
-                    if (Hp_Current <= Hp_Max * 0.75)
-                    {
-                        //위로 총 두번 두는 애니메이션 틀고
-                        speed = 0;
-
-                        frame = (GameObject)Instantiate(Stom_Obj, new Vector3(0, 2, 0), Quaternion.identity);
-
-
-                        frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
-                        frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
-
-                        Stom_Count++;
-
-                        Invoke("speed_back", 0.5f);
-
-                    }
-                */
-                /*
-                if(speed == 0)
-                anim.SetBool("Check_Idle", true);
-                */
-
-
-
                 Attack_Cool -= Time.deltaTime;
 
 
@@ -472,7 +479,7 @@ public class Boss : Character
         Boss_Translate_Cooltime = 15;
         Black_Fog_Ins_Count = 0;
 
-        Invoke("anim_off", 0.5f);
+        Invoke("anim_off", 1f);
        
         //anim_off();
         Invoke("speed_back", 1f);
@@ -605,15 +612,12 @@ public class Boss : Character
     {
         Boss_State_Check = false;
         speed = 0;
-        for(int i = 0;i < 1; i++)
+        for (int i = 0; i < 1; i++)
         {
             Bomb[i] = Instantiate(Bomb_Obj, Bomb_Transform.transform.position, Quaternion.identity);
             //Bomb[i] = Instantiate(Bomb_Obj, Bomb_Transform.transform.localPosition, Quaternion.identity);
 
         }
-
-        //anim.SetBool("Throw_Bomb", true);
-        //Invoke("Throw_Bomb", 0.3f);
         anim_off();
         Invoke("speed_back", 0.4f);
     }
@@ -622,9 +626,17 @@ public class Boss : Character
     public GameObject Dark_Syclone_Obj;
     void Dark_Syclone()
     {
-        Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x,transform.position.y +1,transform.position.z), Quaternion.identity); 
+        Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x,transform.position.y +1,transform.position.z), Quaternion.identity);
+        GameObject Frame = Instantiate(Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
+        Frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
+        Frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
+        
     }
-
+    public void Boss_HP_Frame_Check_False()
+    {
+        Boss_HP_Frame_Check = false;
+        Debug.Log(23);
+    }
 
 
     void anim_off()
@@ -656,11 +668,12 @@ public class Boss : Character
             }
         }
         anim.SetBool("Shot_Bullet", false);
-            anim.SetBool("Stomping", false);
+        anim.SetBool("Syclone", false);
+        anim.SetBool("Stomping", false);
             anim.SetBool("Throw_Bomb", false);
             anim.SetBool("Translate_Boss", false);
             anim.SetBool("Translate_Boss2", false);
-
+        Debug.Log(23);
 
         }
     void speed_back()//Invoke용

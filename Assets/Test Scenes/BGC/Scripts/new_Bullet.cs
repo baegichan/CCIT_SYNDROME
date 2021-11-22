@@ -79,7 +79,7 @@ public class new_Bullet : MonoBehaviour
         {
             if (collision.tag == "Player")
             {
-                collision.GetComponent<Character>().Damage(bulletDMG);
+                collision.transform.parent.GetComponent<Character>().Damage(bulletDMG);
                 Destroy(gameObject);
             }
             
@@ -88,7 +88,7 @@ public class new_Bullet : MonoBehaviour
         {
             if (collision.tag == "enemy")
             {
-                collision.GetComponent<Character>().Damage(bulletDMG);
+                collision.transform.parent.GetComponent<Character>().Damage(bulletDMG);
                 Destroy(gameObject);
             }
         }
