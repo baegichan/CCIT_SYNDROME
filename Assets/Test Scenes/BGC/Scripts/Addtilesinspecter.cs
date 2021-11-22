@@ -68,7 +68,7 @@ public class Addtilesinspecter : Editor
         {
             if (map.GetEventObjectCheck() != null)
             {
-
+                
                 map.MapData.Load_AbyssMonsterParent(map.GetEventObjectCheck());
                 map.MapData.Load_NormalMonsterParent(map.GetEventObjectCheck());
                 
