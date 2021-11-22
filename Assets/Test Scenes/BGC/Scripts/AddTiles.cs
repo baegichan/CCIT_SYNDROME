@@ -162,7 +162,7 @@ public class AddTiles : MonoBehaviour
     {
         mapcode = 0;
         MapData.Save_MapData(Editor.transform.GetChild(0).gameObject,Event);
-        if(!PotalnameCheck("LeftPotal",false))
+        if(!PotalnameCheck("LeftPotal",false)) 
         {
             MapData.Save_Potal(PotalObjectCheck("LeftPotal"),0);
             mapcode += 0b1000;

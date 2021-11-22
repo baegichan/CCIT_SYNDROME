@@ -75,7 +75,7 @@ public class TestPlayer : Character
         rigid = GetComponent<Rigidbody2D>();
         SelectChar = Char[0];
         ChangeChar(SelectChar);
-        SelectAbility();
+        SelectAbility();   
     }
 
     void FixedUpdate()
@@ -176,7 +176,7 @@ public class TestPlayer : Character
     public void Move()
     {
         h = Input.GetAxisRaw("Horizontal");
-        transform.position += new Vector3(h * speed * Time.deltaTime, 0);
+        SelectChar.transform.position += new Vector3(h * speed * Time.deltaTime, 0);
 
         switch (h)
         {
@@ -210,7 +210,6 @@ public class TestPlayer : Character
         else if (P_JumpInt > 0)
         {
             rigid.AddForce(Vector3.up * P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
-            Debug.Log("점프는 1번만");
             //rigid.velocity = new Vector2(0, 0);
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);

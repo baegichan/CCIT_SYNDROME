@@ -51,6 +51,18 @@ public class MapData : ScriptableObject
     {
        return (GameObject)Instantiate(Resources.Load("DefaultTile"), target.transform.position, Quaternion.identity, target.transform);
     }
+    public GameObject Load_AbyssMonsterParent(GameObject target)
+    {
+        return (GameObject)Instantiate(Resources.Load("AbyssMonsterP"), target.transform.position, Quaternion.identity, target.transform);
+    }
+    public GameObject Load_NormalMonsterParent(GameObject target)
+    {
+        return (GameObject)Instantiate(Resources.Load("NormalMonsterP"), target.transform.position, Quaternion.identity, target.transform);
+    }
+    public GameObject Load_DefaultMonster(GameObject target)
+    {
+        return (GameObject)Instantiate(Resources.Load("DefaultTile"), target.transform.position, Quaternion.identity, target.transform);
+    }
     public void Load_MapData(GameObject target)
     {
         Batch_map(target);
@@ -293,6 +305,7 @@ public class MapData : ScriptableObject
             
             Tile.name = BG[j].TilemapName;
             int Layer_binary = Convert.ToInt32(Convert.ToString(BG[j].Layer.value, 2));
+            Debug.Log(Layer_binary);
             int Layer_count = 0;
             for (int L = 0; L < 32; L++)
             {
