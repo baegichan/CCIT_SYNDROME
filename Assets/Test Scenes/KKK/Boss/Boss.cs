@@ -181,7 +181,7 @@ public class Boss : Character
             {
                 if(speed != 0)
                 {
-
+                    anim.SetBool("Syclone", true);
                 }
             }
             else
