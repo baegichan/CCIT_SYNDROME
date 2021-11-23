@@ -6,13 +6,11 @@ public class MothMonster : Character
 {
     
     [Header("Prameter")]
-
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
 
     [Header("Refernce")]
-    public GameObject mothBullet;
     public GameObject player;//플레이어 피봇 위치 트러짐 떄문에 사용
     public Transform playerTransform;//플레이어 피봇 위치 트러짐 떄문에 사용
     public Animator anim;
@@ -24,6 +22,7 @@ public class MothMonster : Character
     public Transform atkpos; //공격 근접이면 가능이지만 원거리는 교체가 필요
     public Vector2 direction;
     public float distance;
+    public Bullet_Attack bullet_Attack;
 
     [Header("Turn state")]
     public bool filp;
@@ -118,7 +117,6 @@ public class MothMonster : Character
             if (atkpos.localPosition.x > 0)
             {
                 atkpos.localPosition = new Vector2(atkpos.localPosition.x * -1, atkpos.localPosition.y);
-
             }
         }
         else
@@ -129,7 +127,8 @@ public class MothMonster : Character
 
             }
         }
-        Instantiate(mothBullet, atkpos.transform.position, Quaternion.identity);
+        bullet_Attack.Attack(playerTransform.gameObject);
+        //Instantiate(mothBullet, atkpos.transform.position, Quaternion.identity);
     }
 
     public void Patroll()
@@ -138,7 +137,7 @@ public class MothMonster : Character
         Filp();
     }
 
-    public void FireflyDestroy()
+    public void MothDestroy()
     {
         Destroy(gameObject);
     }

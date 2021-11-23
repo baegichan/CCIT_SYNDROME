@@ -18,6 +18,7 @@ public class MiniMap : MonoBehaviour
     public MapCreate MapCreateSC;
     private bool minimapCreated;
     GameObject[,] WorldMap;
+    public GameObject WolrdMapCanvas;
     public int[,] WORLDMAP_DATA
     {
         get {return MapData; }
@@ -50,7 +51,18 @@ public class MiniMap : MonoBehaviour
             }
         }
     }
-    
+
+    public void VisitRoomCheck()
+    {
+        for (int i = 0; i < Level * 2 + 1; i++)
+        {
+            for (int j = 0; j < Level * 2 + 1; j++)
+            {
+                MapEnable[j, i] = MapManager.map[i, j].GetComponent<Room_data>().VisitedRoom; ;
+            }
+        }
+    }
+
     int Level;
     public  int STAGELEVEL 
     {   
@@ -68,6 +80,14 @@ public class MiniMap : MonoBehaviour
         {        //이후 KeyManager 키로 변경요망
             if (Input.GetKeyDown(KeyCode.M))
             {
+                if(Time.timeScale ==1)
+                 {
+                    Time.timeScale = 0;
+                }
+                else
+                {
+                    Time.timeScale = 1;
+                }
                 if (Loaded == false)
                 {
                     WolrdMap.transform.localPosition = -WorldMap[(int)MapManager.PCurrent_Room.y, (int)MapManager.PCurrent_Room.x].transform.localPosition;
@@ -75,17 +95,46 @@ public class MiniMap : MonoBehaviour
                 }
                 else
                 {
+                    
+                    
+                    if(WolrdMapCanvas.activeSelf)
+                    {
+                        WolrdMapCanvas.SetActive(false);
+                    }
+                    else
+                    {
+                        WolrdMapCanvas.SetActive(true);
+                    }   
                     WolrdMap.transform.localPosition = -WorldMap[(int)MapManager.PCurrent_Room.y, (int)MapManager.PCurrent_Room.x].transform.localPosition;
                     MapUpdate();
                 }
             }
         }
       
- 
+      
+    }
+    public void TimeScaleChanger()
+    {
+        if (Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
+    public void CanvasOff()
+    {
+        WolrdMapCanvas.SetActive(false);
+    }
+    public void MapLocationUpdate()
+    {
+        WolrdMap.transform.localPosition = -WorldMap[(int)MapManager.PCurrent_Room.y, (int)MapManager.PCurrent_Room.x].transform.localPosition;
     }
     public void MapUpdate()
     {
-
+        VisitRoomCheck();
         for (int i = 0; i < STAGELEVEL * 2 + 1; i++)
         {
             for (int j = 0; j < STAGELEVEL * 2 + 1; j++)
@@ -96,11 +145,25 @@ public class MiniMap : MonoBehaviour
                 }
                 if(MapEnable[i,j]==true&&WorldMap[i,j]==true)
                 {
-                    WorldMap[i, j].SetActive(WorldMap[i,j].activeSelf?false:true);
+                    WorldMap[i, j].SetActive(true);
                 }             
             }
         }
     }
+    public void CurrentOff(Vector2 Index)
+    {
+        WorldMapSpriteChanger SpChanger = WorldMap[(int)Index.x, (int)Index.y].GetComponent<WorldMapSpriteChanger>();
+        SpChanger.CurrentRoomChecker.SetActive(false);
+
+    }
+    public void CurrentOn(Vector2 Index)
+    {
+        WorldMapSpriteChanger SpChanger = WorldMap[(int)Index.x, (int)Index.y].GetComponent<WorldMapSpriteChanger>();
+        SpChanger.CurrentRoomChecker.SetActive(true);
+
+    }
+
+
     public void LoadMiniMap(int[,] LoadMap)
     {  
         int height= -STAGELEVEL * distance;
@@ -113,6 +176,40 @@ public class MiniMap : MonoBehaviour
                 {
                     WorldMap[j,i]=Instantiate(Target,new Vector3(width,height + j * distance),Quaternion.identity, WolrdMap.transform).gameObject;
                     WorldMap[j,i].transform.localScale = (new Vector3(1, 1, 1));
+                    WorldMapSpriteChanger SpChanger =WorldMap[j, i].GetComponent<WorldMapSpriteChanger>();
+                   if(!MapManager.map[i, j].GetComponent<Room_data>().Right)
+                   {
+                        SpChanger.R_Brige.SetActive(false);
+                   }
+                    if (!MapManager.map[i, j].GetComponent<Room_data>().Left)
+                    {
+                        SpChanger.L_Brige.SetActive(false);
+                    }
+                    if (!MapManager.map[i, j].GetComponent<Room_data>().Top)
+                    {
+
+                        SpChanger.T_Brige.SetActive(false);
+                    }
+                    if (!MapManager.map[i, j].GetComponent<Room_data>().Bottom)
+                    {
+                        SpChanger.B_Brige.SetActive(false);
+                    }
+                    if(MapManager.map[i, j].GetComponent<Room_data>().Room_Type==Room_data.RoomType.Boss)
+                    {
+                        SpChanger.Boss.SetActive(true);
+                    }
+                    if (MapManager.map[i, j].GetComponent<Room_data>().Room_Type == Room_data.RoomType.Crane)
+                    {
+                        SpChanger.Gacha.SetActive(true);
+                    }
+                    if (MapManager.map[i, j].GetComponent<Room_data>().Room_Type == Room_data.RoomType.Shop)
+                    {
+                        SpChanger.Shop.SetActive(true);
+                    }
+                    if(MapManager.Current_Room == new Vector2(i,j))
+                    {
+                        SpChanger.CurrentRoomChecker.SetActive(true);
+                    }
                 }                 
             }
            height = -STAGELEVEL * distance;
@@ -121,6 +218,8 @@ public class MiniMap : MonoBehaviour
         Loaded = true;
         MapUpdate();
     }
+
+   
     public bool CheckMapData(int test)
     {
         if(test == 1)
