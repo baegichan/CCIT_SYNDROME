@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class MiniMapDrag : MonoBehaviour, IEndDragHandler, IDragHandler
 {
     public Vector2 BeginMousePosition = new Vector3(0, 0);
+    //«ÿ¥Á πÊ - ∫§≈Õ
     public Vector2 MovePoint = new Vector3(0,0 );
     bool Loaded = false;
     [Range(0,500)]public float insensitive = 10;

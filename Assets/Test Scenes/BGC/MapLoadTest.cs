@@ -23,6 +23,7 @@ public class MapLoadTest : MonoBehaviour
                 {
                     case Room_data.RoomType.StartRoom:
                         testmap = Mapset.Get_RandomRoom(16);
+                        Target_Room.GetComponent<Room_data>().Visit();
                         Debug.Log("Load StartRoom");
                         break;
                     case Room_data.RoomType.Shop:

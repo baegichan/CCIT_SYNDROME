@@ -12,6 +12,12 @@ public class Room_data : MonoBehaviour
     PolygonCollider2D MapPolygon=null;
     SpriteRenderer spr;
     public Sprite[] sp;
+    public bool VisitedRoom= false;
+
+    public void Visit()
+    {
+        VisitedRoom = true;
+    }
     public PolygonCollider2D MapPoly { get {return MapPolygon; } set {MapPolygon=value; } }
     public enum RoomType
     {

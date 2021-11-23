@@ -14,38 +14,39 @@ public class MiniMap : MonoBehaviour
     int[,] MapData = new int[,] { {1,1,1,1,1 },{ 0,0,1,0,1},{ 0,1,1,1,1},{ 0,1,1,1,0},{1,1,0,0,0 } };
     bool[,] MapEnable = new bool[,] { { true, true, true, false, false }, { false, false, true, false, false }, { false, true, false, false, true }, { false, false, true, true, false }, { true, false, false, false, false } };
     #endregion
+    public MapManager MapManager;
     public MapCreate MapCreateSC;
+    private bool minimapCreated;
     GameObject[,] WorldMap;
     public int[,] WORLDMAP_DATA
     {
         get {return MapData; }
-        set { MapData = value; STAGELEVEL = ((int)Mathf.Sqrt(value.Length) - 1)/2; WorldMap = new GameObject[MapCreateSC.Level * 2 + 1, MapCreateSC.Level * 2 + 1]; }
+        set { MapData = value; STAGELEVEL = ((int)Mathf.Sqrt(value.Length) - 1)/2; WorldMap = new GameObject[MapManager.Level * 2 + 1, MapManager.Level * 2 + 1]; }
     }
     private void Start()
     {
         transform.parent.GetComponent<Canvas>().worldCamera = Camera.main;
-       
     }
     
     public void MiniMapSetting()
     {
-        WORLDMAP_DATA = new int[(int)Mathf.Sqrt(MapCreateSC.MapArray.Length), (int)Mathf.Sqrt(MapCreateSC.MapArray.Length)];
-        Debug.Log("Worldmap clear" + WORLDMAP_DATA.Length);
-        MapEnable = new bool[(int)Mathf.Sqrt(MapCreateSC.MapArray.Length), (int)Mathf.Sqrt(MapCreateSC.MapArray.Length)];
-        Debug.Log("MapEnable clear" + MapEnable.Length);
-        WorldMap = new GameObject[(int)Mathf.Sqrt(MapCreateSC.MapArray.Length), (int)Mathf.Sqrt(MapCreateSC.MapArray.Length)];
+        WORLDMAP_DATA = new int[(int)Mathf.Sqrt(MapManager.map.Length), (int)Mathf.Sqrt(MapManager.map.Length)];
+        MapEnable = new bool[(int)Mathf.Sqrt(MapManager.map.Length), (int)Mathf.Sqrt(MapManager.map.Length)];  
+        WorldMap = new GameObject[(int)Mathf.Sqrt(MapManager.map.Length), (int)Mathf.Sqrt(MapManager.map.Length)];
         WorldMapUpdate();
         LoadMiniMap(WORLDMAP_DATA);
-        Debug.Log(WORLDMAP_DATA);
+        minimapCreated= true;
+
+
     }
     public void WorldMapUpdate()
     {
-        for(int i = 0; i< Level*2;i++)
+        for(int i = 0; i< Level*2+1;i++)
         {
-            for(int j =0; j< Level*2;j++)
+            for(int j =0; j< Level*2+1;j++)
             {
-                WORLDMAP_DATA[i, j] = MapCreateSC.MapArray[i, j].GetComponent<RoomData>().IsCreated?1:0;
-                MapEnable[i, j] = MapCreateSC.MapArray[i, j].GetComponent<RoomData>().VisitedRoom;
+                WORLDMAP_DATA[i, j] = MapManager.map[i, j].GetComponent<Room_data>().Room_Created?1:0;
+                MapEnable[i, j] = MapManager.map[i, j].GetComponent<Room_data>().VisitedRoom;
             }
         }
     }
@@ -63,20 +64,24 @@ public class MiniMap : MonoBehaviour
     public bool Loaded = false;
     private void Update()
     {
-       //이후 KeyManager 키로 변경요망
-      if ( Input.GetKeyDown(KeyCode.M))
-        {
-            if(Loaded==false)
+    if(minimapCreated)
+        {        //이후 KeyManager 키로 변경요망
+            if (Input.GetKeyDown(KeyCode.M))
             {
-                WolrdMap.transform.localPosition = new Vector3(0, 0, 0);
-                MapUpdate();
-            }
-             else
-            {
-                WolrdMap.transform.localPosition = new Vector3(0, 0, 0);
-                MapUpdate();
+                if (Loaded == false)
+                {
+                    WolrdMap.transform.localPosition = -WorldMap[(int)MapManager.PCurrent_Room.y, (int)MapManager.PCurrent_Room.x].transform.localPosition;
+                    MapUpdate();
+                }
+                else
+                {
+                    WolrdMap.transform.localPosition = -WorldMap[(int)MapManager.PCurrent_Room.y, (int)MapManager.PCurrent_Room.x].transform.localPosition;
+                    MapUpdate();
+                }
             }
         }
+      
+ 
     }
     public void MapUpdate()
     {

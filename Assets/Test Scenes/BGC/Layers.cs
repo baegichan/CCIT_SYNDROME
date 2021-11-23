@@ -10,7 +10,8 @@ public class Layers : MonoBehaviour
 
     private void OnEnable()
     {
-        //if(현재 어비스라면)
+    /*
+        if(AbyssManager.abyss.abyssState== AbyssManager.AbyssState.Abyss)
         {
             foreach (GameObject layer in AbyssLayer)
             {
@@ -27,7 +28,7 @@ public class Layers : MonoBehaviour
                 }
             }
         }
-        //else
+        else
         {
             foreach (GameObject layer in AbyssLayer)
             {
@@ -44,6 +45,6 @@ public class Layers : MonoBehaviour
                 }
             }
 
-        }
+        }*/
     }
 }
