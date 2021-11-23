@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 43292252}
   - component: {fileID: 43292251}
   - component: {fileID: 43292250}
+  - component: {fileID: 43292254}
   m_Layer: 5
   m_Name: HPcanvas
   m_TagString: Untagged
@@ -166,7 +167,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 43292249}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
@@ -223,6 +224,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &43292254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43292249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f8e083dd6b52346a3d49ea3b079c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp_bar: {fileID: 2144027952}
+  Cha: {fileID: 1633482778}
 --- !u!1 &565002937
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,6 +518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1633482777}
   - component: {fileID: 1633482776}
+  - component: {fileID: 1633482778}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -576,6 +592,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1633482778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633482775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5501f8b5f7902dd4d88a6b0628e3cd03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp_Max: 2000
+  Hp_Current: 2000
+  Shield: 0
+  AP: 0
+  DP: 0
+  speed: 0
 --- !u!1 &1645370983
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +791,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -851,7 +885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2144027951
 RectTransform:
   m_ObjectHideFlags: 0
