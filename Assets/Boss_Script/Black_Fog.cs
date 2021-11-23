@@ -23,7 +23,7 @@ public class Black_Fog : MonoBehaviour
     {
         if (collision.CompareTag("Player") && Damage_Delay == 0.5f)
         {
-            collision.transform.GetComponent<Character>().Damage(Black_Fog_Damage);
+            collision.transform.parent.GetComponent<Character>().Damage(Black_Fog_Damage);
             Damage_Delay = 0;
         }
     }

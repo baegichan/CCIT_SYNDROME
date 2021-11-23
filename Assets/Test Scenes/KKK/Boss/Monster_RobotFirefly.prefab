@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7287305514186929069}
   - component: {fileID: 2945207913879651316}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Monster_Firefly_LeftWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 116614328868823581}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: bone_Monster_Firefly_LeftWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8418790121283618346}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: bone_Monster_Firefly_RightWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3577876505671549635}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: downCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3577876506579287170}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: upCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3577876506786709412}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 4252309525993306272}
   - component: {fileID: 4252309525993306303}
   - component: {fileID: 4252309525993306302}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Monster_RobotFirefly
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -303,19 +303,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d896a20e7f293541b4368884742be31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Hp_Max: 0
+  Hp_Current: 0
+  Shield: 0
+  AP: 0
+  DP: 0
   speed: 10
   patrolSpeed: 5
   atkCooltime: 2
   atkDelay: 0
   fireflybullet: {fileID: 3818960076316225726, guid: 4fd3e582ff9f5d048acad46e6879f639, type: 3}
   player: {fileID: 0}
+  playerTransform: {fileID: 0}
   anim: {fileID: 0}
   first: {x: 0, y: 0}
   rb: {fileID: 4252309525993306303}
   wallCheck: {fileID: 3577876506786709412}
   upCheck: {fileID: 3577876506579287170}
   downCheck: {fileID: 3577876505671549635}
-  playerCheck: {fileID: 0}
   atkpos: {fileID: 2410304102625909809}
   direction: {x: 0, y: 0}
   distance: 0
@@ -323,6 +328,7 @@ MonoBehaviour:
   patroll: 0
   trace: 0
   Targeton: 1
+  Dead: 0
   m_bDebugMode: 1
   m_horizontalViewAngle: 360
   m_viewRadius: 100
@@ -390,7 +396,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2410304102625909809}
   - component: {fileID: 8776515188729771812}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Charging_Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8196371188174444721}
   - component: {fileID: 9121547773416182767}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Monster_Firefly_RightWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -554,7 +560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6430650220220608373}
   - component: {fileID: 8970252842620373844}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Monster_Firefly_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -637,7 +643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4124079072980004174}
   - component: {fileID: 1660617469037654846}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Monster_Firefly_Face_Default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -719,7 +725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4888368388769904185}
   - component: {fileID: 6650142106177276052}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Eye_Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -800,7 +806,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8382559775005048352}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: bone_Monster_Firefly_Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -834,7 +840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8797072453506550498}
   - component: {fileID: 2930489526499703572}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Monster_Firefly_Weaphon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -916,7 +922,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7212515510889104229}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: bone_Monster_Firefly_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -947,7 +953,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7156912970176088387}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: bone_Monster_Firefly_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
