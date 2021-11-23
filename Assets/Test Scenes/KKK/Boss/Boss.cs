@@ -53,14 +53,15 @@ public class Boss : Character
     public GameObject Bomb_Transform;
     public GameObject Barrier_Hit;
 
+    public GameObject For_Big_Stom_Obj_made;
+
+
 
     public GameObject[] Boss_Particle = new GameObject[8];
 
 
     [Header("Transform")]
-    //public Transform[] Bomb_Transform = new Transform[4];//지뢰 날려주는 위치
     public Transform Player_Transform;//플레이어 위치
-    //public Transform Bullet_Transform;//플레이어 총구 위치
     public Transform Black_Fog_Transform;//플레이어 근접 검은안개 생성 위치
 
 
@@ -97,6 +98,7 @@ public class Boss : Character
         }
     }
 
+    int Shield_Value;
     void Start()
     {
         //Direction_Player();
@@ -115,7 +117,7 @@ public class Boss : Character
             transform.GetChild(1).gameObject.SetActive(true);
         }
         */
-        Shield = Hp_Max / 5;
+        Shield_Value = Hp_Max / 5;
         
 
     }
@@ -125,23 +127,26 @@ public class Boss : Character
         if (Boss_Active_on == true)
         {
 
-            
 
-            Dis = Vector3.Distance(Player_Transform.position , transform.position);
+
+            Dis = Vector3.Distance(Player_Transform.position, transform.position);
 
             Trace_Player();
 
-
-            if(Frame_Count_Check == 0)
-            Monster_HP_Frame_Check();
-
-            if(Half_Count_Check == 0)
-            Monster_HP_Check();
+            if (Abyss_on == false)
+            {
+                if (Frame_Count_Check == 0)
+                    Monster_HP_Frame_Check();
 
 
 
-            Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.TransformDirection(Vector2.left) * 300f, Color.green);
-            Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.TransformDirection(Vector2.right) * 300f, Color.green);
+                if (Half_Count_Check == 0)
+                    Monster_HP_Check();
+            }
+
+
+            //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.TransformDirection(Vector2.left) * 300f, Color.green);
+            //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.TransformDirection(Vector2.right) * 300f, Color.green);
 
 
 
@@ -173,23 +178,44 @@ public class Boss : Character
 
             }
 
-            
 
-            
-            if (Boss_HP_Frame_Check == true)
+
+            if (Abyss_on == false)
             {
-                speed = 0;
-                anim.SetBool("Syclone", true);
-            }
-            else
-            {
-                Cool_Control();
-            }
+                if (Boss_HP_Frame_Check == true)
+                {
+                    speed = 0;
+                    anim.SetBool("Syclone", true);
+                }
+                else
+                {
+                    Cool_Control();
+                }
 
-            P_bossHP = Shield;
-            Debug.Log(Shield);
-           
+                P_bossHP = Shield_Value;
+                
 
+                if(Boss_HP_Half == true)
+                {
+                    speed = 0;
+                    anim.SetBool("2PAGE", true);
+
+
+                    //원래 있던 액자 없애주는 부분
+                    Destroy(Frame);
+
+
+                    
+                    //더큰 액자로 변경해주는 부분
+                    //For_Big_Stom_Obj_made =Instantiate(Big_Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
+                    //For_Big_Stom_Obj_made.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
+                    //For_Big_Stom_Obj_made.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
+
+                }
+
+
+
+            }
 
 
             if (Barrier_Cool > 0)
@@ -209,14 +235,6 @@ public class Boss : Character
                    
                 }
             }
-            /*
-            if(Boss_HP_Half == true)
-            {
-                speed = 0;
-                anim
-            }
-            */
-
 
 
 
@@ -233,7 +251,7 @@ public class Boss : Character
             if (Boss_HP_Frame_Check == false)
             {
                 Boss_HP_Frame_Check = true;
-                //////////////////////StartCoroutine(Respawn_Monster());
+                StartCoroutine(Respawn_Monster());
             }
 
             if(Frame_Count_Check == 0)
@@ -242,6 +260,9 @@ public class Boss : Character
             }
         }
     }
+
+
+
     int Half_Count_Check;
     void Monster_HP_Check()
     {
@@ -258,6 +279,16 @@ public class Boss : Character
 
         }
     }
+
+
+    void Boss_Abycss_Change()
+    {
+
+    }
+
+
+
+
     IEnumerator Respawn_Monster()//몬스터 리스폰 쿨타임 25초로 잡아놈
     {
 
@@ -430,7 +461,7 @@ public class Boss : Character
                     else if(aa == 2)
                     {
                         if (Barrier_Cool <= 0)
-                            anim.SetBool("Barrier_Check", true);
+                            if(Barrier != true) { anim.SetBool("Barrier_Check", true); } else { Select_Pattern(); }
                         else
                             Select_Pattern();
 
@@ -474,7 +505,7 @@ public class Boss : Character
                     else if(aa== 2)
                     {
                         if (Barrier_Cool <= 0)
-                            anim.SetBool("Barrier_Check", true);
+                            if (Barrier != true) { anim.SetBool("Barrier_Check", true); } else { Select_Pattern(); }
                         else
                             Select_Pattern();
                     }
@@ -501,10 +532,26 @@ public class Boss : Character
 
         if (transform.position.x >= 0)
         {
+            if (Player_Transform.position.x > this.transform.position.x)
+            {
+                this.transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+                this.transform.localScale = new Vector3(1, 1, 1);
+            }
             transform.position = new Vector3(transform.position.x - 8, transform.position.y, transform.position.z);
         }
         else if (transform.position.x < 0)
         {
+            if (Player_Transform.position.x > this.transform.position.x)
+            {
+                this.transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+                this.transform.localScale = new Vector3(1, 1, 1);
+            }
             transform.position = new Vector3(transform.position.x + 8, transform.position.y, transform.position.z);
         }
 
@@ -746,10 +793,13 @@ public class Boss : Character
 
 
     public GameObject Dark_Syclone_Obj;
+
+    GameObject Frame;
+
     void Dark_Syclone()
     {
         Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x,transform.position.y +1,transform.position.z), Quaternion.identity);
-        GameObject Frame = Instantiate(Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
+        Frame = Instantiate(Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
         Frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
         Frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
         
@@ -765,7 +815,7 @@ public class Boss : Character
         transform.GetChild(0).gameObject.SetActive(true);
         Shield = Boss_Shild;
 
-        Barrier_Cool = 12;
+        Barrier_Cool = 20;
     }
 
     
