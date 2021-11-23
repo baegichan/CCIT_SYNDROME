@@ -214,7 +214,7 @@ public class AbyssManager : MonoBehaviour
         set
         {
             abyssGage = value;
-           //StateManager.state.AbyssGage = abyssGage; 임시
+           StateManager.state.AbyssGage = abyssGage; 임시
         }
     }
 
