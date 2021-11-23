@@ -24,6 +24,7 @@ public class DEVILSWORD_ANI : MonoBehaviour
     void AI()
     {
         Attack_int = 0;
+        Char_Parent.Active_Cool = 0f;
     }
 
     public void HI()

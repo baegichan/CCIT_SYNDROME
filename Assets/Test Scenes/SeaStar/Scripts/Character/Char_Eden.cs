@@ -160,13 +160,14 @@ public class Char_Eden : MonoBehaviour
     {
         if (Ani.GetBool("CanIThis") && !GetComponentInParent<Char_Parent>().BattleAxe_Senaka.activeSelf && Ani.GetBool("Move"))
         {
-            GetComponentInParent<Char_Parent>().OffBattleAxe();
+            //GetComponentInParent<Char_Parent>().OffBattleAxe();
         }
     }
     void BattleAxeintInitalization()
     {
        //BAX.GetComponent<BattleAxeAttack>().Attack_int = 0;
-       BattleAxeAttack.Attack_int = 0;
+        BattleAxeAttack.Attack_int = 0;
+        Char_Parent.Active_Cool = 0f;
     }
     void TestBa()
     {

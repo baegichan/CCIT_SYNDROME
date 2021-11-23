@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class weapon2 : MonoBehaviour
+public class WolfAttack : MonoBehaviour
 {
     public int Damage;
     public GameObject YourParent;
@@ -12,9 +12,9 @@ public class weapon2 : MonoBehaviour
     {
         Current = col.gameObject;
 
-        if (YourParent.GetComponent<Char_Eden>().P_Attack_State == true)
+        if (YourParent.GetComponent<Char_Wolf>().P_Attack_State == true)
         {
-            if (col.tag == "Monster")
+            if (col.tag == "Monster") 
             {
                 CameraShake.Cam_instance.Shake(0.1f, 0.005f);
                 col.GetComponent<Character>().Damage(Damage, YourParent.GetComponentInParent<Char_Parent>().UseApPostion);

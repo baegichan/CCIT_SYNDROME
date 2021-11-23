@@ -380,13 +380,13 @@ public class Char_Parent : Character
             case 4:
                 OffBattleAxe();
                 Current_Use = BattleAxe_Senaka;
-                Active_Cool_Max = 4f;
+                Active_Cool_Max = 0.5f;
                 break;
             case 5:
                 EvillSwordSwitch();
                 Current_Use = EvilSword;
                 AM.EA = Current_Use.GetComponent<Animator>();
-                Active_Cool_Max = 50f; 
+                Active_Cool_Max = 5f; 
                 break;
             case 9:
                 Active_Cool_Max = 4f;

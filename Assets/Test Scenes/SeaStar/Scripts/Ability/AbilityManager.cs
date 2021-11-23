@@ -132,7 +132,6 @@ public class AbilityManager : MonoBehaviour
         CP.Ani.SetInteger("AbilityNum", 4);
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
-            Char_Parent.Active_Cool = 0f;
             A_Attack();
             py.GetComponent<Char_Eden>().P_CombatInt = 1;
         }
@@ -153,7 +152,6 @@ public class AbilityManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
-            Char_Parent.Active_Cool = 0f;
             EvilSword_Attack();
             py.GetComponent<Char_Eden>().P_CombatInt = 1;
         }
@@ -166,7 +164,6 @@ public class AbilityManager : MonoBehaviour
 
     public void EvilSword_Attack()
     {
-        CP.Ani.SetTrigger("Ability");
         CP.Ani.SetInteger("AbilityNum", 5);
         CP.Ani.SetBool("Combat", true);
         CP.Ani.SetBool("CanIThis", false);
