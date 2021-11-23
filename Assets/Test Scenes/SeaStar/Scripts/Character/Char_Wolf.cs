@@ -10,6 +10,7 @@ public class Char_Wolf : MonoBehaviour
     public int power;
     IEnumerator wolf;
     public Animator Ani;
+    public bool P_Attack_State;
 
     public void Attack()
     {
@@ -54,5 +55,14 @@ public class Char_Wolf : MonoBehaviour
             GetComponentInParent<Char_Parent>().P_JumpInt = GetComponentInParent<Char_Parent>().P_MaxJumpInt;
             Ani.SetBool("Jump", false);
         }
+    }
+
+    void AttackStart()
+    {
+        P_Attack_State = true;
+    }
+    void AttackEnd()
+    {
+        P_Attack_State = false;
     }
 }

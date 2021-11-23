@@ -18,17 +18,6 @@ public class Character : MonoBehaviour
     [Tooltip("기본 이동속도")]
     public float speed;
 
-
-
-
-   
-
-    void Awake()
-    {
-        Hp_Current = Hp_Max;
-    }
-
-
     void Update()
     {
         if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
@@ -74,7 +63,9 @@ public class Character : MonoBehaviour
         Text.GetComponent<DamageOBJ>().HealText(Healint);
     }
     public  void Load_Damage_Text(Character target,int Damage)
-    {
+    { 
+        if(transform.tag == "Player") { AbyssManager.abyss.GetAbyssGage(10); }
+
         GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), target.transform.position + Vector3.up * 3+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
     }
@@ -103,7 +94,7 @@ public class Character : MonoBehaviour
         Debug.Log(firstDamage);
         if (DamageValue > 20)
         {
-           // CameraShake.Shake(70, 0.4f);
+           //CameraShake.Cam_instance.Shake(70, 0.4f);
         }
         int secondDamge = firstDamage - Shield;
         if (secondDamge > 0)
@@ -114,5 +105,4 @@ public class Character : MonoBehaviour
             Shield -= firstDamage - DP;
         Load_Damage_Text(this, firstDamage);
     }
-
 }

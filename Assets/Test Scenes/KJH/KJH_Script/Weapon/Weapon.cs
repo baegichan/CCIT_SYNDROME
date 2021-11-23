@@ -5,7 +5,6 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public int D;
-    public GameObject YourWeapon;
     public GameObject YourParent;
     public GameObject Current;
    
