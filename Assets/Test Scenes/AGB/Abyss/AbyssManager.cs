@@ -173,7 +173,7 @@ public class AbyssManager : MonoBehaviour
     /// <summary>
     /// 심연 이동 함수
     /// </summary>
-    void GoAbyss()
+    public void GoAbyss()
     {
         //보이게하기
         MainCamera.cullingMask = 1 << abyssLayer;
@@ -192,7 +192,7 @@ public class AbyssManager : MonoBehaviour
     /// <summary>
     /// 현실 이동 함수
     /// </summary>
-    void GoReal()
+    public void GoReal()
     {
         //보이게하기
         MainCamera.cullingMask = 1 << realLayer;
