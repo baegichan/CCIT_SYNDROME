@@ -46,15 +46,14 @@ public class AbyssManager : MonoBehaviour
     #region 변수
 
 
-    [Header("InputKey")]
-    public char abyssKey = 'q';
+
 
     [Header("Abyss Variable")]
     //검은 안개
     private int darkfog = 0;
     public int maxAbyssGage = 100;
     //어비스 게이지
-    public int abyssGage = 0;
+    public int abyssGage = 1;
     //hp 게이지
     public int hpGage = 0;
 
@@ -73,20 +72,19 @@ public class AbyssManager : MonoBehaviour
     public enum AbyssState { Reality, Abyss };
 
 
-    [Header("MonsterBox")]
-    public GameObject RealBox;
-    public GameObject AbyssBox;
+    //[Header("MonsterBox")]
+    //public GameObject RealBox;
+    //public GameObject AbyssBox;
 
-    [Header("AbyssMonsterPrefab")]
-    public GameObject[] AbyssMonsterPrefab;
 
-    [Header("CameraLayer")]
-    public Camera MainCamera;
-    public int realLayer;
-    public int abyssLayer;
 
-    [Header("StateManager")]
-    public StateManager stateManager;
+    //[Header("CameraLayer")]
+    //public Camera MainCamera;
+    //public int realLayer;
+    //public int abyssLayer;
+
+    //[Header("StateManager")]
+    //public StateManager stateManager;
 
 
 
@@ -98,32 +96,25 @@ public class AbyssManager : MonoBehaviour
     public Text fogText;
 
     public AbyssState abyssState = new AbyssState();
-    //몬스터
-
-    int[] monsterId = new int[50];
-    Vector3[] monsterPos = new Vector3[50];
 
     #endregion
 
-  
+
     // Start is called before the first frame update
     void Start()
     {
-        //AbyssBox.SetActive(false);
+
         abyssState = AbyssState.Reality;
         fogText.text = Convert.ToString(darkfog);
-        //보이게
-        MainCamera.cullingMask = 1 << 11;
-        //안보이게 하기
-        MainCamera.cullingMask = ~(1 << 12);
 
-      
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        //교체   if (Input.GetKeyDown(settingmanager.GM.abyss))
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (isAbyssStay == false && isAbyssEnd == true)
@@ -136,6 +127,7 @@ public class AbyssManager : MonoBehaviour
 
     IEnumerator AbyssResource()
     {
+
         isAbyssEnd = false;
         int exint;
         while (isAbyssStay)
@@ -153,17 +145,17 @@ public class AbyssManager : MonoBehaviour
             {
                 if (hpGage < 0)
                     hpGage = 0;
-            
+
                 isAbyssStay = false;
                 abyssState = AbyssState.Reality;
                 break;
 
             }
-       
+
             yield return new WaitForSeconds(abyssConsumptionTime);
         }
         abyssState = AbyssState.Reality;
-       
+
         isAbyssEnd = true;
     }
 
@@ -173,33 +165,21 @@ public class AbyssManager : MonoBehaviour
     /// <summary>
     /// 심연 이동 함수
     /// </summary>
-    void GoAbyss()
+    public void GoAbyss()
     {
-        //보이게하기
-        MainCamera.cullingMask = 1 << abyssLayer;
-        //안보이게 하기
-        MainCamera.cullingMask = ~(1 << realLayer);
 
         isAbyssStay = true;
         abyssState = AbyssState.Abyss; // enum에 상태값 입력
-       
-        AbyssMonsterSpawn(); // 심연 몬스터가 있을경우 실행
-        AbyssBox.SetActive(true);// 심연 몬스터 그룹  활성화
-        RealBox.SetActive(false);// 현실 몬스터 그룹 비활성화
-        StartCoroutine("AbyssResource"); // 심연 리소스 소모 코루틴 실행
+
+        StartCoroutine(AbyssResource()); // 심연 리소스 소모 코루틴 실행
     }
 
     /// <summary>
     /// 현실 이동 함수
     /// </summary>
-    void GoReal()
+    public void GoReal()
     {
-        //보이게하기
-        MainCamera.cullingMask = 1 << realLayer;
-        //안보이게 하기
-        MainCamera.cullingMask = ~(1 << abyssLayer);
-        AbyssBox.SetActive(false);// 현실 몬스터 그룹  활성화
-        RealBox.SetActive(true);  // 심연 몬스터 그룹 비활성화
+
         abyssState = AbyssState.Reality;
         isAbyssStay = false;
     }
@@ -220,7 +200,7 @@ public class AbyssManager : MonoBehaviour
         {
             darkfog = value;
             fogText.text = Convert.ToString(darkfog);
-            
+
         }
     }
 
@@ -234,7 +214,7 @@ public class AbyssManager : MonoBehaviour
         set
         {
             abyssGage = value;
-            stateManager.AbyssGage = abyssGage;
+            StateManager.state.AbyssGage = abyssGage; 임시
         }
     }
 
@@ -242,49 +222,11 @@ public class AbyssManager : MonoBehaviour
     #endregion
 
 
-    #region 심연 몬스터 관련 함수
-
-    void AbyssMonsterSpawn()
-    {
-
-        for (int i = 0; i < monsterId.Length; i++)
-        {
-            if (monsterId[i] == 0 && i != 0)
-            {
-                monsterId = new int[50];
-                break;
-            }
-            else
-            {
-                var d = Instantiate(AbyssMonsterPrefab[monsterId[i]], monsterPos[i], Quaternion.identity);
-                d.transform.SetParent(AbyssBox.transform, false);
-            }
-        }
-    }
-
-    public void AbyssMonsterAdd(int id, Vector3 pos)
-    {
-        //들어오면 hp값 공격력 더하고 스택에 집어넣기
-        for (int i = 0; i < monsterId.Length; i++)
-        {
-            if (monsterId[i] == 0)
-            {
-                monsterId[i] = id;
-                monsterPos[i] = pos;
-                if (i != 0)
-                    break;
-            }
-        }
-    }
-
-
-
-    #endregion
 
     #region 리소스 관리
 
 
-   
+
 
     /// <summary>
     /// 심연게이지 습득
@@ -297,7 +239,7 @@ public class AbyssManager : MonoBehaviour
             abyssGage = maxAbyssGage;
         else
             abyssGage += gage;
-   
+
 
     }
     #endregion
