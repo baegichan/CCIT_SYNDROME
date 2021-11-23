@@ -17,6 +17,7 @@ public class Weapon : MonoBehaviour
         {
             if (col.tag == "Monster")
             {
+                CameraShake.Cam_instance.Shake(0.1f, 0.005f);
                 col.GetComponent<Character>().Damage(D);                
             }
         }

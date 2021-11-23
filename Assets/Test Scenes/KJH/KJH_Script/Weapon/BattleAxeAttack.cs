@@ -15,7 +15,6 @@ public class BattleAxeAttack : MonoBehaviour
         {
             if (col.tag == "Monster")
             {
-                Debug.Log("현재:" + Attack_int);
                 if (Attack_int <= 4)
                 {
                     Current = col.gameObject;
@@ -32,17 +31,21 @@ public class BattleAxeAttack : MonoBehaviour
         {
              
             case 1:
+                CameraShake.Cam_instance.Shake(0.09f, 0.02f);
                 Current.GetComponent<Character>().Damage(D);
                 break;
-            case 2:          
+            case 2:
+                CameraShake.Cam_instance.Shake(0.09f, 0.02f);
                 Current.GetComponent<Character>().Damage(D);
                 break;
-            case 3:               
+            case 3:
+                CameraShake.Cam_instance.Shake(0.09f, 0.02f);
                 Current.GetComponent<Character>().Damage(D);
                 break;
-            case 4:              
-                //CameraShake.Cam_instance.Shake(1000, 500);     
-                Current.GetComponent<Character>().Damage(D + 20);//더미 플러스값 언제든 변경가능
+            case 4:
+                Debug.Log("aaaa");
+                CameraShake.Cam_instance.Shake(0.12f, 0.8f);     
+                Current.GetComponent<Character>().Damage(D + 60);//더미 플러스값 언제든 변경가능
                 break;          
         }
 

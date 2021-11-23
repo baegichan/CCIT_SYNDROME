@@ -67,14 +67,13 @@ public class CameraShake : MonoBehaviour
             //shake_time -= Time.De;
         }
     }
-    static public void Shake(float time,float power)
+     public void Shake(float time,float power)
     {
-        if(Cam_instance==null)
-        {
-            return;
-        }
-        
-       // Cam_instance.shake_time = time;
-       // Cam_instance.shake_power = power;
+        //if(Cam_instance==null)
+        //{
+         //   return;
+       // }
+
+        StartCoroutine(Shaking(time, power));
     }
 }
