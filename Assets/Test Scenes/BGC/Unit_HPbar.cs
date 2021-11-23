@@ -8,7 +8,11 @@ public class Unit_HPbar : MonoBehaviour
     public Slider Hp_bar;
     public Character Cha;
     float Max;
-    
+    public GameObject Target;
+    public Vector2 AdditionalPosition;
+
+
+    public Image BackGround;
 
     bool hpbarActive=false;
     // Start is called before the first frame update
@@ -22,7 +26,8 @@ public class Unit_HPbar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!hpbarActive)
+        transform.position = (Vector2)Target.transform.position + AdditionalPosition;
+        if (!hpbarActive)
         if (Cha.Hp_Max != Cha.Hp_Current)
         {
                 Hp_bar.gameObject.SetActive(true);
