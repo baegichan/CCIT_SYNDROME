@@ -24,16 +24,13 @@ public class CameraShake : MonoBehaviour
        {
             Destroy(this);
        }
-        Shake(100000, 500);
+    
     }
     private void FixedUpdate()
     {
         
     }
-    private void Start()
-    {
-        StartCoroutine(Shaking(3, 10));
-    }
+  
     public IEnumerator Shaking(float time, float power)
     {
         Vector3 PrePos = transform.localPosition;
