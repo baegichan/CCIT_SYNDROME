@@ -11,21 +11,32 @@ public class AbyssMonster : MonoBehaviour
 
     [Header("DarkFogPrefab")]
     public GameObject DarkFog;
-    [Header("AbyssGage")]
-    public int giveAbyssGage = 5;
+    //[Header("AbyssGage")]
+    //public int giveAbyssGage = 5;
     [Header("Monster ID")]
     public int id = 0;
- 
-  
+
+    private MonsterBox monsterBox;
    
-  
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            
+            MonsterDie();
+        }
+           
+    }
+
     public void MonsterDie()
     {
         if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Reality)
         {
-            AbyssManager.abyss.AbyssMonsterAdd(id, transform.position);
-            AbyssManager.abyss.GetAbyssGage(giveAbyssGage);
-            Destroy(this.gameObject);
+            monsterBox = transform.parent.parent.GetComponent<MonsterBox>();
+            monsterBox.AbyssMonsterAdd(id, transform.position);
+            //AbyssManager.abyss.GetAbyssGage(giveAbyssGage);
+            Destroy(transform.gameObject);
 
         }
         else

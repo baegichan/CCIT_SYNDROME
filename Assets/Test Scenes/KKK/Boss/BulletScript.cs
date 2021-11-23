@@ -16,15 +16,25 @@ public class BulletScript : MonoBehaviour
     public float Abyss_bullet_speed;
     public int Abyss_bullet_Damage;
 
-
+    public bool Abyss_Bullet_State = false;
 
     public bool left;
     public bool right;
 
     Vector3 aa;
+
+
+    Boss boss;
     private void Start()
     {
+        if(Abyss_Bullet_State == true)
+        {
+            bullet_speed = Abyss_bullet_speed;
+            Bullet_Damage = Abyss_bullet_Damage;
+        }
         target = GameObject.FindGameObjectWithTag("Player").transform;
+
+
         aa = target.position - transform.position;
 
         if (target.position.x > transform.position.x)
@@ -37,6 +47,8 @@ public class BulletScript : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = false;
             //left = true;
         }
+
+        
 
     }
     public void Update()

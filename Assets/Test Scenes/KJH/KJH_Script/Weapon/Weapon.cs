@@ -5,7 +5,6 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public int D;
-    public GameObject YourWeapon;
     public GameObject YourParent;
     public GameObject Current;
    
@@ -18,7 +17,8 @@ public class Weapon : MonoBehaviour
             if (col.tag == "Monster")
             {
                 CameraShake.Cam_instance.Shake(0.1f, 0.005f);
-                col.GetComponent<Character>().Damage(D);                
+                col.GetComponent<Character>().Damage(D);
+                Debug.Log(col.name);
             }
         }
     } 

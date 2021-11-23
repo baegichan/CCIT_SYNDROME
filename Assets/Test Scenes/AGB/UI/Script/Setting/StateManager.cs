@@ -49,7 +49,6 @@ public class StateManager : MonoBehaviour
   
 
 
-    public AbyssManager abyssManager;
 
     [SerializeField]
     private Image HpBar;
