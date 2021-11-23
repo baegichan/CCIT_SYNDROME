@@ -29,7 +29,7 @@ public class ResercherMonster : Character
     public bool trace;
     public bool Targeton = false;
     public bool Dead;
-
+    public bool movable = false;
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
     //SerializeField 쓴 이유는 인스펙터에선느 접근이 가능하지만 외부 스크립트에서 접근이 불가능하게 막으러고 사용했다. 몬스터마다 각각의 고유 범위가 있기 때문에 이는 참조가 되면 안된다고 생각
@@ -43,7 +43,7 @@ public class ResercherMonster : Character
 
     [SerializeField] private LayerMask m_viewTargetMask; //볼 수 있는 타겟
     [SerializeField] private LayerMask m_viewObstacleMask; //시야를 가로막는 오브젝트 레이어
-    
+
 
     private List<Collider2D> hitedTargetContainer = new List<Collider2D>(); //맞은 타겟을 저장해두는 리스트
 
@@ -81,7 +81,7 @@ public class ResercherMonster : Character
             trace = false;
             anim.SetTrigger("Dead");
         }
-
+        
     }
 
     private void FixedUpdate()
@@ -109,6 +109,8 @@ public class ResercherMonster : Character
             anim.SetFloat("Direction", 1);
     }
 
+  
+
     public void ResercherAttack()
     {
         if (anim.GetFloat("Direction") == -1)
@@ -134,13 +136,23 @@ public class ResercherMonster : Character
 
     public void Patroll()
     {
-        transform.Translate(Vector2.right * patrolSpeed * Time.deltaTime);
+        //transform.Translate(Vector2.right * patrolSpeed * Time.deltaTime);
         Filp();
     }
 
-    public void ClupDestroy()
+    public void ResercherDestroy()
     {
         Destroy(gameObject);
+    }
+
+    public void Movetrue()
+    {
+        movable = true;
+    }
+
+    public void Movefalse()
+    {
+        movable = false;
     }
 
     public void Filp()

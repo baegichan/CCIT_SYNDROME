@@ -11,7 +11,7 @@ public class FireflyMonster:Character
     public float atkDelay;
 
     [Header("Refernce")]
-    public GameObject fireflybullet;
+    public Bullet_Attack bullet_Attack;
     public GameObject player;//플레이어 피봇 위치 트러짐 떄문에 사용
     public Transform playerTransform;//플레이어 피봇 위치 트러짐 떄문에 사용
     public Animator anim;
@@ -128,7 +128,8 @@ public class FireflyMonster:Character
                 
             }
         }
-        Instantiate(fireflybullet, atkpos.transform.position, Quaternion.identity);
+        bullet_Attack.Attack(playerTransform.gameObject);
+        //Instantiate(fireflybullet, atkpos.transform.position, Quaternion.identity);
     }
 
     public void Patroll()
