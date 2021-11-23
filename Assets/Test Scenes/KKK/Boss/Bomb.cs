@@ -16,6 +16,7 @@ public class Bomb : MonoBehaviour
 
     public GameObject Player;
     public GameObject Explosion;
+    public GameObject Abyss_Explosion;
 
     public int Weight;
     public int Height;

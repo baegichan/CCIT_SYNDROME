@@ -5,6 +5,7 @@ using UnityEngine;
 public class Black_Fog : MonoBehaviour
 {
     public int Black_Fog_Damage = 15;
+    public int Black_Fog_Damage2 = 25;
     float Damage_Delay = 1.5f;
 
     private void Start()
