@@ -8,7 +8,9 @@ public class Enhance : MonoBehaviour
 {
     public Char_Parent CP;
 
+    public GameObject Ability_;
     public GameObject Ability_Shop;
+    public GameObject Enhance_;
     public GameObject Ability_Enhance;
     public GameObject EnhanceNPC;
     public GameObject[] PageButton;
@@ -169,20 +171,19 @@ public class Enhance : MonoBehaviour
 
     public void OpenShop()
     {
-        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.selectedSprite;
-        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Toggle>().spriteState.disabledSprite;
-
+        Ability_.SetActive(true);
         Ability_Shop.SetActive(true);
+        Enhance_.SetActive(false);
         Ability_Enhance.SetActive(false);
     }
 
     public void OpenEnhance()
     {
-        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.disabledSprite;
-        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Toggle>().spriteState.selectedSprite;
-
+        Ability_.SetActive(false);
         Ability_Shop.SetActive(false);
+        Enhance_.SetActive(true);
         Ability_Enhance.SetActive(true);
+
         SettingAbility();
     }
 

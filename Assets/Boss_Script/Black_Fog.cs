@@ -5,10 +5,18 @@ using UnityEngine;
 public class Black_Fog : MonoBehaviour
 {
     public int Black_Fog_Damage = 15;
+    public int Abycss_Black_Fog_Damage = 25;
     float Damage_Delay = 1.5f;
+
+    public bool Abycss_Boss_Monster= false;
+
 
     private void Start()
     {
+        if(Abycss_Boss_Monster == true)
+        {
+            Black_Fog_Damage = Abycss_Black_Fog_Damage;
+        }
         Destroy(this.gameObject, 1.5f);
     }
 

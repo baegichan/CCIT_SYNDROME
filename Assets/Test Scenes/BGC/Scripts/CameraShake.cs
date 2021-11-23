@@ -10,7 +10,7 @@ public class CameraShake : MonoBehaviour
     private Vector3 pre_Cam_Vec;
     private float shake_time=0.0f;
     private float shake_power=0.0f;
-
+    private bool shaking;
     void Awake()
     {
         
@@ -30,22 +30,32 @@ public class CameraShake : MonoBehaviour
     {
         
     }
-  
+    Vector3 PrePos;
     public IEnumerator Shaking(float time, float power)
     {
-        Vector3 PrePos = transform.localPosition;
-        float elapsed = 0.0f;
-        while(elapsed<time)
-        {
-            float x = Random.Range(-1f, 1f) * power;
-            float y = Random.Range(-1f, 1f) * power;
-            transform.localPosition = new Vector3(x, y, PrePos.z);
-            elapsed += Time.deltaTime;
-            yield return null;
+    if(shaking==true)
+    {
+            transform.localPosition = PrePos;
+            shaking = false;
+            StartCoroutine(Shaking(time,power));
+    }
+    else 
+    {
+            shaking = true;
+            PrePos = transform.localPosition;
+            float elapsed = 0.0f;
+            while (elapsed < time)
+            {
+                float x = Random.Range(-1f, 1f) * power;
+                float y = Random.Range(-1f, 1f) * power;
+                transform.localPosition = new Vector3(x, y, PrePos.z);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            transform.localPosition = PrePos;
+            shaking = false;
         }
-
-
-        transform.localPosition = PrePos;
+       
 
     }
     private void OnPreRender()
@@ -67,14 +77,13 @@ public class CameraShake : MonoBehaviour
             //shake_time -= Time.De;
         }
     }
-    static public void Shake(float time,float power)
+     public void Shake(float time,float power)
     {
-        if(Cam_instance==null)
-        {
-            return;
-        }
-        
-       // Cam_instance.shake_time = time;
-       // Cam_instance.shake_power = power;
+        //if(Cam_instance==null)
+        //{
+         //   return;
+       // }
+
+        StartCoroutine(Shaking(time, power));
     }
 }

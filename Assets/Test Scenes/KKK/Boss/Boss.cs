@@ -9,11 +9,14 @@ public class Boss : Character
                                //플레이어가 보스방에 입장하면 True
 
 
+    public bool Abyss_on;
+    //보스 어비스 상태에서는 데미지만 높게
+
     public bool Player_On_Ground = true;// 
     bool Boss_State_Check = true;//무언가를 하는중이면 false
     bool Boss_HP_Frame_Check;
     bool Boss_HP_Half;
-
+    bool Barrier;
 
     Animator anim;
 
@@ -23,6 +26,7 @@ public class Boss : Character
     public float Boss_Attack_Cooltime = 1;
     public float Bullet_Delay = 0.15f;
     public float Boss_Translate_Cooltime = 30;
+    public float Barrier_Cool = 0;
 
 
 
@@ -33,8 +37,7 @@ public class Boss : Character
 
 
     [Header("Boss_Info")]
-    public int Boss_HP;
-    public int Boss_Currnent_HP;
+    public int Boss_Shild;
 
 
     int Stom_Count = 0;
@@ -42,14 +45,15 @@ public class Boss : Character
     [Header("GameObject")]
     public GameObject Boss_Bullet;//보스 총알
     public GameObject Bomb_Obj;//수류탄
+    public GameObject Abyss_Bomb_Obj;//심연 수류탄
     public GameObject Black_Fog;//검은 안개
     public GameObject Stom_Obj;//검은 소용돌이
     public GameObject Big_Stom_Obj;
     public GameObject FireFly_Monster;
     public GameObject Bomb_Transform;
+    public GameObject Barrier_Hit;
 
 
-    public GameObject[] Boss_Body = new GameObject[15];
     public GameObject[] Boss_Particle = new GameObject[8];
 
 
@@ -63,9 +67,35 @@ public class Boss : Character
 
     RaycastHit2D hit;
     float MaxDistance = 15;
+
     [SerializeField]
     LayerMask m_viewTargetMask; //타겟레이어
 
+
+    int aa = 0;int bb = 0;//몰?루
+    public int P_bossHP 
+    { 
+        get
+        { 
+            return Shield;
+        }
+        set 
+        {
+            if (Barrier)
+            {
+                if(aa == 0)
+                {
+                    bb = Shield;
+                    aa++;
+                }
+                if (bb != Shield) 
+                {
+                    Instantiate(Barrier_Hit, transform.position, Quaternion.identity);
+                    aa = 0;
+                }
+            }; 
+        }
+    }
 
     void Start()
     {
@@ -73,31 +103,31 @@ public class Boss : Character
         //BM = GameManager.instance;
         anim = GetComponent<Animator>();
         speed = 1;
-        Hp_Max = Boss_HP;
-        Hp_Current = Boss_Currnent_HP;
+        Hp_Max = 2000;
+        Hp_Current = Hp_Max;
 
         Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<TestPlayer>().SelectChar.transform;//플레이어 위치 받아올수 있게
 
-
+        //Abyss_on = true;
+        /*
+        if(Abyss_on == true)
+        {
+            transform.GetChild(1).gameObject.SetActive(true);
+        }
+        */
+        Shield = Hp_Max / 5;
+        
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Debug.Log(transform.position);
         if (Boss_Active_on == true)
         {
 
             
 
-
-            //Vector2 Distance = Player_Transform.position - this.transform.position;
-            //Debug.Log(Player_Transform.position);
-            //Dis = Vector2.SqrMagnitude(Distance);//플레이어와 몬스터 거리 받아옴
             Dis = Vector3.Distance(Player_Transform.position , transform.position);
-
-            //Cool_Control();//쿨 cool.....
 
             Trace_Player();
 
@@ -143,46 +173,9 @@ public class Boss : Character
 
             }
 
+            
 
-
-            /*
-            if (Stom_Count == 1)
-            {
-                if (Hp_Current <= Hp_Max * 0.5)
-                {
-                    //심연으로 바뀌고 
-                    Destroy(frame);
-                    Big_frame = (GameObject)Instantiate(Big_Stom_Obj, new Vector3(0, 2, 0), Quaternion.identity);
-
-                    Big_frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
-                    Big_frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
-
-                    Stom_Count++;
-                }
-            }
-            */
-            /*
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Boss_Move"))//현재 걷는 애니메이션이 돌아가는 상황이어야 할때
-            {
-                if(speed == 0)
-                {
-                    speed = 0;
-                    anim.SetBool("Check_Idle", true);
-                }
-                else
-                {
-                    anim_off();
-                }
-            }
-            */
-            /*
-            if (Input.GetMouseButtonDown(0))
-            {
-                Throw_Bomb();
-            }
-
-
-            */
+            
             if (Boss_HP_Frame_Check == true)
             {
                 speed = 0;
@@ -193,7 +186,29 @@ public class Boss : Character
                 Cool_Control();
             }
 
+            P_bossHP = Shield;
+            Debug.Log(Shield);
+           
 
+
+
+            if (Barrier_Cool > 0)
+            {
+                Barrier_Cool -= Time.deltaTime;
+            }
+
+
+
+
+            
+            if(Barrier == true)
+            {
+                if(Shield <= 0)
+                {
+                    transform.GetChild(0).gameObject.SetActive(false);
+                   
+                }
+            }
             /*
             if(Boss_HP_Half == true)
             {
@@ -201,6 +216,10 @@ public class Boss : Character
                 anim
             }
             */
+
+
+
+
 
 
 
@@ -214,7 +233,7 @@ public class Boss : Character
             if (Boss_HP_Frame_Check == false)
             {
                 Boss_HP_Frame_Check = true;
-                //StartCoroutine(Respawn_Monster());
+                //////////////////////StartCoroutine(Respawn_Monster());
             }
 
             if(Frame_Count_Check == 0)
@@ -358,12 +377,8 @@ public class Boss : Character
             {
                 Attack_Cool -= Time.deltaTime;
 
-
                 if(Attack_Cool <= 0)
                 {
-                   
-                    
-
                     Select_Pattern();
                 }
             }
@@ -385,7 +400,7 @@ public class Boss : Character
             if(Dis > Distance_To_Player)
             {
                 anim.SetBool("Shot_Bullet", true);
-                Invoke("Ins_Bullet", 0.4f);
+                //Invoke("Ins_Bullet", 0.4f);
             }
             else if(Dis <= Distance_To_Player)
             {
@@ -401,16 +416,24 @@ public class Boss : Character
                 else if(Black_Fog_Ins_Count == 1 && Boss_Translate_Cooltime > 0)
                 {
                     Black_Fog_Ins_Count = 0;
-                    int aa = Random.Range(0, 2);
+                    int aa = Random.Range(0, 3);
                     if (aa == 0)
                     {
                         anim.SetBool("Shot_Bullet", true);
-                        Invoke("Ins_Bullet", 0.4f);
+                        //Invoke("Ins_Bullet", 0.4f);
                     }
-                    else
+                    else if(aa == 1)
                     {
                         anim.SetBool("Stomping", true);
                         //Invoke("Black_Fog_Ins", 1f);
+                    }
+                    else if(aa == 2)
+                    {
+                        if (Barrier_Cool <= 0)
+                            anim.SetBool("Barrier_Check", true);
+                        else
+                            Select_Pattern();
+
                     }
                 }
             }
@@ -437,16 +460,23 @@ public class Boss : Character
                 else if (Black_Fog_Ins_Count == 1 && Boss_Translate_Cooltime > 0)
                 {
                     Black_Fog_Ins_Count = 0;
-                    int aa = Random.Range(0, 2);
+                    int aa = Random.Range(0, 3);
                     if (aa == 0)
                     {
                         anim.SetBool("Throw_Bomb", true);
                         //Invoke("Throw_Bomb", 0.17f);
                     }
-                    else
+                    else if(aa == 1)
                     {
                         anim.SetBool("Stomping", true);
                         //Invoke("Black_Fog_Ins", 1f);
+                    }
+                    else if(aa== 2)
+                    {
+                        if (Barrier_Cool <= 0)
+                            anim.SetBool("Barrier_Check", true);
+                        else
+                            Select_Pattern();
                     }
                 }
             }
@@ -458,11 +488,17 @@ public class Boss : Character
         anim.SetBool("Translate_Boss", true);
         speed = 0;
 
-        Invoke("Fade_In", 1f);
+
+        Invoke("Fade_In", 0.8f);
+       
 
     }
     void Fade_In()//보스 이동후 사라졌다 나오는거~
     {
+        anim.SetBool("Translate_Boss", false);
+        anim.SetBool("Check_Idle", false);
+
+
         if (transform.position.x >= 0)
         {
             transform.position = new Vector3(transform.position.x - 8, transform.position.y, transform.position.z);
@@ -472,14 +508,14 @@ public class Boss : Character
             transform.position = new Vector3(transform.position.x + 8, transform.position.y, transform.position.z);
         }
 
-        anim_off();
+        
 
         anim.SetBool("Translate_Boss2", true);
 
         Boss_Translate_Cooltime = 15;
         Black_Fog_Ins_Count = 0;
 
-        Invoke("anim_off", 1f);
+        //Invoke("anim_off", 0.8f);
        
         //anim_off();
         Invoke("speed_back", 1f);
@@ -507,6 +543,100 @@ public class Boss : Character
 
     GameObject[] Bullet_4 = new GameObject[4];
 
+    void Ins_Bullet_1()
+    {
+        Boss_State_Check = false;
+    }
+    void Ins_Bullet_2()
+    {
+        speed = 0;
+        Bullet_4[Normal_Atk_Count] = Instantiate(Boss_Bullet, Left_Hand.position, Quaternion.identity);//총알 생성 위치 조정 필요
+        if (transform.localScale.x > 0)
+        {
+            Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().right = true;
+            if (Abyss_on == true)
+                Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
+        }
+        else if (transform.localScale.x < 0)
+        {
+            Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().left = true;
+            if (Abyss_on == true)
+                Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
+        }
+        Normal_Atk_Count++;
+    }
+    void Ins_Bullet_3()
+    {
+        speed = 0;
+        Bullet_4[Normal_Atk_Count] = Instantiate(Boss_Bullet, Left_Hand.position, Quaternion.identity);//총알 생성 위치 조정 필요
+        if (transform.localScale.x > 0)
+        {
+            Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().right = true;
+            if (Abyss_on == true)
+                Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
+        }
+        else if (transform.localScale.x < 0)
+        {
+            Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().left = true;
+            if (Abyss_on == true)
+                Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
+        }
+        Normal_Atk_Count++;
+    }
+    void Ins_Bullet_4()
+    {
+        speed = 0;
+        Bullet_4[Normal_Atk_Count] = Instantiate(Boss_Bullet, Right_Hand.position, Quaternion.identity);//총알 생성 위치 조정 필요
+        if (transform.localScale.x > 0)
+        {
+            Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().right = true;
+            if (Abyss_on == true)
+                Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
+        }
+        else if (transform.localScale.x < 0)
+        {
+            Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().left = true;
+            if (Abyss_on == true)
+                Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
+        }
+        Normal_Atk_Count++;
+    }
+
+    void Ins_Bullet_5()
+    {
+        speed = 0;
+        Bullet_4[Normal_Atk_Count] = Instantiate(Boss_Bullet, Right_Hand.position, Quaternion.identity);//총알 생성 위치 조정 필요
+        if (transform.localScale.x > 0)
+        {
+            Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().right = true;
+            if (Abyss_on == true)
+                Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
+        }
+        else if (transform.localScale.x < 0)
+        {
+            Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().left = true;
+            if (Abyss_on == true)
+                Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
+        }
+        Normal_Atk_Count++;
+
+
+        Normal_Atk_Count = 0;
+
+        anim_off();
+        anim.SetBool("Check_Idle", false);
+        Invoke("speed_back", 0.8f);
+    }
+
+    void Ins_Bullet_End()
+    {
+        Normal_Atk_Count = 0;
+
+        anim_off();
+        anim.SetBool("Check_Idle", false);
+        speed_back();
+    }
+
     void Ins_Bullet()//기본공격 총알 생성
     {
         
@@ -520,10 +650,14 @@ public class Boss : Character
                 if(transform.localScale.x > 0)
                 {
                     Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().right = true;
+                    if (Abyss_on == true)
+                        Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
                 }
                 else if(transform.localScale.x < 0)
                 {
                     Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().left = true;
+                    if (Abyss_on == true)
+                        Bullet_4[Normal_Atk_Count].GetComponent<BulletScript>().Abyss_Bullet_State = true;
                 }
             }
             else if (Normal_Atk_Count == 2 || Normal_Atk_Count == 3)
@@ -556,6 +690,11 @@ public class Boss : Character
         }
     }
 
+    
+
+
+
+
 
     int Black_Fog_Ins_Count = 0;
     void Black_Fog_Ins()//검은안개 생성
@@ -564,7 +703,9 @@ public class Boss : Character
         speed = 0;
 
 
-        Instantiate(Black_Fog, Black_Fog_Transform.position, Quaternion.identity);
+        GameObject BF = Instantiate(Black_Fog, Black_Fog_Transform.position, Quaternion.identity);
+        if (Abyss_on == true)
+        BF.GetComponent<Black_Fog>().Abycss_Boss_Monster = true;
 
         Black_Fog_Ins_Count++;
 
@@ -578,31 +719,7 @@ public class Boss : Character
 
     GameObject frame;
     GameObject Big_frame;
-    void Stoming()//액자 생성
-    {
-        if(Stom_Count == 0)
-            if (Hp_Current <= Hp_Max * 0.75)
-            {
-                //위로 총 두번 두는 애니메이션 틀고
-                speed = 0;
 
-                frame = (GameObject)Instantiate(Stom_Obj,new Vector3(0,2,0), Quaternion.identity);
-
-
-                frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
-                frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
-
-                Stom_Count++;
-
-
-
-
-                Invoke("speed_back", 0.5f);
-
-            }
-      
-    }
-   
     int Normal_Atk_Count;//총알 갯수
     
     GameObject[] Bomb = new GameObject[4];
@@ -614,8 +731,13 @@ public class Boss : Character
         speed = 0;
         for (int i = 0; i < 1; i++)
         {
-            Bomb[i] = Instantiate(Bomb_Obj, Bomb_Transform.transform.position, Quaternion.identity);
-            //Bomb[i] = Instantiate(Bomb_Obj, Bomb_Transform.transform.localPosition, Quaternion.identity);
+            if (Abyss_on == false)
+                Bomb[i] = Instantiate(Bomb_Obj, Bomb_Transform.transform.position, Quaternion.identity);
+            else if(Abyss_on == true)
+            {
+                Bomb[i] = Instantiate(Abyss_Bomb_Obj, Bomb_Transform.transform.position, Quaternion.identity);
+                //Bomb[i].GetComponent<Bomb>().Abycss_state = true;
+            }
 
         }
         anim_off();
@@ -632,13 +754,21 @@ public class Boss : Character
         Frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
         
     }
-    public void Boss_HP_Frame_Check_False()
+    public void Boss_HP_Frame_Check_False()//Animation Event용
     {
         Boss_HP_Frame_Check = false;
-        Debug.Log(23);
     }
 
+    public void Barrier_Set()
+    {
+        Barrier = true;
+        transform.GetChild(0).gameObject.SetActive(true);
+        Shield = Boss_Shild;
 
+        Barrier_Cool = 12;
+    }
+
+    
     void anim_off()
     {
         if (Player_On_Ground == true)
@@ -670,10 +800,10 @@ public class Boss : Character
         anim.SetBool("Shot_Bullet", false);
         anim.SetBool("Syclone", false);
         anim.SetBool("Stomping", false);
-            anim.SetBool("Throw_Bomb", false);
-            anim.SetBool("Translate_Boss", false);
-            anim.SetBool("Translate_Boss2", false);
-        Debug.Log(23);
+        anim.SetBool("Throw_Bomb", false);
+        anim.SetBool("Translate_Boss", false);
+        anim.SetBool("Translate_Boss2", false);
+        anim.SetBool("Barrier_Check", false);
 
         }
     void speed_back()//Invoke용
@@ -683,6 +813,10 @@ public class Boss : Character
         Attack_Cool = Boss_Attack_Cooltime;
 
     }
+
+
+
+
 
 
 }

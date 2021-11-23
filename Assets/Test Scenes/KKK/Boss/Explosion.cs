@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
+    public int Normal_Boss_Bomb_Damage;
     private void Start()
     {
 
@@ -17,7 +18,7 @@ public class Explosion : MonoBehaviour
         {
             if (collision.CompareTag("Player"))
             {
-                collision.transform.parent.GetComponent<Character>().Damage(20);
+                collision.transform.parent.GetComponent<Character>().Damage(Normal_Boss_Bomb_Damage);
                 //Destroy(this.gameObject, 5);플레이어가 밟으면 터지는거 애니메이션 끝나면 없애줄꺼임// 5초는 그냥 설정
                 Destroy(gameObject,3);
             }

@@ -7,14 +7,13 @@ public class Bomb : MonoBehaviour
 {
     [Range(0, 1)]
     public float Test;
-   
 
     public Vector3 p1;
     public Vector3 p2;
     public Vector3 p3;
     public Vector3 p4;
 
-    public GameObject Player;
+    GameObject Player;
     public GameObject Explosion;
 
     public int Weight;
@@ -26,6 +25,9 @@ public class Bomb : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");
         Transform Player_Transform = Player.GetComponent<TestPlayer>().SelectChar.transform;
         
+        
+
+
 
         p1 = transform.position;
         p2 = new Vector3(p1.x, p1.y + Height, p1.z);
@@ -75,16 +77,19 @@ public class Bomb : MonoBehaviour
         {
             if (collision.CompareTag("Player"))
             {
-                //ollision.transform.parent.GetComponent<Character>().Damage(20);
+                
                 Instantiate(Explosion, this.transform.position, Quaternion.identity);
+                
                 Destroy(gameObject);
 
                 //Destroy(this.gameObject, 5);플레이어가 밟으면 터지는거 애니메이션 끝나면 없애줄꺼임// 5초는 그냥 설정
             }
             if (collision.CompareTag("Ground"))
             {
-                Instantiate(Explosion, this.transform.position, Quaternion.identity);
-                Destroy(gameObject);
+            
+                    //Instantiate(Explosion, this.transform.position, Quaternion.identity);
+                
+                //Destroy(gameObject);
             }
 
         }
