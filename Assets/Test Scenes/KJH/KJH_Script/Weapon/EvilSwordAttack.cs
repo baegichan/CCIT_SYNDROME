@@ -48,6 +48,7 @@ public class EvilSwordAttack : MonoBehaviour
             {
                 if (col.tag == "Monster")
                 {
+                    CameraShake.Cam_instance.Shake(0.12f, 0.005f);
                     Current = col.gameObject;
                     Current.GetComponent<Character>().Damage(D);
                 }
@@ -56,7 +57,7 @@ public class EvilSwordAttack : MonoBehaviour
             {
                 if (col.tag == "Monster")
                 {              
-                    CameraShake.Shake(1000, 1000);
+                    CameraShake.Cam_instance.Shake(0.5f, 0.09f);
                     Current = col.gameObject;
                     Current.GetComponent<Character>().Damage(D);
                   
@@ -69,6 +70,7 @@ public class EvilSwordAttack : MonoBehaviour
     {
         if (EvilSwordAniEvent.Attack_int == 0)
         {
+            CameraShake.Cam_instance.Shake(0.12f, 0.01f);
             Current.GetComponent<Character>().Damage(20);
         }
     }
