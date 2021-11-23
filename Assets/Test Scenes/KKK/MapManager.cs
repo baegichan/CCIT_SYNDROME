@@ -6,6 +6,7 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager s_Instace;
     public bool Map_Lock = false;
+    public MiniMap Minimap;
     public void instace()
     {
         if (s_Instace == null)
@@ -89,7 +90,7 @@ public class MapManager : MonoBehaviour
 
     }
     [SerializeField]
-    int Level;
+    public int Level;
     int map_index;
     [Header("간격 default = 500")]
     public int width = 500;//사이 간격
@@ -99,7 +100,7 @@ public class MapManager : MonoBehaviour
 
 
     [SerializeField]
-    GameObject[,] map;
+   public GameObject[,] map;
     [SerializeField]
     int a = 0, b = 0;
     [SerializeField]
@@ -255,6 +256,7 @@ public class MapManager : MonoBehaviour
         Maps.GetComponent<MapLoadTest>().Starting_Setting();
         MapAllOff();
         PCurrent_Room = new Vector2(Level, Level);
+        Minimap.MiniMapSetting();
     }
     void bbb()//맵 최소 개수 
     {

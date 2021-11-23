@@ -22,7 +22,7 @@ public class MapCreate : MonoBehaviour
     {
         
     }
-    private void Start()
+    public void MapLoad()
     {
         Level = 4;
         for(int i =0; i<Level*2+1;i++)
