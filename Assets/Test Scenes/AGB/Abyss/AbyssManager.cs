@@ -167,7 +167,7 @@ public class AbyssManager : MonoBehaviour
     /// </summary>
     public void GoAbyss()
     {
-        Debug.Log("ddd");
+        
         isAbyssStay = true;
         abyssState = AbyssState.Abyss; // enum에 상태값 입력
        
