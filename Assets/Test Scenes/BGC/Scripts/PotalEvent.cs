@@ -105,27 +105,36 @@ public class PotalEvent : MonoBehaviour
     switch(PotalType)
     {
             case Potals.PotalType.L:
+                MapManager.s_Instace.Minimap.CurrentOff(MapManager.s_Instace.PCurrent_Room);
                 MapManager.s_Instace.PCurrent_Room = new Vector2(MapManager.s_Instace.PCurrent_Room.x-1, MapManager.s_Instace.PCurrent_Room.y);
                 Player.transform.position = MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).transform.Find("Potals(Clone)").GetComponent<Potals>().R_Potal.transform.position;
                 MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).transform.Find("Potals(Clone)").GetComponent<Potals>().R_Potal.GetComponent<PotalEvent>().Teleport_able = false;
+                MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).GetComponent<Room_data>().Visit();
+                MapManager.s_Instace.Minimap.CurrentOn(MapManager.s_Instace.PCurrent_Room);
                 break;
             case Potals.PotalType.R:
+                MapManager.s_Instace.Minimap.CurrentOff(MapManager.s_Instace.PCurrent_Room);
                 MapManager.s_Instace.PCurrent_Room = new Vector2(MapManager.s_Instace.PCurrent_Room.x+1, MapManager.s_Instace.PCurrent_Room.y);
                 Player.transform.position = MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).transform.Find("Potals(Clone)").GetComponent<Potals>().L_Potal.transform.position;
                 MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).transform.Find("Potals(Clone)").GetComponent<Potals>().L_Potal.GetComponent<PotalEvent>().Teleport_able = false;
-
+                MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).GetComponent<Room_data>().Visit();
+                MapManager.s_Instace.Minimap.CurrentOn(MapManager.s_Instace.PCurrent_Room);
                 break;
             case Potals.PotalType.T:
+                MapManager.s_Instace.Minimap.CurrentOff(MapManager.s_Instace.PCurrent_Room);
                 MapManager.s_Instace.PCurrent_Room = new Vector2(MapManager.s_Instace.PCurrent_Room.x, MapManager.s_Instace.PCurrent_Room.y+1);
                 Player.transform.position = MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).transform.Find("Potals(Clone)").GetComponent<Potals>().B_Potal.transform.position;
                 MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).transform.Find("Potals(Clone)").GetComponent<Potals>().B_Potal.GetComponent<PotalEvent>().Teleport_able = false;
-
+                MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).GetComponent<Room_data>().Visit();
+                MapManager.s_Instace.Minimap.CurrentOn(MapManager.s_Instace.PCurrent_Room);
                 break;
             case Potals.PotalType.B:
+                MapManager.s_Instace.Minimap.CurrentOff(MapManager.s_Instace.PCurrent_Room);
                 MapManager.s_Instace.PCurrent_Room = new Vector2(MapManager.s_Instace.PCurrent_Room.x, MapManager.s_Instace.PCurrent_Room.y-1);
                 Player.transform.position = MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).transform.Find("Potals(Clone)").GetComponent<Potals>().T_Potal.transform.position;
                 MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).transform.Find("Potals(Clone)").GetComponent<Potals>().T_Potal.GetComponent<PotalEvent>().Teleport_able = false;
-
+                MapManager.s_Instace.Maps.transform.GetChild(MapManager.s_Instace.currentindexreturner()).GetComponent<Room_data>().Visit();
+                MapManager.s_Instace.Minimap.CurrentOn(MapManager.s_Instace.PCurrent_Room);
                 break;
         }
        
