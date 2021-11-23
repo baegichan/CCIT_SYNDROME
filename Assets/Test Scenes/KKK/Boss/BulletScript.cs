@@ -7,8 +7,17 @@ public class BulletScript : MonoBehaviour
     //public GameObject Boss;//Component받아와야함
 
     Transform target;
+
+    [Header("Normal")]
     public float bullet_speed;
     public int Bullet_Damage;
+
+    [Header("Abyss")]
+    public float Abyss_bullet_speed;
+    public int Abyss_bullet_Damage;
+
+
+
     public bool left;
     public bool right;
 

@@ -13,7 +13,7 @@ public class Boss : Character
     bool Boss_State_Check = true;//무언가를 하는중이면 false
     bool Boss_HP_Frame_Check;
     bool Boss_HP_Half;
-
+    bool Barrier;
 
     Animator anim;
 
@@ -80,6 +80,10 @@ public class Boss : Character
 
 
 
+
+
+
+
     }
 
     // Update is called once per frame
@@ -143,7 +147,7 @@ public class Boss : Character
 
             }
 
-
+            
 
             /*
             if (Stom_Count == 1)
@@ -204,6 +208,10 @@ public class Boss : Character
 
 
 
+
+
+
+
         }
     }
     int Frame_Count_Check;
@@ -214,7 +222,7 @@ public class Boss : Character
             if (Boss_HP_Frame_Check == false)
             {
                 Boss_HP_Frame_Check = true;
-                //StartCoroutine(Respawn_Monster());
+                //////////////////////StartCoroutine(Respawn_Monster());
             }
 
             if(Frame_Count_Check == 0)
@@ -401,16 +409,20 @@ public class Boss : Character
                 else if(Black_Fog_Ins_Count == 1 && Boss_Translate_Cooltime > 0)
                 {
                     Black_Fog_Ins_Count = 0;
-                    int aa = Random.Range(0, 2);
+                    int aa = Random.Range(0, 3);
                     if (aa == 0)
                     {
                         anim.SetBool("Shot_Bullet", true);
                         Invoke("Ins_Bullet", 0.4f);
                     }
-                    else
+                    else if(aa == 1)
                     {
                         anim.SetBool("Stomping", true);
                         //Invoke("Black_Fog_Ins", 1f);
+                    }
+                    else if(aa == 2)
+                    {
+                        anim.SetBool("Barrier_Check", true);
                     }
                 }
             }
@@ -437,16 +449,20 @@ public class Boss : Character
                 else if (Black_Fog_Ins_Count == 1 && Boss_Translate_Cooltime > 0)
                 {
                     Black_Fog_Ins_Count = 0;
-                    int aa = Random.Range(0, 2);
+                    int aa = Random.Range(0, 3);
                     if (aa == 0)
                     {
                         anim.SetBool("Throw_Bomb", true);
                         //Invoke("Throw_Bomb", 0.17f);
                     }
-                    else
+                    else if(aa == 1)
                     {
                         anim.SetBool("Stomping", true);
                         //Invoke("Black_Fog_Ins", 1f);
+                    }
+                    else if(aa== 2)
+                    {
+                        anim.SetBool("Barrier_Check", true);
                     }
                 }
             }
@@ -458,11 +474,17 @@ public class Boss : Character
         anim.SetBool("Translate_Boss", true);
         speed = 0;
 
-        Invoke("Fade_In", 1f);
+
+        Invoke("Fade_In", 0.8f);
+       
 
     }
     void Fade_In()//보스 이동후 사라졌다 나오는거~
     {
+        anim.SetBool("Translate_Boss", false);
+        anim.SetBool("Check_Idle", false);
+
+
         if (transform.position.x >= 0)
         {
             transform.position = new Vector3(transform.position.x - 8, transform.position.y, transform.position.z);
@@ -472,14 +494,14 @@ public class Boss : Character
             transform.position = new Vector3(transform.position.x + 8, transform.position.y, transform.position.z);
         }
 
-        anim_off();
+        
 
         anim.SetBool("Translate_Boss2", true);
 
         Boss_Translate_Cooltime = 15;
         Black_Fog_Ins_Count = 0;
 
-        Invoke("anim_off", 1f);
+        //Invoke("anim_off", 0.8f);
        
         //anim_off();
         Invoke("speed_back", 1f);
@@ -632,10 +654,15 @@ public class Boss : Character
         Frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
         
     }
-    public void Boss_HP_Frame_Check_False()
+    public void Boss_HP_Frame_Check_False()//Animation Event용
     {
         Boss_HP_Frame_Check = false;
-        Debug.Log(23);
+    }
+
+    public void Barrier_Set()
+    {
+        Barrier = true;
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 
 
@@ -673,7 +700,7 @@ public class Boss : Character
             anim.SetBool("Throw_Bomb", false);
             anim.SetBool("Translate_Boss", false);
             anim.SetBool("Translate_Boss2", false);
-        Debug.Log(23);
+        anim.SetBool("Barrier_Check", false);
 
         }
     void speed_back()//Invoke용
