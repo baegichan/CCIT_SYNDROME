@@ -79,13 +79,18 @@ public class Char_Parent : Character
         ChangeChar(SelectChar);
 
         AM.CP = this;
-    
-
-
+        Hp_Current = Hp_Max;
     }
- 
-        void Update()
+    void FixedUpdate()
     {
+        if (Ani.GetBool("CanIThis"))
+        {
+            Move();
+        }
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O)) { Damage(10); }
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);//∏∂øÏΩ∫ ∆˜¿Œ≈Õ ¡¬«•πﬁ±‚//2021.10.12 ±Ë¿Á«Â
         Mouse = Input.mousePosition;//2021.10.12 ±Ë¿Á«Â
         MouseFilp();//2021.10.12 ±Ë¿Á«Â
@@ -94,14 +99,15 @@ public class Char_Parent : Character
         {
             UseSkill();
         }
+
+        if (Ani.GetBool("CanIThis"))
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+        }
+
         UseItem();
         ds();
         atk();
-        if(Ani.GetBool("CanIThis"))
-        {
-            if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
-            Move();
-        }
         if(Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
 
         if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); }
@@ -210,8 +216,8 @@ public class Char_Parent : Character
         if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0)
         {
-            rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime);
-            rigid.velocity = new Vector2(0, 0);
+            rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime, ForceMode2D.Impulse);
+           // rigid.velocity = new Vector2(0, 0);
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);
         }
@@ -380,7 +386,7 @@ public class Char_Parent : Character
                 EvillSwordSwitch();
                 Current_Use = EvilSword;
                 AM.EA = Current_Use.GetComponent<Animator>();
-                Active_Cool_Max = 4f; 
+                Active_Cool_Max = 50f; 
                 break;
             case 9:
                 Active_Cool_Max = 4f;

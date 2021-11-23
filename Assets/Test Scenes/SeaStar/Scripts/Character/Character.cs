@@ -18,17 +18,6 @@ public class Character : MonoBehaviour
     [Tooltip("기본 이동속도")]
     public float speed;
 
-
-
-
-   
-
-    void Awake()
-    {
-        Hp_Current = Hp_Max;
-    }
-
-
     void Update()
     {
         if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
@@ -105,7 +94,7 @@ public class Character : MonoBehaviour
         Debug.Log(firstDamage);
         if (DamageValue > 20)
         {
-           // CameraShake.Shake(70, 0.4f);
+           //CameraShake.Cam_instance.Shake(70, 0.4f);
         }
         int secondDamge = firstDamage - Shield;
         if (secondDamge > 0)
@@ -116,5 +105,4 @@ public class Character : MonoBehaviour
             Shield -= firstDamage - DP;
         Load_Damage_Text(this, firstDamage);
     }
-
 }

@@ -15,11 +15,7 @@ public class AbilityManager : MonoBehaviour
     public int[] WolfAP = { 2, 3, 4, 5 };
 
     //마검
-    public float E_Attack_Damage;
-    public float E_Attack_Int = 0;
-    public float E_Attack_Range = 100;
-    public float E_ResetTimer = 0.8f;
-    public static Transform Spawn;
+    public bool E_Attack_State = false;
     //
     //전투도끼
     public int A_Int;
@@ -134,12 +130,13 @@ public class AbilityManager : MonoBehaviour
     public void BattleAxe()
     {
         CP.Ani.SetInteger("AbilityNum", 4);
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
+            Char_Parent.Active_Cool = 0f;
             A_Attack();
             py.GetComponent<Char_Eden>().P_CombatInt = 1;
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             py.GetComponent<Char_Eden>().P_CombatInt = 0;
             py.GetComponent<Char_Eden>().P_CombatTimer = 5;
@@ -154,12 +151,13 @@ public class AbilityManager : MonoBehaviour
 
     public void Ability_E()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
+            Char_Parent.Active_Cool = 0f;
             EvilSword_Attack();
             py.GetComponent<Char_Eden>().P_CombatInt = 1;
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             py.GetComponent<Char_Eden>().P_CombatInt = 0;
             py.GetComponent<Char_Eden>().P_CombatTimer = 5;
@@ -171,7 +169,13 @@ public class AbilityManager : MonoBehaviour
         CP.Ani.SetTrigger("Ability");
         CP.Ani.SetInteger("AbilityNum", 5);
         CP.Ani.SetBool("Combat", true);
+        CP.Ani.SetBool("CanIThis", false);
         EA.SetTrigger("Attack");
+    }
+
+    public void EvilRe()
+    {
+        CP.Ani.SetBool("CanIThis", true);
     }
 
     public GameObject B_Ball;

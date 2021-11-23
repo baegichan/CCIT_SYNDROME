@@ -109,7 +109,7 @@ public class AbyssManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AbyssBox.SetActive(false);
+        //AbyssBox.SetActive(false);
         abyssState = AbyssState.Reality;
         fogText.text = Convert.ToString(darkfog);
         //∫∏¿Ã∞‘
