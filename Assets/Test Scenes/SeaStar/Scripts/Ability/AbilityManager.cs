@@ -157,6 +157,7 @@ public class AbilityManager : MonoBehaviour
             {
                 py.GetComponent<Char_Eden>().P_CombatInt = 0;
                 EA.SetTrigger("First");
+                EA.SetTrigger("Attack");
             }
             else if(Char_Parent.Active_Cool < Char_Parent.Active_Cool_Max)
             {

@@ -12,6 +12,7 @@ public class Char_Parent : Character
     public static Rigidbody2D rigid;
     AbilityManager AM;
     Camera Cam;
+    public static bool ShopOn;
 
     [Header("플레이어 장비")]
     public GameObject Current_Use;
@@ -23,6 +24,7 @@ public class Char_Parent : Character
     public List<Ability> AbilityHistory;
 
     [Header("플레이어 스테이터스")]
+    public bool Dead;
     public int DefaultHP;
     public int CharHP;
     public int CharAP;
@@ -84,7 +86,7 @@ public class Char_Parent : Character
     }
     void FixedUpdate()
     {
-        if(!Ani.GetBool("ShopOn"))
+        if(!ShopOn)
         {
             if (Ani.GetBool("CanIThis"))
             {
@@ -94,19 +96,18 @@ public class Char_Parent : Character
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O)) { Damage(10); } //테스트용
+        if (Input.GetKeyDown(KeyCode.O)) { Damage(50); } //테스트용
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         Mouse = Input.mousePosition;
-        if (!Ani.GetBool("ShopOn"))
+        if (!ShopOn)
         {
             if (Ani.GetBool("CanIThis"))
             {
-                MouseFilp();
                 if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                 UseItem();
-                ds();
-                atk();
             }
+            ds();
+            atk();
             if (ActiveAbility.AbSprite != null)
             {
                 UseSkill();
@@ -121,7 +122,18 @@ public class Char_Parent : Character
         if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); } //테스트용
         if (AP_Timer > 0) { AP_Time(); }
         else { if (UseApPostion) { UseApPostion = false; } }
-        if(Hp_Current <= 0) { Fail(); }
+        Die();
+    }
+
+    void Die()
+    {
+        if (Hp_Current <= 0 && !Dead)
+        {
+            SelectChar = Char[0];
+            ChangeChar(SelectChar);
+            Dead = true;
+            Ani.SetTrigger("Die");
+        }
     }
 
     //캐릭터 변경
@@ -194,7 +206,7 @@ public class Char_Parent : Character
     public void Move()
     {
         h = Input.GetAxisRaw("Horizontal");
-        transform.position += new Vector3(h * speed * Time.deltaTime, 0);
+        SelectChar.transform.position += new Vector3(h * speed * Time.deltaTime, 0);
 
         switch (h)
         {
@@ -448,7 +460,6 @@ public class Char_Parent : Character
 
     public void SaveAbilityHistory(Ability ability)
     {
-        Debug.Log(ability.AbName);
         if(AbilityHistory.Count == 0) { AbilityHistory.Add(ability); }
         else if(AbilityHistory.Count > 0)
         {
@@ -456,14 +467,18 @@ public class Char_Parent : Character
             {
                 if(AbilityHistory[i].AbCode == ability.AbCode) { break; }
                 else if(i == AbilityHistory.Count - 1 && AbilityHistory[i].AbCode != ability.AbCode) { AbilityHistory.Add(ability); }
-
-                Debug.Log(AbilityHistory[i]);
             }
         }
     }
-
+    GameObject CurrentCha;
+    public void Special_Load_Damage_Text(int Damage)
+    {
+        CurrentCha = GetComponent<Char_Parent>().SelectChar;
+        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), CurrentCha.transform.position + Vector3.up * 3 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+        Text.GetComponent<DamageOBJ>().DamageText(Damage);
+    }
     void Fail()
     {
-        //체력 0돼면 뜨는거
+        //GameResultManager.result.ShowResult(false);
     }
 }

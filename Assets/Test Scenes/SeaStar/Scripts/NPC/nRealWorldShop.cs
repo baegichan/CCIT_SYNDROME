@@ -23,7 +23,16 @@ public class nRealWorldShop : NPC
     {
         Flip();
         talkWithPlayer();
-    } 
+    }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Player") { IsPlayer = true; }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "Player") { IsPlayer = false; }
+    }
 
     void OpenShop()
     {

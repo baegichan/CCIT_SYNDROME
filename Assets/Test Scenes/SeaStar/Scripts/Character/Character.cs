@@ -69,27 +69,37 @@ public class Character : MonoBehaviour
         GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), target.transform.position + Vector3.up * 3+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
     }
-    public void Damage( int DamageValue) 
+    public void Damage(int DamageValue)
     {
-        int firstDamge = DamageValue;
-        if(DamageValue>20)
+
+        if (transform.tag == "Player")
         {
-            //CameraShake.Cam_instance.Shake(70, 0.4f);
+            GetComponent<Char_Parent>().Special_Load_Damage_Text(DamageValue);
+        }
+        else
+        {
+            Load_Damage_Text(this, DamageValue);
+        }
+        int firstDamge = DamageValue;
+        if (DamageValue > 20)
+        {
+            CameraShake.Cam_instance.Shake(70, 0.4f);
         }
         int secondDamge = firstDamge - Shield;
         if (secondDamge > 0)
         {
             Hp_Current -= secondDamge - DP;
-          
-        }       
+
+        }
         if (Shield > 0)
-           Shield -= firstDamge - DP;
-        Load_Damage_Text(this,DamageValue);
+            Shield -= firstDamge - DP;
+
     }
 
 
     public void Damage(int DamageValue, bool IsBuffOn)
     {
+        //Instantiate(HitEffect, position, Quaternion.identity);
         int firstDamage = IsBuffOn ? DamageValue + Mathf.RoundToInt(DamageValue * 0.2f) : DamageValue;
         if (DamageValue > 20)
         {
@@ -103,5 +113,21 @@ public class Character : MonoBehaviour
         if (Shield > 0)
             Shield -= firstDamage - DP;
         Load_Damage_Text(this, firstDamage);
+    }
+    public void KnuckBack(Transform Attacker, float Power)
+    {
+
+        if (Attacker.position.x < transform.position.x)
+        {
+            GetComponent<Rigidbody2D>().AddForce(Vector2.right * Power, ForceMode2D.Impulse);
+            GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+            GetComponent<MonsterColorChanger>().Damaged();
+        }
+        else if (Attacker.position.x > transform.position.x)
+        {
+            GetComponent<Rigidbody2D>().AddForce(Vector2.left * Power, ForceMode2D.Impulse);
+            GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+            GetComponent<MonsterColorChanger>().Damaged();
+        }
     }
 }

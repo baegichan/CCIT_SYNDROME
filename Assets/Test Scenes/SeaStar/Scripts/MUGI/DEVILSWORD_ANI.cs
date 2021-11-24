@@ -5,8 +5,11 @@ using UnityEngine;
 public class DEVILSWORD_ANI : MonoBehaviour
 {
     public static int Attack_int = 0;
-    public List<GameObject> hit = new List<GameObject>();
-    public GameObject ply;
+    public Char_Parent ply;
+    public AbilityManager am;
+    public DEVILSWORD Single;
+    public DEVILSWORD[] Sjard;
+    public DEVILSWORD circle;
 
     void Update()
     {
@@ -16,20 +19,15 @@ public class DEVILSWORD_ANI : MonoBehaviour
         }
     }
 
-    public void Statefalse()
+    public void OffAttack()
     {
-        ply.GetComponent<AbilityManager>().E_Attack_State = false;
+        am.E_Attack_State = false;
     }
 
     void AI()
     {
         Attack_int = 0;
         Char_Parent.Active_Cool = 0f;
-    }
-
-    public void HI()
-    {
-        hit = new List<GameObject>();
     }
 
     public void int1()
@@ -41,22 +39,32 @@ public class DEVILSWORD_ANI : MonoBehaviour
         Attack_int = 2;
     }
 
-    void OnAttakcState()
+    void OnAttack()
     {
-        ply.GetComponent<AbilityManager>().E_Attack_State = true;
+        am.E_Attack_State = true;
     }
     void IcantDo()
     {
-        ply.GetComponent<AbilityManager>().Evilst();
+        am.Evilst();
     }
 
     void IcanDoit()
     {
-        ply.GetComponent<AbilityManager>().EvilRe();
+        am.EvilRe();
     }
 
     void Movefalse()
     {
-        ply.GetComponent<Char_Parent>().Ani.SetBool("Move", false);
+        ply.Ani.SetBool("Move", false);
+    }
+    void ESAttack()
+    {
+        if(Attack_int == 0) { Single.EvilSwordAttack(); }
+        else if(Attack_int == 1)
+        {
+            Sjard[0].EvilSwordAttack();
+            Sjard[1].EvilSwordAttack();
+        }
+        else if(Attack_int == 2) { circle.EvilSwordAttack(); }
     }
 }

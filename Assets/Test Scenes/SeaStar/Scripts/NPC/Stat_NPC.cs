@@ -24,6 +24,16 @@ public class Stat_NPC : NPC
         talkWithPlayer();
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Player") { IsPlayer = true; }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "Player") { IsPlayer = false; }
+    }
+
     void OpenEnhance()
     {
         Enhance_Stat ESH = Enhance_Stat_UI.GetComponent<Enhance_Stat>();

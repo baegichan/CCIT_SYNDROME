@@ -17,11 +17,13 @@ public class Ability
     public bool IsSelect;
     public Sprite AbIcon;
     public Sprite AbSprite;
+    public Sprite ResultIcon;
+    public Sprite icon;
     public bool IsUsing;
     [TextArea]
     public string AbExplan;
     
-    public Ability(int AbCode, string AbName, ABTYPE AbType, ABGRADE AbGrade, int Enhance, int[] Enhance_Cost, int AbPrice, bool IsSelect,Sprite AbIcon, Sprite AbSprite, bool IsUsing, string AbExplan)
+    public Ability(int AbCode, string AbName, ABTYPE AbType, ABGRADE AbGrade, int Enhance, int[] Enhance_Cost, int AbPrice, bool IsSelect,Sprite AbIcon, Sprite AbSprite, Sprite ResultIcon, Sprite icon, bool IsUsing, string AbExplan)
     {
         this.AbCode = AbCode;
         this.AbName = AbName;
@@ -33,6 +35,8 @@ public class Ability
         this.IsSelect = IsSelect;
         this.AbIcon = AbIcon;
         this.AbSprite = AbSprite;
+        this.ResultIcon = ResultIcon;
+        this.icon = icon;
         this.IsUsing = IsUsing;
         this.AbExplan = AbExplan;
     }

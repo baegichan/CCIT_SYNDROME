@@ -29,7 +29,7 @@ public class RealWorldShop : MonoBehaviour
 
     void Update()
     {
-        if (gameObject.activeSelf) { CP.Ani.SetBool("ShopOn", true); }
+        if (gameObject.activeSelf) { Char_Parent.ShopOn = true; }
     }
 
     public void SettingBox()
@@ -96,6 +96,6 @@ public class RealWorldShop : MonoBehaviour
         PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Button>().spriteState.disabledSprite;
         PillShopButton.GetComponent<Image>().sprite = PillShopButton.GetComponent<Button>().spriteState.disabledSprite;
         gameObject.SetActive(false);
-        CP.Ani.SetBool("ShopOn", false);
+        Char_Parent.ShopOn = false;
     }
 }
