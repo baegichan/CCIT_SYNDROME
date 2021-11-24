@@ -18,9 +18,11 @@ public class Unit_HPbar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.parent = transform.parent.parent;
         Max = Cha.Hp_Max;
         Hp_bar.maxValue = Max;
         Hp_bar.value = Max;
+       
     }
 
     // Update is called once per frame
@@ -38,6 +40,11 @@ public class Unit_HPbar : MonoBehaviour
         {
             Hp_bar.value = Cha.Hp_Current;
         
+        }
+
+        if(Hp_bar.value==0)
+        {
+            Destroy(gameObject);
         }
        
     }

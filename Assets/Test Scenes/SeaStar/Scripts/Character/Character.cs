@@ -64,7 +64,7 @@ public class Character : MonoBehaviour
     }
     public  void Load_Damage_Text(Character target,int Damage)
     { 
-        if(transform.tag == "Player" && AbyssManager.abyss.fogText != null) { AbyssManager.abyss.GetAbyssGage(10); }
+        if(transform.tag == "Player" && AbyssManager.abyss != null) { AbyssManager.abyss.GetAbyssGage(10); }
 
         GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), target.transform.position + Vector3.up * 3+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);

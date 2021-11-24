@@ -21,7 +21,7 @@ public class Resercher_Ready : StateMachineBehaviour
         animator.SetTrigger("Attack");
         if(Reserchermon.Targeton == true)
         {
-            if (Vector2.Distance(Reserchermon.playerTransform.position, ResercherTransform.position) > 0.7f) //따가라가서 공격 하는 범위
+            if (Vector2.Distance(Reserchermon.playerTransform.position, ResercherTransform.position) > 0.5f) //따가라가서 공격 하는 범위
                 animator.SetBool("Follow", true);
         }
 
