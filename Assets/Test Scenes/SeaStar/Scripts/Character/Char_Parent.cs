@@ -121,6 +121,7 @@ public class Char_Parent : Character
         if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); } //테스트용
         if (AP_Timer > 0) { AP_Time(); }
         else { if (UseApPostion) { UseApPostion = false; } }
+        if(Hp_Current <= 0) { Fail(); }
     }
 
     //캐릭터 변경
@@ -459,5 +460,10 @@ public class Char_Parent : Character
                 Debug.Log(AbilityHistory[i]);
             }
         }
+    }
+
+    void Fail()
+    {
+        //체력 0돼면 뜨는거
     }
 }
