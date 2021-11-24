@@ -19,15 +19,7 @@ public class AbyssMonster : MonoBehaviour
     private MonsterBox monsterBox;
    
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            
-            MonsterDie();
-        }
-           
-    }
+ 
 
     public void MonsterDie()
     {
