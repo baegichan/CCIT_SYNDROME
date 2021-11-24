@@ -96,7 +96,7 @@ public class Char_Parent : Character
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O)) { Damage(50); } //테스트용
+        if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         Mouse = Input.mousePosition;
         if (!ShopOn)
