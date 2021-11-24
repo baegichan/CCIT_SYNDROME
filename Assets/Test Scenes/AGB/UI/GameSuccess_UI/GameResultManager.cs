@@ -12,7 +12,7 @@ public class GameResultManager : MonoBehaviour
     private int countKillBoss;
 
     public float PlayTime;
-    public bool isGameClear;
+   
 
     [Header("Panel")]
     GameObject ClearPanel;
@@ -61,7 +61,7 @@ public class GameResultManager : MonoBehaviour
 
     }
 
-    public void ShowResult()
+    public void ShowResult(bool isGameClear)
     {
         if (isGameClear)
             ClearPanel.SetActive(true);
