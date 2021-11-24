@@ -22,7 +22,7 @@ public class Abycss_Bomb : MonoBehaviour
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        Transform Player_Transform = Player.GetComponent<TestPlayer>().SelectChar.transform;
+        Transform Player_Transform = Player.GetComponent<Char_Parent>().SelectChar.transform;
 
 
 

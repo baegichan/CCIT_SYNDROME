@@ -108,8 +108,8 @@ public class Boss : Character
         Hp_Max = 2000;
         Hp_Current = Hp_Max;
 
-        Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<TestPlayer>().SelectChar.transform;//플레이어 위치 받아올수 있게
-
+         Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<Char_Parent>().SelectChar.transform;//플레이어 위치 받아올수 있게
+        //Player_Transform = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject.GetComponent<TestPlayer>().SelectChar.transform;
         //Abyss_on = true;
         /*
         if(Abyss_on == true)
@@ -117,7 +117,7 @@ public class Boss : Character
             transform.GetChild(1).gameObject.SetActive(true);
         }
         */
-        
+
 
 
 
@@ -345,6 +345,11 @@ public class Boss : Character
                     if (Dis > Distance_To_Player)
                     {
                         transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player_Transform.position.x, transform.position.y, transform.position.z), Time.deltaTime * speed);
+                        if (Boss_State_Check == false)
+                        {
+                            anim.SetBool("Check_Idle", false);
+                        }
+
                     }
                     else if (Dis <= Distance_To_Player)
                     {
@@ -358,6 +363,10 @@ public class Boss : Character
                     if (Dis > Distance_To_Player)
                     {
                         transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player_Transform.position.x, transform.position.y, transform.position.z), Time.deltaTime * speed);
+                        if (Boss_State_Check == false)
+                        {
+                            anim.SetBool("Check_Idle", false);
+                        }
                     }
                     else if (Dis <= Distance_To_Player)
                     {
@@ -374,6 +383,10 @@ public class Boss : Character
                     if (Dis > Distance_To_Player2)
                     {
                         transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player_Transform.position.x, transform.position.y, transform.position.z), Time.deltaTime * speed);
+                        if (Boss_State_Check == false)
+                        {
+                            anim.SetBool("Check_Idle", false);
+                        }
                     }
                     else if (Dis <= Distance_To_Player2)
                     {
@@ -386,7 +399,10 @@ public class Boss : Character
                     if (Dis > Distance_To_Player2)
                     {
                         transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player_Transform.position.x, transform.position.y, transform.position.z), Time.deltaTime * speed);
-                       
+                        if (Boss_State_Check == false)
+                        {
+                            anim.SetBool("Check_Idle", false);
+                        }
                     }
                     else if (Dis <= Distance_To_Player2)
                     {
@@ -557,6 +573,8 @@ public class Boss : Character
 
         if (Abyss_on == false)
         {
+            Debug.Log(Player_Transform.position);
+
             if (transform.position.x >= 0)
             {
                 if (Player_Transform.position.x > this.transform.position.x)
