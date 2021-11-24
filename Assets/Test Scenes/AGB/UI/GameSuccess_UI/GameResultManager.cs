@@ -15,8 +15,11 @@ public class GameResultManager : MonoBehaviour
 
     List<Ability> ability;
 
-    [Header("Panel")]
+    [SerializeField]
+    GameObject GameResultBox;
+    [SerializeField]
     GameObject ClearPanel;
+    [SerializeField]
     GameObject FaillPanel;
 
     [Header("Text")]
@@ -25,6 +28,11 @@ public class GameResultManager : MonoBehaviour
     Text KillBossText;
     Text DarkFogText;
 
+    [SerializeField]
+    GameObject ItemBox;
+
+    [SerializeField]
+    GameObject Content;
     private static GameResultManager _result;
     public static GameResultManager result
     {
@@ -79,10 +87,16 @@ public class GameResultManager : MonoBehaviour
         int index = 1;
         for (int i = 0; i < count; i++)
         {
+            var d = Instantiate(ItemBox);
+            d.transform.SetParent(Content.transform, false);
+
             for (int j = 1; j <= 3; j++)
             {
                 index = j * num;
-               // if(ability[index].ab)
+                if (ability[index] == null)
+                    break;
+                d.transform.GetChild(j - 1).GetComponent<Image>().sprite = ability[index].ResultIcon;
+                d.transform.GetChild(j - 1).gameObject.SetActive(true);
             }
 
             num++;
