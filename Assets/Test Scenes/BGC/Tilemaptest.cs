@@ -22,8 +22,7 @@ public class Tilemaptest : MonoBehaviour
                  tile = allTiles[x + y * bounds.size.x];
                 if (tile != null)
                 {
-                    Debug.Log("x:" + x + " y:" + y +  " tile: ");
-                    Debug.Log( tilemap.GetTile(new Vector3Int(x, y,0)).name);
+              
                 }
               
             }
