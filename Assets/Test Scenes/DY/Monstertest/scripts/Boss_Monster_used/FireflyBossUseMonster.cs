@@ -30,6 +30,7 @@ public class FireflyBossUseMonster : Character
     public bool trace;
     public bool Targeton = false;
     public bool Dead;
+    private bool Online;
     //2D sight
 
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
@@ -59,6 +60,20 @@ public class FireflyBossUseMonster : Character
     {
         playerTransform = null;
         Targeton = false;
+        if (Online)
+        {
+            anim.SetFloat("Direction", 1);
+        }
+
+        transform.eulerAngles = new Vector3(0, 0, 0);
+    }
+
+    private void OnDisable()
+    {
+        anim.SetFloat("Direction", 1);
+        Vector2 current = transform.localScale;
+        current.x = 1;
+        transform.localScale = current;
     }
 
     void Start()
@@ -68,7 +83,7 @@ public class FireflyBossUseMonster : Character
         trace = false;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        
+        Online = true;
     }
 
     void Update()
@@ -245,16 +260,16 @@ public class FireflyBossUseMonster : Character
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
-                //player = GameObject.FindGameObjectWithTag("Player").transform;
-                player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;//플레이어 피봇 위치 트러짐 떄문에 사용
+                player = GameObject.FindGameObjectWithTag("Player");
+                //player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;//플레이어 피봇 위치 트러짐 떄문에 사용
                 Debug.Log(player + "이새끼 때문임1");
 
                 if (playerTransform == null)
                 {
-                    playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                    playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 }
                 else
-                    playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                    playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if(rayHitedTarget != false)
                     Debug.Log(rayHitedTarget.collider.name);
