@@ -86,7 +86,7 @@ public class Char_Parent : Character
     }
     void FixedUpdate()
     {
-        if(!ShopOn)
+        if(!ShopOn && !Dead)
         {
             if (Ani.GetBool("CanIThis"))
             {
@@ -96,33 +96,36 @@ public class Char_Parent : Character
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
-        PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
-        Mouse = Input.mousePosition;
-        if (!ShopOn)
+        if(!Dead)
         {
+            if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
+            PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
+            Mouse = Input.mousePosition;
+            if (!ShopOn)
+            {
+                if (Ani.GetBool("CanIThis"))
+                {
+                    if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                    UseItem();
+                }
+                ds();
+                atk();
+                if (ActiveAbility.AbSprite != null)
+                {
+                    UseSkill();
+                }
+            }
             if (Ani.GetBool("CanIThis"))
             {
-                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
-                UseItem();
+                MouseFilp();
             }
-            ds();
-            atk();
-            if (ActiveAbility.AbSprite != null)
-            {
-                UseSkill();
-            }
-        }
-        if (Ani.GetBool("CanIThis"))
-        {
-            MouseFilp();
-        }
-        if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
+            if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
 
-        if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); } //테스트용
-        if (AP_Timer > 0) { AP_Time(); }
-        else { if (UseApPostion) { UseApPostion = false; } }
-        Die();
+            if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); } //테스트용
+            if (AP_Timer > 0) { AP_Time(); }
+            else { if (UseApPostion) { UseApPostion = false; } }
+            Die();
+        }
     }
 
     void Die()
@@ -130,6 +133,7 @@ public class Char_Parent : Character
         if (Hp_Current <= 0 && !Dead)
         {
             SelectChar = Char[0];
+            AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
             ChangeChar(SelectChar);
             Dead = true;
             Ani.SetTrigger("Die");
@@ -137,8 +141,12 @@ public class Char_Parent : Character
     }
 
     //캐릭터 변경
+    Vector3 Before_Position;
+
     public void DecideChar()
     {
+        Before_Position = SelectChar.transform.position;
+
         switch (ActiveAbility.AbCode)
         {
             case 0:
@@ -160,7 +168,7 @@ public class Char_Parent : Character
         {
             this.Char[i].SetActive(false);
         }
-        Char.transform.position = Char.transform.position;
+        Char.transform.position = Before_Position;
         Char.SetActive(true);
 
         UpdateStat();

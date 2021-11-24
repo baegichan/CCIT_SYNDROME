@@ -687,7 +687,10 @@ MonoBehaviour:
   Current_Use: {fileID: 0}
   PharaoWand_Senaka: {fileID: 1361117556707070363}
   PharaoWand: {fileID: 1729495115542788759}
+  BattleAxe_Senaka: {fileID: 0}
+  BattleAxe: {fileID: 0}
   EvilSword: {fileID: 0}
+  AbilityHistory: []
   DefaultHP: 100
   CharHP: 0
   CharAP: 10
@@ -695,6 +698,7 @@ MonoBehaviour:
   CharSpeed: 5
   P_JumpForce: 300
   P_JumpInt: 10
+  UseApPostion: 0
   P_OtherWorld: 0
   Enhance_Health: 0
   Enhance_Strength: 0
@@ -751,14 +755,11 @@ MonoBehaviour:
   ParaoAP: 140000001e0000002800000032000000
   BoomAP: 0a0000000d0000001000000014000000
   WolfAP: 02000000030000000400000005000000
-  E_Attack_Damage: 0
-  E_Attack_Int: 0
-  E_Attack_Range: 100
-  E_ResetTimer: 0.8
+  E_Attack_State: 0
   A_Int: 0
-  A_ResetTimer: 0
   PharaoEffect: {fileID: 3453195809068231161, guid: fca619a24d08c1b4a9e7c28e187f7167, type: 3}
   EA: {fileID: 0}
+  CP: {fileID: 0}
   ShieldCool: 0
   B_Ball: {fileID: 0}
   B_Damage: 0
@@ -2948,7 +2949,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 0
   DP: 0
+  P_AttackForce: 0
+  P_AttackInt: 0
+  P_AttackTimer: 1
+  P_Attack_State: 0
+  P_AttackResetTimer: 0
+  P_CombatTimer: 5
+  P_CombatInt: 0
+  P_AttackMoveInt: 0
   P_DashForce: 0
+  P_DashInt: 1
+  P_DashTimer: 5
   Ani: {fileID: 2268306353751711632}
 --- !u!1 &3717603437936187324
 GameObject:
@@ -4710,6 +4721,7 @@ MonoBehaviour:
   WereWolf_Gauge: 0
   power: 100
   Ani: {fileID: 2396997526176085403}
+  P_Attack_State: 0
 --- !u!114 &5113577394907274681
 MonoBehaviour:
   m_ObjectHideFlags: 0
