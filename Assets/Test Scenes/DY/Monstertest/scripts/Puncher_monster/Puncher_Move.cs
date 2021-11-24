@@ -11,6 +11,7 @@ public class Puncher_Move : StateMachineBehaviour
     {
         puncherMon = animator.GetComponent<Punchermonster>();
         puncherTransform = animator.GetComponent<Transform>();
+        puncherMon.patroll = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -18,16 +19,16 @@ public class Puncher_Move : StateMachineBehaviour
     {
         if (puncherMon.Targeton == true)
         {
-            if (Vector2.Distance(puncherMon.first, puncherTransform.position) < 0.1f || Vector2.Distance(puncherTransform.position, puncherMon.playerTransform.position) > 10f)//Å½Áö ¹üÀ§
+            //if (Vector2.Distance(puncherMon.first, puncherTransform.position) < 0.1f || Vector2.Distance(puncherTransform.position, puncherMon.playerTransform.position) > 10f)//Å½Áö ¹üÀ§
             {
                 animator.SetBool("Move", false);
                 animator.SetBool("Follow", true);
             }
-            else
+            
             {
-                puncherMon.DirectionPunchermonster(puncherMon.first.x, puncherTransform.position.x);
-                puncherTransform.position = Vector2.MoveTowards(puncherTransform.position, puncherMon.first, Time.deltaTime * puncherMon.speed);
-
+                //puncherMon.DirectionPunchermonster(puncherMon.first.x, puncherTransform.position.x);
+                //puncherTransform.position = Vector2.MoveTowards(puncherTransform.position, puncherMon.first, Time.deltaTime * puncherMon.speed);
+                
             }
         }
     }
@@ -35,6 +36,5 @@ public class Puncher_Move : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
     }
 }

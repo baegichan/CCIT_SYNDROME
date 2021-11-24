@@ -13,7 +13,7 @@ public class Resercher_Move : StateMachineBehaviour
     {
         Reserchermon = animator.GetComponent<ResercherMonster>();
         ResercherTransform = animator.GetComponent<Transform>();
-
+        Reserchermon.patroll = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

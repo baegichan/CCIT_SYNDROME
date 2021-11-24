@@ -22,7 +22,7 @@ public class Boss : Character
 
 
     [Header("Boss_Cool")]
-    float Attack_Cool = 1;
+    public float Attack_Cool = 1;
     public float Boss_Attack_Cooltime = 1;
     public float Bullet_Delay = 0.15f;
     public float Boss_Translate_Cooltime = 30;
@@ -52,10 +52,13 @@ public class Boss : Character
     public GameObject FireFly_Monster;
     public GameObject Bomb_Transform;
     public GameObject Barrier_Hit;
+    public GameObject Abyss_Fog;
+    public GameObject Boss_Use_lns_Zone;
 
-    public GameObject For_Big_Stom_Obj_made;
 
 
+    GameObject Boss_Controll;
+    
 
     public GameObject[] Boss_Particle = new GameObject[8];
 
@@ -98,35 +101,62 @@ public class Boss : Character
         }
     }
 
+
+
     int Shield_Value;
+
+
+    public GameObject BossUI;
+    BosStateUi Bs; 
+
     void Start()
     {
-        //Direction_Player();
-        //BM = GameManager.instance;
         anim = GetComponent<Animator>();
+        if(Abyss_on == false)
         speed = 1;
-        Hp_Max = 2000;
-        Hp_Current = Hp_Max;
-
-        Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<TestPlayer>().SelectChar.transform;//플레이어 위치 받아올수 있게
-
-        //Abyss_on = true;
-        /*
-        if(Abyss_on == true)
-        {
-            transform.GetChild(1).gameObject.SetActive(true);
-        }
-        */
-        Shield_Value = Hp_Max / 5;
+       
         
 
-    }
+        Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<Char_Parent>().SelectChar.transform;
 
+        
+
+      
+
+
+        Bs = BossUI.transform.GetComponent<BosStateUi>();
+        if (Abyss_on == false)
+        {
+            Hp_Max = 2000;
+            Hp_Current = Hp_Max;
+            BossUI.SetActive(true);
+            Bs.MaxHp = Hp_Max;
+            Bs.MaxShield = Shield;
+        }
+        else
+            StartCoroutine(Respawn_Monster());//몬스터 젠 시작
+
+
+
+
+        Shield_Value = Hp_Max / 5;
+        Bs.MaxShield = Shield_Value;
+        Boss_Controll = transform.parent.gameObject;
+        
+        
+    }
+    int Start_Count;
+    bool Boss_Dead_Check = false;//Dead 애니메이션 연속방지
     void Update()
     {
         if (Boss_Active_on == true)
         {
 
+            if (Start_Count == 0)
+            {
+                anim.SetBool("Move_ON", true);
+                Start_Count++;
+            }
 
 
             Dis = Vector3.Distance(Player_Transform.position, transform.position);
@@ -142,7 +172,7 @@ public class Boss : Character
 
                 if (Half_Count_Check == 0)
                     Monster_HP_Check();
-            }
+            }//노말 상태일때 보스 HP 확인
 
 
             //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.TransformDirection(Vector2.left) * 300f, Color.green);
@@ -163,7 +193,7 @@ public class Boss : Character
                 {
                     anim.SetBool("Distance_Check", true);
                 }
-            }
+            }//플레이어가 Ground위에 있을때 애니메이션 중간에 달릴지 가만히 서있을지 정하는거임
             else
             {
                 if (Dis > Distance_To_Player2)
@@ -179,6 +209,12 @@ public class Boss : Character
             }
 
 
+            P_bossHP = Shield_Value;//보스 보호막 있을때 히트 이펙트
+
+            Bs.Hp = Hp_Current;
+
+            Bs.Shield = Shield;
+
 
             if (Abyss_on == false)
             {
@@ -192,29 +228,26 @@ public class Boss : Character
                     Cool_Control();
                 }
 
-                P_bossHP = Shield_Value;
-                
 
-                if(Boss_HP_Half == true)
+
+                if (Boss_HP_Half == true)
                 {
                     speed = 0;
+                    StopCoroutine(Respawn_Monster());//몬스터 젠 ㄲ ㅌ
+                    if(Boss_Use_lns_Zone.transform.childCount != 0)
+                    for(int a = 0; a <Boss_Use_lns_Zone.transform.childCount; a++)
+                    {
+                        Destroy(Boss_Use_lns_Zone.transform.GetChild(a).gameObject);
+                    }
                     anim.SetBool("2PAGE", true);
-
-
-                    //원래 있던 액자 없애주는 부분
-                    Destroy(Frame);
-
-
-                    
-                    //더큰 액자로 변경해주는 부분
-                    //For_Big_Stom_Obj_made =Instantiate(Big_Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
-                    //For_Big_Stom_Obj_made.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
-                    //For_Big_Stom_Obj_made.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
-
                 }
 
 
 
+            }
+            else
+            {
+                Cool_Control();
             }
 
 
@@ -225,9 +258,11 @@ public class Boss : Character
 
 
 
+            //보스 HP 같게 해주는거 심연이랑 노말이랑~~
+            //transform.parent.gameObject.GetComponent<Boss_Info_Trans>().Translate_Boss_State();
 
-            
-            if(Barrier == true)
+
+            if (Barrier == true)
             {
                 if(Shield <= 0)
                 {
@@ -236,13 +271,66 @@ public class Boss : Character
                 }
             }
 
-
-
+            
+            if(Hp_Current <= 0)
+            {
+                if (Boss_Dead_Check == false)
+                {
+                    StopCoroutine(Respawn_Monster());//몬스터 젠 ㄲ ㅌ
+                    anim_off();
+                    anim.SetBool("Move_ON", false);
+                    anim.SetBool("Dead", true);
+                    Boss_Dead_Check = true;
+                    if (Boss_Use_lns_Zone.transform.childCount != 0)
+                        for (int a = 0; a < Boss_Use_lns_Zone.transform.childCount; a++)
+                        {
+                            Destroy(Boss_Use_lns_Zone.transform.GetChild(a).gameObject);
+                        }
+                }
+            }
 
 
 
         }
     }
+    void Dead_END()
+    {
+        anim.SetBool("Dead", false);
+        StopCoroutine(Respawn_Monster());//몬스터 젠 시작
+
+        ///////////////////////////////////
+        ///
+
+        Destroy(Frame2);
+
+        ////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //////////////////////////
+    }
+    public void Change_Abyss_Boss()
+    {
+        Boss_Controll.transform.GetChild(1).gameObject.SetActive(true);
+
+
+        //2PAGE애니메이션에서 맵 전체를 뒤엎어주는 애니메이션 나왔을때 보스를 사라지게 해줘야함
+        this.gameObject.SetActive(false);
+
+    }
+
+
+
     int Frame_Count_Check;
     void Monster_HP_Frame_Check()
     {
@@ -281,10 +369,6 @@ public class Boss : Character
     }
 
 
-    void Boss_Abycss_Change()
-    {
-
-    }
 
 
 
@@ -294,10 +378,14 @@ public class Boss : Character
 
         if (FireFly_Monster != null)
         {
-            Instantiate(FireFly_Monster, new Vector3(5, 7, 0), Quaternion.identity);
-            Instantiate(FireFly_Monster, new Vector3(-5, 7, 0), Quaternion.identity);
-            Instantiate(FireFly_Monster, new Vector3(-7, 4, 0), Quaternion.identity);
-            Instantiate(FireFly_Monster, new Vector3(7, 4, 0), Quaternion.identity);
+            GameObject a = Instantiate(FireFly_Monster, new Vector3(5, 7, 0), Quaternion.identity);
+            a.transform.SetParent(Boss_Use_lns_Zone.transform);
+            GameObject b = Instantiate(FireFly_Monster, new Vector3(-5, 7, 0), Quaternion.identity);
+            b.transform.SetParent(Boss_Use_lns_Zone.transform);
+            GameObject c = Instantiate(FireFly_Monster, new Vector3(-7, 4, 0), Quaternion.identity);
+            c.transform.SetParent(Boss_Use_lns_Zone.transform);
+            GameObject d = Instantiate(FireFly_Monster, new Vector3(7, 4, 0), Quaternion.identity);
+            d.transform.SetParent(Boss_Use_lns_Zone.transform);
         }
 
         yield return new WaitForSeconds(25f);
@@ -318,6 +406,11 @@ public class Boss : Character
                     if (Dis > Distance_To_Player)
                     {
                         transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player_Transform.position.x, transform.position.y, transform.position.z), Time.deltaTime * speed);
+                        if (Boss_State_Check == false)
+                        {
+                            anim.SetBool("Check_Idle", false);
+                        }
+
                     }
                     else if (Dis <= Distance_To_Player)
                     {
@@ -331,6 +424,10 @@ public class Boss : Character
                     if (Dis > Distance_To_Player)
                     {
                         transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player_Transform.position.x, transform.position.y, transform.position.z), Time.deltaTime * speed);
+                        if (Boss_State_Check == false)
+                        {
+                            anim.SetBool("Check_Idle", false);
+                        }
                     }
                     else if (Dis <= Distance_To_Player)
                     {
@@ -347,10 +444,16 @@ public class Boss : Character
                     if (Dis > Distance_To_Player2)
                     {
                         transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player_Transform.position.x, transform.position.y, transform.position.z), Time.deltaTime * speed);
+                        if (Boss_State_Check == false)
+                        {
+                            anim.SetBool("Check_Idle", false);
+                        }
                     }
                     else if (Dis <= Distance_To_Player2)
                     {
                         speed = 0;
+                        anim.SetBool("Check_Idle", true);
+
                     }
                 }
                 else if (Player_Transform.position.x > this.transform.position.x)
@@ -359,13 +462,15 @@ public class Boss : Character
                     if (Dis > Distance_To_Player2)
                     {
                         transform.position = Vector3.MoveTowards(transform.position, new Vector3(Player_Transform.position.x, transform.position.y, transform.position.z), Time.deltaTime * speed);
-                        Right();
-
+                        if (Boss_State_Check == false)
+                        {
+                            anim.SetBool("Check_Idle", false);
+                        }
                     }
                     else if (Dis <= Distance_To_Player2)
                     {
                         speed = 0;
-
+                        anim.SetBool("Check_Idle", true);
                     }
                 }
             }
@@ -413,6 +518,10 @@ public class Boss : Character
                     Select_Pattern();
                 }
             }
+            else
+            {
+                //Select_Pattern();
+            }
         }
         
 
@@ -442,7 +551,7 @@ public class Boss : Character
                 }
                 else if(Black_Fog_Ins_Count == 1 && Boss_Translate_Cooltime <= 0)
                 {
-                    Translate_Boss();
+                    anim.SetBool("Translate_Boss", true);
                 }
                 else if(Black_Fog_Ins_Count == 1 && Boss_Translate_Cooltime > 0)
                 {
@@ -461,7 +570,7 @@ public class Boss : Character
                     else if(aa == 2)
                     {
                         if (Barrier_Cool <= 0)
-                            if(Barrier != true) { anim.SetBool("Barrier_Check", true); } else { Select_Pattern(); }
+                            if(Barrier != true) { speed = 0; anim.SetBool("Barrier_Check", true); } else { Select_Pattern(); }
                         else
                             Select_Pattern();
 
@@ -505,7 +614,7 @@ public class Boss : Character
                     else if(aa== 2)
                     {
                         if (Barrier_Cool <= 0)
-                            if (Barrier != true) { anim.SetBool("Barrier_Check", true); } else { Select_Pattern(); }
+                            if (Barrier != true) { speed = 0; anim.SetBool("Barrier_Check", true); } else { Select_Pattern(); }
                         else
                             Select_Pattern();
                     }
@@ -516,11 +625,11 @@ public class Boss : Character
 
     void Translate_Boss()
     {
-        anim.SetBool("Translate_Boss", true);
+        //anim.SetBool("Translate_Boss", true);
         speed = 0;
 
 
-        Invoke("Fade_In", 0.8f);
+        //Invoke("Fade_In", 0.8f);
        
 
     }
@@ -529,32 +638,60 @@ public class Boss : Character
         anim.SetBool("Translate_Boss", false);
         anim.SetBool("Check_Idle", false);
 
-
-        if (transform.position.x >= 0)
+        if (Abyss_on == false)
         {
-            if (Player_Transform.position.x > this.transform.position.x)
+            if (transform.position.x >= 0)
             {
-                this.transform.localScale = new Vector3(-1, 1, 1);
+                if (Player_Transform.position.x > this.transform.position.x)
+                {
+                    this.transform.localScale = new Vector3(-1, 1, 1);
+                }
+                else
+                {
+                    this.transform.localScale = new Vector3(1, 1, 1);
+                }
+                transform.position = new Vector3(transform.position.x - 8, transform.position.y, transform.position.z);
             }
-            else
+            else if (transform.position.x < 0)
             {
-                this.transform.localScale = new Vector3(1, 1, 1);
+                if (Player_Transform.position.x > this.transform.position.x)
+                {
+                    this.transform.localScale = new Vector3(-1, 1, 1);
+                }
+                else
+                {
+                    this.transform.localScale = new Vector3(1, 1, 1);
+                }
+                transform.position = new Vector3(transform.position.x + 8, transform.position.y, transform.position.z);
             }
-            transform.position = new Vector3(transform.position.x - 8, transform.position.y, transform.position.z);
         }
-        else if (transform.position.x < 0)
+        else
         {
-            if (Player_Transform.position.x > this.transform.position.x)
+            if (transform.position.x >= 0)
             {
-                this.transform.localScale = new Vector3(-1, 1, 1);
+                if (Player_Transform.position.x > this.transform.position.x)
+                {
+                    this.transform.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    this.transform.localScale = new Vector3(-1, 1, 1);
+                }
+                transform.position = new Vector3(transform.position.x - 8, transform.position.y, transform.position.z);
             }
-            else
+            else if (transform.position.x < 0)
             {
-                this.transform.localScale = new Vector3(1, 1, 1);
+                if (Player_Transform.position.x > this.transform.position.x)
+                {
+                    this.transform.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    this.transform.localScale = new Vector3(-1, 1, 1);
+                }
+                transform.position = new Vector3(transform.position.x + 8, transform.position.y, transform.position.z);
             }
-            transform.position = new Vector3(transform.position.x + 8, transform.position.y, transform.position.z);
         }
-
         
 
         anim.SetBool("Translate_Boss2", true);
@@ -588,7 +725,7 @@ public class Boss : Character
     public Transform Left_Hand;
     public Transform Right_Hand;
 
-    GameObject[] Bullet_4 = new GameObject[4];
+    GameObject[] Bullet_4 = new GameObject[5];
 
     void Ins_Bullet_1()
     {
@@ -757,9 +894,9 @@ public class Boss : Character
         Black_Fog_Ins_Count++;
 
 
-        anim_off();
+        //anim_off();
         //anim.SetBool("Check_Idle", false);
-        Invoke("speed_back", 1);
+        //Invoke("speed_back", 1);
     }
 
 
@@ -793,15 +930,30 @@ public class Boss : Character
 
 
     public GameObject Dark_Syclone_Obj;
+    
+
 
     GameObject Frame;
+    GameObject Frame2;
 
     void Dark_Syclone()
     {
-        Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x,transform.position.y +1,transform.position.z), Quaternion.identity);
-        Frame = Instantiate(Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
-        Frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
-        Frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
+        if (Abyss_on == false)
+        {
+            Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
+            Frame = Instantiate(Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
+            Frame.name = "Frame";// 삭제할 때 Find용으로다가
+            Frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
+            Frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
+        }
+        else if(Abyss_on == true)
+        {
+            Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
+            Frame2 = Instantiate(Big_Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
+            Frame2.name = "Frame2";// 삭제할 때 Find용으로다가
+            Frame2.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
+            Frame2.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
+        }
         
     }
     public void Boss_HP_Frame_Check_False()//Animation Event용
@@ -813,11 +965,14 @@ public class Boss : Character
     {
         Barrier = true;
         transform.GetChild(0).gameObject.SetActive(true);
-        Shield = Boss_Shild;
+        Shield = Shield_Value;
 
         Barrier_Cool = 20;
     }
-
+    public void Abyss_Fog_Ins()
+    {
+        Instantiate(Abyss_Fog, transform.position, Quaternion.identity);
+    }
     
     void anim_off()
     {
@@ -856,9 +1011,29 @@ public class Boss : Character
         anim.SetBool("Barrier_Check", false);
 
         }
+
+
+    void speed_zero()
+    {
+        speed = 0;
+        GameObject Boss = GameObject.Find("Boss_Controll").transform.GetChild(1).gameObject;
+        if (Boss.GetComponent<Boss>().gameObject.activeSelf == true)
+        { 
+            //액자가 무조건 생산되있을거니까 상관없을듯
+            GameObject Small = GameObject.Find("Frame");
+
+            if(Small != null)
+            Small.SetActive(false);
+
+
+        }
+    }
     void speed_back()//Invoke용
     {
-        speed = 1;
+        if (Abyss_on == false)
+            speed = 1;
+        else
+            speed = 3;
         Boss_State_Check = true;
         Attack_Cool = Boss_Attack_Cooltime;
 

@@ -23,6 +23,10 @@ public class Resercher_Trace : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (Reserchermon.playerTransform == null)
+            animator.SetTrigger("Clear");
+        if (Reserchermon.Targeton == false)
+            animator.SetTrigger("Clear");
         if(Reserchermon.Targeton == true)
         {
             if (Reserchermon.movable == true)

@@ -60,7 +60,7 @@ public class keymatcher : MonoBehaviour
     }
     public void changerclick()
     {
-
+        this.gameObject.transform.GetChild(0).GetComponent<Text>().color = new Color(255, 255, 255, 255);
         keychanger.buttonkeyevent(this.gameObject, key.ToString().ToLower());
 
     }

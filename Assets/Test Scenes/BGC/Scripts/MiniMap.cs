@@ -152,13 +152,13 @@ public class MiniMap : MonoBehaviour
     }
     public void CurrentOff(Vector2 Index)
     {
-        WorldMapSpriteChanger SpChanger = WorldMap[(int)Index.x, (int)Index.y].GetComponent<WorldMapSpriteChanger>();
+        WorldMapSpriteChanger SpChanger = WorldMap[(int)Index.y, (int)Index.x].GetComponent<WorldMapSpriteChanger>();
         SpChanger.CurrentRoomChecker.SetActive(false);
 
     }
     public void CurrentOn(Vector2 Index)
     {
-        WorldMapSpriteChanger SpChanger = WorldMap[(int)Index.x, (int)Index.y].GetComponent<WorldMapSpriteChanger>();
+        WorldMapSpriteChanger SpChanger = WorldMap[(int)Index.y, (int)Index.x].GetComponent<WorldMapSpriteChanger>();
         SpChanger.CurrentRoomChecker.SetActive(true);
 
     }
