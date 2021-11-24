@@ -53,8 +53,12 @@ public class Boss : Character
     public GameObject Bomb_Transform;
     public GameObject Barrier_Hit;
     public GameObject Abyss_Fog;
-    GameObject Boss_Controll;
+    public GameObject Boss_Use_lns_Zone;
 
+
+
+    GameObject Boss_Controll;
+    
 
     public GameObject[] Boss_Particle = new GameObject[8];
 
@@ -139,6 +143,7 @@ public class Boss : Character
         
     }
     int Start_Count;
+    bool Boss_Dead_Check = false;//Dead 애니메이션 연속방지
     void Update()
     {
         if (Boss_Active_on == true)
@@ -225,7 +230,12 @@ public class Boss : Character
                 if (Boss_HP_Half == true)
                 {
                     speed = 0;
-
+                    StopCoroutine(Respawn_Monster());//몬스터 젠 ㄲ ㅌ
+                    if(Boss_Use_lns_Zone.transform.childCount != 0)
+                    for(int a = 0; a <Boss_Use_lns_Zone.transform.childCount; a++)
+                    {
+                        Destroy(Boss_Use_lns_Zone.transform.GetChild(a).gameObject);
+                    }
                     anim.SetBool("2PAGE", true);
                 }
 
@@ -258,13 +268,22 @@ public class Boss : Character
                 }
             }
 
-
+            
             if(Hp_Current <= 0)
             {
-                StopCoroutine(Respawn_Monster());//몬스터 젠 ㄲ ㅌ
-                anim_off();
-                anim.SetBool("Move_ON", false);
-                anim.SetBool("Dead", true);
+                if (Boss_Dead_Check == false)
+                {
+                    StopCoroutine(Respawn_Monster());//몬스터 젠 ㄲ ㅌ
+                    anim_off();
+                    anim.SetBool("Move_ON", false);
+                    anim.SetBool("Dead", true);
+                    Boss_Dead_Check = true;
+                    if (Boss_Use_lns_Zone.transform.childCount != 0)
+                        for (int a = 0; a < Boss_Use_lns_Zone.transform.childCount; a++)
+                        {
+                            Destroy(Boss_Use_lns_Zone.transform.GetChild(a).gameObject);
+                        }
+                }
             }
 
 
@@ -280,7 +299,7 @@ public class Boss : Character
 
 
 
-
+        Debug.Log(23);
         ////////////////////////
 
 
@@ -300,6 +319,7 @@ public class Boss : Character
     public void Change_Abyss_Boss()
     {
         Boss_Controll.transform.GetChild(1).gameObject.SetActive(true);
+        StartCoroutine(Respawn_Monster());//몬스터 젠 시작
 
 
         //2PAGE애니메이션에서 맵 전체를 뒤엎어주는 애니메이션 나왔을때 보스를 사라지게 해줘야함
@@ -356,10 +376,14 @@ public class Boss : Character
 
         if (FireFly_Monster != null)
         {
-            Instantiate(FireFly_Monster, new Vector3(5, 7, 0), Quaternion.identity);
-            Instantiate(FireFly_Monster, new Vector3(-5, 7, 0), Quaternion.identity);
-            Instantiate(FireFly_Monster, new Vector3(-7, 4, 0), Quaternion.identity);
-            Instantiate(FireFly_Monster, new Vector3(7, 4, 0), Quaternion.identity);
+            GameObject a = Instantiate(FireFly_Monster, new Vector3(5, 7, 0), Quaternion.identity);
+            a.transform.SetParent(Boss_Use_lns_Zone.transform);
+            GameObject b = Instantiate(FireFly_Monster, new Vector3(-5, 7, 0), Quaternion.identity);
+            b.transform.SetParent(Boss_Use_lns_Zone.transform);
+            GameObject c = Instantiate(FireFly_Monster, new Vector3(-7, 4, 0), Quaternion.identity);
+            c.transform.SetParent(Boss_Use_lns_Zone.transform);
+            GameObject d = Instantiate(FireFly_Monster, new Vector3(7, 4, 0), Quaternion.identity);
+            d.transform.SetParent(Boss_Use_lns_Zone.transform);
         }
 
         yield return new WaitForSeconds(25f);
@@ -614,8 +638,6 @@ public class Boss : Character
 
         if (Abyss_on == false)
         {
-            Debug.Log(Player_Transform.position);
-
             if (transform.position.x >= 0)
             {
                 if (Player_Transform.position.x > this.transform.position.x)
@@ -643,7 +665,6 @@ public class Boss : Character
         }
         else
         {
-            Debug.Log(Player_Transform.position);
             if (transform.position.x >= 0)
             {
                 if (Player_Transform.position.x > this.transform.position.x)
