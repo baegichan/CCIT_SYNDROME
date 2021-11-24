@@ -5,9 +5,14 @@ using UnityEngine;
 public class Boss_Info_Trans : MonoBehaviour
 {
 
-    public void Translate_Boss_State()
+    public void Update()
     {
-        transform.GetChild(1).GetComponent<Boss>().Hp_Current = transform.GetChild(0).GetComponent<Boss>().Hp_Current;
+        if (transform.GetChild(0).gameObject.activeSelf == true)
+        {
+            transform.GetChild(1).GetComponent<Boss>().transform.position = transform.GetChild(0).GetComponent<Boss>().transform.position;
+            transform.GetChild(1).GetComponent<Boss>().Hp_Max = transform.GetChild(0).GetComponent<Boss>().Hp_Max;
+            transform.GetChild(1).GetComponent<Boss>().Hp_Current = transform.GetChild(0).GetComponent<Boss>().Hp_Current;
+        }
     }
 
 
