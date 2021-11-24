@@ -18,7 +18,7 @@ public class Puncher_Bullet : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         //Player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;
-        playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+        playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
         trans = new Vector2(playerTransform.position.x, playerTransform.position.y);
         dir = playerTransform.position - transform.position;
         float angle = Mathf.Atan2(playerTransform.position.y - transform.position.y, playerTransform.position.x - transform.position.x) * Mathf.Rad2Deg;
