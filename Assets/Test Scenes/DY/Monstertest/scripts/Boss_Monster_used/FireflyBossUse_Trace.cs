@@ -23,6 +23,10 @@ public class FireflyBossUse_Trace : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (FireflyBossUseMon.playerTransform == null)
+            animator.SetTrigger("Clear");
+        if (FireflyBossUseMon.Targeton == false)
+            animator.SetTrigger("Clear");
         if (FireflyBossUseMon.Targeton == true)
         {
             if (Vector2.Distance(FireflyBossUseMon.playerTransform.position, FireflyBossUseTransform.position) > 2f) //플레이어 따라 오는 함수

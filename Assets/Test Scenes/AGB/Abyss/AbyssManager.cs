@@ -50,9 +50,10 @@ public class AbyssManager : MonoBehaviour
 
     [Header("Abyss Variable")]
     //검은 안개
-    private int darkfog = 0;
+    public int darkfog = 0;
+
     public int maxAbyssGage = 100;
-    //어비스 게이지
+   
     public int abyssGage = 1;
     //hp 게이지
     public int hpGage = 0;
@@ -92,8 +93,8 @@ public class AbyssManager : MonoBehaviour
 
 
 
-    [Header("Temporary")]
-    public Text fogText;
+ 
+    
 
     public AbyssState abyssState = new AbyssState();
 
@@ -105,25 +106,14 @@ public class AbyssManager : MonoBehaviour
     {
 
         abyssState = AbyssState.Reality;
-        fogText.text = Convert.ToString(darkfog);
+        StateManager.state.DarkFog = darkfog;
 
 
     }
 
 
     // Update is called once per frame
-    void Update()
-    {
-        //교체   if (Input.GetKeyDown(settingmanager.GM.abyss))
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (isAbyssStay == false && isAbyssEnd == true)
-                GoAbyss();
-            else
-                GoReal();
-
-        }
-    }
+   
 
     IEnumerator AbyssResource()
     {
@@ -192,14 +182,15 @@ public class AbyssManager : MonoBehaviour
     {
         get
         {
-            fogText.text = Convert.ToString(darkfog);
+            StateManager.state.DarkFog = darkfog;
             return darkfog;
+           
         }
 
         set
         {
             darkfog = value;
-            fogText.text = Convert.ToString(darkfog);
+            StateManager.state.DarkFog = darkfog;
 
         }
     }
@@ -214,7 +205,7 @@ public class AbyssManager : MonoBehaviour
         set
         {
             abyssGage = value;
-            StateManager.state.AbyssGage = abyssGage; 
+           StateManager.state.AbyssGage = abyssGage; 
         }
     }
 

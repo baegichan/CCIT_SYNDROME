@@ -22,6 +22,10 @@ public class Puncher_Trace : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (puncherMon.playerTransform == null)
+            animator.SetTrigger("Clear");
+        if (puncherMon.Targeton == false)
+            animator.SetTrigger("Clear");
         if (puncherMon.Targeton == true)
         {
             if (Vector2.Distance(puncherMon.playerTransform.position, puncherTransform.position) > 4f) //플레이어 따라 오는 함수
@@ -32,11 +36,10 @@ public class Puncher_Trace : StateMachineBehaviour
                 animator.SetBool("Follow", false);
             }
         }
-        puncherMon.DirectionPunchermonster(puncherMon.playerTransform.position.x, puncherTransform.position.x);
+        //puncherMon.DirectionPunchermonster(puncherMon.playerTransform.position.x, puncherTransform.position.x);
     }
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
     }
 }

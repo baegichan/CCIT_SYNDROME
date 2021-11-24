@@ -18,12 +18,13 @@ public class AbilityItem : MonoBehaviour
 
     void Awake()
     {
+        Physics2D.IgnoreLayerCollision(7, 30);
         AlyakList();
     }
 
     void Start()
     {
-        if(transform.tag == "Pill") { DecideCode_Gacha(); }
+        if (transform.tag == "Pill") { DecideCode_Gacha(); }
     }
 
     void Update()
@@ -105,19 +106,19 @@ public class AbilityItem : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.tag == "Player")
+        if (col.transform.tag == "Player")
         {
             Ply = col.gameObject;
-            Char_Parent pt = col.GetComponent<Char_Parent>();
+            Char_Parent pt = col.transform.GetComponent<Char_Parent>();
             me.IsSelect = true;
         }
     }
 
-    void OnTriggerExit2D(Collider2D col)
+    void OnCollisionExit2D(Collision2D col)
     {
-        if (col.tag == "Player") { me.IsSelect = false; }
+        if (col.transform.tag == "Player") { me.IsSelect = false; }
     }
 
     void BuyItem()
@@ -146,6 +147,7 @@ public class AbilityItem : MonoBehaviour
                         pt.AlYakInt++;
                         break;
                 }
+                pt.SaveAbilityHistory(me);
                 pt.DecideChar();
                 Destroy(this.gameObject);
             }

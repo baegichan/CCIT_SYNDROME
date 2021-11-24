@@ -23,7 +23,11 @@ public class ResercherPoison_Trace : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(ResercherPoisonmon.Targeton == true)
+        if (ResercherPoisonmon.playerTransform == null)
+            animator.SetTrigger("Clear");
+        if (ResercherPoisonmon.Targeton == false)
+            animator.SetTrigger("Clear");
+        if (ResercherPoisonmon.Targeton == true)
         {
             if (ResercherPoisonmon.movable == true)
             {

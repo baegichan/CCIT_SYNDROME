@@ -15,7 +15,6 @@ public class Enhance : MonoBehaviour
     public GameObject EnhanceNPC;
     public GameObject[] PageButton;
 
-
     [Header("Sell Items")]
     public Image[] Icon_Image;
     public Text[] Explan_Text;
@@ -42,6 +41,11 @@ public class Enhance : MonoBehaviour
     [Header("오브젝트 위치")]
     public Vector2[] BoxPosition;
     public float[] LevelTextPosition;
+
+    void Update()
+    {
+        if (gameObject.activeSelf) { CP.Ani.SetBool("ShopOn", true); }
+    }
 
     void LevelTextPos(int AbilityNum, Text LevelText)
     {
@@ -76,6 +80,7 @@ public class Enhance : MonoBehaviour
             ActiveEnhance.SetActive(true);
             Active_Level_Text.enabled = true;
             Active_Explan_Text.enabled = true;
+            Active_Price_Text.enabled = true;
 
             Active_Icon_Image.sprite = CP.ActiveAbility.AbIcon;
             Active_Level_Text.text = "LV." + CP.ActiveAbility.Enhance.ToString();
@@ -91,6 +96,7 @@ public class Enhance : MonoBehaviour
             ActiveEnhance.SetActive(false);
             Active_Level_Text.enabled = false;
             Active_Explan_Text.enabled = false;
+            Active_Price_Text.enabled = false;
         }
 
         if (CP.PassiveAbility.AbSprite != null)
@@ -100,6 +106,7 @@ public class Enhance : MonoBehaviour
             PassiveEnhance.SetActive(true);
             Passive_Level_Text.enabled = true;
             Passive_Explan_Text.enabled = true;
+            Passive_Price_Text.enabled = true;
 
             Passive_Icon_Image.sprite = CP.PassiveAbility.AbIcon;
             Passive_Level_Text.text = "LV." + CP.PassiveAbility.Enhance.ToString();
@@ -112,6 +119,7 @@ public class Enhance : MonoBehaviour
             PassiveEnhance.SetActive(false);
             Passive_Level_Text.enabled = false;
             Passive_Explan_Text.enabled = false;
+            Passive_Price_Text.enabled = false;
         }
     }
 
@@ -119,7 +127,7 @@ public class Enhance : MonoBehaviour
 
     public void SettingShop()
     {
-        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.selectedSprite;
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Button>().spriteState.selectedSprite;
 
         EHNPC = EnhanceNPC.GetComponent<OtherWorldShop>();
         for(int i = 0; i < EHNPC.SellItem.Length; i++)
@@ -129,11 +137,13 @@ public class Enhance : MonoBehaviour
             {
                 Explan_Text[i].text = "이미 구입했습니다.";
                 BuyButton[i].SetActive(false);
+                Price_Text[i].enabled = false;
             }
             else
             {
                 Explan_Text[i].text = EHNPC.SellItem[i].AbExplan;
                 BuyButton[i].SetActive(true);
+                Price_Text[i].enabled = true;
             }
             Price_Text[i].text = EHNPC.SellItem[i].AbPrice.ToString();
         }
@@ -141,12 +151,15 @@ public class Enhance : MonoBehaviour
 
     public void Exit()
     {
-        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Toggle>().spriteState.disabledSprite;
-        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Toggle>().spriteState.disabledSprite;
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Button>().spriteState.disabledSprite;
+        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Button>().spriteState.disabledSprite;
 
         Ability_Enhance.SetActive(false);
+        Enhance_.SetActive(false);
         Ability_Shop.SetActive(true);
+        Ability_.SetActive(true);
         gameObject.SetActive(false);
+        CP.Ani.SetBool("ShopOn", false);
     }
 
     public void EnhaceAbility()
@@ -171,6 +184,9 @@ public class Enhance : MonoBehaviour
 
     public void OpenShop()
     {
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Button>().spriteState.selectedSprite;
+        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Button>().spriteState.disabledSprite;
+
         Ability_.SetActive(true);
         Ability_Shop.SetActive(true);
         Enhance_.SetActive(false);
@@ -179,6 +195,9 @@ public class Enhance : MonoBehaviour
 
     public void OpenEnhance()
     {
+        PageButton[0].GetComponent<Image>().sprite = PageButton[0].GetComponent<Button>().spriteState.disabledSprite;
+        PageButton[1].GetComponent<Image>().sprite = PageButton[1].GetComponent<Button>().spriteState.selectedSprite;
+
         Ability_.SetActive(false);
         Ability_Shop.SetActive(false);
         Enhance_.SetActive(true);
@@ -217,6 +236,7 @@ public class Enhance : MonoBehaviour
                 CP.UsePassive();
                 CP.passive();
             }
+            CP.SaveAbilityHistory(EHNPC.SellItem[index]);
             EHNPC.IsSell[index] = true;
             SettingShop();
             SettingAbility();

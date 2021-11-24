@@ -150,12 +150,21 @@ public class AbilityManager : MonoBehaviour
 
     public void Ability_E()
     {
-        if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if (Input.GetMouseButtonDown(1))
         {
             EvilSword_Attack();
+            if(Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+            {
+                py.GetComponent<Char_Eden>().P_CombatInt = 0;
+                EA.SetTrigger("First");
+            }
+            else if(Char_Parent.Active_Cool < Char_Parent.Active_Cool_Max)
+            {
+                EA.SetTrigger("Attack");
+            }
             py.GetComponent<Char_Eden>().P_CombatInt = 1;
         }
-        if (Input.GetMouseButtonUp(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if (Input.GetMouseButtonUp(1))
         {
             py.GetComponent<Char_Eden>().P_CombatInt = 0;
             py.GetComponent<Char_Eden>().P_CombatTimer = 5;
@@ -164,10 +173,13 @@ public class AbilityManager : MonoBehaviour
 
     public void EvilSword_Attack()
     {
+        CP.Ani.SetTrigger("Ability");
         CP.Ani.SetInteger("AbilityNum", 5);
         CP.Ani.SetBool("Combat", true);
+    }
+    public void Evilst()
+    {
         CP.Ani.SetBool("CanIThis", false);
-        EA.SetTrigger("Attack");
     }
 
     public void EvilRe()

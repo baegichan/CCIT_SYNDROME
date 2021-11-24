@@ -38,7 +38,7 @@ public class NPC : MonoBehaviour
     protected void talkWithPlayer()
     {
         float Distance = Vector2.Distance(transform.position, ply.transform.position);
-        if(Distance <= 2f) { IsPlayer = true; }
+        if(Distance <= 0.5f) { IsPlayer = true; }
         else { IsPlayer = false; }
 
         if(IsPlayer && Input.GetKeyDown(KeyCode.F)) { talk(); }
