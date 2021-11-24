@@ -86,9 +86,6 @@ public class Abycss_Bomb : MonoBehaviour
             if (collision.CompareTag("Ground"))
             {
 
-                Instantiate(Abyss_Explosion, this.transform.position, Quaternion.identity);
-
-                Destroy(gameObject);
             }
 
         }
