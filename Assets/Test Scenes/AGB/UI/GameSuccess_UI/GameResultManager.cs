@@ -68,14 +68,14 @@ public class GameResultManager : MonoBehaviour
         else
             FaillPanel.SetActive(true);
 
-            TimeText.text = string.Format("{0}:{1}:{2}", (int)PlayTime / 3600, (int)PlayTime / 60 % 60,(int)PlayTime % 60);
-            KillMobText.text = Convert.ToString(countKillMonster);
-            KillBossText.text = Convert.ToString(countKillBoss);
-            DarkFogText.text = Convert.ToString(AbyssManager.abyss.darkfog);
+        TimeText.text = string.Format("{0}:{1}:{2}", (int)PlayTime / 3600, (int)PlayTime / 60 % 60, (int)PlayTime % 60);
+        KillMobText.text = Convert.ToString(countKillMonster);
+        KillBossText.text = Convert.ToString(countKillBoss);
+        DarkFogText.text = Convert.ToString(AbyssManager.abyss.darkfog);
 
 
 
-        }
     }
-  
 }
+
+
