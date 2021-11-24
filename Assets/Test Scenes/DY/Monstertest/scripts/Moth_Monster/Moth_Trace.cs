@@ -25,7 +25,7 @@ public class Moth_Trace : StateMachineBehaviour
     {
         if (MothMon.Targeton == true)
         {
-            if (Vector2.Distance(MothMon.playerTransform.position, MothTransform.position) > 4f) //플레이어 따라 오는 함수
+            if (Vector2.Distance(MothMon.playerTransform.position, MothTransform.position) > 6f) //플레이어 따라 오는 함수
                 MothTransform.position = Vector2.MoveTowards(MothTransform.position, MothMon.playerTransform.position, Time.deltaTime * MothMon.speed);
             else
             {
