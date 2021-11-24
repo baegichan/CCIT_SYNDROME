@@ -45,6 +45,7 @@ public class StateManager : MonoBehaviour
     int hp;
 
     int avssGage;
+    int darkFog;
 
   
 
@@ -56,25 +57,21 @@ public class StateManager : MonoBehaviour
     [SerializeField]
     private Image AbyssBar;
 
+    [SerializeField]
+    private Text DarkFogText;
+
     #endregion
-    // Start is called before the first frame update
-
-
-    // Update is called once per frame
 
 
     #region 리소스 가져오기
-    private void Start()
-    {
 
-    }
     public int MaxHp
     {
         set
         {
             //max 추후에 증가본 추가
             maxHp = value;
-
+            
         }
     }
     public int Hp
@@ -97,9 +94,14 @@ public class StateManager : MonoBehaviour
 
         }
     }
+    public int DarkFog
+    {
+        set
+        {
+            darkFog = value;
+            DarkFogText.text = Convert.ToString(darkFog);
+        }
+    }
     #endregion
 
-    #region
-  
-    #endregion
 }
