@@ -81,7 +81,7 @@ public class MonsterBox : MonoBehaviour
         monsterPosQue.Enqueue(pos);
 
     }
-
+   
 
     #endregion
 

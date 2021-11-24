@@ -35,7 +35,7 @@ public class AbyssMonster : MonoBehaviour
         {
             monsterBox = transform.parent.parent.GetComponent<MonsterBox>();
             monsterBox.AbyssMonsterAdd(id, transform.position);
-            //AbyssManager.abyss.GetAbyssGage(giveAbyssGage);
+             
             Destroy(transform.gameObject);
 
         }

@@ -1,13 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameResultManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    private int clearTime;
+
     private int countKillMonster;
     private int countKillBoss;
+
+    public float PlayTime;
+    public bool isGameClear;
+
+    [Header("Panel")]
+    GameObject ClearPanel;
+    GameObject FaillPanel;
+
+    [Header("Text")]
+    Text TimeText;
+    Text KillMobText;
+    Text KillBossText;
+    Text DarkFogText;
 
     private static GameResultManager _result;
     public static GameResultManager result
@@ -25,9 +40,13 @@ public class GameResultManager : MonoBehaviour
             return _result;
         }
     }
-
+    private void Update()
+    {
+        PlayTime += Time.deltaTime;
+    }
     private void Awake()
     {
+
         if (_result == null)
         {
             _result = this;
@@ -39,5 +58,24 @@ public class GameResultManager : MonoBehaviour
         }
         // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
         DontDestroyOnLoad(gameObject);
+
+    }
+
+    public void ShowResult()
+    {
+        if (isGameClear)
+            ClearPanel.SetActive(true);
+        else
+            FaillPanel.SetActive(true);
+
+        TimeText.text = string.Format("{0}:{1}:{2}", (int)PlayTime / 3600, (int)PlayTime / 60 % 60, (int)PlayTime % 60);
+        KillMobText.text = Convert.ToString(countKillMonster);
+        KillBossText.text = Convert.ToString(countKillBoss);
+        DarkFogText.text = Convert.ToString(AbyssManager.abyss.darkfog);
+
+
+
     }
 }
+
+

@@ -50,9 +50,10 @@ public class AbyssManager : MonoBehaviour
 
     [Header("Abyss Variable")]
     //검은 안개
-    private int darkfog = 0;
+    public int darkfog = 0;
+
     public int maxAbyssGage = 100;
-    //어비스 게이지
+   
     public int abyssGage = 1;
     //hp 게이지
     public int hpGage = 0;
@@ -214,7 +215,7 @@ public class AbyssManager : MonoBehaviour
         set
         {
             abyssGage = value;
-            StateManager.state.AbyssGage = abyssGage; 
+           StateManager.state.AbyssGage = abyssGage; 
         }
     }
 
