@@ -12,6 +12,7 @@ public class Clup_Idle : StateMachineBehaviour
     {
         clupmon = animator.GetComponent<ClupMonster>();
         clupTransform = animator.GetComponent<Transform>();
+        clupmon.patroll = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

@@ -23,6 +23,7 @@ public class Posion_Plask : MonoBehaviour
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        //Player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;
         Transform Player_Transform = Player.GetComponent<TestPlayer>().SelectChar.transform;
 
 

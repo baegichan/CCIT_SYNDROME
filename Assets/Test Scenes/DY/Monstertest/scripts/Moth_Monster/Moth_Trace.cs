@@ -23,7 +23,12 @@ public class Moth_Trace : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (MothMon.playerTransform == null)
+            animator.SetTrigger("Clear");
+        if (MothMon.Targeton == false)
+            animator.SetTrigger("Clear");
         if (MothMon.Targeton == true)
+            if (MothMon.Targeton == true)
         {
             if (Vector2.Distance(MothMon.playerTransform.position, MothTransform.position) > 6f) //플레이어 따라 오는 함수
                 MothTransform.position = Vector2.MoveTowards(MothTransform.position, MothMon.playerTransform.position, Time.deltaTime * MothMon.speed);

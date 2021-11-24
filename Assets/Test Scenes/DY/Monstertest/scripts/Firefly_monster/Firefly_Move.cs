@@ -12,6 +12,7 @@ public class Firefly_Move : StateMachineBehaviour
     {
         fireflyMon = animator.GetComponent<FireflyMonster>();
         fireflyTransform = animator.GetComponent<Transform>();
+        fireflyMon.patroll = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

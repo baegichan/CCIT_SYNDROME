@@ -12,7 +12,9 @@ public class Firefly_Trace : StateMachineBehaviour
         fireflyMon = animator.GetComponent<FireflyMonster>();
         fireflyTransform = animator.GetComponent<Transform>();
          
-        fireflyMon.patroll = false; //몬스터의 패트롤을 끝낼 수 있는 함수를 생성하고 여기서 받는다.
+        fireflyMon.patroll = false;
+        //몬스터의 패트롤을 끝낼 수 있는 함수를 생성하고 여기서 받는다.
+        
         if (fireflyMon.filp == false || fireflyMon.patroll == false)
         {
             fireflyMon.transform.eulerAngles = new Vector3(0, 0, 0);
@@ -23,6 +25,10 @@ public class Firefly_Trace : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (fireflyMon.playerTransform == null)
+            animator.SetTrigger("Clear");
+        if (fireflyMon.Targeton == false)
+            animator.SetTrigger("Clear");
         if (fireflyMon.Targeton == true)
         {
             if (Vector2.Distance(fireflyMon.playerTransform.position, fireflyTransform.position) > 4f) //플레이어 따라 오는 함수
