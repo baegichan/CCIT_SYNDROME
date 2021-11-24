@@ -133,6 +133,9 @@ public class Boss : Character
             Bs.MaxHp = Hp_Max;
             Bs.MaxShield = Shield;
         }
+        else
+            StartCoroutine(Respawn_Monster());//몬스터 젠 시작
+
 
 
 
@@ -293,13 +296,13 @@ public class Boss : Character
     void Dead_END()
     {
         anim.SetBool("Dead", false);
+        StopCoroutine(Respawn_Monster());//몬스터 젠 시작
 
         ///////////////////////////////////
         ///
 
+        Destroy(Frame2);
 
-
-        Debug.Log(23);
         ////////////////////////
 
 
@@ -319,7 +322,6 @@ public class Boss : Character
     public void Change_Abyss_Boss()
     {
         Boss_Controll.transform.GetChild(1).gameObject.SetActive(true);
-        StartCoroutine(Respawn_Monster());//몬스터 젠 시작
 
 
         //2PAGE애니메이션에서 맵 전체를 뒤엎어주는 애니메이션 나왔을때 보스를 사라지게 해줘야함
