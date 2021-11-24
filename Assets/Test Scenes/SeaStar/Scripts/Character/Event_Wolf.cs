@@ -67,7 +67,7 @@ public class Event_Wolf : MonoBehaviour
                 {
                     CameraShake.Cam_instance.Shake(0.1f, 0.05f);
                     Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion);
-                    Current.GetComponent<Character>().KnuckBack(transform, 5);
+                    Current.GetComponent<Character>().KnuckBack(transform, 5, Current.GetComponent<Character>().IsBoss);
                 }
             }
         }
@@ -83,7 +83,7 @@ public class Event_Wolf : MonoBehaviour
                 {
                     CameraShake.Cam_instance.Shake(0.1f, 0.05f);
                     Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion);
-                    Current.GetComponent<Character>().KnuckBack(transform, 5);
+                    Current.GetComponent<Character>().KnuckBack(transform, 5, Current.GetComponent<Character>().IsBoss);
                 }
             }
         }

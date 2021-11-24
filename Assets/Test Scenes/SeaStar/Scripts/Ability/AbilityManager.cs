@@ -9,6 +9,7 @@ public class AbilityManager : MonoBehaviour
     public GameObject Bomb;
     public float WereWolf_Gauge = 0;
     Rigidbody2D rg;
+    public LayerMask TargetLayer;
     public int RockAP;
     public int[] ParaoAP = { 20, 30, 40, 50};
     public int[] BoomAP = { 10, 13, 16, 20 };
@@ -34,7 +35,7 @@ public class AbilityManager : MonoBehaviour
             CP.Ani.SetTrigger("Ability");
             CP.Ani.SetBool("CanIThis", false);
             Vector2 pp = py.transform.position + new Vector3(0.5f,0);
-            Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, Physics2D.AllLayers);
+            Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, TargetLayer);
             for(int i = 0; i < hit.Length; i++)
             {
                 if (hit[i].tag == "Monster")
@@ -67,13 +68,13 @@ public class AbilityManager : MonoBehaviour
         Vector2 ppp = new Vector2(py.transform.position.x, py.transform.position.y + 2f);
 
         Instantiate(PharaoEffect, ppp, Quaternion.identity);
-        Collider2D[] MonsterCol = Physics2D.OverlapBoxAll(pp, new Vector2(5, 5), 0, Physics2D.AllLayers);
+        Collider2D[] MonsterCol = Physics2D.OverlapBoxAll(pp, new Vector2(5, 5), 0, TargetLayer);
         for (int i = 0; i < MonsterCol.Length; i++)
         {
             if (MonsterCol[i].tag == "Monster")
             {
                 Vector2 enemy = new Vector2(MonsterCol[i].transform.position.x, MonsterCol[i].transform.position.y) - pp;
-                RaycastHit2D Hit = Physics2D.Raycast(pp, enemy);
+                RaycastHit2D Hit = Physics2D.Raycast(pp, enemy, TargetLayer);
                 if (Hit.transform.tag == "Monster")
                 {
                     Hit.transform.GetComponent<Character>().Damage(ParaoAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
