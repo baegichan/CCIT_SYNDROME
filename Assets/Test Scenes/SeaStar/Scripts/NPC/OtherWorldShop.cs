@@ -54,6 +54,16 @@ public class OtherWorldShop : NPC
         }
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.tag == "Player") { IsPlayer = true; }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "Player") { IsPlayer = false; }
+    }
+
     Ability Decide_SellItem()
     {
         item.AlyakList();

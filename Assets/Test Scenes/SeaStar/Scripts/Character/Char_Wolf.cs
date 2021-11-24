@@ -14,7 +14,7 @@ public class Char_Wolf : MonoBehaviour
 
     public void Attack()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
         {
             Ani.SetTrigger("Attack");
             Ani.SetBool("CanIThis", false);
@@ -46,15 +46,6 @@ public class Char_Wolf : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (WereWolf_Gauge < 5) { WereWolf_Gauge += 1; }
         StartCoroutine(WolfGauge());
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Ground")
-        {
-            GetComponentInParent<Char_Parent>().P_JumpInt = GetComponentInParent<Char_Parent>().P_MaxJumpInt;
-            Ani.SetBool("Jump", false);
-        }
     }
 
     void AttackStart()

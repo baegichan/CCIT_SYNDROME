@@ -6,46 +6,57 @@ public class AXE : MonoBehaviour
 {
     public int Damage;
     public static int Attack_int;
-    public GameObject Current;
     public GameObject YourParent;
+    public float KnuckBackForce;
 
-    void OnTriggerEnter2D(Collider2D col)
+    public void AxeAttack()
     {
+        Collider2D[] hitAxe = Physics2D.OverlapBoxAll(transform.position, new Vector2(1.8f, 1), 0);
+
         if (AbilityManager.A_Attack_State == true)
         {
-            if (col.tag == "Monster")
+            foreach (Collider2D Current in hitAxe)
             {
-                if (Attack_int <= 4)
+                if (Current.tag == "Monster")
                 {
-                    Current = col.gameObject;
-                    Attack_int++;
-                    Fourth();
+                    if (Attack_int <= 4)
+                    {
+                        Attack_int++;
+                        Fourth(Current);
+                    }
                 }
             }
         }
     }
-
-    private void Fourth()
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(transform.position, new Vector2(1.8f, 1));
+    }
+    private void Fourth(Collider2D col)
     {
         switch (Attack_int)
         {
-
             case 1:
                 CameraShake.Cam_instance.Shake(0.09f, 0.02f);
-                Current.GetComponent<Character>().Damage(Damage, YourParent.GetComponent<Char_Parent>().UseApPostion);
+                col.GetComponent<Character>().Damage(Damage, YourParent.GetComponent<Char_Parent>().UseApPostion);
+                col.GetComponent<Character>().KnuckBack(transform, KnuckBackForce);
                 break;
             case 2:
                 CameraShake.Cam_instance.Shake(0.09f, 0.02f);
-                Current.GetComponent<Character>().Damage(Damage, YourParent.GetComponent<Char_Parent>().UseApPostion);
+                col.GetComponent<Character>().Damage(Damage, YourParent.GetComponent<Char_Parent>().UseApPostion);
+                col.GetComponent<Character>().KnuckBack(transform, KnuckBackForce);
                 break;
             case 3:
                 CameraShake.Cam_instance.Shake(0.09f, 0.02f);
-                Current.GetComponent<Character>().Damage(Damage, YourParent.GetComponent<Char_Parent>().UseApPostion);
+                col.GetComponent<Character>().Damage(Damage, YourParent.GetComponent<Char_Parent>().UseApPostion);
+                col.GetComponent<Character>().KnuckBack(transform, KnuckBackForce);
                 break;
             case 4:
                 Debug.Log("aaaa");
                 CameraShake.Cam_instance.Shake(0.12f, 0.8f);
-                Current.GetComponent<Character>().Damage(Damage + 60, YourParent.GetComponent<Char_Parent>().UseApPostion);//더미 플러스값 언제든 변경가능
+                col.GetComponent<Character>().Damage(Damage + 60, YourParent.GetComponent<Char_Parent>().UseApPostion);//더미 플러스값 언제든 변경가능
+                col.GetComponent<Character>().KnuckBack(transform, KnuckBackForce + 5);
                 break;
         }
 

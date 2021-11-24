@@ -44,7 +44,7 @@ public class Enhance : MonoBehaviour
 
     void Update()
     {
-        if (gameObject.activeSelf) { CP.Ani.SetBool("ShopOn", true); }
+        if (gameObject.activeSelf) { Char_Parent.ShopOn = true; }
     }
 
     void LevelTextPos(int AbilityNum, Text LevelText)
@@ -159,7 +159,7 @@ public class Enhance : MonoBehaviour
         Ability_Shop.SetActive(true);
         Ability_.SetActive(true);
         gameObject.SetActive(false);
-        CP.Ani.SetBool("ShopOn", false);
+        Char_Parent.ShopOn = false;
     }
 
     public void EnhaceAbility()
@@ -228,7 +228,12 @@ public class Enhance : MonoBehaviour
             {
                 EHNPC.py.ActiveAbility = EHNPC.SellItem[index];
                 EHNPC.py.SelectAbility();
-                EHNPC.py.DecideChar();
+                if (EHNPC.SellItem[index].AbCode != 0) { EHNPC.py.DecideChar(); }
+                else if (EHNPC.SellItem[index].AbCode == 0)
+                {
+                    EHNPC.py.Ani.SetFloat("AbilityNum",0);
+                    EHNPC.py.Ani.SetTrigger("Ability");
+                }
             }
             else if (EHNPC.SellItem[index].AbType == Ability.ABTYPE.Passive)
             {

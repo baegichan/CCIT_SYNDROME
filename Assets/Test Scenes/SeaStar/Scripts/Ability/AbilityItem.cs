@@ -100,7 +100,7 @@ public class AbilityItem : MonoBehaviour
                     gameObject.name = AbList[i].AbName;
                     ThisPrice = AbList[i].AbPrice;
                 }
-                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].IsUsing, AbList[i].AbExplan);
+                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].ResultIcon, AbList[i].icon, AbList[i].IsUsing, AbList[i].AbExplan);
                 AbList.RemoveAt(i);
             }
         }
@@ -148,7 +148,12 @@ public class AbilityItem : MonoBehaviour
                         break;
                 }
                 pt.SaveAbilityHistory(me);
-                pt.DecideChar();
+                if (me.AbCode != 0) { pt.DecideChar(); }
+                else if(me.AbCode != 0)
+                {
+                    pt.Ani.SetFloat("AbilityNum", 0);
+                    pt.Ani.SetTrigger("Ability");
+                }
                 Destroy(this.gameObject);
             }
             else
