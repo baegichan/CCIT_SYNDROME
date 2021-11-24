@@ -99,7 +99,7 @@ public class BulletScript : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 collision.transform.parent.GetComponent<Character>().Damage(Bullet_Damage);
-                
+                //collision.transform.parent.GetComponent<Character>().KnuckBack(transform, 5, collision.GetComponent<Character>().IsBoss);
                 Destroy(this.gameObject);
             }
             else
