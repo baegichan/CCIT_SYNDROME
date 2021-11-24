@@ -99,9 +99,9 @@ public class Character : MonoBehaviour
     }
 
 
-    public void Damage(int DamageValue, bool IsBuffOn)
+    public void Damage(int DamageValue, bool IsBuffOn, GameObject HitEffect)
     {
-        //Instantiate(HitEffect, position, Quaternion.identity);
+        Instantiate(HitEffect, transform.position, Quaternion.identity);
         int firstDamage = IsBuffOn ? DamageValue + Mathf.RoundToInt(DamageValue * 0.2f) : DamageValue;
         if (DamageValue > 20)
         {
@@ -116,6 +116,24 @@ public class Character : MonoBehaviour
             Shield -= firstDamage - DP;
         Load_Damage_Text(this, firstDamage);
     }
+
+    public void Damage(int DamageValue, bool IsBuffOn)
+    {
+        int firstDamage = IsBuffOn ? DamageValue + Mathf.RoundToInt(DamageValue * 0.2f) : DamageValue;
+        if (DamageValue > 20)
+        {
+            //CameraShake.Cam_instance.Shake(70, 0.4f);
+        }
+        int secondDamge = firstDamage - Shield;
+        if (secondDamge > 0)
+        {
+            Hp_Current -= secondDamge - DP;
+        }
+        if (Shield > 0)
+            Shield -= firstDamage - DP;
+        Load_Damage_Text(this, firstDamage);
+    }
+
     public void KnuckBack(Transform Attacker, float Power, bool IsBoss)
     {
         if(!IsBoss)

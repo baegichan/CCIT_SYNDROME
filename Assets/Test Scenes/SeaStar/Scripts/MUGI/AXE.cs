@@ -6,8 +6,10 @@ public class AXE : MonoBehaviour
 {
     public int Damage;
     public static int Attack_int;
-    public GameObject YourParent;
+    public Char_Parent CP;
+    public AbilityManager AM;
     public float KnuckBackForce;
+    public GameObject HitEffect;
 
     public void AxeAttack()
     {
@@ -39,23 +41,23 @@ public class AXE : MonoBehaviour
         {
             case 1:
                 CameraShake.Cam_instance.Shake(0.09f, 0.02f);
-                col.GetComponent<Character>().Damage(Damage, YourParent.GetComponent<Char_Parent>().UseApPostion);
+                col.GetComponent<Character>().Damage(AM.AxeAP[CP.ActiveAbility.Enhance], CP.UseApPostion, HitEffect);
                 col.GetComponent<Character>().KnuckBack(transform, KnuckBackForce, col.GetComponent<Character>().IsBoss);
                 break;
             case 2:
                 CameraShake.Cam_instance.Shake(0.09f, 0.02f);
-                col.GetComponent<Character>().Damage(Damage, YourParent.GetComponent<Char_Parent>().UseApPostion);
+                col.GetComponent<Character>().Damage(AM.AxeAP[CP.ActiveAbility.Enhance], CP.UseApPostion, HitEffect);
                 col.GetComponent<Character>().KnuckBack(transform, KnuckBackForce, col.GetComponent<Character>().IsBoss);
                 break;
             case 3:
                 CameraShake.Cam_instance.Shake(0.09f, 0.02f);
-                col.GetComponent<Character>().Damage(Damage, YourParent.GetComponent<Char_Parent>().UseApPostion);
+                col.GetComponent<Character>().Damage(AM.AxeAP[CP.ActiveAbility.Enhance], CP.UseApPostion, HitEffect);
                 col.GetComponent<Character>().KnuckBack(transform, KnuckBackForce, col.GetComponent<Character>().IsBoss);
                 break;
             case 4:
                 Debug.Log("aaaa");
                 CameraShake.Cam_instance.Shake(0.12f, 0.8f);
-                col.GetComponent<Character>().Damage(Damage + 60, YourParent.GetComponent<Char_Parent>().UseApPostion);//더미 플러스값 언제든 변경가능
+                col.GetComponent<Character>().Damage(AM.AxeAP[CP.ActiveAbility.Enhance] + 20, CP.UseApPostion, HitEffect);
                 col.GetComponent<Character>().KnuckBack(transform, KnuckBackForce + 5, col.GetComponent<Character>().IsBoss);
                 break;
         }
