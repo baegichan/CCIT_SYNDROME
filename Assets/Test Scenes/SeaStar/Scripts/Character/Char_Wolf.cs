@@ -11,11 +11,16 @@ public class Char_Wolf : MonoBehaviour
     IEnumerator wolf;
     public Animator Ani;
     public bool P_Attack_State;
+    public float P_AttackMoveInt;
 
     public void Attack()
     {
         if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
         {
+            if (GetComponentInParent<Char_Parent>().Ani.GetBool("Jump") == false)
+            {
+                Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * (P_AttackMoveInt * 5), ForceMode2D.Impulse);
+            }
             Ani.SetTrigger("Attack");
             Ani.SetBool("CanIThis", false);
         }

@@ -14,6 +14,8 @@ public class Event_Wolf : MonoBehaviour
     public Vector3 RightHand, LeftHand;
     public Vector3 RightBox, LeftBox;
     public Char_Wolf wolf;
+    public GameObject[] HitEffect;
+    int AttackInt;
 
     void CanMove()
     {
@@ -66,7 +68,7 @@ public class Event_Wolf : MonoBehaviour
                 if (Current.tag == "Monster")
                 {
                     CameraShake.Cam_instance.Shake(0.1f, 0.05f);
-                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion);
+                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect[AttackInt-1]);
                     Current.GetComponent<Character>().KnuckBack(transform, 5, Current.GetComponent<Character>().IsBoss);
                 }
             }
@@ -82,11 +84,17 @@ public class Event_Wolf : MonoBehaviour
                 if (Current.tag == "Monster")
                 {
                     CameraShake.Cam_instance.Shake(0.1f, 0.05f);
-                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion);
+                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect[AttackInt-1]);
                     Current.GetComponent<Character>().KnuckBack(transform, 5, Current.GetComponent<Character>().IsBoss);
                 }
             }
         }
+    }
+
+    void attackInt()
+    {
+        if(AttackInt == 3) { AttackInt = 1; }
+        else if(AttackInt < 3) { AttackInt++; }
     }
 
     void OnDrawGizmos()
