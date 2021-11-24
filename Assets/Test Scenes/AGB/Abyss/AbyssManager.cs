@@ -106,7 +106,7 @@ public class AbyssManager : MonoBehaviour
     {
 
         abyssState = AbyssState.Reality;
-        fogText.text = Convert.ToString(darkfog);
+        //fogText.text = Convert.ToString(darkfog);
 
 
     }
