@@ -12,6 +12,7 @@ public class Moth_Move : StateMachineBehaviour
     {
         MothMon = animator.GetComponent<MothMonster>();
         MothTransform = animator.GetComponent<Transform>();
+        MothMon.patroll = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

@@ -8,7 +8,7 @@ public class ResercherMonster : Character
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
-    public int clupmonDamage;
+    public int ResercherDamage;
 
     [Header("Refernce")]
     public GameObject player;
@@ -30,6 +30,7 @@ public class ResercherMonster : Character
     public bool Targeton = false;
     public bool Dead;
     public bool movable = false;
+    private bool Online;
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
     //SerializeField 쓴 이유는 인스펙터에선느 접근이 가능하지만 외부 스크립트에서 접근이 불가능하게 막으러고 사용했다. 몬스터마다 각각의 고유 범위가 있기 때문에 이는 참조가 되면 안된다고 생각
@@ -49,6 +50,26 @@ public class ResercherMonster : Character
 
     private float m_horizontalViewHalfAngle = 0f;
 
+    private void OnEnable()
+    {
+        playerTransform = null;
+        Targeton = false;
+        if (Online)
+        {
+            anim.SetFloat("Direction", 1);
+        }
+
+        transform.eulerAngles = new Vector3(0, 0, 0);
+    }
+
+    private void OnDisable()
+    {
+        anim.SetFloat("Direction", 1);
+        Vector2 current = transform.localScale;
+        current.x = 1;
+        transform.localScale = current;
+    }
+
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;// 0.5f을 곱하는 이유는 우리가 보는 각도가 중앙이 되고 그 부분으로 시야각이 10이라면 -10, 10이렇게 되어야 하기 때문이다.
@@ -61,6 +82,7 @@ public class ResercherMonster : Character
         trace = false;
         anim = GetComponent<Animator>();
         Physics.IgnoreLayerCollision(0, 0);
+        Online = true;
     }
 
     void Update()
@@ -129,7 +151,7 @@ public class ResercherMonster : Character
         {
             if (col.tag == "Player")
             {
-                col.GetComponentInParent<Character>().Damage(clupmonDamage);
+                col.GetComponentInParent<Character>().Damage(ResercherDamage);
             }
         }
     }
@@ -249,9 +271,16 @@ public class ResercherMonster : Character
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
-                //player = GameObject.FindGameObjectWithTag("Player").transform;
-                player = GameObject.FindGameObjectWithTag("Player");//플레이어 피봇 위치 트러짐 떄문에 사용
-                playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                player = GameObject.FindGameObjectWithTag("Player");
+                //player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;//플레이어 피봇 위치 트러짐 떄문에 사용
+                Debug.Log(player + "이새끼 때문임1");
+             
+                if (playerTransform == null)
+                {
+                  playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                }
+                else
+                    playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget)
                 {

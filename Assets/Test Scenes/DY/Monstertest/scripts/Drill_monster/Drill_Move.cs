@@ -12,7 +12,7 @@ public class Drill_Move : StateMachineBehaviour
     {
         drillMon = animator.GetComponent<DrillMonster>();
         drillTransform = animator.GetComponent<Transform>();
-
+        drillMon.patroll = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -20,7 +20,7 @@ public class Drill_Move : StateMachineBehaviour
     { 
         if(drillMon.Targeton ==true)
         {
-            if (Vector2.Distance(drillMon.first, drillTransform.position) < 0.1f || Vector2.Distance(drillTransform.position, drillMon.PlayerT.position) > 10f)//Å½Áö ¹üÀ§
+            if (Vector2.Distance(drillMon.first, drillTransform.position) < 0.1f || Vector2.Distance(drillTransform.position, drillMon.playerTransform.position) > 10f)//Å½Áö ¹üÀ§
             {
                 animator.SetBool("Move", false);
                 animator.SetBool("Follow", true);

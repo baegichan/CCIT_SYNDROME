@@ -13,7 +13,7 @@ public class ResercherPoison_Move : StateMachineBehaviour
     {
         ResercherPoisonmon = animator.GetComponent<ResercherPoisonMonster>();
         ResercherPoisonTransform = animator.GetComponent<Transform>();
-
+        ResercherPoisonmon.patroll = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -40,7 +40,6 @@ public class ResercherPoison_Move : StateMachineBehaviour
             {
                 ResercherPoisonTransform.position = Vector2.MoveTowards(ResercherPoisonTransform.position, ResercherPoisonmon.first + Vector2.left, Time.deltaTime * ResercherPoisonmon.patrolSpeed);
             }
-
         }
     }
 
