@@ -162,9 +162,7 @@ public class Punchermonster : Character
 
     public void PuncherDestroy()
     {
-        abyssMonster.MonsterDie();
         Destroy(gameObject);
-
     }
 
     public void Filp()

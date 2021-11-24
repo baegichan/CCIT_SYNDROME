@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 7
   m_Sprite: {fileID: -2705890660367286297, guid: 198632d253dc23348ab4c0d062383c64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -245,7 +245,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 6
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -470,7 +470,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 9
   m_Sprite: {fileID: 5237505511032744732, guid: 198632d253dc23348ab4c0d062383c64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -584,7 +584,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 10
   m_Sprite: {fileID: -896608604185691875, guid: 198632d253dc23348ab4c0d062383c64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -674,6 +674,7 @@ GameObject:
   - component: {fileID: 4661385673086449579}
   - component: {fileID: 9204756148408553550}
   - component: {fileID: 3941622753299243641}
+  - component: {fileID: 8529250832628045646}
   m_Layer: 14
   m_Name: Monster_RobotClup
   m_TagString: Monster
@@ -784,6 +785,7 @@ MonoBehaviour:
   AP: 0
   DP: 0
   speed: 5
+  IsBoss: 0
   patrolSpeed: 3
   atkCooltime: 1.5
   atkDelay: 0
@@ -814,6 +816,20 @@ MonoBehaviour:
   m_viewObstacleMask:
     serializedVersion: 2
     m_Bits: 2147483712
+--- !u!114 &8529250832628045646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3941622753299243638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4451014f230144cb6d498702a17d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DarkFog: {fileID: 0}
+  id: 1
 --- !u!1 &4127974974922238141
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,7 +929,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 8
   m_Sprite: {fileID: -1974917360739584452, guid: 198632d253dc23348ab4c0d062383c64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -995,7 +1011,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 2261661455605091421, guid: 198632d253dc23348ab4c0d062383c64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1078,7 +1094,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 4
   m_Sprite: {fileID: 7984237644401361914, guid: 198632d253dc23348ab4c0d062383c64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1161,7 +1177,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 2
   m_Sprite: {fileID: -8714631039151265203, guid: 198632d253dc23348ab4c0d062383c64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1348,7 +1364,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 11
   m_Sprite: {fileID: 2928824049201528721, guid: 198632d253dc23348ab4c0d062383c64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

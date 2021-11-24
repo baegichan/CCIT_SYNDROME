@@ -9852,7 +9852,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 16
   m_Sprite: {fileID: -2937186022416604850, guid: 53138acab6830df478fcec641717e14b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10033,7 +10033,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 11
   m_Sprite: {fileID: 3249417922600416664, guid: 53138acab6830df478fcec641717e14b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10187,7 +10187,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 4
   m_Sprite: {fileID: -4458434195047490561, guid: 53138acab6830df478fcec641717e14b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10462,6 +10462,7 @@ GameObject:
   - component: {fileID: 6185011703035609631}
   - component: {fileID: 6185011703035609616}
   - component: {fileID: 6185011703035609617}
+  - component: {fileID: 5856539613389920983}
   m_Layer: 14
   m_Name: Monster_Moth
   m_TagString: Monster
@@ -10543,6 +10544,7 @@ MonoBehaviour:
   AP: 0
   DP: 0
   speed: 5
+  IsBoss: 0
   patrolSpeed: 3
   atkCooltime: 3
   atkDelay: 0
@@ -10620,6 +10622,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7898081, y: 0.3950572}
   m_EdgeRadius: 0
+--- !u!114 &5856539613389920983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6185011703035609618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4451014f230144cb6d498702a17d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DarkFog: {fileID: 0}
+  id: 7
 --- !u!1 &6216183848359119043
 GameObject:
   m_ObjectHideFlags: 0
@@ -15780,7 +15796,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 20
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
