@@ -12,7 +12,8 @@ public class GameResultManager : MonoBehaviour
     private int countKillBoss;
 
     public float PlayTime;
-   
+
+    List<Ability> ability;
 
     [Header("Panel")]
     GameObject ClearPanel;
@@ -50,6 +51,7 @@ public class GameResultManager : MonoBehaviour
         if (_result == null)
         {
             _result = this;
+
         }
         // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
         else if (_result != this)
@@ -72,9 +74,24 @@ public class GameResultManager : MonoBehaviour
         KillMobText.text = Convert.ToString(countKillMonster);
         KillBossText.text = Convert.ToString(countKillBoss);
         DarkFogText.text = Convert.ToString(AbyssManager.abyss.darkfog);
+        float count = Convert.ToSingle(ability.Count) / 3f;
+        int num = 1;
+        int index = 1;
+        for (int i = 0; i < count; i++)
+        {
+            for (int j = 1; j <= 3; j++)
+            {
+                index = j * num;
+               // if(ability[index].ab)
+            }
 
+            num++;
+        }
+    }
 
-
+    public void Abilty(List<Ability> d)
+    {
+        ability = d;
     }
 }
 
