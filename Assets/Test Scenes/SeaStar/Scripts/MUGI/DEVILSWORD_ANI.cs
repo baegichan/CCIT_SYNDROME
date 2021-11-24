@@ -45,9 +45,18 @@ public class DEVILSWORD_ANI : MonoBehaviour
     {
         ply.GetComponent<AbilityManager>().E_Attack_State = true;
     }
+    void IcantDo()
+    {
+        ply.GetComponent<AbilityManager>().Evilst();
+    }
 
     void IcanDoit()
     {
         ply.GetComponent<AbilityManager>().EvilRe();
+    }
+
+    void Movefalse()
+    {
+        ply.GetComponent<Char_Parent>().Ani.SetBool("Move", false);
     }
 }

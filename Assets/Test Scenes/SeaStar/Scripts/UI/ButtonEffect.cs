@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Sprite Default;
     public Sprite Hover;
@@ -12,16 +12,17 @@ public class ButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerClickHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.GetComponent<Image>().sprite = Hover;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-
+        if(transform.GetComponent<Image>().sprite != Default)
+        {
+            transform.GetComponent<Image>().sprite = Hover;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-
+        if (transform.GetComponent<Image>().sprite != Default)
+        {
+            transform.GetComponent<Image>().sprite = Disable;
+        }
     }
 }

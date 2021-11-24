@@ -7,7 +7,9 @@ public class RealWorldShop : MonoBehaviour
 {
     [Header("Shop Page")]
     public GameObject PetShop;
+    public GameObject PetShop_Box;
     public GameObject PillShop;
+    public GameObject PillShop_Box;
     public GameObject PetShopButton;
     public GameObject PillShopButton;
 
@@ -25,9 +27,14 @@ public class RealWorldShop : MonoBehaviour
     public Text APItem_Explan_Text;
     public Text APItem_Price_Text;
 
+    void Update()
+    {
+        if (gameObject.activeSelf) { CP.Ani.SetBool("ShopOn", true); }
+    }
+
     public void SettingBox()
     {
-        PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Toggle>().spriteState.selectedSprite;
+        PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Button>().spriteState.selectedSprite;
 
         HPItem_Icon_Image.sprite = HPItem.AbIcon;
         HPItem_Explan_Text.text = HPItem.AbExplan;
@@ -40,20 +47,24 @@ public class RealWorldShop : MonoBehaviour
 
     public void OpenPet_Box()
     {
-        PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Toggle>().spriteState.selectedSprite;
-        PillShopButton.GetComponent<Image>().sprite = PillShopButton.GetComponent<Toggle>().spriteState.disabledSprite;
+        PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Button>().spriteState.selectedSprite;
+        PillShopButton.GetComponent<Image>().sprite = PillShopButton.GetComponent<Button>().spriteState.disabledSprite;
 
         PetShop.SetActive(true);
+        PetShop_Box.SetActive(true);
         PillShop.SetActive(false);
+        PillShop_Box.SetActive(false);
     }
 
     public void OpenPill_Box()
     {
-        PillShopButton.GetComponent<Image>().sprite = PillShopButton.GetComponent<Toggle>().spriteState.selectedSprite;
-        PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Toggle>().spriteState.disabledSprite;
+        PillShopButton.GetComponent<Image>().sprite = PillShopButton.GetComponent<Button>().spriteState.selectedSprite;
+        PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Button>().spriteState.disabledSprite;
 
         PetShop.SetActive(false);
+        PetShop_Box.SetActive(false);
         PillShop.SetActive(true);
+        PillShop_Box.SetActive(true);
     }
 
     public Char_Parent CP;
@@ -79,9 +90,12 @@ public class RealWorldShop : MonoBehaviour
     public void close()
     {
         PetShop.SetActive(true);
+        PetShop_Box.SetActive(true);
         PillShop.SetActive(false);
-        PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Toggle>().spriteState.disabledSprite;
-        PillShopButton.GetComponent<Image>().sprite = PillShopButton.GetComponent<Toggle>().spriteState.disabledSprite;
+        PillShop_Box.SetActive(false);
+        PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Button>().spriteState.disabledSprite;
+        PillShopButton.GetComponent<Image>().sprite = PillShopButton.GetComponent<Button>().spriteState.disabledSprite;
         gameObject.SetActive(false);
+        CP.Ani.SetBool("ShopOn", false);
     }
 }

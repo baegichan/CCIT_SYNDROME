@@ -16,6 +16,8 @@ public class Char_Eden : MonoBehaviour
     public float P_AttackResetTimer;
     public float P_CombatTimer = 5;
     public float P_CombatInt;
+    [Tooltip("플레이어 공격시 앞으로 움직여지는 변수")]
+    public float P_AttackMoveInt;
     //
     [Header("대쉬")]
     public float P_DashForce;
@@ -43,7 +45,7 @@ public class Char_Eden : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * 2500 * Time.deltaTime);
+            Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * (P_AttackMoveInt * 5) * Time.deltaTime, ForceMode2D.Impulse);
             Ani.SetTrigger("Attack");
             Ani.SetBool("Combat", true);
             Ani.SetBool("CanIThis", false);

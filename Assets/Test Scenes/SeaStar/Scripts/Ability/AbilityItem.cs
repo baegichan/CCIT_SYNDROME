@@ -146,6 +146,7 @@ public class AbilityItem : MonoBehaviour
                         pt.AlYakInt++;
                         break;
                 }
+                pt.SaveAbilityHistory(me);
                 pt.DecideChar();
                 Destroy(this.gameObject);
             }

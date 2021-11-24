@@ -91,7 +91,6 @@ public class Character : MonoBehaviour
     public void Damage(int DamageValue, bool IsBuffOn)
     {
         int firstDamage = IsBuffOn ? DamageValue + Mathf.RoundToInt(DamageValue * 0.2f) : DamageValue;
-        Debug.Log(firstDamage);
         if (DamageValue > 20)
         {
            //CameraShake.Cam_instance.Shake(70, 0.4f);

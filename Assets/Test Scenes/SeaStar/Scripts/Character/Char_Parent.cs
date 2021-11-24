@@ -20,6 +20,7 @@ public class Char_Parent : Character
     public GameObject BattleAxe_Senaka;
     public GameObject BattleAxe;
     public GameObject EvilSword;
+    public List<Ability> AbilityHistory;
 
     [Header("플레이어 스테이터스")]
     public int DefaultHP;
@@ -83,34 +84,41 @@ public class Char_Parent : Character
     }
     void FixedUpdate()
     {
-        if (Ani.GetBool("CanIThis"))
+        if(!Ani.GetBool("ShopOn"))
         {
-            Move();
+            if (Ani.GetBool("CanIThis"))
+            {
+                Move();
+            }
         }
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O)) { Damage(10); }
-        PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);//마우스 포인터 좌표받기//2021.10.12 김재헌
-        Mouse = Input.mousePosition;//2021.10.12 김재헌
-        MouseFilp();//2021.10.12 김재헌
-
-        if (ActiveAbility.AbSprite != null)
+        if (Input.GetKeyDown(KeyCode.O)) { Damage(10); } //테스트용
+        PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
+        Mouse = Input.mousePosition;
+        if (!Ani.GetBool("ShopOn"))
         {
-            UseSkill();
+            if (Ani.GetBool("CanIThis"))
+            {
+                MouseFilp();
+                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                UseItem();
+                ds();
+                atk();
+            }
+            if (ActiveAbility.AbSprite != null)
+            {
+                UseSkill();
+            }
         }
-
         if (Ani.GetBool("CanIThis"))
         {
-            if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+            MouseFilp();
         }
+        if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
 
-        UseItem();
-        ds();
-        atk();
-        if(Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
-
-        if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); }
+        if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); } //테스트용
         if (AP_Timer > 0) { AP_Time(); }
         else { if (UseApPostion) { UseApPostion = false; } }
     }
@@ -194,7 +202,11 @@ public class Char_Parent : Character
                 break;
             case -1:
             case 1:
-                Ani.SetBool("Move", true);
+                if (Ani.GetBool("CanIThis") == false)
+                {
+                    Ani.SetBool("Move", false);
+                }
+                else { Ani.SetBool("Move", true); }
                 break;
         }
     }
@@ -431,5 +443,21 @@ public class Char_Parent : Character
         PlayerPrefs.SetInt("E_Health", Enhance_Health);
         PlayerPrefs.SetInt("E_Strength", Enhance_Strength);
         PlayerPrefs.SetInt("E_Speed", Enhance_Speed);
+    }
+
+    public void SaveAbilityHistory(Ability ability)
+    {
+        Debug.Log(ability.AbName);
+        if(AbilityHistory.Count == 0) { AbilityHistory.Add(ability); }
+        else if(AbilityHistory.Count > 0)
+        {
+            for(int i = 0; i < AbilityHistory.Count; i++)
+            {
+                if(AbilityHistory[i].AbCode == ability.AbCode) { break; }
+                else if(i == AbilityHistory.Count - 1 && AbilityHistory[i].AbCode != ability.AbCode) { AbilityHistory.Add(ability); }
+
+                Debug.Log(AbilityHistory[i]);
+            }
+        }
     }
 }
