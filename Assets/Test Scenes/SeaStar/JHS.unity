@@ -268,7 +268,6 @@ MonoBehaviour:
   hpGage: 0
   abyssGageConsumption: 1
   abyssConsumptionTime: 1
-  fogText: {fileID: 0}
   abyssState: 0
 --- !u!114 &122823942
 MonoBehaviour:
@@ -284,6 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HpBar: {fileID: 4010394848929077863}
   AbyssBar: {fileID: 4010394847333682565}
+  DarkFogText: {fileID: 0}
 --- !u!4 &122823943
 Transform:
   m_ObjectHideFlags: 0
@@ -36682,6 +36682,7 @@ MonoBehaviour:
   AP: 0
   DP: 0
   speed: 0
+  IsBoss: 0
   Char:
   - {fileID: 3813169850363156642}
   - {fileID: 4727192599444057771}
@@ -36760,6 +36761,9 @@ MonoBehaviour:
   py: {fileID: 0}
   Bomb: {fileID: 4392590547361939785, guid: d139dd23d490ec3419dd3091eaf899da, type: 3}
   WereWolf_Gauge: 0
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
   RockAP: 20
   ParaoAP: c8000000fa0000002c0100005e010000
   BoomAP: 0a0000000d0000001000000014000000
@@ -43090,6 +43094,7 @@ MonoBehaviour:
   AP: 0
   DP: 0
   speed: 0
+  IsBoss: 0
 --- !u!61 &1792828268
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -93779,8 +93784,8 @@ MonoBehaviour:
   Attack_Event_4: {fileID: 3924056785389573368}
   Attack_Event_5: {fileID: 2313162082929489431}
   Skill_Effect: {fileID: 4593779223135802603}
-  RightHand: {x: -1.28, y: 0.59, z: 0}
-  LeftHand: {x: -1.28, y: 0.59, z: 0}
+  RightHand: {x: 1.28, y: 0.59, z: 0}
+  LeftHand: {x: 1.28, y: 0.59, z: 0}
   RightBox: {x: 1.25, y: 0.97, z: 0}
   LeftBox: {x: 1.25, y: 0.97, z: 0}
   wolf: {fileID: 4727192599444057772}

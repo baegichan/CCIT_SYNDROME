@@ -20,7 +20,9 @@ public class Explosion : MonoBehaviour
             {
                 collision.transform.parent.GetComponent<Character>().Damage(Normal_Boss_Bomb_Damage);
                 //Destroy(this.gameObject, 5);플레이어가 밟으면 터지는거 애니메이션 끝나면 없애줄꺼임// 5초는 그냥 설정
-                Destroy(gameObject,3);
+                //                col.GetComponent<Character>().KnuckBack(transform, KnuckBackForce, col.GetComponent<Character>().IsBoss);
+                //collision.transform.parent.GetComponent<Character>().KnuckBack(transform, 5, collision.GetComponent<Character>().IsBoss);   
+                Destroy(gameObject);
             }
             if (collision.CompareTag("Ground"))
             {

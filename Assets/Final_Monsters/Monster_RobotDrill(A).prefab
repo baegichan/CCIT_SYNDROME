@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 3
   m_Sprite: {fileID: 3570669096297568338, guid: 41604ad91c717cb49bc93f703e1454ed, type: 3}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
@@ -225,7 +225,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 10
   m_Sprite: {fileID: 7005421044742825440, guid: 41604ad91c717cb49bc93f703e1454ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5155,7 +5155,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 13
   m_Sprite: {fileID: -7999414288399406090, guid: 41604ad91c717cb49bc93f703e1454ed, type: 3}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
@@ -10175,7 +10175,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e90b61d5ef8266b4c984a0f982122de5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10332,7 +10332,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 8
   m_Sprite: {fileID: -31717236589658250, guid: 41604ad91c717cb49bc93f703e1454ed, type: 3}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
@@ -10417,7 +10417,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: -4153578919308731584, guid: 41604ad91c717cb49bc93f703e1454ed, type: 3}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
@@ -10443,6 +10443,7 @@ GameObject:
   - component: {fileID: 3794033226144899244}
   - component: {fileID: 3794033226144899251}
   - component: {fileID: 3794033226144899245}
+  - component: {fileID: 4364730563698913495}
   m_Layer: 13
   m_Name: Monster_RobotDrill(A)
   m_TagString: Monster
@@ -10552,6 +10553,7 @@ MonoBehaviour:
   AP: 0
   DP: 0
   speed: 5
+  IsBoss: 0
   patrolSpeed: 3
   atkCooltime: 1.5
   atkDelay: 0
@@ -10578,10 +10580,24 @@ MonoBehaviour:
   m_viewRotateZ: 0
   m_viewTargetMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1073741824
   m_viewObstacleMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
+--- !u!114 &4364730563698913495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6319775848074521431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4451014f230144cb6d498702a17d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DarkFog: {fileID: 6027438083043282874, guid: 626875ba9fa6132449b7dfc925529d25, type: 3}
+  id: 0
 --- !u!1 &7236793386193605333
 GameObject:
   m_ObjectHideFlags: 0
@@ -10651,7 +10667,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 2
   m_Sprite: {fileID: -4941477622996325257, guid: 41604ad91c717cb49bc93f703e1454ed, type: 3}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
@@ -10800,7 +10816,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1738102297
-  m_SortingLayer: 3
+  m_SortingLayer: 6
   m_SortingOrder: 14
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

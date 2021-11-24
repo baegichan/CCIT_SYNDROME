@@ -17,6 +17,8 @@ public class Character : MonoBehaviour
     public int DP;
     [Tooltip("기본 이동속도")]
     public float speed;
+    [Tooltip("보스 몬스터 여부")]
+    public bool IsBoss;
 
     void Update()
     {
@@ -114,20 +116,22 @@ public class Character : MonoBehaviour
             Shield -= firstDamage - DP;
         Load_Damage_Text(this, firstDamage);
     }
-    public void KnuckBack(Transform Attacker, float Power)
+    public void KnuckBack(Transform Attacker, float Power, bool IsBoss)
     {
-
-        if (Attacker.position.x < transform.position.x)
+        if(!IsBoss)
         {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.right * Power, ForceMode2D.Impulse);
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
-            GetComponent<MonsterColorChanger>().Damaged();
-        }
-        else if (Attacker.position.x > transform.position.x)
-        {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.left * Power, ForceMode2D.Impulse);
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
-            GetComponent<MonsterColorChanger>().Damaged();
+            if (Attacker.position.x < transform.position.x)
+            {
+                GetComponent<Rigidbody2D>().AddForce(Vector2.right * Power, ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
+            else if (Attacker.position.x > transform.position.x)
+            {
+                GetComponent<Rigidbody2D>().AddForce(Vector2.left * Power, ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
         }
     }
 }
