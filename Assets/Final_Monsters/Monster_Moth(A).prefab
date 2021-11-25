@@ -10490,7 +10490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1486636013141226822
 Transform:
   m_ObjectHideFlags: 0
@@ -10525,7 +10525,7 @@ MonoBehaviour:
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
-  m_UseNormalMap: 0
+  m_UseNormalMap: 1
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 0
@@ -10534,7 +10534,7 @@ MonoBehaviour:
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
   m_PointLightOuterRadius: 1
-  m_PointLightDistance: 3
+  m_PointLightDistance: 5
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
@@ -10543,9 +10543,11 @@ MonoBehaviour:
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
   - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.123427644, y: -2.455796, z: 0}
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 4.226589, y: 0.059033003, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.03141519, y: 2.2451074, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
   - {x: -4.0354223, y: 0.057841413, z: 0}
 --- !u!1 &4695987527102078562
@@ -10699,7 +10701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hp_Max: 40
-  Hp_Current: 5
+  Hp_Current: 40
   Shield: 0
   AP: 0
   DP: 0
@@ -15810,10 +15812,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9156205675159124977, guid: b1c67208cf0cc7943aee420ba3b72de4, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9156205675159124979, guid: b1c67208cf0cc7943aee420ba3b72de4, type: 3}
       propertyPath: m_Name
       value: HPcanvas
@@ -15826,14 +15824,6 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 5200450857881125708}
-    - target: {fileID: 9156205675159124980, guid: b1c67208cf0cc7943aee420ba3b72de4, type: 3}
-      propertyPath: BackGround
-      value: 
-      objectReference: {fileID: 9092759924767929211}
-    - target: {fileID: 9156205675159124980, guid: b1c67208cf0cc7943aee420ba3b72de4, type: 3}
-      propertyPath: AdditionalPosition.y
-      value: 0.6
-      objectReference: {fileID: 0}
     - target: {fileID: 9156205675159124983, guid: b1c67208cf0cc7943aee420ba3b72de4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -15869,10 +15859,6 @@ PrefabInstance:
     - target: {fileID: 9156205675159124983, guid: b1c67208cf0cc7943aee420ba3b72de4, type: 3}
       propertyPath: m_SizeDelta.y
       value: 1080
-      objectReference: {fileID: 0}
-    - target: {fileID: 9156205675159124983, guid: b1c67208cf0cc7943aee420ba3b72de4, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.0012
       objectReference: {fileID: 0}
     - target: {fileID: 9156205675159124983, guid: b1c67208cf0cc7943aee420ba3b72de4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15938,17 +15924,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0f8e083dd6b52346a3d49ea3b079c8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9092759924767929211 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9156205674486564651, guid: b1c67208cf0cc7943aee420ba3b72de4, type: 3}
-  m_PrefabInstance: {fileID: 89676671971701840}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7855546064260831841
@@ -16076,6 +16051,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9192025845244002508, guid: e15f5423f4b8b194f987b7f12396ca31, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9192025847167800255, guid: e15f5423f4b8b194f987b7f12396ca31, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
