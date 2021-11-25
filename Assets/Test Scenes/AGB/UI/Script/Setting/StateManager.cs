@@ -91,7 +91,10 @@ public class StateManager : MonoBehaviour
         set
         {
             hp = value;
-            if(lastHp ==)
+
+            if (lastHp == 0)
+                lastHp = hp;
+
             StartCoroutine(HpBarEffects());
 
 
