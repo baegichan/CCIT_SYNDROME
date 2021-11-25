@@ -23,6 +23,7 @@ public class MothMonster : Character
     public Vector2 direction;
     public float distance;
     public Bullet_Attack bullet_Attack;
+    
 
     [Header("Turn state")]
     public bool filp;
@@ -264,10 +265,10 @@ public class MothMonster : Character
 
                 if (playerTransform == null)
                 {
-                    playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                    playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 }
                 else
-                    playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                    playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget != false)
                     Debug.Log(rayHitedTarget.collider.name);

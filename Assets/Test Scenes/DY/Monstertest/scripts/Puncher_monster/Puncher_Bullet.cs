@@ -7,6 +7,7 @@ public class Puncher_Bullet : MonoBehaviour
     [Header("Prameter")]
     public float bullet_speed;
     public int bullet_Damage;
+    [Range(0, 100)] public float Bullet_LifeTime;
 
     [Header("Refernce")]
     GameObject player;
@@ -18,7 +19,7 @@ public class Puncher_Bullet : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         //Player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;
-        playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+        playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
         trans = new Vector2(playerTransform.position.x, playerTransform.position.y);
         dir = playerTransform.position - transform.position;
         float angle = Mathf.Atan2(playerTransform.position.y - transform.position.y, playerTransform.position.x - transform.position.x) * Mathf.Rad2Deg;
@@ -45,6 +46,7 @@ public class Puncher_Bullet : MonoBehaviour
             float Right_Dir = 0.7f;
             transform.localScale = new Vector3(Right_Dir, transform.localScale.y, transform.localScale.z);
         }
+        DestroyPuncherBullet();
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -62,6 +64,15 @@ public class Puncher_Bullet : MonoBehaviour
         if (col.tag == "Wall")
         {
             BulletDestroy();
+        }
+    }
+
+    public void DestroyPuncherBullet()
+    {
+        Bullet_LifeTime = Mathf.Clamp(Bullet_LifeTime - Time.deltaTime, 0, 100);
+        if (Bullet_LifeTime == 0)
+        {
+            Destroy(gameObject);
         }
     }
 

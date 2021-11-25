@@ -6,7 +6,7 @@ public class Posion_Plask : MonoBehaviour
 {
     [Range(0, 1)]
     public float Test;
-
+    [Range(0, 100)] public float Bullet_LifeTime;
 
     public Vector3 p1;
     public Vector3 p2;
@@ -24,7 +24,7 @@ public class Posion_Plask : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         //Player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;
-        Transform Player_Transform = Player.GetComponent<TestPlayer>().SelectChar.transform;
+        Transform Player_Transform = Player.GetComponent<Char_Parent>().SelectChar.transform;
 
 
         p1 = transform.position;
@@ -45,8 +45,10 @@ public class Posion_Plask : MonoBehaviour
             //Destroy(gameObject);
         }
         transform.Rotate(new Vector3(0, 0, -1000f * Time.deltaTime));
-
+        DestroyPlask();
     }
+
+
     public Vector3 BezirTest(
         Vector3 P_1,
         Vector3 P_2,
@@ -66,7 +68,14 @@ public class Posion_Plask : MonoBehaviour
         return F;
     }
 
-
+    public void DestroyPlask()
+    {
+        Bullet_LifeTime = Mathf.Clamp(Bullet_LifeTime - Time.deltaTime, 0, 100);
+        if (Bullet_LifeTime == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
 

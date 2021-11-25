@@ -14,6 +14,9 @@ public class AbilityManager : MonoBehaviour
     public int[] ParaoAP = { 20, 30, 40, 50};
     public int[] BoomAP = { 10, 13, 16, 20 };
     public int[] WolfAP = { 2, 3, 4, 5 };
+    public int[] AxeAP = { 5, 10, 15, 20 };
+    public int[] EvilAP = { 6, 9, 12, 15 };
+    public GameObject PharaoHitEffect;
 
     //¸¶°Ë
     public bool E_Attack_State = false;
@@ -68,6 +71,7 @@ public class AbilityManager : MonoBehaviour
         Vector2 ppp = new Vector2(py.transform.position.x, py.transform.position.y + 2f);
 
         Instantiate(PharaoEffect, ppp, Quaternion.identity);
+        Physics2D.queriesStartInColliders = false;
         Collider2D[] MonsterCol = Physics2D.OverlapBoxAll(pp, new Vector2(5, 5), 0, TargetLayer);
         for (int i = 0; i < MonsterCol.Length; i++)
         {
@@ -77,7 +81,7 @@ public class AbilityManager : MonoBehaviour
                 RaycastHit2D Hit = Physics2D.Raycast(pp, enemy, TargetLayer);
                 if (Hit.transform.tag == "Monster")
                 {
-                    Hit.transform.GetComponent<Character>().Damage(ParaoAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
+                    Hit.transform.GetComponent<Character>().Damage(ParaoAP[CP.ActiveAbility.Enhance], CP.UseApPostion, PharaoHitEffect);
                 }
             }
         }

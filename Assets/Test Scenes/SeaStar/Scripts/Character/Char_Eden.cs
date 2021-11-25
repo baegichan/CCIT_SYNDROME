@@ -16,6 +16,7 @@ public class Char_Eden : MonoBehaviour
     public float P_AttackResetTimer;
     public float P_CombatTimer = 5;
     public float P_CombatInt;
+    public GameObject HitEffect;
     [Tooltip("플레이어 공격시 앞으로 움직여지는 변수")]
     public float P_AttackMoveInt;
     //
@@ -25,6 +26,17 @@ public class Char_Eden : MonoBehaviour
     public float P_DashTimer = 5;
     int AnimeInt = 1;
     //
+    [Header("기본공격 이팩트")]
+    public GameObject One;
+    public GameObject Two;
+    public GameObject Three;
+    [Header("도끼공격 이팩트")]
+    public GameObject A_One;
+    public GameObject A_Two;
+    public GameObject A_Three;
+
+    [Header("라이트 리스트")]
+    public GameObject PharaoLight;
 
     public Animator Ani;
     Rigidbody2D rigid;
@@ -42,7 +54,11 @@ public class Char_Eden : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
         {
-            Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * (P_AttackMoveInt * 5) , ForceMode2D.Impulse);
+            if (GetComponentInParent<Char_Parent>().Ani.GetBool("Jump") == false)
+            {
+                Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * (P_AttackMoveInt * 5), ForceMode2D.Impulse);
+            }
+
             Ani.SetTrigger("Attack");
             Ani.SetBool("Combat", true);
             Ani.SetBool("CanIThis", false);
@@ -77,13 +93,30 @@ public class Char_Eden : MonoBehaviour
                 if (Current.tag == "Monster")
                 {
                     CameraShake.Cam_instance.Shake(0.1f, 0.05f);
-                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion);
+                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect);
                     Current.GetComponent<Character>().KnuckBack(transform, 5, Current.GetComponent<Character>().IsBoss);
                 }
             }
         }
     }
 
+    void AttackEffect(GameObject Effect)
+    {
+        if (Effect.activeSelf) { Effect.SetActive(false); }
+        Effect.SetActive(true);
+    }
+
+    void SwordAttackEffect1() { AttackEffect(One); }
+
+    void SwordAttackEffect2() { AttackEffect(Two); }
+
+    void SwordAttackEffect3() { AttackEffect(Three); Two.SetActive(false); }
+
+    void AxeAttackEffect1() { AttackEffect(A_One); }
+
+    void AxeAttackEffect2() { AttackEffect(A_Two); }
+
+    void AxeAttackEffect3() { AttackEffect(A_Three); A_Two.SetActive(false); }
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -99,24 +132,19 @@ public class Char_Eden : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             if (P_DashInt == 0)
-            {
-                if (AnimeInt == 1)
-                {
+            { 
                     Ani.SetBool("Dash", true);
-                    Ani.SetBool("CanIThis", false);
-                    AnimeInt = 0;
-                }
+                Physics2D.IgnoreLayerCollision(10, 11);
+                Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
+                Char_Parent.rigid.velocity = new Vector2(0, 0);
+                P_DashInt = 0;
             }
-            Physics2D.IgnoreLayerCollision(10, 11);
-            Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
-            Char_Parent.rigid.velocity = new Vector2(0, 0);
-            P_DashInt = 0;
+           
             if (Char_Parent.RedBullDash == true)
             {
                 Physics2D.IgnoreLayerCollision(10, 11);
             }
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
 
         if (P_DashInt == 0)
         {
@@ -128,7 +156,6 @@ public class Char_Eden : MonoBehaviour
         {
             P_DashTimer = 5;
             P_DashInt = 1;
-            AnimeInt = 1;
             P_DashForce = 300;
             Physics2D.IgnoreLayerCollision(10, 11, false);
         }
@@ -246,5 +273,11 @@ public class Char_Eden : MonoBehaviour
     void NormalTime()
     {
         Time.timeScale = 1f;
+    }
+
+    void PharaoOff()
+    {
+        if (PharaoLight.activeSelf) { PharaoLight.SetActive(false); }
+        else { PharaoLight.SetActive(true); }
     }
 }

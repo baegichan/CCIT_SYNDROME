@@ -8,7 +8,6 @@ public class ResercherPoisonMonster : Character
     public float patrolSpeed;
     public float atkCooltime = 4;
     public float atkDelay;
-    public int clupmonDamage;
 
     [Header("Refernce")]
     public GameObject player;
@@ -270,10 +269,10 @@ public class ResercherPoisonMonster : Character
                 Debug.Log(player + "이새끼 때문임1");
                 if (playerTransform == null)
                 {
-                    playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                    playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 }
                 else
-                    playerTransform = player.GetComponent<TestPlayer>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                    playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if (rayHitedTarget)
                 {

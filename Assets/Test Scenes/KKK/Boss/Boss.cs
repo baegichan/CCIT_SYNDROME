@@ -112,10 +112,17 @@ public class Boss : Character
     void Start()
     {
         IsBoss = true;
-        anim = GetComponent<Animator>();
-        if(Abyss_on == false)
-        speed = 1;
-       
+        
+        //anim = GetComponent<Animator>();
+        if (Abyss_on == false)
+        {
+            anim = transform.GetChild(0).GetComponent<Animator>(); 
+            speed = 1;
+        }
+        else
+        {
+            anim = transform.GetChild(0).GetComponent<Animator>();
+        }
         
 
         Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<Char_Parent>().SelectChar.transform;
@@ -942,7 +949,7 @@ public class Boss : Character
         if (Abyss_on == false)
         {
             Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
-            Frame = Instantiate(Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
+            Frame = Instantiate(Stom_Obj, new Vector3(0, 7, 0), Quaternion.identity);
             Frame.name = "Frame";// 삭제할 때 Find용으로다가
             Frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
             Frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
@@ -950,7 +957,7 @@ public class Boss : Character
         else if(Abyss_on == true)
         {
             Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
-            Frame2 = Instantiate(Big_Stom_Obj, new Vector3(0, 5, 0), Quaternion.identity);
+            Frame2 = Instantiate(Big_Stom_Obj, new Vector3(0, 7, 0), Quaternion.identity);
             Frame2.name = "Frame2";// 삭제할 때 Find용으로다가
             Frame2.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
             Frame2.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);

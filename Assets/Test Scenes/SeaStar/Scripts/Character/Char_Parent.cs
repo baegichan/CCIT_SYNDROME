@@ -77,7 +77,6 @@ public class Char_Parent : Character
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
         Cam = Camera.main;
-        rigid = GetComponent<Rigidbody2D>();
         SelectChar = Char[0];
         ChangeChar(SelectChar);
 
@@ -90,6 +89,7 @@ public class Char_Parent : Character
         {
             if (Ani.GetBool("CanIThis"))
             {
+                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                 Move();
             }
         }
@@ -105,7 +105,7 @@ public class Char_Parent : Character
             {
                 if (Ani.GetBool("CanIThis"))
                 {
-                    if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                   // if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                     UseItem();
                 }
                 ds();
@@ -205,7 +205,6 @@ public class Char_Parent : Character
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
         speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
         AM.py = SelectChar;
-        CharScale = SelectChar.transform.localScale;
         switchItem(ActiveAbility.AbCode);
     }
     //
@@ -259,19 +258,17 @@ public class Char_Parent : Character
 
     //마우스 플립
 
-    Vector3 CharScale;
-
     public void MouseFilp()
     {
         if (Ani.GetBool("CanIThis"))
         {
             if (Mouse.x <= PlayerPosition.x)
             {
-                SelectChar.transform.localScale = new Vector3(-CharScale.x, CharScale.y, CharScale.z);
+                SelectChar.transform.localScale = new Vector3(-1, 1, 1);
             }
             else if (Mouse.x > PlayerPosition.x)
             {
-                SelectChar.transform.localScale = new Vector3(CharScale.x, CharScale.y, CharScale.z);
+                SelectChar.transform.localScale = new Vector3(1, 1, 1);
             }
         }
     }
