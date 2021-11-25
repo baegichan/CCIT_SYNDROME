@@ -106,7 +106,7 @@ public class StateManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         if(lastHp > hp)
             HpBarBack.fillAmount = Mathf.Lerp(HpBarBack.fillAmount, Convert.ToSingle(hp) / Convert.ToSingle(maxHp), Time.deltaTime * 1f);
-
+        Debug.Log(HpBarBack.fillAmount);
         lastHp = hp;
         //HpBarBack.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
 
