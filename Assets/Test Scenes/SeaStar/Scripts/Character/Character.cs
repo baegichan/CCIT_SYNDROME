@@ -136,7 +136,7 @@ public class Character : MonoBehaviour
 
     public void KnuckBack(Transform Attacker, float Power, bool IsBoss)
     {
-        if(!IsBoss)
+        if (!IsBoss)
         {
             if (Attacker.position.x < transform.position.x)
             {
@@ -148,6 +148,25 @@ public class Character : MonoBehaviour
             {
                 GetComponent<Rigidbody2D>().AddForce(Vector2.left * Power, ForceMode2D.Impulse);
                 GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
+        }
+    }
+
+    public void PlayerKnuckBack(Transform Hit, float Power, bool IsBoss)
+    {
+        if(!IsBoss)
+        {
+            if (Hit.position.x > transform.position.x)
+            {
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.right * Power, ForceMode2D.Impulse);
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
+            else if (Hit.position.x < transform.position.x)
+            {
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.left * Power, ForceMode2D.Impulse);
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
                 //GetComponent<MonsterColorChanger>().Damaged();
             }
         }
