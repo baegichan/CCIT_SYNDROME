@@ -22,6 +22,7 @@ public class ClupMonster : Character
     public Transform boxpos;
     public Vector2 direction;
     public float distance;
+    public AbyssMonster abyss;
 
     [Header("Turn state")]
     public bool filp;
@@ -163,7 +164,8 @@ public class ClupMonster : Character
 
     public void ClupDestroy()
     {
-        Destroy(gameObject);
+        abyss.MonsterDie();
+        //Destroy(gameObject);
     }
 
     public void Filp()

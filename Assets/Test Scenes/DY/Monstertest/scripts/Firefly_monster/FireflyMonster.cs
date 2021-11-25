@@ -23,6 +23,7 @@ public class FireflyMonster:Character
     public Transform atkpos; //공격 근접이면 가능이지만 원거리는 교체가 필요
     public Vector2 direction;
     public float distance;
+    public AbyssMonster abyss;
 
     [Header("Turn state")]
     public bool filp;
@@ -161,7 +162,8 @@ public class FireflyMonster:Character
 
     public void FireflyDestroy()
     {
-        Destroy(gameObject);
+        abyss.MonsterDie();
+        //Destroy(gameObject);
     }
 
     public void Filp()
