@@ -81,7 +81,6 @@ public class Char_Parent : Character
         ChangeChar(SelectChar);
 
         AM.CP = this;
-        Hp_Current = Hp_Max;
     }
     void FixedUpdate()
     {
@@ -133,8 +132,8 @@ public class Char_Parent : Character
         if (Hp_Current <= 0 && !Dead)
         {
             SelectChar = Char[0];
-            AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
-            PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
+            //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
+            //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
             ChangeChar(SelectChar);
             Dead = true;
             Ani.SetTrigger("Die");
@@ -180,37 +179,48 @@ public class Char_Parent : Character
         switch (SelectChar.transform.name)
         {
             case "Defualt":
-                atk = SelectChar.GetComponent<Char_Eden>().Attack;
-                ds = SelectChar.GetComponent<Char_Eden>().Dash;
-                CharHP = SelectChar.GetComponent<Char_Eden>().HP;
-                CharDP = SelectChar.GetComponent<Char_Eden>().DP;
+                Char_Eden eden = SelectChar.GetComponent<Char_Eden>();
+                atk = eden.Attack;
+                ds = eden.Dash;
+                CharHP = eden.HP;
+                CharDP = eden.DP;
+                StateManager.state.CharImgSelect(0);
                 break;
             case "Wolf":
-                atk = SelectChar.GetComponent<Char_Wolf>().Attack;
-                ds = SelectChar.GetComponent<Char_Wolf>().Dash;
-                CharHP = SelectChar.GetComponent<Char_Wolf>().HP[ActiveAbility.Enhance];
-                CharDP = SelectChar.GetComponent<Char_Wolf>().DP;
+                Char_Wolf wolf = SelectChar.GetComponent<Char_Wolf>();
+                atk = wolf.Attack;
+                ds = wolf.Dash;
+                CharHP = wolf.HP[ActiveAbility.Enhance];
+                CharDP = wolf.DP;
+                StateManager.state.CharImgSelect(1);
                 break;
             case "RockHuman":
-                atk = SelectChar.GetComponent<Char_RockMan>().Attack;
-                ds = SelectChar.GetComponent<Char_RockMan>().Dash;
-                CharHP = SelectChar.GetComponent<Char_RockMan>().HP;
-                CharDP = SelectChar.GetComponent<Char_RockMan>().DP[ActiveAbility.Enhance];
+                Char_RockMan rock = SelectChar.GetComponent<Char_RockMan>();
+                atk = rock.Attack;
+                ds = rock.Dash;
+                CharHP = rock.HP;
+                CharDP = rock.DP[ActiveAbility.Enhance];
                 break;
         }
 
         rigid = SelectChar.GetComponent<Rigidbody2D>();
         Ani = SelectChar.GetComponent<Animator>();
         Hp_Max = DefaultHP + CharHP + Enhance_Health_Point[Enhance_Health];
+        if (!Dead) { Hp_Current = Hp_Max; }
         DP = CharDP;
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
         speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
         AM.py = SelectChar;
         switchItem(ActiveAbility.AbCode);
+        UpdateState();
     }
-    //
 
-    //¿Ãµø
+    void UpdateState()
+    {
+        StateManager.state.MaxHp = Hp_Max;
+        StateManager.state.Hp = Hp_Current;
+    }
+
     public void Move()
     {
         h = Input.GetAxisRaw("Horizontal");
