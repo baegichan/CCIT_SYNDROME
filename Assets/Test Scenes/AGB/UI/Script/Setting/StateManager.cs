@@ -43,7 +43,7 @@ public class StateManager : MonoBehaviour
     #region º¯¼ö
     int maxHp;
     int hp;
-    int lastHp;
+    int lastHp = 0;
 
 
 
@@ -91,6 +91,7 @@ public class StateManager : MonoBehaviour
         set
         {
             hp = value;
+            if(lastHp ==)
             StartCoroutine(HpBarEffects());
 
 
@@ -99,9 +100,9 @@ public class StateManager : MonoBehaviour
     IEnumerator HpBarEffects()
     {
         HpBar.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
-        yield return new WaitForSeconds(2);
-        if(lastHp < hp)
-            Mathf.Lerp(HpBarBack.fillAmount, Convert.ToSingle(hp) / Convert.ToSingle(maxHp), Time.deltaTime * 1f);
+        yield return new WaitForSeconds(1);
+        if(lastHp > hp)
+            HpBarBack.fillAmount = Mathf.Lerp(HpBarBack.fillAmount, Convert.ToSingle(hp) / Convert.ToSingle(maxHp), Time.deltaTime * 1f);
 
         lastHp = hp;
         //HpBarBack.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
