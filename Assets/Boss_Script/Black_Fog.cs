@@ -35,6 +35,7 @@ public class Black_Fog : MonoBehaviour
         if (collision.CompareTag("Player") && Damage_Delay == 0.5f)
         {
             collision.transform.parent.GetComponent<Character>().Damage(Black_Fog_Damage);
+            collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 3, false);
             Damage_Delay = 0;
         }
     }
