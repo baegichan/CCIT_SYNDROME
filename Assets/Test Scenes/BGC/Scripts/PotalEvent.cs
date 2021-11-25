@@ -11,7 +11,7 @@ public class PotalEvent : MonoBehaviour
    public  bool Teleport_able = true;
 
     public Potals.PotalType PotalType;
-
+    public Potals.PotalType PotalDirection;
     private void OnTriggerStay2D(Collider2D other)
     {
         if (MapManager.s_Instace.Map_Lock != true)
