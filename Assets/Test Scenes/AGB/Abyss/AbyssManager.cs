@@ -53,7 +53,7 @@ public class AbyssManager : MonoBehaviour
     public int darkfog = 0;
 
     public int maxAbyssGage = 100;
-   
+
     public int abyssGage = 1;
     //hp ∞‘¿Ã¡ˆ
     public int hpGage = 0;
@@ -93,8 +93,8 @@ public class AbyssManager : MonoBehaviour
 
 
 
- 
-    
+
+
 
     public AbyssState abyssState = new AbyssState();
 
@@ -111,9 +111,19 @@ public class AbyssManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Q))
+        {
+            if (abyssState == AbyssState.Abyss)
+                GoReal();
+            else
+                GoAbyss();
+        }
+    }
 
     // Update is called once per frame
-   
+
 
     IEnumerator AbyssResource()
     {
@@ -184,7 +194,7 @@ public class AbyssManager : MonoBehaviour
         {
             StateManager.state.DarkFog = darkfog;
             return darkfog;
-           
+
         }
 
         set
@@ -205,7 +215,7 @@ public class AbyssManager : MonoBehaviour
         set
         {
             abyssGage = value;
-           StateManager.state.AbyssGage = abyssGage; 
+            StateManager.state.AbyssGage = abyssGage;
         }
     }
 
