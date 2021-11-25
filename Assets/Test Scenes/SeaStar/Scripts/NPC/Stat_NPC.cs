@@ -9,7 +9,6 @@ public class Stat_NPC : NPC
     void Start()
     {
         ply = GameObject.FindGameObjectWithTag("Player");
-        Enhance_Stat_UI = GameObject.Find("Canvas").transform.Find("Enhance_Stat").gameObject;
 
         Scale = transform.localScale;
         DefaultX = Scale.x;

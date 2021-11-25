@@ -497,6 +497,7 @@ public class Char_Parent : Character
     }
     void Fail()
     {
-        //GameResultManager.result.ShowResult(false);
+        GameResultManager.result.Abilty(AbilityHistory);
+        GameResultManager.result.ShowResult(false);
     }
 }
