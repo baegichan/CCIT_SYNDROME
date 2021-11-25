@@ -89,6 +89,7 @@ public class Char_Parent : Character
         {
             if (Ani.GetBool("CanIThis"))
             {
+                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                 Move();
             }
         }
@@ -104,7 +105,7 @@ public class Char_Parent : Character
             {
                 if (Ani.GetBool("CanIThis"))
                 {
-                    if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                   // if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                     UseItem();
                 }
                 ds();

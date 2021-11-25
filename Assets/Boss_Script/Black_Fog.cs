@@ -11,6 +11,9 @@ public class Black_Fog : MonoBehaviour
     public bool Abycss_Boss_Monster= false;
 
 
+    public GameObject Boss;
+    public GameObject Abyss_Boss;
+
     private void Start()
     {
         if(Abycss_Boss_Monster == true)
