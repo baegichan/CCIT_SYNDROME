@@ -46,7 +46,7 @@ public class PotalEvent : MonoBehaviour
         GameObject Block = (GameObject)Resources.Load("Wall");
        
         var Potal = Block.GetComponent<MapLineDraw>();
-        switch (PotalType)
+        switch (PotalDirection)
         {
             case Potals.PotalType.L:
                 Instantiate(Block, new Vector2(transform.position.x-Mathf.Abs(linedrawer.L_Area)- Mathf.Abs(linedrawer.R_Area), transform.position.y), Quaternion.identity, this.transform);
@@ -115,7 +115,32 @@ public class PotalEvent : MonoBehaviour
         }
 
     }
- 
+    public void PotalD_setting(Potal.Potal_type PotalTypes)
+    {
+        switch (PotalTypes)
+        {
+            case Potal.Potal_type.LeftPotal:
+                PotalDirection = Potals.PotalType.L;
+
+                break;
+            case Potal.Potal_type.RightPotal:
+                PotalDirection = Potals.PotalType.R;
+
+                break;
+            case Potal.Potal_type.TopPotal:
+                PotalDirection = Potals.PotalType.T;
+
+                break;
+            case Potal.Potal_type.BottomPotal:
+                PotalDirection = Potals.PotalType.B;
+
+                break;
+
+
+        }
+
+    }
+
     public void Movement(GameObject Player)
     {
     switch(PotalType)

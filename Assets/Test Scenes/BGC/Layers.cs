@@ -14,7 +14,7 @@ public class Layers : MonoBehaviour
         if(AbyssManager.abyss.abyssState== AbyssManager.AbyssState.Abyss)
         {
             foreach (GameObject layer in AbyssLayer)
-            {
+            
                 if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = true;
