@@ -43,18 +43,26 @@ public class StateManager : MonoBehaviour
     #region º¯¼ö
     int maxHp;
     int hp;
+    int lastHp;
 
- 
+
 
     int avssGage;
     int darkFog;
-    
 
+    [Header("HP")]
     [SerializeField]
     private Image HpBar;
+    [SerializeField]
+    private Image HpBarBack;
+    [SerializeField]
+    private Image HpBarEffect;
 
+    [Header("Abyss")]
     [SerializeField]
     private Image AbyssBar;
+    [SerializeField]
+    private Image AbyssEffect;
 
 
  
@@ -83,12 +91,20 @@ public class StateManager : MonoBehaviour
         set
         {
             hp = value;
-            HpBar.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
+            StartCoroutine(HpBarEffects());
 
 
         }
     }
+    IEnumerator HpBarEffects()
+    {
+        HpBar.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
+        yield return new WaitForSeconds(2);
+        if(lastHp < hp)
+            Mathf.Lerp(HpBarBack.fillAmount, Convert.ToSingle(hp) / Convert.ToSingle(maxHp), Time.deltaTime * 1f);
+        //HpBarBack.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
 
+    }
     public int AbyssGage
     {
         set
