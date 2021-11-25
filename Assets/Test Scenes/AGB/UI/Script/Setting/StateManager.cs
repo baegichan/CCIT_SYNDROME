@@ -95,6 +95,7 @@ public class StateManager : MonoBehaviour
         {
             avssGage = value;
             AbyssBar.fillAmount = Convert.ToSingle(avssGage) / Convert.ToSingle(100);
+            Debug.Log(AbyssBar.fillAmount);
 
         }
     }

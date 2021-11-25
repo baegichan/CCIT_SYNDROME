@@ -300,7 +300,7 @@ public class Boss : Character
     void Dead_END()
     {
         anim.SetBool("Dead", false);
-        StopCoroutine(Respawn_Monster());//∏ÛΩ∫≈Õ ¡® Ω√¿€
+        StopCoroutine(Respawn_Monster());//∏ÛΩ∫≈Õ ¡® ∏ÿ√„
 
         ///////////////////////////////////
         ///
