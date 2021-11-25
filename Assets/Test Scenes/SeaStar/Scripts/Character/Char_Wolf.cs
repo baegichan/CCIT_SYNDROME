@@ -7,6 +7,7 @@ public class Char_Wolf : MonoBehaviour
     public int[] HP;
     public int DP;
     public int WereWolf_Gauge = 0;
+    public int WereWolf_Max = 5;
     public int power;
     IEnumerator wolf;
     public Animator Ani;
@@ -34,12 +35,12 @@ public class Char_Wolf : MonoBehaviour
             Ani.SetBool("CanIThis", false);
             wolf = WolfGauge();
             StartCoroutine(wolf);
-            Ani.SetBool("CanIThis", true);
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             Ani.SetBool("Dash", false);
+            Ani.SetBool("CanIThis", true);
             StopAllCoroutines();
             Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h * 4, 0.6f) * WereWolf_Gauge * power);
             WereWolf_Gauge = 0;
@@ -49,7 +50,7 @@ public class Char_Wolf : MonoBehaviour
     IEnumerator WolfGauge()
     {
         yield return new WaitForSeconds(0.5f);
-        if (WereWolf_Gauge < 5) { WereWolf_Gauge += 1; }
+        if (WereWolf_Gauge < WereWolf_Max) { WereWolf_Gauge += 1; }
         StartCoroutine(WolfGauge());
     }
 

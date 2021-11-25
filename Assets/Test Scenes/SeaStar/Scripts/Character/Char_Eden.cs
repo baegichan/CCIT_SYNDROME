@@ -132,24 +132,19 @@ public class Char_Eden : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             if (P_DashInt == 0)
-            {
-                if (AnimeInt == 1)
-                {
+            { 
                     Ani.SetBool("Dash", true);
-                    Ani.SetBool("CanIThis", false);
-                    AnimeInt = 0;
-                }
+                Physics2D.IgnoreLayerCollision(10, 11);
+                Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
+                Char_Parent.rigid.velocity = new Vector2(0, 0);
+                P_DashInt = 0;
             }
-            Physics2D.IgnoreLayerCollision(10, 11);
-            Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
-            Char_Parent.rigid.velocity = new Vector2(0, 0);
-            P_DashInt = 0;
+           
             if (Char_Parent.RedBullDash == true)
             {
                 Physics2D.IgnoreLayerCollision(10, 11);
             }
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift)) { Ani.SetBool("Dash", false); }
 
         if (P_DashInt == 0)
         {
@@ -161,7 +156,6 @@ public class Char_Eden : MonoBehaviour
         {
             P_DashTimer = 5;
             P_DashInt = 1;
-            AnimeInt = 1;
             P_DashForce = 300;
             Physics2D.IgnoreLayerCollision(10, 11, false);
         }
