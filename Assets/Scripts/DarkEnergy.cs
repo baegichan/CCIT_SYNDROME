@@ -8,11 +8,12 @@ public class DarkEnergy : MonoBehaviour
     private bool teststopper;
     public float speed;
 
+  
     private void Start()
     {
         StartCoroutine(onsokunosonic());
     
-        player = GameObject.FindGameObjectWithTag("Player");
+       
     }
     
     void Update()
@@ -20,7 +21,8 @@ public class DarkEnergy : MonoBehaviour
         if (teststopper)
         {
             float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, player.transform.position.y+2, player.transform.position.z), step);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z), step);
+           
         }
     }
     

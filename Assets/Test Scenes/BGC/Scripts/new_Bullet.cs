@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class new_Bullet : Character
+public class new_Bullet : MonoBehaviour
 {
     // Start is called before the first frame update
     public float Speed;
@@ -80,7 +80,7 @@ public class new_Bullet : Character
             if (collision.tag == "Player")
             {
                 collision.transform.parent.GetComponent<Character>().Damage(bulletDMG);
-                PlayerKnuckBack(collision.transform, 10, false);
+                collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 2, false);
                 Destroy(gameObject);
             }
             
@@ -90,7 +90,7 @@ public class new_Bullet : Character
             if (collision.tag == "enemy")
             {
                 collision.transform.parent.GetComponent<Character>().Damage(bulletDMG);
-                PlayerKnuckBack(collision.transform, 10, false);
+                collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 2, false);
                 Destroy(gameObject);
             }
         }

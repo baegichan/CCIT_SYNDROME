@@ -43,23 +43,35 @@ public class StateManager : MonoBehaviour
     #region 변수
     int maxHp;
     int hp;
+    int lastHp = 0;
+
+
 
     int avssGage;
     int darkFog;
 
-  
-
-
-
+    [Header("HP")]
     [SerializeField]
     private Image HpBar;
+    [SerializeField]
+    private Image HpBarBack;
+    [SerializeField]
+    private Image HpBarEffect;
 
+    [Header("Abyss")]
     [SerializeField]
     private Image AbyssBar;
+    [SerializeField]
+    private Image AbyssEffect;
+
+
+ 
 
     [SerializeField]
     private Text DarkFogText;
 
+    [SerializeField]
+    private GameObject PlayerImgBox;
     #endregion
 
 
@@ -71,7 +83,7 @@ public class StateManager : MonoBehaviour
         {
             //max 추후에 증가본 추가
             maxHp = value;
-            
+
         }
     }
     public int Hp
@@ -79,18 +91,33 @@ public class StateManager : MonoBehaviour
         set
         {
             hp = value;
-            HpBar.fillAmount = Convert.ToSingle(hp) /Convert.ToSingle(maxHp);
-           
-        
+
+            if (lastHp == 0)
+                lastHp = hp;
+
+            StartCoroutine(HpBarEffects());
+
+
         }
     }
+    IEnumerator HpBarEffects()
+    {
+        HpBar.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
+        yield return new WaitForSeconds(1);
+        if(lastHp > hp)
+            HpBarBack.fillAmount = Mathf.Lerp(HpBarBack.fillAmount, Convert.ToSingle(hp) / Convert.ToSingle(maxHp), Time.deltaTime * 1f);
+        Debug.Log(HpBarBack.fillAmount);
+        lastHp = hp;
+        //HpBarBack.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
 
+    }
     public int AbyssGage
     {
         set
         {
             avssGage = value;
             AbyssBar.fillAmount = Convert.ToSingle(avssGage) / Convert.ToSingle(100);
+            Debug.Log(AbyssBar.fillAmount);
 
         }
     }
@@ -100,6 +127,19 @@ public class StateManager : MonoBehaviour
         {
             darkFog = value;
             DarkFogText.text = Convert.ToString(darkFog);
+        }
+    }
+
+    public void CharImgSelect(int charnum)
+    {
+        int i = PlayerImgBox.transform.childCount;
+
+        for (int j = 0; j < i; j++)
+        {
+            if (j != charnum)
+                PlayerImgBox.transform.GetChild(j).gameObject.SetActive(false);
+            else
+                PlayerImgBox.transform.GetChild(charnum).gameObject.SetActive(true);
         }
     }
     #endregion

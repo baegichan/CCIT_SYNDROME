@@ -9,11 +9,12 @@ public class CameraShake : MonoBehaviour
     public static CameraShake Cam_instance = null;
     public static GameObject Target;
     private CinemachineVirtualCamera Cam;
+    public GameObject Cm;
     private Vector3 pre_Cam_Vec;
     private float shake_time = 0.0f;
     private float shake_power = 0.0f;
     private bool shaking;
-    CinemachineBasicMultiChannelPerlin perlin;
+  
     void Awake()
     {
 
@@ -22,8 +23,8 @@ public class CameraShake : MonoBehaviour
         {
             Cam_instance = this;
             Target = gameObject;
-            Cam= GetComponent<CinemachineVirtualCamera>();
-            perlin= Cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
+            //Cam= GetComponent<CinemachineVirtualCamera>();
+        
         }
         else
         {
@@ -95,19 +96,22 @@ public class CameraShake : MonoBehaviour
 
     public  void CameraShake_Cinemachine(float time, float power)
     {
-       
+        CinemachineBasicMultiChannelPerlin perlin = Cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
+
         perlin.m_AmplitudeGain = power;
         shake_time = time;
     }
 
     private void Update()
     {
-        if(shake_time>0)
+       // CinemachineBasicMultiChannelPerlin perlin = Cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
+        if (shake_time>0)
         {
             shake_time -= Time.deltaTime;
             if(shake_time<0)
             {
-                perlin.m_AmplitudeGain = 0;
+              
+                //perlin.m_AmplitudeGain = 0;
             }
         }
     }
