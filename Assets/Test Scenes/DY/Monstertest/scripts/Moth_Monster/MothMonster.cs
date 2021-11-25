@@ -23,6 +23,7 @@ public class MothMonster : Character
     public Vector2 direction;
     public float distance;
     public Bullet_Attack bullet_Attack;
+    public AbyssMonster abyss;
     
 
     [Header("Turn state")]
@@ -160,7 +161,8 @@ public class MothMonster : Character
 
     public void MothDestroy()
     {
-        Destroy(gameObject);
+        abyss.MonsterDie();
+        //Destroy(gameObject);
     }
 
     public void Filp()
