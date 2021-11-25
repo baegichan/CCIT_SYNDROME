@@ -5,6 +5,7 @@ using UnityEngine;
 public class MonsterColorChanger : MonoBehaviour
 {
     public SpriteRenderer[] Materials=null;
+    [SerializeField]
     List<Color32> colors = new List<Color32>();
     public Color DefaultColor = new Color(1, 0.3686275f, 0.1764706f, 1f);
     public float Change_time = 0.1f;
