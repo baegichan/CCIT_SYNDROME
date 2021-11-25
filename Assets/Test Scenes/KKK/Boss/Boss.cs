@@ -112,10 +112,17 @@ public class Boss : Character
     void Start()
     {
         IsBoss = true;
-        anim = GetComponent<Animator>();
-        if(Abyss_on == false)
-        speed = 1;
-       
+        
+        //anim = GetComponent<Animator>();
+        if (Abyss_on == false)
+        {
+            anim = transform.GetChild(0).GetComponent<Animator>(); 
+            speed = 1;
+        }
+        else
+        {
+            anim = transform.GetChild(0).GetComponent<Animator>();
+        }
         
 
         Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<Char_Parent>().SelectChar.transform;

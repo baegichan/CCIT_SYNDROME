@@ -23,8 +23,7 @@ public class BulletScript : MonoBehaviour
 
     Vector3 aa;
 
-
-    Boss boss;
+    public GameObject Boss;
     private void Start()
     {
         if(Abyss_Bullet_State == true)
@@ -99,7 +98,8 @@ public class BulletScript : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 collision.transform.parent.GetComponent<Character>().Damage(Bullet_Damage);
-                //collision.transform.parent.GetComponent<Character>().KnuckBack(transform, 5, collision.GetComponent<Character>().IsBoss);
+                Debug.Log(collision.name);
+                //collision.GetComponent<Character>().PlayerKnuckBack(collision.transform, 5, false);
                 Destroy(this.gameObject);
             }
             else
