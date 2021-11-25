@@ -74,6 +74,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
+        Before_Position = SelectChar.transform.position;
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
         Cam = Camera.main;
@@ -132,11 +133,13 @@ public class Char_Parent : Character
         if (Hp_Current <= 0 && !Dead)
         {
             SelectChar = Char[0];
+            Before_Position = SelectChar.transform.position;
             //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
             //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
-            ChangeChar(SelectChar);
             Dead = true;
+            ChangeChar(SelectChar);
             Ani.SetTrigger("Die");
+
         }
     }
 
@@ -384,6 +387,8 @@ public class Char_Parent : Character
         {
             MulYakInt--;
             Hp_Current += 50;
+            if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
+            UpdateState();
         }
         else if (AlYakInt > 0 && Input.GetKeyDown(KeyCode.Q))
         {
