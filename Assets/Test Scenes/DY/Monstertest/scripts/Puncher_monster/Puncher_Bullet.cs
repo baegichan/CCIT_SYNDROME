@@ -7,6 +7,7 @@ public class Puncher_Bullet : MonoBehaviour
     [Header("Prameter")]
     public float bullet_speed;
     public int bullet_Damage;
+    [Range(0, 100)] public float Bullet_LifeTime;
 
     [Header("Refernce")]
     GameObject player;
@@ -45,6 +46,7 @@ public class Puncher_Bullet : MonoBehaviour
             float Right_Dir = 0.7f;
             transform.localScale = new Vector3(Right_Dir, transform.localScale.y, transform.localScale.z);
         }
+        DestroyPuncherBullet();
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -62,6 +64,15 @@ public class Puncher_Bullet : MonoBehaviour
         if (col.tag == "Wall")
         {
             BulletDestroy();
+        }
+    }
+
+    public void DestroyPuncherBullet()
+    {
+        Bullet_LifeTime = Mathf.Clamp(Bullet_LifeTime - Time.deltaTime, 0, 100);
+        if (Bullet_LifeTime == 0)
+        {
+            Destroy(gameObject);
         }
     }
 
