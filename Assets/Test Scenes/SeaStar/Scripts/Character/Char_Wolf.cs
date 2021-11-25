@@ -6,7 +6,7 @@ public class Char_Wolf : MonoBehaviour
 {
     public int[] HP;
     public int DP;
-    public float WereWolf_Gauge = 0;
+    public int WereWolf_Gauge = 0;
     public int power;
     IEnumerator wolf;
     public Animator Ani;
