@@ -94,7 +94,7 @@ public class Char_Eden : MonoBehaviour
             {
                 if (Current.tag == "Monster")
                 {
-                    CameraShake.Cam_instance.Shake(10f, 100f);
+                    CameraShake.Cam_instance.Shake(0.04f, 0.02f);
                     Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect);
                     Current.GetComponent<Character>().KnuckBack(transform, 5, Current.GetComponent<Character>().IsBoss);
                 }
