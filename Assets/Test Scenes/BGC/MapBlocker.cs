@@ -15,7 +15,7 @@ public class MapBlocker : MonoBehaviour
         PotalEvent Potal = transform.parent.GetComponent<PotalEvent>();
         MapLineDraw Line = Potal.GetComponent<MapLineDraw>();   
         var shape = Wall.shape; 
-        switch (Potal.PotalType)
+        switch (Potal.PotalDirection)
         {
             case Potals.PotalType.L:
                 shape.rotation = new Vector3(0,90,90);         
