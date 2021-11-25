@@ -37,6 +37,8 @@ public class Char_Eden : MonoBehaviour
 
     [Header("라이트 리스트")]
     public GameObject PharaoLight;
+    public GameObject SwordLight;
+    public GameObject AxeLight;
 
     public Animator Ani;
     Rigidbody2D rigid;
@@ -107,16 +109,15 @@ public class Char_Eden : MonoBehaviour
     }
 
     void SwordAttackEffect1() { AttackEffect(One); }
-
     void SwordAttackEffect2() { AttackEffect(Two); }
-
     void SwordAttackEffect3() { AttackEffect(Three); Two.SetActive(false); }
-
     void AxeAttackEffect1() { AttackEffect(A_One); }
-
     void AxeAttackEffect2() { AttackEffect(A_Two); }
-
     void AxeAttackEffect3() { AttackEffect(A_Three); A_Two.SetActive(false); }
+    void SwordLightOn() { SwordLight.SetActive(true); }
+    void SwordLightOff() { SwordLight.SetActive(false); }
+    void AxeLightOn() { AxeLight.SetActive(true); }
+    void AxeLightOff() { AxeLight.SetActive(false); }
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
