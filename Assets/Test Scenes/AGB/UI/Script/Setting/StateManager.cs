@@ -44,12 +44,11 @@ public class StateManager : MonoBehaviour
     int maxHp;
     int hp;
 
+ 
+
     int avssGage;
     int darkFog;
-
-  
-
-
+    
 
     [SerializeField]
     private Image HpBar;
@@ -57,9 +56,14 @@ public class StateManager : MonoBehaviour
     [SerializeField]
     private Image AbyssBar;
 
+
+ 
+
     [SerializeField]
     private Text DarkFogText;
 
+    [SerializeField]
+    private GameObject PlayerImgBox;
     #endregion
 
 
@@ -71,7 +75,7 @@ public class StateManager : MonoBehaviour
         {
             //max 추후에 증가본 추가
             maxHp = value;
-            
+
         }
     }
     public int Hp
@@ -79,9 +83,9 @@ public class StateManager : MonoBehaviour
         set
         {
             hp = value;
-            HpBar.fillAmount = Convert.ToSingle(hp) /Convert.ToSingle(maxHp);
-           
-        
+            HpBar.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
+
+
         }
     }
 
@@ -91,6 +95,7 @@ public class StateManager : MonoBehaviour
         {
             avssGage = value;
             AbyssBar.fillAmount = Convert.ToSingle(avssGage) / Convert.ToSingle(100);
+            Debug.Log(AbyssBar.fillAmount);
 
         }
     }
@@ -100,6 +105,19 @@ public class StateManager : MonoBehaviour
         {
             darkFog = value;
             DarkFogText.text = Convert.ToString(darkFog);
+        }
+    }
+
+    public void CharImgSelect(int charnum)
+    {
+        int i = PlayerImgBox.transform.childCount;
+
+        for (int j = 0; j < i; j++)
+        {
+            if (j != charnum)
+                PlayerImgBox.transform.GetChild(j).gameObject.SetActive(false);
+            else
+                PlayerImgBox.transform.GetChild(charnum).gameObject.SetActive(true);
         }
     }
     #endregion

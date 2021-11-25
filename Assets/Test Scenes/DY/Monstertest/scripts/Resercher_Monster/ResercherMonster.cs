@@ -152,7 +152,7 @@ public class ResercherMonster : Character
             if (col.tag == "Player")
             {
                 col.GetComponentInParent<Character>().Damage(ResercherDamage);
-                PlayerKnuckBack(col.transform, 10, false);
+                PlayerKnuckBack(col.transform, 3, false);
             }
         }
     }

@@ -86,6 +86,7 @@ public class Posion_Plask : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 collision.transform.parent.GetComponent<Character>().Damage(4);
+                collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 2, false);
                 Destroy(gameObject);
             }
             if (collision.CompareTag("Ground"))
