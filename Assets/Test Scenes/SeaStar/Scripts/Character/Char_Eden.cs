@@ -35,6 +35,9 @@ public class Char_Eden : MonoBehaviour
     public GameObject A_Two;
     public GameObject A_Three;
 
+    [Header("라이트 리스트")]
+    public GameObject PharaoLight;
+
     public Animator Ani;
     Rigidbody2D rigid;
 
@@ -276,5 +279,11 @@ public class Char_Eden : MonoBehaviour
     void NormalTime()
     {
         Time.timeScale = 1f;
+    }
+
+    void PharaoOff()
+    {
+        if (PharaoLight.activeSelf) { PharaoLight.SetActive(false); }
+        else { PharaoLight.SetActive(true); }
     }
 }
