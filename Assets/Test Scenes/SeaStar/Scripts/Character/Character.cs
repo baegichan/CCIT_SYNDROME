@@ -171,4 +171,23 @@ public class Character : MonoBehaviour
             }
         }
     }
+
+    public void PlayerKnuckBack(Transform Attacker, Transform Hit, float Power, bool IsBoss)
+    {
+        if (!IsBoss)
+        {
+            if (Hit.position.x > Attacker.position.x)
+            {
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.right * Power, ForceMode2D.Impulse);
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
+            else if (Hit.position.x < Attacker.position.x)
+            {
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.left * Power, ForceMode2D.Impulse);
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
+        }
+    }
 }
