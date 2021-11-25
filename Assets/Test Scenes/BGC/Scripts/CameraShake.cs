@@ -2,45 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Cinemachine;
 
 public class CameraShake : MonoBehaviour
 {
     public static CameraShake Cam_instance = null;
     public static GameObject Target;
+    private CinemachineVirtualCamera Cam;
+    public GameObject Cm;
     private Vector3 pre_Cam_Vec;
-    private float shake_time=0.0f;
-    private float shake_power=0.0f;
+    private float shake_time = 0.0f;
+    private float shake_power = 0.0f;
     private bool shaking;
+  
     void Awake()
     {
-        
-   
-       if(Cam_instance==null)
-       {
+
+
+        if (Cam_instance == null)
+        {
             Cam_instance = this;
             Target = gameObject;
-       }
-       else
-       {
+            //Cam= GetComponent<CinemachineVirtualCamera>();
+        
+        }
+        else
+        {
             Destroy(this);
-       }
-    
+        }
+
     }
     private void FixedUpdate()
     {
-        
+
     }
     Vector3 PrePos;
     public IEnumerator Shaking(float time, float power)
     {
-    if(shaking==true)
-    {
+        if (shaking == true)
+        {
             transform.localPosition = PrePos;
             shaking = false;
-            StartCoroutine(Shaking(time,power));
-    }
-    else 
-    {
+            StartCoroutine(Shaking(time, power));
+        }
+        else
+        {
             shaking = true;
             PrePos = transform.localPosition;
             float elapsed = 0.0f;
@@ -55,19 +61,19 @@ public class CameraShake : MonoBehaviour
             transform.localPosition = PrePos;
             shaking = false;
         }
-       
+
 
     }
     private void OnPreRender()
     {
-        if(shake_time>0)
+        if (shake_time > 0)
         {
             pre_Cam_Vec = Random.insideUnitCircle * shake_power;
-            Target.transform.localPosition = Target.transform.localPosition + pre_Cam_Vec ;
+            Target.transform.localPosition = Target.transform.localPosition + pre_Cam_Vec;
         }
     }
 
-   
+
     private void OnPostRender()
     {
         if (shake_time > 0)
@@ -77,13 +83,36 @@ public class CameraShake : MonoBehaviour
             //shake_time -= Time.De;
         }
     }
-     public void Shake(float time,float power)
+    public void Shake(float time, float power)
     {
         //if(Cam_instance==null)
         //{
-         //   return;
-       // }
+        //   return;
+        // }
 
         StartCoroutine(Shaking(time, power));
+    }
+
+
+    public  void CameraShake_Cinemachine(float time, float power)
+    {
+        CinemachineBasicMultiChannelPerlin perlin = Cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
+
+        perlin.m_AmplitudeGain = power;
+        shake_time = time;
+    }
+
+    private void Update()
+    {
+       // CinemachineBasicMultiChannelPerlin perlin = Cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
+        if (shake_time>0)
+        {
+            shake_time -= Time.deltaTime;
+            if(shake_time<0)
+            {
+              
+                //perlin.m_AmplitudeGain = 0;
+            }
+        }
     }
 }

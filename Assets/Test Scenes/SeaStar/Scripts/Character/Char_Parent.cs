@@ -77,7 +77,6 @@ public class Char_Parent : Character
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
         Cam = Camera.main;
-        rigid = GetComponent<Rigidbody2D>();
         SelectChar = Char[0];
         ChangeChar(SelectChar);
 
@@ -90,6 +89,7 @@ public class Char_Parent : Character
         {
             if (Ani.GetBool("CanIThis"))
             {
+                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                 Move();
             }
         }
@@ -105,7 +105,7 @@ public class Char_Parent : Character
             {
                 if (Ani.GetBool("CanIThis"))
                 {
-                    if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                   // if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                     UseItem();
                 }
                 ds();
@@ -134,6 +134,7 @@ public class Char_Parent : Character
         {
             SelectChar = Char[0];
             AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
+            PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
             ChangeChar(SelectChar);
             Dead = true;
             Ani.SetTrigger("Die");
@@ -205,7 +206,6 @@ public class Char_Parent : Character
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
         speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
         AM.py = SelectChar;
-        CharScale = SelectChar.transform.localScale;
         switchItem(ActiveAbility.AbCode);
     }
     //
@@ -259,19 +259,17 @@ public class Char_Parent : Character
 
     //마우스 플립
 
-    Vector3 CharScale;
-
     public void MouseFilp()
     {
         if (Ani.GetBool("CanIThis"))
         {
             if (Mouse.x <= PlayerPosition.x)
             {
-                SelectChar.transform.localScale = new Vector3(-CharScale.x, CharScale.y, CharScale.z);
+                SelectChar.transform.localScale = new Vector3(-1, 1, 1);
             }
             else if (Mouse.x > PlayerPosition.x)
             {
-                SelectChar.transform.localScale = new Vector3(CharScale.x, CharScale.y, CharScale.z);
+                SelectChar.transform.localScale = new Vector3(1, 1, 1);
             }
         }
     }
@@ -457,6 +455,7 @@ public class Char_Parent : Character
         Enhance_Health = PlayerPrefs.HasKey("E_Health") ? PlayerPrefs.GetInt("E_Health") : 0;
         Enhance_Strength = PlayerPrefs.HasKey("E_Strength") ? PlayerPrefs.GetInt("E_Strength") : 0;
         Enhance_Speed = PlayerPrefs.HasKey("E_Speed") ? PlayerPrefs.GetInt("E_Speed") : 0;
+        //AbyssManager.abyss.Darkfog = PlayerPrefs.HasKey("DarkFog") ? PlayerPrefs.GetInt("DarkFog") : 0;
     }
 
     public void Save_StateEnhance()
@@ -464,6 +463,7 @@ public class Char_Parent : Character
         PlayerPrefs.SetInt("E_Health", Enhance_Health);
         PlayerPrefs.SetInt("E_Strength", Enhance_Strength);
         PlayerPrefs.SetInt("E_Speed", Enhance_Speed);
+        //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
     }
 
     public void SaveAbilityHistory(Ability ability)

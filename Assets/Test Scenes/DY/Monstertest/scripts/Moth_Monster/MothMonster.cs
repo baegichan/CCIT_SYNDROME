@@ -23,6 +23,7 @@ public class MothMonster : Character
     public Vector2 direction;
     public float distance;
     public Bullet_Attack bullet_Attack;
+    
 
     [Header("Turn state")]
     public bool filp;
@@ -95,8 +96,8 @@ public class MothMonster : Character
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
-        //Up();
-        //Down();
+        Up();
+        Down();
         if (Hp_Current <= 0)
         {
             Dead = true;
@@ -189,7 +190,7 @@ public class MothMonster : Character
         RaycastHit2D upcheck = Physics2D.Raycast(upCheck.position, Vector2.up, 0.2f);
         if (upcheck.collider == true)
         {
-            rb.AddForce(transform.up * -1f);
+            rb.AddForce(transform.up * -5f);
         }
     }
     public void Down()
@@ -197,7 +198,7 @@ public class MothMonster : Character
         RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 0.2f);
         if (downcheck.collider == true)
         {
-            rb.AddForce(transform.up * 1f);
+            rb.AddForce(transform.up * 5f);
         }
     }
 

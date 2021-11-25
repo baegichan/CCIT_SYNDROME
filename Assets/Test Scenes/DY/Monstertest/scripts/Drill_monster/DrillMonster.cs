@@ -148,6 +148,7 @@ public class DrillMonster : Character
             if (col.tag == "Player")
             {
                 col.GetComponentInParent<Character>().Damage(drillmonDamage);
+                col.GetComponentInParent<Character>().PlayerKnuckBack(transform, col.transform, 3, false);
             }
         }
     }

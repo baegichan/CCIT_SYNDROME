@@ -80,6 +80,7 @@ public class new_Bullet : MonoBehaviour
             if (collision.tag == "Player")
             {
                 collision.transform.parent.GetComponent<Character>().Damage(bulletDMG);
+                collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 2, false);
                 Destroy(gameObject);
             }
             
@@ -89,6 +90,7 @@ public class new_Bullet : MonoBehaviour
             if (collision.tag == "enemy")
             {
                 collision.transform.parent.GetComponent<Character>().Damage(bulletDMG);
+                collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 2, false);
                 Destroy(gameObject);
             }
         }
