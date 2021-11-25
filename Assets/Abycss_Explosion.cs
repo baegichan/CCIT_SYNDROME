@@ -5,6 +5,9 @@ using UnityEngine;
 public class Abycss_Explosion : MonoBehaviour
 {
     public int Abycss_Bomb_Damage;
+
+    public GameObject Abyss_Boss;
+
     private void Start()
     {
 
