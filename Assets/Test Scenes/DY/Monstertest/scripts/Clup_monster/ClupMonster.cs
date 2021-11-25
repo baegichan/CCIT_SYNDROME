@@ -150,6 +150,7 @@ public class ClupMonster : Character
             if (col.tag == "Player")
             {
                 col.GetComponentInParent<Character>().Damage(clupmonDamage);
+                col.GetComponentInParent<Character>().PlayerKnuckBack(transform, col.transform, 3, false);
             }
         }
     }
