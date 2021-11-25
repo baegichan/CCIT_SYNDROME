@@ -99,9 +99,9 @@ public class Character : MonoBehaviour
     }
 
 
-    public void Damage(int DamageValue, bool IsBuffOn)
+    public void Damage(int DamageValue, bool IsBuffOn, GameObject HitEffect)
     {
-        //Instantiate(HitEffect, position, Quaternion.identity);
+        Instantiate(HitEffect, transform.position, Quaternion.identity);
         int firstDamage = IsBuffOn ? DamageValue + Mathf.RoundToInt(DamageValue * 0.2f) : DamageValue;
         if (DamageValue > 20)
         {
@@ -116,9 +116,27 @@ public class Character : MonoBehaviour
             Shield -= firstDamage - DP;
         Load_Damage_Text(this, firstDamage);
     }
+
+    public void Damage(int DamageValue, bool IsBuffOn)
+    {
+        int firstDamage = IsBuffOn ? DamageValue + Mathf.RoundToInt(DamageValue * 0.2f) : DamageValue;
+        if (DamageValue > 20)
+        {
+            //CameraShake.Cam_instance.Shake(70, 0.4f);
+        }
+        int secondDamge = firstDamage - Shield;
+        if (secondDamge > 0)
+        {
+            Hp_Current -= secondDamge - DP;
+        }
+        if (Shield > 0)
+            Shield -= firstDamage - DP;
+        Load_Damage_Text(this, firstDamage);
+    }
+
     public void KnuckBack(Transform Attacker, float Power, bool IsBoss)
     {
-        if(!IsBoss)
+        if (!IsBoss)
         {
             if (Attacker.position.x < transform.position.x)
             {
@@ -130,6 +148,44 @@ public class Character : MonoBehaviour
             {
                 GetComponent<Rigidbody2D>().AddForce(Vector2.left * Power, ForceMode2D.Impulse);
                 GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
+        }
+    }
+
+    public void PlayerKnuckBack(Transform Hit, float Power, bool IsBoss)
+    {
+        if(!IsBoss)
+        {
+            if (Hit.position.x > transform.position.x)
+            {
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.right * Power, ForceMode2D.Impulse);
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
+            else if (Hit.position.x < transform.position.x)
+            {
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.left * Power, ForceMode2D.Impulse);
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
+        }
+    }
+
+    public void PlayerKnuckBack(Transform Attacker, Transform Hit, float Power, bool IsBoss)
+    {
+        if (!IsBoss)
+        {
+            if (Hit.position.x > Attacker.position.x)
+            {
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.right * Power, ForceMode2D.Impulse);
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
+                //GetComponent<MonsterColorChanger>().Damaged();
+            }
+            else if (Hit.position.x < Attacker.position.x)
+            {
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.left * Power, ForceMode2D.Impulse);
+                Hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Power / 3, ForceMode2D.Impulse);
                 //GetComponent<MonsterColorChanger>().Damaged();
             }
         }

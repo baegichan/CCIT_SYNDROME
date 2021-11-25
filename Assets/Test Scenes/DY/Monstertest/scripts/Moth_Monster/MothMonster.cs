@@ -23,6 +23,7 @@ public class MothMonster : Character
     public Vector2 direction;
     public float distance;
     public Bullet_Attack bullet_Attack;
+    
 
     [Header("Turn state")]
     public bool filp;

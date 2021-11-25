@@ -106,7 +106,7 @@ public class AbyssManager : MonoBehaviour
     {
 
         abyssState = AbyssState.Reality;
-        StateManager.state.DarkFog = darkfog;
+        //StateManager.state.DarkFog = darkfog;
 
 
     }
