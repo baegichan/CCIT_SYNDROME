@@ -22,6 +22,7 @@ public class ResercherPoisonMonster : Character
     public Transform atkpos;
     public float distance;
     public GameObject ResercherPoisonBullet;
+    public AbyssMonster abyss;
 
     [Header("Turn state")]
     public bool filp;
@@ -156,8 +157,8 @@ public class ResercherPoisonMonster : Character
 
     public void ResercherPoisonDestroy()
     {
-
-        Destroy(gameObject);
+        abyss.MonsterDie();
+        //Destroy(gameObject);
     }
 
     public void Movetrue()
