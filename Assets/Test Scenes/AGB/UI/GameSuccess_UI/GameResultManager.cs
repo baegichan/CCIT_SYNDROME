@@ -22,6 +22,18 @@ public class GameResultManager : MonoBehaviour
     [SerializeField]
     GameObject FaillPanel;
 
+  
+    
+    [Header("Effect")]
+    [SerializeField]
+    GameObject EffectPanel;
+
+    GameObject EffectResult;
+    GameObject EffectBack;
+    GameObject textImage;
+
+
+
     [Header("Text")]
     [SerializeField]
     Text TimeText;
@@ -103,23 +115,125 @@ public class GameResultManager : MonoBehaviour
                 if (ability[index] == null)
                     break;
 
-             
+
                 d.transform.GetChild(j).GetComponent<Image>().sprite = ability[index].ResultIcon;
                 d.transform.GetChild(j).gameObject.SetActive(true);
 
-                
-                    index++;
+
+                index++;
                 Debug.Log(index);
             }
             Debug.Log("ddd");
 
         }
+        //StartCoroutine(Effect(isGameClear, string.Format("{0}:{1}:{2}", (int)PlayTime / 3600, (int)PlayTime / 60 % 60, (int)PlayTime % 60)));
+   
+      
+    }
+      float times;
+    IEnumerator Effect(bool isGameClear, string time)
+    {
+        bool isEnd = true;
+        if (isGameClear)
+            EffectResult = EffectPanel.transform.GetChild(0).gameObject; // 성공
+        else 
+            EffectResult = EffectPanel.transform.GetChild(1).gameObject; // 실패
+
+        EffectBack = EffectResult.transform.GetChild(0).gameObject;
+        textImage = EffectResult.transform.GetChild(1).gameObject;
+        EffectBack.transform.localScale = new Vector3(1, 1, 1);
+        EffectBack.transform.localPosition = new Vector3(0, 0, 0);
+        var vecScale = Vector3.up;
+      
+        while (EffectBack.transform.localScale.y < 1f)
+        {
+            times += Time.deltaTime;
+            EffectBack.transform.localScale = new Vector3(1, times, 1);
+        }
+
+        while (EffectBack.transform.localScale.y < 1f)
+        {
+            times += Time.deltaTime;
+            EffectBack.transform.localScale = new Vector3(1, times, 1);
+        }
+
+
+        yield return null;
+        if (isGameClear)
+            ClearPanel.SetActive(true);
+        else
+            FaillPanel.SetActive(true);
+        GameResultBox.SetActive(true);
+
+        TimeText.text = string.Format("{0}:{1}:{2}", (int)PlayTime / 3600, (int)PlayTime / 60 % 60, (int)PlayTime % 60);
+        KillMobText.text = Convert.ToString(countKillMonster);
+        KillBossText.text = Convert.ToString(countKillBoss);
+        DarkFogText.text = Convert.ToString(AbyssManager.abyss.darkfog);
+        float count = Convert.ToSingle(ability.Count) / 3f;
+        int num = 1;
+        int index = 0;
+        for (int i = 0; i < count; i++)
+        {
+
+            var d = Instantiate(ItemBox);
+            d.transform.SetParent(Content.transform, false);
+
+            for (int j = 0; j < 3; j++)
+            {
+
+
+                if (ability[index] == null)
+                    break;
+
+
+                d.transform.GetChild(j).GetComponent<Image>().sprite = ability[index].ResultIcon;
+                d.transform.GetChild(j).gameObject.SetActive(true);
+
+
+                index++;
+                Debug.Log(index);
+            }
+            Debug.Log("ddd");
+
+        }
+
     }
 
+    #region 변수 
     public void Abilty(List<Ability> d)
     {
         ability = d;
     }
+  
+     
+
+    public int CountKillMonster
+    {
+        set
+        {
+            countKillMonster = value;
+  
+        }
+        get
+        {
+            return countKillMonster;
+        }
+    }
+
+    public int CountKillBoss
+    {
+        set
+        {
+            countKillBoss = value;
+
+        }
+        get
+        {
+            return countKillBoss;
+        }
+    }
+    #endregion
+
 }
 
 
