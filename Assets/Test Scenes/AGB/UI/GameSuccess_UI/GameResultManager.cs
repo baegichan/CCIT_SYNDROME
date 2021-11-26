@@ -23,9 +23,13 @@ public class GameResultManager : MonoBehaviour
     GameObject FaillPanel;
 
     [Header("Text")]
+    [SerializeField]
     Text TimeText;
+    [SerializeField]
     Text KillMobText;
+    [SerializeField]
     Text KillBossText;
+    [SerializeField]
     Text DarkFogText;
 
     [SerializeField]
