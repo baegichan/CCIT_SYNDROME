@@ -100,8 +100,8 @@ public class GameResultManager : MonoBehaviour
                 index = j * num;
                 if (ability[index] == null)
                     break;
-                d.transform.GetChild(j - 1).GetComponent<Image>().sprite = ability[index].ResultIcon;
-                d.transform.GetChild(j - 1).gameObject.SetActive(true);
+                d.transform.GetChild(index).GetComponent<Image>().sprite = ability[index].ResultIcon;
+                d.transform.GetChild(index).gameObject.SetActive(true);
             }
 
             num++;
