@@ -11,7 +11,7 @@ public class Char_Parent : Character
     public Animator Ani;
     public static Rigidbody2D rigid;
     AbilityManager AM;
-    Camera Cam;
+    public Camera Cam;
     public static bool ShopOn;
 
     [Header("플레이어 장비")]
@@ -74,7 +74,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
-        Before_Position = SelectChar.transform.position;
+        Before_Position = transform.position;
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
         Cam = Camera.main;
@@ -96,10 +96,10 @@ public class Char_Parent : Character
     }
     void Update()
     {
-        if(!Dead)
+        PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
+        if (!Dead)
         {
             if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
-            PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
             Mouse = Input.mousePosition;
             if (!ShopOn)
             {
