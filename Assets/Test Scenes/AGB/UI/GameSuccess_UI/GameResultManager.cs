@@ -89,22 +89,30 @@ public class GameResultManager : MonoBehaviour
         DarkFogText.text = Convert.ToString(AbyssManager.abyss.darkfog);
         float count = Convert.ToSingle(ability.Count) / 3f;
         int num = 1;
-        int index = 1;
+        int index = 0;
         for (int i = 0; i < count; i++)
         {
+
             var d = Instantiate(ItemBox);
             d.transform.SetParent(Content.transform, false);
 
-            for (int j = 1; j <= 3; j++)
+            for (int j = 0; j < 3; j++)
             {
-                index = j * num;
+
+
                 if (ability[index] == null)
                     break;
-                d.transform.GetChild(index-1).GetComponent<Image>().sprite = ability[index-1].ResultIcon;
-                d.transform.GetChild(index-1).gameObject.SetActive(true);
-            }
 
-            num++;
+             
+                d.transform.GetChild(j).GetComponent<Image>().sprite = ability[index].ResultIcon;
+                d.transform.GetChild(j).gameObject.SetActive(true);
+
+                
+                    index++;
+                Debug.Log(index);
+            }
+            Debug.Log("ddd");
+
         }
     }
 
