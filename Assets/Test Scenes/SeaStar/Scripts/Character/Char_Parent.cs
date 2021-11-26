@@ -11,7 +11,7 @@ public class Char_Parent : Character
     public Animator Ani;
     public static Rigidbody2D rigid;
     AbilityManager AM;
-    Camera Cam;
+    public Camera Cam;
     public static bool ShopOn;
 
     [Header("플레이어 장비")]
@@ -30,6 +30,7 @@ public class Char_Parent : Character
     public int CharAP;
     public int CharDP;
     public int CharSpeed;
+    public float RayDistance;
     //점프
     public float P_JumpForce;
     float P_DefaultJumpInt = 1;
@@ -74,7 +75,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
-        Before_Position = SelectChar.transform.position;
+        Before_Position = transform.position;
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
         Cam = Camera.main;
@@ -96,10 +97,10 @@ public class Char_Parent : Character
     }
     void Update()
     {
-        if(!Dead)
+        PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
+        if (!Dead)
         {
             if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
-            PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
             Mouse = Input.mousePosition;
             if (!ShopOn)
             {
@@ -499,10 +500,5 @@ public class Char_Parent : Character
         CurrentCha = GetComponent<Char_Parent>().SelectChar;
         GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), CurrentCha.transform.position + Vector3.up * 3 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
-    }
-    void Fail()
-    {
-        GameResultManager.result.Abilty(AbilityHistory);
-        GameResultManager.result.ShowResult(false);
     }
 }

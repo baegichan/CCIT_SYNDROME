@@ -23,9 +23,13 @@ public class GameResultManager : MonoBehaviour
     GameObject FaillPanel;
 
     [Header("Text")]
+    [SerializeField]
     Text TimeText;
+    [SerializeField]
     Text KillMobText;
+    [SerializeField]
     Text KillBossText;
+    [SerializeField]
     Text DarkFogText;
 
     [SerializeField]
@@ -77,6 +81,7 @@ public class GameResultManager : MonoBehaviour
             ClearPanel.SetActive(true);
         else
             FaillPanel.SetActive(true);
+        GameResultBox.SetActive(true);
 
         TimeText.text = string.Format("{0}:{1}:{2}", (int)PlayTime / 3600, (int)PlayTime / 60 % 60, (int)PlayTime % 60);
         KillMobText.text = Convert.ToString(countKillMonster);
@@ -95,8 +100,8 @@ public class GameResultManager : MonoBehaviour
                 index = j * num;
                 if (ability[index] == null)
                     break;
-                d.transform.GetChild(j - 1).GetComponent<Image>().sprite = ability[index].ResultIcon;
-                d.transform.GetChild(j - 1).gameObject.SetActive(true);
+                d.transform.GetChild(index-1).GetComponent<Image>().sprite = ability[index-1].ResultIcon;
+                d.transform.GetChild(index-1).gameObject.SetActive(true);
             }
 
             num++;

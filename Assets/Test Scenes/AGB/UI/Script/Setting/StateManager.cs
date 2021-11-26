@@ -44,8 +44,11 @@ public class StateManager : MonoBehaviour
     int maxHp;
     int hp;
     int lastHp = 0;
+    float hpFill = 1;
+    bool isSlow;
 
-
+    bool isWorring;
+    bool isEnter = false;
 
     int avssGage;
     int darkFog;
@@ -65,7 +68,8 @@ public class StateManager : MonoBehaviour
     private Image AbyssEffect;
 
 
- 
+
+
 
     [SerializeField]
     private Text DarkFogText;
@@ -90,24 +94,71 @@ public class StateManager : MonoBehaviour
     {
         set
         {
-            hp = value;
+            if (value > maxHp) hp = maxHp;
+            else if (value < 0) hp = 0;
+            else hp = value;
 
+            hpFill = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
+           
             if (lastHp == 0)
                 lastHp = hp;
-
+            isSlow = false;
             StartCoroutine(HpBarEffects());
+            StartCoroutine(AddDamgeCount());
 
 
+            if (hpFill < 0.25f)
+            {
+                if (!isEnter)
+                { 
+                    StartCoroutine(Worring());
+                }     
+            }   
+            else
+                isWorring = false;
         }
+    }
+
+
+    private void Update()
+    {
+
+        if (hpFill != HpBarBack.fillAmount && isSlow)
+            HpBarBack.fillAmount = Mathf.Lerp(HpBarBack.fillAmount, hpFill, Time.deltaTime * 20f);
+
+    }
+
+
+    IEnumerator Worring()
+    {
+        isEnter = true;
+        isWorring = true;
+        while (isWorring)
+        {
+            HpBarEffect.color = new Color(1, 0.347f, 0, 1);
+            yield return new WaitForSeconds(0.5f);
+            HpBarEffect.color = new Color(1, 1, 1, 0);
+            yield return new WaitForSeconds(0.5f);
+        }
+        isEnter = false;
+    }
+    IEnumerator AddDamgeCount()
+    {
+        yield return new WaitForSeconds(1.8f);
+        if (hpFill == HpBarBack.fillAmount)
+            isSlow = false;
+        else
+            isSlow = true;
     }
     IEnumerator HpBarEffects()
     {
-        HpBar.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
-        yield return new WaitForSeconds(1);
-        if(lastHp > hp)
-            HpBarBack.fillAmount = Mathf.Lerp(HpBarBack.fillAmount, Convert.ToSingle(hp) / Convert.ToSingle(maxHp), Time.deltaTime * 1f);
-        Debug.Log(HpBarBack.fillAmount);
-        lastHp = hp;
+
+        if (HpBar.fillAmount > hpFill)
+            HpBarEffect.color = new Color(1, 0.827f, 0.635f, 1);
+       
+        HpBar.fillAmount = hpFill;
+        yield return new WaitForSeconds(0.15f);
+        HpBarEffect.color = new Color(1, 1, 1, 0);
         //HpBarBack.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
 
     }
@@ -117,7 +168,7 @@ public class StateManager : MonoBehaviour
         {
             avssGage = value;
             AbyssBar.fillAmount = Convert.ToSingle(avssGage) / Convert.ToSingle(100);
-            Debug.Log(AbyssBar.fillAmount);
+         
 
         }
     }
