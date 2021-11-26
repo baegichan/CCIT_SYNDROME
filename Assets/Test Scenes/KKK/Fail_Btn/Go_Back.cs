@@ -27,9 +27,6 @@ public class Go_Back : MonoBehaviour
 
     }
 
-    
-
-
     void Fade_out()
     {
         Fade_out_in_canvas_Alpha = Fade_out_in_canvas.GetComponent<Image>().color.a;
