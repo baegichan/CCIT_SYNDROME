@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Color: {r: 0.6226415, g: 0.055802763, b: 0.055802763, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000e3d1e91dd7a7190f695926653bbab1dae7a96698893f00fac74223da2b780acd
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 1
   m_LightOrder: 0
@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 4230725279678117280}
   - component: {fileID: 1079001251474844275}
   - component: {fileID: 7788332647333943504}
-  - component: {fileID: -3414967249670777735}
+  - component: {fileID: -4023795860814449577}
   m_Layer: 0
   m_Name: Puncher_Bullet
   m_TagString: Untagged
@@ -171,7 +171,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.0717134, y: 0.0057007596}
+  m_Offset: {x: 1.1033291, y: -0.010106891}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -182,7 +182,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7282963, y: 0.48452616}
+  m_Size: {x: 0.28567725, y: 0.25267738}
   m_EdgeRadius: 0
 --- !u!50 &7788332647333943504
 Rigidbody2D:
@@ -205,7 +205,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-3414967249670777735
+--- !u!114 &-4023795860814449577
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,11 +214,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7522412011116099576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cb0de68334b9da4483172237d64d4b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 94821d1a048a30348885963afd0e3f87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet_speed: 1
-  bullet_Damage: 2
+  Speed: 0
+  rigid: {fileID: 0}
+  Curve: 0
+  bulletDMG: 2
+  DestroyBullet: 0
   Bullet_LifeTime: 5
-  trans: {x: 0, y: 0}
-  dir: {x: 0, y: 0, z: 0}
+  Bullet_Target: 0
