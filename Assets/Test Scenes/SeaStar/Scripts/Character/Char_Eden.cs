@@ -156,10 +156,8 @@ public class Char_Eden : MonoBehaviour
     {
         RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
         Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
-        Debug.Log(Ground.collider.gameObject.tag);
         if (Ground.collider.gameObject.tag == "Ground")
         {
-            Debug.Log(Ground.collider.gameObject.tag);
             Ani.SetBool("Jump", false);
             CP.P_JumpInt = CP.P_MaxJumpInt;
         }
@@ -291,7 +289,6 @@ public class Char_Eden : MonoBehaviour
 
     void Fail()
     {
-        Debug.Log("¡Í±›");
         GameResultManager.result.Abilty(CP.AbilityHistory);
         GameResultManager.result.ShowResult(false);
     }

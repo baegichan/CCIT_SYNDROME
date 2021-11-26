@@ -81,6 +81,7 @@ public class Char_Parent : Character
         Cam = Camera.main;
         SelectChar = Char[0];
         ChangeChar(SelectChar);
+        Hp_Current = Hp_Max;
 
         AM.CP = this;
     }
@@ -106,7 +107,6 @@ public class Char_Parent : Character
             {
                 if (Ani.GetBool("CanIThis"))
                 {
-                   // if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                     UseItem();
                 }
                 ds();
@@ -133,12 +133,13 @@ public class Char_Parent : Character
     {
         if (Hp_Current <= 0 && !Dead)
         {
-            SelectChar = Char[0];
             Before_Position = SelectChar.transform.position;
+            SelectChar = Char[0];
             //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
             //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
             Dead = true;
             ChangeChar(SelectChar);
+            SelectChar.transform.position = Before_Position;
             Ani.SetTrigger("Die");
 
         }
@@ -210,7 +211,7 @@ public class Char_Parent : Character
         rigid = SelectChar.GetComponent<Rigidbody2D>();
         Ani = SelectChar.GetComponent<Animator>();
         Hp_Max = DefaultHP + CharHP + Enhance_Health_Point[Enhance_Health];
-        if (!Dead) { Hp_Current = Hp_Max; }
+        //if(!Dead) { Hp_Current = Hp_Max; }
         DP = CharDP;
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
         speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
