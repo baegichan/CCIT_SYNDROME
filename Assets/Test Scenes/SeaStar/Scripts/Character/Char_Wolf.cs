@@ -6,6 +6,7 @@ public class Char_Wolf : MonoBehaviour
 {
     public int[] HP;
     public int DP;
+    public Char_Parent CP;
     public float WereWolf_Gauge = 0;
     float WereWolf_Max = 5;
     public int power;
@@ -13,11 +14,19 @@ public class Char_Wolf : MonoBehaviour
     public bool P_Attack_State;
     public float P_AttackMoveInt;
 
+    void Update()
+    {
+        GroundCheck();
+    }
+    void OnEnable()
+    {
+        CP.Hp_Current += HP[CP.ActiveAbility.Enhance];
+    }
     public void Attack()
     {
         if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
         {
-            if (GetComponentInParent<Char_Parent>().Ani.GetBool("Jump") == false)
+            if (CP.Ani.GetBool("Jump") == false)
             {
                 Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * (P_AttackMoveInt * 5), ForceMode2D.Impulse);
             }
@@ -41,6 +50,19 @@ public class Char_Wolf : MonoBehaviour
             Ani.SetBool("CanIThis", true);
             Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h * 4, 0.6f) * WereWolf_Gauge * power);
             WereWolf_Gauge = 0;
+        }
+    }
+
+    void GroundCheck()
+    {
+        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
+        Debug.Log(Ground.collider.gameObject.tag);
+        if (Ground.collider.gameObject.tag == "Ground")
+        {
+            Debug.Log(Ground.collider.gameObject.tag);
+            Ani.SetBool("Jump", false);
+            CP.P_JumpInt = CP.P_MaxJumpInt;
         }
     }
 

@@ -30,6 +30,7 @@ public class Char_Parent : Character
     public int CharAP;
     public int CharDP;
     public int CharSpeed;
+    public float RayDistance;
     //มกวม
     public float P_JumpForce;
     float P_DefaultJumpInt = 1;
@@ -80,6 +81,7 @@ public class Char_Parent : Character
         Cam = Camera.main;
         SelectChar = Char[0];
         ChangeChar(SelectChar);
+        Hp_Current = Hp_Max;
 
         AM.CP = this;
     }
@@ -105,7 +107,6 @@ public class Char_Parent : Character
             {
                 if (Ani.GetBool("CanIThis"))
                 {
-                   // if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                     UseItem();
                 }
                 ds();
@@ -132,12 +133,13 @@ public class Char_Parent : Character
     {
         if (Hp_Current <= 0 && !Dead)
         {
-            SelectChar = Char[0];
             Before_Position = SelectChar.transform.position;
+            SelectChar = Char[0];
             //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
             //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
             Dead = true;
             ChangeChar(SelectChar);
+            SelectChar.transform.position = Before_Position;
             Ani.SetTrigger("Die");
 
         }
@@ -209,7 +211,7 @@ public class Char_Parent : Character
         rigid = SelectChar.GetComponent<Rigidbody2D>();
         Ani = SelectChar.GetComponent<Animator>();
         Hp_Max = DefaultHP + CharHP + Enhance_Health_Point[Enhance_Health];
-        if (!Dead) { Hp_Current = Hp_Max; }
+        //if(!Dead) { Hp_Current = Hp_Max; }
         DP = CharDP;
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
         speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
@@ -499,10 +501,5 @@ public class Char_Parent : Character
         CurrentCha = GetComponent<Char_Parent>().SelectChar;
         GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), CurrentCha.transform.position + Vector3.up * 3 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
-    }
-    void Fail()
-    {
-        GameResultManager.result.Abilty(AbilityHistory);
-        GameResultManager.result.ShowResult(false);
     }
 }

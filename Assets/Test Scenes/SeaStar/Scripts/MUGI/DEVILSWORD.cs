@@ -20,7 +20,6 @@ public class DEVILSWORD : MonoBehaviour
         if (AM.E_Attack_State == true)
         {
             Collider2D[] hitEs = Physics2D.OverlapBoxAll(transform.position, BoxSize, 0, monsterlayer);
-            Debug.Log(hitEs.Length);
             foreach (Collider2D Current in hitEs)
             {
                 CameraShake.Cam_instance.Shake(ShakeT, ShakeF);

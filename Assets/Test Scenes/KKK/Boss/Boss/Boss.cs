@@ -12,6 +12,8 @@ public class Boss : Character
     public bool Abyss_on;
     //보스 어비스 상태에서는 데미지만 높게
 
+
+
     public bool Player_On_Ground = true;// 
     bool Boss_State_Check = true;//무언가를 하는중이면 false
     bool Boss_HP_Frame_Check;
@@ -120,7 +122,7 @@ public class Boss : Character
         }
       
         
-
+        
         Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<Char_Parent>().SelectChar.transform;
 
         
@@ -392,7 +394,7 @@ public class Boss : Character
             d.transform.SetParent(Boss_Use_lns_Zone.transform);
         }
 
-        yield return new WaitForSeconds(25f);
+        yield return new WaitForSeconds(15f);
         Boss_HP_Half = false;
     }
     
@@ -729,6 +731,7 @@ public class Boss : Character
     void Ins_Bullet_1()
     {
         Boss_State_Check = false;
+        Normal_Atk_Count = 0;
     }
     void Ins_Bullet_2()
     {
