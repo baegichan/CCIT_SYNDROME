@@ -24,6 +24,12 @@ public class Teleporter_Boss_Script : MonoBehaviour
     public GameObject Fade_out_in_canvas;//포탈 탈때 생기는 이미지인데 이거 투명도 조절하면서 
                                          //Fade효과 줘가지고 일부러 DontDestroy걸어놨음ㅁㄴㅇㅁㄴㅇㅁㄴ이ㅏㄴ우리ㅏㅁㅇㄴ랑니라
 
+
+    public GameObject Camera;
+    //보스씬으로 가니까 계속 카메라가 없어서 오류가 나는데 DontDestroy해줘야할듯 합니다~
+
+
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -31,6 +37,8 @@ public class Teleporter_Boss_Script : MonoBehaviour
             //문 열고 들어가는거 틀어주고
             DontDestroyOnLoad(Fade_out_in_canvas.transform.parent.gameObject);
             DontDestroyOnLoad(collision.transform.parent.gameObject);
+            transform.GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(1).gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.W))
             {
                 Fade_out();
@@ -46,6 +54,8 @@ public class Teleporter_Boss_Script : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
             //transform.GetChild(1).gameObject.SetActive(false); 문이라서 필요없을거 같아서 지웠어요~
         }
     }
@@ -53,7 +63,7 @@ public class Teleporter_Boss_Script : MonoBehaviour
 
     void Scene_Change_Boss()
     {
-        SceneManager.LoadScene("main2");
+        SceneManager.LoadScene("Boss_Scene");
 
         //요것두 보스로 바꿔주도록 해요~
     }
