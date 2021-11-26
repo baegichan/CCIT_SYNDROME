@@ -55,7 +55,7 @@ public class GameResultManager : MonoBehaviour
     GameObject Content;
 
 
-    void Go_Back()
+    public void Go_Back()
     {
         Fade_out_in_canvas_Alpha = Fade_out_in_canvas.GetComponent<Image>().color.a;
         StartCoroutine(Fade_Out());
