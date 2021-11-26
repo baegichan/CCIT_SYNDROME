@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class FootCollider : MonoBehaviour
 {
+    public Char_Eden CE;
+    public Char_Parent CP;
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Ground")
         {
-            GetComponentInParent<Char_Eden>().Ani.SetBool("Jump", false);
-            GetComponentInParent<Char_Parent>().P_JumpInt = GetComponentInParent<Char_Parent>().P_MaxJumpInt;
+            CE.Ani.SetBool("Jump", false);
+            CP.P_JumpInt = CP.P_MaxJumpInt;
         }
     }
 }
