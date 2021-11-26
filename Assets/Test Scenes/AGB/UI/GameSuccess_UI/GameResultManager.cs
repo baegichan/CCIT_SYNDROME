@@ -81,7 +81,7 @@ public class GameResultManager : MonoBehaviour
             ClearPanel.SetActive(true);
         else
             FaillPanel.SetActive(true);
-        gameObject.SetActive(true);
+        GameResultBox.SetActive(true);
 
         TimeText.text = string.Format("{0}:{1}:{2}", (int)PlayTime / 3600, (int)PlayTime / 60 % 60, (int)PlayTime % 60);
         KillMobText.text = Convert.ToString(countKillMonster);
