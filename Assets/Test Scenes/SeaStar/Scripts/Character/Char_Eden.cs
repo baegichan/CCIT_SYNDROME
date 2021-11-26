@@ -7,6 +7,7 @@ public class Char_Eden : MonoBehaviour
     //Test
     public int HP;
     public int DP;
+    public Char_Parent CP;
     //
     [Header("°ø°Ý")]
     public float P_AttackForce;
@@ -56,7 +57,7 @@ public class Char_Eden : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
         {
-            if (GetComponentInParent<Char_Parent>().Ani.GetBool("Jump") == false)
+            if (CP.Ani.GetBool("Jump") == false)
             {
                 Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * (P_AttackMoveInt * 5), ForceMode2D.Impulse);
             }
@@ -95,7 +96,7 @@ public class Char_Eden : MonoBehaviour
                 if (Current.tag == "Monster")
                 {
                     CameraShake.Cam_instance.Shake(0.04f, 0.02f);
-                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect);
+                    Current.GetComponent<Character>().Damage(CP.AP, CP.UseApPostion, HitEffect);
                     Current.GetComponent<Character>().KnuckBack(transform, 5, Current.GetComponent<Character>().IsBoss);
                 }
             }
@@ -123,56 +124,50 @@ public class Char_Eden : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(Sword.position, new Vector2(1.8f, 1));
     }
-    public void Event_Eden()
-    {
-        Ani.SetBool("CanIThis", true);
-    }
-
     public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Ani.GetBool("Jump") == false)
         {
-            if (P_DashInt == 0)
-            { 
-                    Ani.SetBool("Dash", true);
-                Physics2D.IgnoreLayerCollision(10, 11);
-                Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
-                Char_Parent.rigid.velocity = new Vector2(0, 0);
-                P_DashInt = 0;
-            }
-           
-            if (Char_Parent.RedBullDash == true)
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                Physics2D.IgnoreLayerCollision(10, 11);
+                if (P_DashTimer >= 5)
+                {
+                    P_DashTimer = 0;
+                    Ani.SetBool("Dash", true);
+                    Physics2D.IgnoreLayerCollision(10, 11);
+                    Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
+                    Char_Parent.rigid.velocity = new Vector2(0, 0);
+                }
             }
         }
-
-        if (P_DashInt == 0)
+        if (P_DashTimer < 5)
         {
-            P_DashForce = 0;
-            P_DashTimer -= Time.deltaTime;
-            Physics2D.IgnoreLayerCollision(10, 11);
+            P_DashTimer += Time.deltaTime;
         }
-        if (P_DashTimer <= 0)
+        if (!Ani.GetBool("Dash"))
         {
-            P_DashTimer = 5;
-            P_DashInt = 1;
-            P_DashForce = 300;
             Physics2D.IgnoreLayerCollision(10, 11, false);
+            if (!Ani.GetBool("CanIThis")) { CanIThisOn(); }
         }
     }
-    void DashS()
+
+    void GroundCheck()
     {
-        Ani.SetBool("CanIThis", false);
+        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
+        Debug.Log(Ground.collider.gameObject.tag);
+        if (Ground.collider.gameObject.tag == "Ground")
+        {
+            Debug.Log(Ground.collider.gameObject.tag);
+            Ani.SetBool("Jump", false);
+            CP.P_JumpInt = CP.P_MaxJumpInt;
+        }
     }
-    void DashE()
-    {
-        Ani.SetBool("Dash", false);
-    }
+
     public void PharaoWandSwitch()
     {
-        if (GetComponentInParent<Char_Parent>().PharaoWand_Senaka.activeSelf) { GetComponentInParent<Char_Parent>().PharaoWand_Senaka.SetActive(false); }
-        else { GetComponentInParent<Char_Parent>().PharaoWand_Senaka.SetActive(true); }
+        if (CP.PharaoWand_Senaka.activeSelf) { CP.PharaoWand_Senaka.SetActive(false); }
+        else { CP.PharaoWand_Senaka.SetActive(true); }
     }
 
     public delegate void Active();
@@ -182,7 +177,18 @@ public class Char_Eden : MonoBehaviour
     {
         active();
     }
-
+    public void CanIThisOn()
+    {
+        Ani.SetBool("CanIThis", true);
+    }
+    public void CanIThisOff()
+    {
+        Ani.SetBool("CanIThis", false);
+    }
+    void DashE()
+    {
+        Ani.SetBool("Dash", false);
+    }
     void AttackStart()
     {
         P_Attack_State = true;
@@ -218,23 +224,23 @@ public class Char_Eden : MonoBehaviour
 
     void CanMoving()
     {
-        GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", true);
+        CP.Ani.SetBool("CanIThis", true);
     }
 
     void BattleAxeAttackEvent()
     {
         AbilityManager.A_Attack_State = true;
-        GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", false);
+        CP.Ani.SetBool("CanIThis", false);
     }
 
     void OnBattleAxeSwith()
     {
-        GetComponentInParent<Char_Parent>().OnBattleAxe();
+        CP.OnBattleAxe();
     }
 
     void OffBattleAxeSwith()
     {
-        GetComponentInParent<Char_Parent>().OffBattleAxe();
+        CP.OffBattleAxe();
     }
 
     void BattleAxeintInitalization()
@@ -259,11 +265,11 @@ public class Char_Eden : MonoBehaviour
     
     void AxeAttack()
     {
-        GetComponentInParent<Char_Parent>().BattleAxe.GetComponent<AXE>().AxeAttack();
+        CP.BattleAxe.GetComponent<AXE>().AxeAttack();
     }
     void Transformation_Wolf()
     {
-        GetComponentInParent<Char_Parent>().DecideChar();
+        CP.DecideChar();
     }
 
     void SlowTime()
@@ -280,5 +286,12 @@ public class Char_Eden : MonoBehaviour
     {
         if (PharaoLight.activeSelf) { PharaoLight.SetActive(false); }
         else { PharaoLight.SetActive(true); }
+    }
+
+    void Fail()
+    {
+        Debug.Log("Áê±Ý");
+        GameResultManager.result.Abilty(CP.AbilityHistory);
+        GameResultManager.result.ShowResult(false);
     }
 }
