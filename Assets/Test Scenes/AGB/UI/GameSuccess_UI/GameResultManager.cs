@@ -23,9 +23,13 @@ public class GameResultManager : MonoBehaviour
     GameObject FaillPanel;
 
     [Header("Text")]
+    [SerializeField]
     Text TimeText;
+    [SerializeField]
     Text KillMobText;
+    [SerializeField]
     Text KillBossText;
+    [SerializeField]
     Text DarkFogText;
 
     [SerializeField]
@@ -77,6 +81,7 @@ public class GameResultManager : MonoBehaviour
             ClearPanel.SetActive(true);
         else
             FaillPanel.SetActive(true);
+        GameResultBox.SetActive(true);
 
         TimeText.text = string.Format("{0}:{1}:{2}", (int)PlayTime / 3600, (int)PlayTime / 60 % 60, (int)PlayTime % 60);
         KillMobText.text = Convert.ToString(countKillMonster);
@@ -84,22 +89,30 @@ public class GameResultManager : MonoBehaviour
         DarkFogText.text = Convert.ToString(AbyssManager.abyss.darkfog);
         float count = Convert.ToSingle(ability.Count) / 3f;
         int num = 1;
-        int index = 1;
+        int index = 0;
         for (int i = 0; i < count; i++)
         {
+
             var d = Instantiate(ItemBox);
             d.transform.SetParent(Content.transform, false);
 
-            for (int j = 1; j <= 3; j++)
+            for (int j = 0; j < 3; j++)
             {
-                index = j * num;
+
+
                 if (ability[index] == null)
                     break;
-                d.transform.GetChild(j - 1).GetComponent<Image>().sprite = ability[index].ResultIcon;
-                d.transform.GetChild(j - 1).gameObject.SetActive(true);
-            }
 
-            num++;
+             
+                d.transform.GetChild(j).GetComponent<Image>().sprite = ability[index].ResultIcon;
+                d.transform.GetChild(j).gameObject.SetActive(true);
+
+                
+                    index++;
+                Debug.Log(index);
+            }
+            Debug.Log("ddd");
+
         }
     }
 

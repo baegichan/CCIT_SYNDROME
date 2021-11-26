@@ -43,23 +43,39 @@ public class StateManager : MonoBehaviour
     #region 변수
     int maxHp;
     int hp;
+    int lastHp = 0;
+    float hpFill = 1;
+    bool isSlow;
+
+    bool isWorring;
+    bool isEnter = false;
 
     int avssGage;
     int darkFog;
 
-  
-
-
-
+    [Header("HP")]
     [SerializeField]
     private Image HpBar;
+    [SerializeField]
+    private Image HpBarBack;
+    [SerializeField]
+    private Image HpBarEffect;
 
+    [Header("Abyss")]
     [SerializeField]
     private Image AbyssBar;
+    [SerializeField]
+    private Image AbyssEffect;
+
+
+
+
 
     [SerializeField]
     private Text DarkFogText;
 
+    [SerializeField]
+    private GameObject PlayerImgBox;
     #endregion
 
 
@@ -71,26 +87,88 @@ public class StateManager : MonoBehaviour
         {
             //max 추후에 증가본 추가
             maxHp = value;
-            
+
         }
     }
     public int Hp
     {
         set
         {
-            hp = value;
-            HpBar.fillAmount = Convert.ToSingle(hp) /Convert.ToSingle(maxHp);
+            if (value > maxHp) hp = maxHp;
+            else if (value < 0) hp = 0;
+            else hp = value;
+
+            hpFill = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
            
-        
+            if (lastHp == 0)
+                lastHp = hp;
+            isSlow = false;
+            StartCoroutine(HpBarEffects());
+            StartCoroutine(AddDamgeCount());
+
+
+            if (hpFill < 0.25f)
+            {
+                if (!isEnter)
+                { 
+                    StartCoroutine(Worring());
+                }     
+            }   
+            else
+                isWorring = false;
         }
     }
 
+
+    private void Update()
+    {
+
+        if (hpFill != HpBarBack.fillAmount && isSlow)
+            HpBarBack.fillAmount = Mathf.Lerp(HpBarBack.fillAmount, hpFill, Time.deltaTime * 20f);
+
+    }
+
+
+    IEnumerator Worring()
+    {
+        isEnter = true;
+        isWorring = true;
+        while (isWorring)
+        {
+            HpBarEffect.color = new Color(1, 0.347f, 0, 1);
+            yield return new WaitForSeconds(0.5f);
+            HpBarEffect.color = new Color(1, 1, 1, 0);
+            yield return new WaitForSeconds(0.5f);
+        }
+        isEnter = false;
+    }
+    IEnumerator AddDamgeCount()
+    {
+        yield return new WaitForSeconds(1.8f);
+        if (hpFill == HpBarBack.fillAmount)
+            isSlow = false;
+        else
+            isSlow = true;
+    }
+    IEnumerator HpBarEffects()
+    {
+
+        if (HpBar.fillAmount > hpFill)
+            HpBarEffect.color = new Color(1, 0.827f, 0.635f, 1);
+       
+        HpBar.fillAmount = hpFill;
+        yield return new WaitForSeconds(0.15f);
+        HpBarEffect.color = new Color(1, 1, 1, 0);
+        //HpBarBack.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
+
+    }
     public int AbyssGage
     {
         set
         {
             avssGage = value;
             AbyssBar.fillAmount = Convert.ToSingle(avssGage) / Convert.ToSingle(100);
+         
 
         }
     }
@@ -100,6 +178,19 @@ public class StateManager : MonoBehaviour
         {
             darkFog = value;
             DarkFogText.text = Convert.ToString(darkFog);
+        }
+    }
+
+    public void CharImgSelect(int charnum)
+    {
+        int i = PlayerImgBox.transform.childCount;
+
+        for (int j = 0; j < i; j++)
+        {
+            if (j != charnum)
+                PlayerImgBox.transform.GetChild(j).gameObject.SetActive(false);
+            else
+                PlayerImgBox.transform.GetChild(charnum).gameObject.SetActive(true);
         }
     }
     #endregion

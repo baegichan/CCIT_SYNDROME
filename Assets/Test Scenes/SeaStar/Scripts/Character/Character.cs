@@ -73,19 +73,10 @@ public class Character : MonoBehaviour
     }
     public void Damage(int DamageValue)
     {
-
-        if (transform.tag == "Player")
-        {
-            GetComponent<Char_Parent>().Special_Load_Damage_Text(DamageValue);
-        }
-        else
-        {
-            Load_Damage_Text(this, DamageValue);
-        }
         int firstDamge = DamageValue;
         if (DamageValue > 20)
         {
-            CameraShake.Cam_instance.Shake(70, 0.4f);
+            CameraShake.Cam_instance.Shake(0.04f, 0.4f);
         }
         int secondDamge = firstDamge - Shield;
         if (secondDamge > 0)
@@ -96,6 +87,15 @@ public class Character : MonoBehaviour
         if (Shield > 0)
             Shield -= firstDamge - DP;
 
+        if (transform.tag == "Player")
+        {
+            GetComponent<Char_Parent>().Special_Load_Damage_Text(DamageValue);
+            StateManager.state.Hp = Hp_Current;
+        }
+        else
+        {
+            Load_Damage_Text(this, DamageValue);
+        }
     }
 
 

@@ -8,18 +8,25 @@ public class Layers : MonoBehaviour
     public List<GameObject> AbyssLayer= new List<GameObject>();
     public List<GameObject> NomalLayer = new List<GameObject>();
 
-    private void OnEnable()
+
+    private void Update()
     {
-    /*
-        if(AbyssManager.abyss.abyssState== AbyssManager.AbyssState.Abyss)
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+           StartCoroutine( Change());
+        }
+    }
+    public IEnumerator Change()
+    {
+        yield return new WaitForSeconds(1);
+        if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Abyss)
         {
             foreach (GameObject layer in AbyssLayer)
-            {
+
                 if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = true;
                 }
-            }
             foreach (GameObject layer in NomalLayer)
             {
                 if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
@@ -28,6 +35,48 @@ public class Layers : MonoBehaviour
                 }
             }
         }
+
+
+        else
+        {
+            foreach (GameObject layer in AbyssLayer)
+            {
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                {
+                    layer.GetComponent<TilemapCollider2D>().enabled = false;
+                }
+            }
+            foreach (GameObject layer in NomalLayer)
+            {
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                {
+                    layer.GetComponent<TilemapCollider2D>().enabled = true;
+                }
+            }
+
+        }
+    }
+    private void OnEnable()
+    {
+        
+        if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Abyss)
+        {
+            foreach (GameObject layer in AbyssLayer)
+
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                {
+                    layer.GetComponent<TilemapCollider2D>().enabled = true;
+                }
+            foreach (GameObject layer in NomalLayer)
+            {
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                {
+                    layer.GetComponent<TilemapCollider2D>().enabled = false;
+                }
+            }
+        }
+     
+        
         else
         {
             foreach (GameObject layer in AbyssLayer)
@@ -45,6 +94,6 @@ public class Layers : MonoBehaviour
                 }
             }
 
-        }*/
+        }
     }
 }

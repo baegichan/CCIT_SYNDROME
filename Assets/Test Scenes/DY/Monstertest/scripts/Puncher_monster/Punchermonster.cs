@@ -23,6 +23,7 @@ public class Punchermonster : Character
     public Transform atkpos1;
     public Vector2 direction;
     public float distance;
+    public AbyssMonster abyss;
 
     [Header("Turn state")]
     public bool filp;
@@ -162,7 +163,8 @@ public class Punchermonster : Character
 
     public void PuncherDestroy()
     {
-        Destroy(gameObject);
+        abyss.MonsterDie();
+        //Destroy(gameObject);
     }
 
     public void Filp()

@@ -52,40 +52,18 @@ public class BulletScript : MonoBehaviour
     }
     public void Update()
     {
-        /*
-        if (target.position.x > transform.position.x)
-        {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.right * bullet_speed, ForceMode2D.Impulse);
-        }
-        if (target.position.x < transform.position.x)
-        {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.left * bullet_speed, ForceMode2D.Impulse);
-        }
-        */
-        /*
-        if (target.position.x > transform.position.x)
-        {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.left * bullet_speed, ForceMode2D.Impulse);
-        }
-        if (target.position.x < transform.position.x)
-        {
-            GetComponent<SpriteRenderer>().flipX = false;
-        }
-        */
         if(left == true)
         {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.left * bullet_speed, ForceMode2D.Impulse);
+            //GetComponent<Rigidbody2D>().AddForce(Vector2.left, ForceMode2D.Impulse);
             GetComponent<SpriteRenderer>().flipX = false;
+            this.transform.position = new Vector3(this.transform.position.x - 0.1f,transform.position.y,transform.position.z);
         }
         if (right == true)
         {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.right * bullet_speed, ForceMode2D.Impulse);
+            //GetComponent<Rigidbody2D>().AddForce(Vector2.right, ForceMode2D.Impulse);
             GetComponent<SpriteRenderer>().flipX = true;
+            this.transform.position = new Vector3(this.transform.position.x + 0.1f, transform.position.y, transform.position.z);
         }
-
-
-
-
 
     }
 
@@ -99,7 +77,7 @@ public class BulletScript : MonoBehaviour
             {
                 collision.transform.parent.GetComponent<Character>().Damage(Bullet_Damage);
                 
-                collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 5, false);
+                collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 1, false);
                 Destroy(this.gameObject);
             }
             else
@@ -110,40 +88,4 @@ public class BulletScript : MonoBehaviour
     }
 
 
-    /*
-    void Start()
-    {
-        //bulletRB = GetComponent<Rigidbody2D>();
-        target = GameObject.FindGameObjectWithTag("Player");
-        targetPos = new Vector2(target.transform.position.x, target.transform.position.y);
-        Vector3 dir = target.transform.position - this.transform.position;
-        float angle = Mathf.Atan2(target.transform.position.y - this.transform.position.y, target.transform.position.x - this.transform.position.x) *
-            Mathf.Rad2Deg;
-        this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        Destroy(this.gameObject, 5);
-
-    }
-    private void Update()
-    {
-        Vector2 moveDir = (target.transform.position - transform.position).normalized * (speed * Time.deltaTime);
-        this.GetComponent<Rigidbody2D>().velocity = new Vector2(targetPos.x, targetPos.y+0.8f);
-
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            this.gameObject.SetActive(false);
-            Debug.Log("ㄴㅁㅇ");
-        }
-        Debug.Log("공격 받음");
-
-    }
-    /*private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(this.gameObject);
-        }
-    }*/
 }

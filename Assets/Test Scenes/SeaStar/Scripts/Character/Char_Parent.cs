@@ -11,7 +11,7 @@ public class Char_Parent : Character
     public Animator Ani;
     public static Rigidbody2D rigid;
     AbilityManager AM;
-    Camera Cam;
+    public Camera Cam;
     public static bool ShopOn;
 
     [Header("플레이어 장비")]
@@ -30,6 +30,7 @@ public class Char_Parent : Character
     public int CharAP;
     public int CharDP;
     public int CharSpeed;
+    public float RayDistance;
     //점프
     public float P_JumpForce;
     float P_DefaultJumpInt = 1;
@@ -74,6 +75,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
+        Before_Position = transform.position;
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
         Cam = Camera.main;
@@ -81,7 +83,6 @@ public class Char_Parent : Character
         ChangeChar(SelectChar);
 
         AM.CP = this;
-        Hp_Current = Hp_Max;
     }
     void FixedUpdate()
     {
@@ -96,10 +97,10 @@ public class Char_Parent : Character
     }
     void Update()
     {
-        if(!Dead)
+        PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
+        if (!Dead)
         {
             if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
-            PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
             Mouse = Input.mousePosition;
             if (!ShopOn)
             {
@@ -133,10 +134,13 @@ public class Char_Parent : Character
         if (Hp_Current <= 0 && !Dead)
         {
             SelectChar = Char[0];
-            AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
-            ChangeChar(SelectChar);
+            Before_Position = SelectChar.transform.position;
+            //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
+            //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
             Dead = true;
+            ChangeChar(SelectChar);
             Ani.SetTrigger("Die");
+
         }
     }
 
@@ -179,37 +183,48 @@ public class Char_Parent : Character
         switch (SelectChar.transform.name)
         {
             case "Defualt":
-                atk = SelectChar.GetComponent<Char_Eden>().Attack;
-                ds = SelectChar.GetComponent<Char_Eden>().Dash;
-                CharHP = SelectChar.GetComponent<Char_Eden>().HP;
-                CharDP = SelectChar.GetComponent<Char_Eden>().DP;
+                Char_Eden eden = SelectChar.GetComponent<Char_Eden>();
+                atk = eden.Attack;
+                ds = eden.Dash;
+                CharHP = eden.HP;
+                CharDP = eden.DP;
+                StateManager.state.CharImgSelect(0);
                 break;
             case "Wolf":
-                atk = SelectChar.GetComponent<Char_Wolf>().Attack;
-                ds = SelectChar.GetComponent<Char_Wolf>().Dash;
-                CharHP = SelectChar.GetComponent<Char_Wolf>().HP[ActiveAbility.Enhance];
-                CharDP = SelectChar.GetComponent<Char_Wolf>().DP;
+                Char_Wolf wolf = SelectChar.GetComponent<Char_Wolf>();
+                atk = wolf.Attack;
+                ds = wolf.Dash;
+                CharHP = wolf.HP[ActiveAbility.Enhance];
+                CharDP = wolf.DP;
+                StateManager.state.CharImgSelect(1);
                 break;
             case "RockHuman":
-                atk = SelectChar.GetComponent<Char_RockMan>().Attack;
-                ds = SelectChar.GetComponent<Char_RockMan>().Dash;
-                CharHP = SelectChar.GetComponent<Char_RockMan>().HP;
-                CharDP = SelectChar.GetComponent<Char_RockMan>().DP[ActiveAbility.Enhance];
+                Char_RockMan rock = SelectChar.GetComponent<Char_RockMan>();
+                atk = rock.Attack;
+                ds = rock.Dash;
+                CharHP = rock.HP;
+                CharDP = rock.DP[ActiveAbility.Enhance];
                 break;
         }
 
         rigid = SelectChar.GetComponent<Rigidbody2D>();
         Ani = SelectChar.GetComponent<Animator>();
         Hp_Max = DefaultHP + CharHP + Enhance_Health_Point[Enhance_Health];
+        if (!Dead) { Hp_Current = Hp_Max; }
         DP = CharDP;
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
         speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
         AM.py = SelectChar;
         switchItem(ActiveAbility.AbCode);
+        UpdateState();
     }
-    //
 
-    //이동
+    void UpdateState()
+    {
+        StateManager.state.MaxHp = Hp_Max;
+        StateManager.state.Hp = Hp_Current;
+    }
+
     public void Move()
     {
         h = Input.GetAxisRaw("Horizontal");
@@ -373,6 +388,8 @@ public class Char_Parent : Character
         {
             MulYakInt--;
             Hp_Current += 50;
+            if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
+            UpdateState();
         }
         else if (AlYakInt > 0 && Input.GetKeyDown(KeyCode.Q))
         {
@@ -454,6 +471,7 @@ public class Char_Parent : Character
         Enhance_Health = PlayerPrefs.HasKey("E_Health") ? PlayerPrefs.GetInt("E_Health") : 0;
         Enhance_Strength = PlayerPrefs.HasKey("E_Strength") ? PlayerPrefs.GetInt("E_Strength") : 0;
         Enhance_Speed = PlayerPrefs.HasKey("E_Speed") ? PlayerPrefs.GetInt("E_Speed") : 0;
+        //AbyssManager.abyss.Darkfog = PlayerPrefs.HasKey("DarkFog") ? PlayerPrefs.GetInt("DarkFog") : 0;
     }
 
     public void Save_StateEnhance()
@@ -461,6 +479,7 @@ public class Char_Parent : Character
         PlayerPrefs.SetInt("E_Health", Enhance_Health);
         PlayerPrefs.SetInt("E_Strength", Enhance_Strength);
         PlayerPrefs.SetInt("E_Speed", Enhance_Speed);
+        //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
     }
 
     public void SaveAbilityHistory(Ability ability)
@@ -481,9 +500,5 @@ public class Char_Parent : Character
         CurrentCha = GetComponent<Char_Parent>().SelectChar;
         GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), CurrentCha.transform.position + Vector3.up * 3 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
-    }
-    void Fail()
-    {
-        //GameResultManager.result.ShowResult(false);
     }
 }

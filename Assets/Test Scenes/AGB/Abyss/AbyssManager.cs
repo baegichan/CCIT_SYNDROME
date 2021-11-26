@@ -53,7 +53,7 @@ public class AbyssManager : MonoBehaviour
     public int darkfog = 0;
 
     public int maxAbyssGage = 100;
-   
+
     public int abyssGage = 1;
     //hp 게이지
     public int hpGage = 0;
@@ -69,6 +69,8 @@ public class AbyssManager : MonoBehaviour
     private bool isAbyssStay = false;
     //심연 코루틴 끝났는지 여부
     private bool isAbyssEnd = true;
+
+    private bool isCoolTime = true;
 
     public enum AbyssState { Reality, Abyss };
 
@@ -93,8 +95,8 @@ public class AbyssManager : MonoBehaviour
 
 
 
- 
-    
+
+
 
     public AbyssState abyssState = new AbyssState();
 
@@ -111,9 +113,25 @@ public class AbyssManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Q) && isCoolTime)
+        {
+            isCoolTime = false;
+            StartCoroutine(CoolTime());
+            if (abyssState == AbyssState.Abyss)
+                GoReal();
+            else
+                GoAbyss();
+        }
+    }
 
-    // Update is called once per frame
-   
+    IEnumerator CoolTime()
+    {
+        yield return new WaitForSeconds(1f);
+        isCoolTime = true;
+    }
+
 
     IEnumerator AbyssResource()
     {
@@ -184,7 +202,7 @@ public class AbyssManager : MonoBehaviour
         {
             StateManager.state.DarkFog = darkfog;
             return darkfog;
-           
+
         }
 
         set
@@ -205,7 +223,7 @@ public class AbyssManager : MonoBehaviour
         set
         {
             abyssGage = value;
-           StateManager.state.AbyssGage = abyssGage; 
+            StateManager.state.AbyssGage = abyssGage;
         }
     }
 

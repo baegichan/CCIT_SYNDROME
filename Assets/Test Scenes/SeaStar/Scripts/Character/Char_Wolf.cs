@@ -6,10 +6,10 @@ public class Char_Wolf : MonoBehaviour
 {
     public int[] HP;
     public int DP;
-    public int WereWolf_Gauge = 0;
-    public int WereWolf_Max = 5;
+    public Char_Parent CP;
+    public float WereWolf_Gauge = 0;
+    float WereWolf_Max = 5;
     public int power;
-    IEnumerator wolf;
     public Animator Ani;
     public bool P_Attack_State;
     public float P_AttackMoveInt;
@@ -18,7 +18,7 @@ public class Char_Wolf : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
         {
-            if (GetComponentInParent<Char_Parent>().Ani.GetBool("Jump") == false)
+            if (CP.Ani.GetBool("Jump") == false)
             {
                 Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * (P_AttackMoveInt * 5), ForceMode2D.Impulse);
             }
@@ -29,29 +29,33 @@ public class Char_Wolf : MonoBehaviour
 
     public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             Ani.SetBool("Dash", true);
             Ani.SetBool("CanIThis", false);
-            wolf = WolfGauge();
-            StartCoroutine(wolf);
+            WereWolf_Gauge = Time.deltaTime;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             Ani.SetBool("Dash", false);
             Ani.SetBool("CanIThis", true);
-            StopAllCoroutines();
             Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h * 4, 0.6f) * WereWolf_Gauge * power);
             WereWolf_Gauge = 0;
         }
     }
 
-    IEnumerator WolfGauge()
+    void GroundCheck()
     {
-        yield return new WaitForSeconds(0.5f);
-        if (WereWolf_Gauge < WereWolf_Max) { WereWolf_Gauge += 1; }
-        StartCoroutine(WolfGauge());
+        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
+        Debug.Log(Ground.collider.gameObject.tag);
+        if (Ground.collider.gameObject.tag == "Ground")
+        {
+            Debug.Log(Ground.collider.gameObject.tag);
+            Ani.SetBool("Jump", false);
+            CP.P_JumpInt = CP.P_MaxJumpInt;
+        }
     }
 
     void AttackStart()

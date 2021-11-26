@@ -23,6 +23,7 @@ public class FireflyMonster:Character
     public Transform atkpos; //공격 근접이면 가능이지만 원거리는 교체가 필요
     public Vector2 direction;
     public float distance;
+    public AbyssMonster abyss;
 
     [Header("Turn state")]
     public bool filp;
@@ -96,8 +97,8 @@ public class FireflyMonster:Character
         first = transform.position;
         if (atkDelay >= 0)
             atkDelay -= Time.deltaTime;
-        //Up();
-        //Down();
+        Up();
+        Down();
         if (Hp_Current <= 0)
         {
             Dead = true;
@@ -161,7 +162,8 @@ public class FireflyMonster:Character
 
     public void FireflyDestroy()
     {
-        Destroy(gameObject);
+        abyss.MonsterDie();
+        //Destroy(gameObject);
     }
 
     public void Filp()
@@ -191,7 +193,7 @@ public class FireflyMonster:Character
         RaycastHit2D upcheck = Physics2D.Raycast(upCheck.position, Vector2.up, 0.2f);
         if(upcheck.collider == true)
         {
-            rb.AddForce(transform.up * -1f);
+            rb.AddForce(transform.up * -5f);
         }
     }
     public void Down()
@@ -199,7 +201,7 @@ public class FireflyMonster:Character
         RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 0.2f);
         if (downcheck.collider == true)
         {
-            rb.AddForce(transform.up * 1f);
+            rb.AddForce(transform.up * 5f);
         }
     }
 

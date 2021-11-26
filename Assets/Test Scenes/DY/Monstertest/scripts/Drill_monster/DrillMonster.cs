@@ -23,6 +23,7 @@ public class DrillMonster : Character
     public Transform boxpos;
     public Vector2 direction;
     public float distance;
+    public AbyssMonster abyss;
 
     [Header("Turn state")]
     public bool filp;
@@ -148,6 +149,7 @@ public class DrillMonster : Character
             if (col.tag == "Player")
             {
                 col.GetComponentInParent<Character>().Damage(drillmonDamage);
+                col.GetComponentInParent<Character>().PlayerKnuckBack(transform, col.transform, 3, false);
             }
         }
     }
@@ -159,7 +161,8 @@ public class DrillMonster : Character
     }
     public void DrillDestroy()
     {
-        Destroy(gameObject);
+        abyss.MonsterDie();
+        //Destroy(gameObject);
     }
 
     public void Filp()
