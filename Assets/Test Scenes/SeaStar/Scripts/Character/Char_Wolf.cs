@@ -14,6 +14,14 @@ public class Char_Wolf : MonoBehaviour
     public bool P_Attack_State;
     public float P_AttackMoveInt;
 
+    void Update()
+    {
+        GroundCheck();
+    }
+    void OnEnable()
+    {
+        CP.Hp_Current += HP[CP.ActiveAbility.Enhance];
+    }
     public void Attack()
     {
         if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
