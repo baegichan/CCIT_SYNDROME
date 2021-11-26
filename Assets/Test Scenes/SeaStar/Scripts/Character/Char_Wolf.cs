@@ -6,6 +6,7 @@ public class Char_Wolf : MonoBehaviour
 {
     public int[] HP;
     public int DP;
+    public Char_Parent CP;
     public float WereWolf_Gauge = 0;
     float WereWolf_Max = 5;
     public int power;
@@ -17,7 +18,7 @@ public class Char_Wolf : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
         {
-            if (GetComponentInParent<Char_Parent>().Ani.GetBool("Jump") == false)
+            if (CP.Ani.GetBool("Jump") == false)
             {
                 Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * (P_AttackMoveInt * 5), ForceMode2D.Impulse);
             }

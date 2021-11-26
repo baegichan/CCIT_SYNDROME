@@ -7,6 +7,7 @@ public class Char_Eden : MonoBehaviour
     //Test
     public int HP;
     public int DP;
+    public Char_Parent CP;
     //
     [Header("°ø°Ý")]
     public float P_AttackForce;
@@ -56,7 +57,7 @@ public class Char_Eden : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
         {
-            if (GetComponentInParent<Char_Parent>().Ani.GetBool("Jump") == false)
+            if (CP.Ani.GetBool("Jump") == false)
             {
                 Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0) * (P_AttackMoveInt * 5), ForceMode2D.Impulse);
             }
@@ -95,7 +96,7 @@ public class Char_Eden : MonoBehaviour
                 if (Current.tag == "Monster")
                 {
                     CameraShake.Cam_instance.Shake(0.04f, 0.02f);
-                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect);
+                    Current.GetComponent<Character>().Damage(CP.AP, CP.UseApPostion, HitEffect);
                     Current.GetComponent<Character>().KnuckBack(transform, 5, Current.GetComponent<Character>().IsBoss);
                 }
             }
@@ -151,8 +152,8 @@ public class Char_Eden : MonoBehaviour
     }
     public void PharaoWandSwitch()
     {
-        if (GetComponentInParent<Char_Parent>().PharaoWand_Senaka.activeSelf) { GetComponentInParent<Char_Parent>().PharaoWand_Senaka.SetActive(false); }
-        else { GetComponentInParent<Char_Parent>().PharaoWand_Senaka.SetActive(true); }
+        if (CP.PharaoWand_Senaka.activeSelf) { CP.PharaoWand_Senaka.SetActive(false); }
+        else { CP.PharaoWand_Senaka.SetActive(true); }
     }
 
     public delegate void Active();
@@ -209,23 +210,23 @@ public class Char_Eden : MonoBehaviour
 
     void CanMoving()
     {
-        GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", true);
+        CP.Ani.SetBool("CanIThis", true);
     }
 
     void BattleAxeAttackEvent()
     {
         AbilityManager.A_Attack_State = true;
-        GetComponentInParent<Char_Parent>().Ani.SetBool("CanIThis", false);
+        CP.Ani.SetBool("CanIThis", false);
     }
 
     void OnBattleAxeSwith()
     {
-        GetComponentInParent<Char_Parent>().OnBattleAxe();
+        CP.OnBattleAxe();
     }
 
     void OffBattleAxeSwith()
     {
-        GetComponentInParent<Char_Parent>().OffBattleAxe();
+        CP.OffBattleAxe();
     }
 
     void BattleAxeintInitalization()
@@ -250,11 +251,11 @@ public class Char_Eden : MonoBehaviour
     
     void AxeAttack()
     {
-        GetComponentInParent<Char_Parent>().BattleAxe.GetComponent<AXE>().AxeAttack();
+        CP.BattleAxe.GetComponent<AXE>().AxeAttack();
     }
     void Transformation_Wolf()
     {
-        GetComponentInParent<Char_Parent>().DecideChar();
+        CP.DecideChar();
     }
 
     void SlowTime()
@@ -271,5 +272,12 @@ public class Char_Eden : MonoBehaviour
     {
         if (PharaoLight.activeSelf) { PharaoLight.SetActive(false); }
         else { PharaoLight.SetActive(true); }
+    }
+
+    void Fail()
+    {
+        Debug.Log("Áê±Ý");
+        GameResultManager.result.Abilty(CP.AbilityHistory);
+        GameResultManager.result.ShowResult(false);
     }
 }

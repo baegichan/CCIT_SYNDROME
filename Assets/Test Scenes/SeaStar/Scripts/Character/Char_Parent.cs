@@ -500,9 +500,4 @@ public class Char_Parent : Character
         GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), CurrentCha.transform.position + Vector3.up * 3 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
     }
-    void Fail()
-    {
-        GameResultManager.result.Abilty(AbilityHistory);
-        GameResultManager.result.ShowResult(false);
-    }
 }
