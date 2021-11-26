@@ -164,8 +164,8 @@ public class Punchermonster : Character
 
     public void PuncherDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
-        //ameResultManager.result.
         //Destroy(gameObject);
     }
 
