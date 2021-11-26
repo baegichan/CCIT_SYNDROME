@@ -538,7 +538,7 @@ public class Potal
     }
     public bool EnablePotal = false;
     public Potal_type Potaltype=Potal.Potal_type.None;
-  
+    public Potal_type PotalDirection = Potal.Potal_type.None;
     public Vector2[] VertexPoints = new Vector2[5];
     public Vector2 PotalLocation = new Vector2(0, 0);
     
@@ -569,6 +569,7 @@ public class Potal
             SpawnedPotal.GetComponent<EdgeCollider2D>().points = VertexPoints;
             SpawnedPotal.transform.position = (Vector2)SpawnedPotal.transform.position+ PotalLocation;
             SpawnedPotal.GetComponent<PotalEvent>().Potal_setting(Potaltype);
+            SpawnedPotal.GetComponent<PotalEvent>().PotalD_setting(PotalDirection);
             SpawnedPotal.GetComponent<PotalEvent>().SetinterBlock();
 
 

@@ -10,7 +10,6 @@ public class nRealWorldShop : NPC
     void Awake()
     {
         ply = GameObject.FindGameObjectWithTag("Player");
-        RealWorldShop_UI = GameObject.Find("Canvas").transform.Find("RWS").gameObject;
 
         Scale = transform.localScale;
         DefaultX = Scale.x;

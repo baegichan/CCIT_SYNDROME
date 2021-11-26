@@ -22,6 +22,7 @@ public class ResercherMonster : Character
     public Transform boxpos;
     public Vector2 direction;
     public float distance;
+    public AbyssMonster abyss;
 
     [Header("Turn state")]
     public bool filp;
@@ -165,7 +166,8 @@ public class ResercherMonster : Character
 
     public void ResercherDestroy()
     {
-        Destroy(gameObject);
+        abyss.MonsterDie();
+        //Destroy(gameObject);
     }
 
     public void Movetrue()
