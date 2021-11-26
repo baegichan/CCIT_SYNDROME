@@ -30,6 +30,7 @@ public class Char_Parent : Character
     public int CharAP;
     public int CharDP;
     public int CharSpeed;
+    public float RayDistance;
     //มกวม
     public float P_JumpForce;
     float P_DefaultJumpInt = 1;

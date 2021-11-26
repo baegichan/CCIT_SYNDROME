@@ -150,6 +150,20 @@ public class Char_Eden : MonoBehaviour
             if (!Ani.GetBool("CanIThis")) { CanIThisOn(); }
         }
     }
+
+    void GroundCheck()
+    {
+        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
+        Debug.Log(Ground.collider.gameObject.tag);
+        if (Ground.collider.gameObject.tag == "Ground")
+        {
+            Debug.Log(Ground.collider.gameObject.tag);
+            Ani.SetBool("Jump", false);
+            CP.P_JumpInt = CP.P_MaxJumpInt;
+        }
+    }
+
     public void PharaoWandSwitch()
     {
         if (CP.PharaoWand_Senaka.activeSelf) { CP.PharaoWand_Senaka.SetActive(false); }
