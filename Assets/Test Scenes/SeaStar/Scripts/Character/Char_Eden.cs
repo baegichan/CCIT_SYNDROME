@@ -123,51 +123,31 @@ public class Char_Eden : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(Sword.position, new Vector2(1.8f, 1));
     }
-    public void Event_Eden()
-    {
-        Ani.SetBool("CanIThis", true);
-    }
-
     public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Ani.GetBool("Jump") == false)
         {
-            if (P_DashInt == 0)
-            { 
-                    Ani.SetBool("Dash", true);
-                Physics2D.IgnoreLayerCollision(10, 11);
-                Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
-                Char_Parent.rigid.velocity = new Vector2(0, 0);
-                P_DashInt = 0;
-            }
-           
-            if (Char_Parent.RedBullDash == true)
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                Physics2D.IgnoreLayerCollision(10, 11);
+                if (P_DashTimer >= 5)
+                {
+                    P_DashTimer = 0;
+                    Ani.SetBool("Dash", true);
+                    Physics2D.IgnoreLayerCollision(10, 11);
+                    Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
+                    Char_Parent.rigid.velocity = new Vector2(0, 0);
+                }
             }
         }
-
-        if (P_DashInt == 0)
+        if (P_DashTimer < 5)
         {
-            P_DashForce = 0;
-            P_DashTimer -= Time.deltaTime;
-            Physics2D.IgnoreLayerCollision(10, 11);
+            P_DashTimer += Time.deltaTime;
         }
-        if (P_DashTimer <= 0)
+        if (!Ani.GetBool("Dash"))
         {
-            P_DashTimer = 5;
-            P_DashInt = 1;
-            P_DashForce = 300;
             Physics2D.IgnoreLayerCollision(10, 11, false);
+            if (!Ani.GetBool("CanIThis")) { CanIThisOn(); }
         }
-    }
-    void DashS()
-    {
-        Ani.SetBool("CanIThis", false);
-    }
-    void DashE()
-    {
-        Ani.SetBool("Dash", false);
     }
     public void PharaoWandSwitch()
     {
@@ -182,7 +162,18 @@ public class Char_Eden : MonoBehaviour
     {
         active();
     }
-
+    public void CanIThisOn()
+    {
+        Ani.SetBool("CanIThis", true);
+    }
+    public void CanIThisOff()
+    {
+        Ani.SetBool("CanIThis", false);
+    }
+    void DashE()
+    {
+        Ani.SetBool("Dash", false);
+    }
     void AttackStart()
     {
         P_Attack_State = true;

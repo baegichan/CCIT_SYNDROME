@@ -11,7 +11,7 @@ public class Char_Parent : Character
     public Animator Ani;
     public static Rigidbody2D rigid;
     AbilityManager AM;
-    Camera Cam;
+    public Camera Cam;
     public static bool ShopOn;
 
     [Header("플레이어 장비")]
@@ -74,6 +74,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
+        Before_Position = transform.position;
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
         Cam = Camera.main;
@@ -95,10 +96,10 @@ public class Char_Parent : Character
     }
     void Update()
     {
-        if(!Dead)
+        PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
+        if (!Dead)
         {
             if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
-            PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
             Mouse = Input.mousePosition;
             if (!ShopOn)
             {
@@ -132,11 +133,13 @@ public class Char_Parent : Character
         if (Hp_Current <= 0 && !Dead)
         {
             SelectChar = Char[0];
+            Before_Position = SelectChar.transform.position;
             //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
             //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
-            ChangeChar(SelectChar);
             Dead = true;
+            ChangeChar(SelectChar);
             Ani.SetTrigger("Die");
+
         }
     }
 
@@ -384,6 +387,8 @@ public class Char_Parent : Character
         {
             MulYakInt--;
             Hp_Current += 50;
+            if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
+            UpdateState();
         }
         else if (AlYakInt > 0 && Input.GetKeyDown(KeyCode.Q))
         {
