@@ -122,7 +122,7 @@ public class Boss : Character
         }
       
         
-
+        
         Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<Char_Parent>().SelectChar.transform;
 
         
