@@ -52,6 +52,7 @@ public class Char_Eden : MonoBehaviour
     void Update()
     {
         BAI();
+        GroundCheck();
     }
     public void Attack()
     {
