@@ -5,7 +5,7 @@ using UnityEngine;
 public class LayerChecker : MonoBehaviour
 {
     public bool isAbyssLayer;
-    public bool isFiledObject;
+    public bool isFieldObject;
     public void Start()
     {
         if(transform.parent.GetComponent<Layers>()!=null)
