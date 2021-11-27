@@ -11,25 +11,25 @@ public class Layers : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.G))
+        if(Input.GetKeyDown(KeyCode.Q))
         {
            StartCoroutine( Change());
         }
     }
     public IEnumerator Change()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Abyss)
         {
             foreach (GameObject layer in AbyssLayer)
 
-                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFieldObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = true;
                 }
             foreach (GameObject layer in NomalLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFieldObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = false;
                 }
@@ -41,14 +41,14 @@ public class Layers : MonoBehaviour
         {
             foreach (GameObject layer in AbyssLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFieldObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = false;
                 }
             }
             foreach (GameObject layer in NomalLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFieldObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = true;
                 }
@@ -63,13 +63,13 @@ public class Layers : MonoBehaviour
         {
             foreach (GameObject layer in AbyssLayer)
 
-                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFieldObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = true;
                 }
             foreach (GameObject layer in NomalLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFieldObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = false;
                 }
@@ -81,14 +81,14 @@ public class Layers : MonoBehaviour
         {
             foreach (GameObject layer in AbyssLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent <LayerChecker>().isFiledObject!=true)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent <LayerChecker>().isFieldObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = false;
                 }
             }
             foreach (GameObject layer in NomalLayer)
             {
-                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFiledObject != true)
+                if (layer.GetComponent<TilemapCollider2D>() != null && layer.GetComponent<LayerChecker>().isFieldObject != true)
                 {
                     layer.GetComponent<TilemapCollider2D>().enabled = true;
                 }
