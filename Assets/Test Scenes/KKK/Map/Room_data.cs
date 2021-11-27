@@ -13,7 +13,7 @@ public class Room_data : MonoBehaviour
     SpriteRenderer spr;
     public Sprite[] sp;
     public bool VisitedRoom= false;
-
+   
     public void Visit()
     {
         VisitedRoom = true;
