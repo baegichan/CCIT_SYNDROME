@@ -70,8 +70,8 @@ public class MonsterBox : MonoBehaviour
       
         for (int i = 0; i < monsteridQue.Count; i++)
         {
-            var d = Instantiate(AbyssMonsterPrefab[monsteridQue.Dequeue()], monsterPosQue.Dequeue(), Quaternion.identity);
-            d.transform.SetParent(abyssBox.transform, false);
+            var d = Instantiate(AbyssMonsterPrefab[monsteridQue.Dequeue()], monsterPosQue.Dequeue(), Quaternion.identity, abyssBox.transform);
+          //  d.transform.SetParent(abyssBox.transform, false);
         }
     }
 

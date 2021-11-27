@@ -7,6 +7,8 @@ public class MapManager : MonoBehaviour
     public static MapManager s_Instace;
     public bool Map_Lock = false;
     public MiniMap Minimap;
+
+   
     public void instace()
     {
         if (s_Instace == null)
