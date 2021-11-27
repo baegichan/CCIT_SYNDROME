@@ -14,21 +14,25 @@ public class PotalEvent : MonoBehaviour
     public Potals.PotalType PotalDirection;
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (MapManager.s_Instace.Map_Lock != true)
-        {
-
-
-            if (!DoorIsLock)
+    if(other.tag=="Player")
+    {
+            if (MapManager.s_Instace.Map_Lock != true)
             {
-                if (Teleport_able == true)
+
+
+                if (!DoorIsLock)
                 {
-                    Movement(other.gameObject);
-                    // MapManager.s_Instace.PotalMove(PotalType);
+                    if (Teleport_able == true)
+                    {
+                        Movement(other.gameObject);
+                        // MapManager.s_Instace.PotalMove(PotalType);
+                    }
+
+
                 }
-
-
             }
         }
+        
     }
     private void OnEnable()
     {
