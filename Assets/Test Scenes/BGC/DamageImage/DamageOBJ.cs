@@ -8,12 +8,12 @@ public class DamageOBJ : MonoBehaviour
     public void DamageText(int i)
     {
         TM.text = System.Convert.ToString(i);
-        TM.color = Color.red;
+        //TM.color = Color.red;
     }
     public void HealText(int i)
     {
         TM.text = System.Convert.ToString(i);
-        TM.color = Color.green;
+      //  TM.color = Color.green;
     }
     public void DestroyTextObj()
     {

@@ -7,6 +7,6 @@ public class PassPlatform : MonoBehaviour
     // Start is called before the first frame update
   public void PlaformReverse(GameObject plaform)
   {
-
+   
   }
 }

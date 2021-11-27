@@ -499,7 +499,7 @@ public class Char_Parent : Character
     public void Special_Load_Damage_Text(int Damage)
     {
         CurrentCha = GetComponent<Char_Parent>().SelectChar;
-        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), CurrentCha.transform.position + Vector3.up * 3 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj2"), CurrentCha.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
     }
 }
