@@ -61,22 +61,34 @@ public class Character : MonoBehaviour
     }
     public  void Load_Heal_Text(Character target,int Healint)
     {
-        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), target.transform.position + Vector3.up * 3+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+        GameObject Text = (GameObject)Instantiate(Resources.Load("HealObj"), target.transform.position + Vector3.up * 1+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().HealText(Healint);
+
+     
+        float fontExtra = Mathf.Clamp(Healint / 10,1, 1.5f);
+        float fontsize = Random.Range(1 * fontExtra, 1.2f * fontExtra);
+        Text.transform.localScale = new Vector3(fontsize, fontsize, 1);
     }
     public  void Load_Damage_Text(Character target,int Damage)
     { 
         if(transform.tag == "Player" && AbyssManager.abyss != null) { AbyssManager.abyss.GetAbyssGage(10); }
-
-        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), target.transform.position + Vector3.up * 3+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+        GameObject Text = null;
+      
+            Text = (GameObject)Instantiate(Resources.Load("DamageObj"), target.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+       
+   
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
+        float fontExtra = Mathf.Clamp(Damage / 10,0.8f,1.5f);
+        float fontsize = Random.Range(0.8f* fontExtra, 1.0f* fontExtra);
+        Text.transform.localScale = new Vector3(fontsize, fontsize, 1);
+       
     }
     public void Damage(int DamageValue)
     {
         int firstDamge = DamageValue;
         if (DamageValue > 20)
         {
-            CameraShake.Cam_instance.Shake(0.04f, 0.4f);
+            CameraShake.Cam_instance.Shake(0.1f, 0.4f);
         }
         int secondDamge = firstDamge - Shield;
         if (secondDamge > 0)

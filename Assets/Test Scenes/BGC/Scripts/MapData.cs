@@ -282,12 +282,12 @@ public class MapData : ScriptableObject
             if (BG[j].Its_Object)
             {
                 Tile.GetComponent<TilemapCollider2D>().enabled = true;
-                Tile.GetComponent<LayerChecker>().isFiledObject = true;
+                Tile.GetComponent<LayerChecker>().isFieldObject = false;
             }
             else
             {
                 Tile.GetComponent<TilemapCollider2D>().enabled = false;
-                Tile.GetComponent<LayerChecker>().isFiledObject = false;
+                Tile.GetComponent<LayerChecker>().isFieldObject = true;
             }
 
 

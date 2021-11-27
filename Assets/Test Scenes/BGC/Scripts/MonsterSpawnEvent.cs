@@ -14,6 +14,8 @@ public class MonsterSpawnEvent : MapEvent
     public bool UseSpawner = true;
     public bool OneTimeSpawn = false;
     int count = 0;
+
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
