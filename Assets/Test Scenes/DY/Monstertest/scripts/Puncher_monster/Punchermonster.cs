@@ -22,8 +22,6 @@ public class Punchermonster : Character
     public Transform groundCheck;
     public Transform atkpos;
     public Transform atkpos1;
-    public Vector2 direction;
-    public float distance;
     public AbyssMonster abyss;
 
     [Header("Turn state")]
@@ -77,8 +75,14 @@ public class Punchermonster : Character
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+        filp = true;
+        patroll = true;
+        trace = false;
+        Targeton = false;
+        anim = GetComponent<Animator>();
+        Online = true;
     }
-
+    /*
     void Start()
     {
         filp = true;
@@ -88,7 +92,7 @@ public class Punchermonster : Character
         anim = GetComponent<Animator>();
         Online = true;          
     }
-
+    */
     void Update()
     {
         if (patroll == true)

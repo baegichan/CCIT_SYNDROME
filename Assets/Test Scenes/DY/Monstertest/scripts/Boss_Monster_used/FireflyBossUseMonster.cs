@@ -21,8 +21,6 @@ public class FireflyBossUseMonster : Character
     public Transform upCheck;
     public Transform downCheck;
     public Transform atkpos; //공격 근접이면 가능이지만 원거리는 교체가 필요
-    public Vector2 direction;
-    public float distance;
 
     [Header("Turn state")]
     public bool filp;
@@ -54,6 +52,12 @@ public class FireflyBossUseMonster : Character
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+        filp = true;
+        patroll = true;
+        trace = false;
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        Online = true;
     }
 
     private void OnEnable()
@@ -71,11 +75,11 @@ public class FireflyBossUseMonster : Character
     private void OnDisable()
     {
         anim.SetFloat("Direction", 1);
-        Vector2 current = transform.localScale;
+         Vector2 current = transform.localScale;
         current.x = 1;
         transform.localScale = current;
     }
-
+    /*
     void Start()
     {
         filp = true;
@@ -85,7 +89,7 @@ public class FireflyBossUseMonster : Character
         rb = GetComponent<Rigidbody2D>();
         Online = true;
     }
-
+    */
     void Update()
     {
         if (patroll == true)
@@ -262,7 +266,6 @@ public class FireflyBossUseMonster : Character
             {
                 player = GameObject.FindGameObjectWithTag("Player");
                 //player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;//플레이어 피봇 위치 트러짐 떄문에 사용
-                Debug.Log(player + "이새끼 때문임1");
 
                 if (playerTransform == null)
                 {
