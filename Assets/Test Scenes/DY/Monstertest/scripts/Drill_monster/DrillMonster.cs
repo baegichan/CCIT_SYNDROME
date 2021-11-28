@@ -21,8 +21,6 @@ public class DrillMonster : Character
     public Transform groundCheck;
     public Transform wallCheck;
     public Transform boxpos;
-    public Vector2 direction;
-    public float distance;
     public AbyssMonster abyss;
 
     [Header("Turn state")]
@@ -75,8 +73,15 @@ public class DrillMonster : Character
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+        filp = true;
+        patroll = true;
+        trace = false;
+        Targeton = false;
+        Dead = false;
+        anim = GetComponent<Animator>();
+        Online = true;
     }
-
+    /*
     void Start()
     {
         filp = true;
@@ -88,7 +93,7 @@ public class DrillMonster : Character
         Physics.IgnoreLayerCollision(0, 0);
         Online = true;
     }
-
+    */
     void Update()
     {
         if (patroll == true)
@@ -161,6 +166,7 @@ public class DrillMonster : Character
     }
     public void DrillDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }
@@ -260,7 +266,6 @@ public class DrillMonster : Character
             {
                 player = GameObject.FindGameObjectWithTag("Player");
                 //player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;//플레이어 피봇 위치 트러짐 떄문에 사용
-                Debug.Log(player + "이새끼 때문임1");
 
                 if (playerTransform == null)
                 {

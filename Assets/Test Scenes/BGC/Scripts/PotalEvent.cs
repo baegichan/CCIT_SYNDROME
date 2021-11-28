@@ -14,21 +14,25 @@ public class PotalEvent : MonoBehaviour
     public Potals.PotalType PotalDirection;
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (MapManager.s_Instace.Map_Lock != true)
-        {
-
-
-            if (!DoorIsLock)
+    if(other.tag=="Player")
+    {
+            if (MapManager.s_Instace.Map_Lock != true)
             {
-                if (Teleport_able == true)
+
+
+                if (!DoorIsLock)
                 {
-                    Movement(other.gameObject);
-                    // MapManager.s_Instace.PotalMove(PotalType);
+                    if (Teleport_able == true)
+                    {
+                        Movement(other.gameObject);
+                        // MapManager.s_Instace.PotalMove(PotalType);
+                    }
+
+
                 }
-
-
             }
         }
+        
     }
     private void OnEnable()
     {
@@ -44,31 +48,48 @@ public class PotalEvent : MonoBehaviour
         Vector2[] VertexPoints = new Vector2[5];
 
         GameObject Block = (GameObject)Resources.Load("Wall");
-       
+        Vector2[] inputVector = new Vector2[5];
         var Potal = Block.GetComponent<MapLineDraw>();
+        inputVector[0] = new Vector2(linedrawer.L_Area, linedrawer.T_Area);
+        inputVector[1] = new Vector2(linedrawer.R_Area, linedrawer.T_Area);
+        inputVector[2] = new Vector2(linedrawer.R_Area, linedrawer.B_Area);
+        inputVector[3] = new Vector2(linedrawer.L_Area, linedrawer.B_Area);
+        inputVector[4] = new Vector2(linedrawer.L_Area, linedrawer.T_Area);
         switch (PotalDirection)
         {
             case Potals.PotalType.L:
-                Instantiate(Block, new Vector2(transform.position.x-Mathf.Abs(linedrawer.L_Area)- Mathf.Abs(linedrawer.R_Area), transform.position.y), Quaternion.identity, this.transform);
-
+               var walll= Instantiate(Block, new Vector3(transform.position.x-Mathf.Abs(linedrawer.L_Area)- Mathf.Abs(linedrawer.R_Area), transform.position.y,3), Quaternion.identity, this.transform);
+                EdgeCollider2D LPotal = walll.GetComponent<EdgeCollider2D>();
+                LPotal.points = inputVector;
+                //MapLineDraw Walll = walll.GetComponent<MapLineDraw>();
+                //Walll.LineDrow(Potal.L_Area, Potal.R_Area, Potal.T_Area, Potal.B_Area);
                 break;
             case Potals.PotalType.R:
-                Instantiate(Block, new Vector2(transform.position.x + Mathf.Abs(linedrawer.L_Area)+ Mathf.Abs(linedrawer.R_Area), transform.position.y), Quaternion.identity, this.transform);
-
-
+                var wallr = Instantiate(Block, new Vector3(transform.position.x + Mathf.Abs(linedrawer.L_Area)+ Mathf.Abs(linedrawer.R_Area), transform.position.y,3), Quaternion.identity, this.transform);
+                //MapLineDraw Wallr = wallr.GetComponent<MapLineDraw>();
+                //Wallr.LineDrow(Potal.L_Area, Potal.R_Area, Potal.T_Area, Potal.B_Area);
+                EdgeCollider2D RPotal = wallr.GetComponent<EdgeCollider2D>();
+ 
+                RPotal.points = inputVector;
                 break;
             case Potals.PotalType.T:
-                Instantiate(Block, new Vector2(transform.position.x, transform.position.y + Mathf.Abs(linedrawer.T_Area) + Mathf.Abs(linedrawer.B_Area)), Quaternion.identity, this.transform);
-
+                var wallt = Instantiate(Block, new Vector3(transform.position.x, transform.position.y + Mathf.Abs(linedrawer.T_Area) + Mathf.Abs(linedrawer.B_Area),3), Quaternion.identity, this.transform);
+                //MapLineDraw Wallt = wallt.GetComponent<MapLineDraw>();
+                // Wallt.LineDrow(Potal.L_Area, Potal.R_Area, Potal.T_Area, Potal.B_Area);
+                EdgeCollider2D TPotal = wallt.GetComponent<EdgeCollider2D>();
+                TPotal.points = inputVector;
                 break;
             case Potals.PotalType.B:
-                Instantiate(Block, new Vector2(transform.position.x, transform.position.y - Mathf.Abs(linedrawer.T_Area) - Mathf.Abs(linedrawer.B_Area)), Quaternion.identity, this.transform);
-
+                var wallb = Instantiate(Block, new Vector3(transform.position.x, transform.position.y - Mathf.Abs(linedrawer.T_Area) - Mathf.Abs(linedrawer.B_Area),3), Quaternion.identity, this.transform);
+                // MapLineDraw Wallb = wallb.GetComponent<MapLineDraw>();
+                // Wallb.LineDrow(Potal.L_Area, Potal.R_Area, Potal.T_Area, Potal.B_Area);
+                EdgeCollider2D BPotal = wallb.GetComponent<EdgeCollider2D>();
+                BPotal.points = inputVector;
                 break;
         }
 
 
-        Potal.GetComponent<EdgeCollider2D>().points = VertexPoints;
+        //Potal.GetComponent<EdgeCollider2D>().points = VertexPoints;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

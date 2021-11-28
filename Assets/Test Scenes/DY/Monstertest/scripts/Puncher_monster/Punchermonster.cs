@@ -11,7 +11,8 @@ public class Punchermonster : Character
     public AbyssMonster abyssMonster;
 
     [Header("Refernce")]
-    public GameObject puncherbullet;
+    public Bullet_Attack bullet_Attack1;
+    public Bullet_Attack bullet_Attack2;
     public GameObject player;
     public Transform playerTransform;
     public Animator anim;
@@ -21,8 +22,6 @@ public class Punchermonster : Character
     public Transform groundCheck;
     public Transform atkpos;
     public Transform atkpos1;
-    public Vector2 direction;
-    public float distance;
     public AbyssMonster abyss;
 
     [Header("Turn state")]
@@ -76,8 +75,14 @@ public class Punchermonster : Character
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+        filp = true;
+        patroll = true;
+        trace = false;
+        Targeton = false;
+        anim = GetComponent<Animator>();
+        Online = true;
     }
-
+    /*
     void Start()
     {
         filp = true;
@@ -87,7 +92,7 @@ public class Punchermonster : Character
         anim = GetComponent<Animator>();
         Online = true;          
     }
-
+    */
     void Update()
     {
         if (patroll == true)
@@ -151,8 +156,8 @@ public class Punchermonster : Character
             if (atkpos1.localPosition.x < 0)
                 atkpos1.localPosition = new Vector2(Mathf.Abs(atkpos1.localPosition.x * 1), atkpos1.localPosition.y);
         }
-        Instantiate(puncherbullet, atkpos.transform.position, Quaternion.identity);
-        Instantiate(puncherbullet, atkpos1.transform.position, Quaternion.identity);
+        bullet_Attack1.Attack(playerTransform.gameObject);
+        bullet_Attack2.Attack(playerTransform.gameObject);
     }
 
     public void Patroll()
@@ -163,6 +168,7 @@ public class Punchermonster : Character
 
     public void PuncherDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }

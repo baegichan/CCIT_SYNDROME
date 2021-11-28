@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6480108031075560003}
   - component: {fileID: 5742019518024510717}
-  - component: {fileID: 5041444078186303722}
   - component: {fileID: -6797520238748143714}
   - component: {fileID: 2949172151577049315}
+  - component: {fileID: 3970806171074928604}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Wall
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,23 +60,6 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &5041444078186303722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4619488644449683837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad7c599c6cf8694ea879a53ec7be4f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LineColor: {r: 1, g: 1, b: 1, a: 1}
-  L_Area: -1
-  R_Area: 1
-  T_Area: 1
-  B_Area: -1
 --- !u!50 &-6797520238748143714
 Rigidbody2D:
   serializedVersion: 4
@@ -114,6 +97,24 @@ MonoBehaviour:
   Downning: 0
   Timer: 3
   currentTime: 3
+--- !u!114 &3970806171074928604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4619488644449683837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad7c599c6cf8694ea879a53ec7be4f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  L_Area: 0
+  R_Area: 0
+  T_Area: 0
+  B_Area: 0
+  updating: 1
 --- !u!1001 &7336393878145126152
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -121,6 +122,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6480108031075560003}
     m_Modifications:
+    - target: {fileID: 2076991542215298184, guid: d506382e121d5ae439e0100a0df77f53, type: 3}
+      propertyPath: m_SortingLayer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2076991542215298184, guid: d506382e121d5ae439e0100a0df77f53, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -635223353
+      objectReference: {fileID: 0}
+    - target: {fileID: 2076991542215298185, guid: d506382e121d5ae439e0100a0df77f53, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2076991542215298186, guid: d506382e121d5ae439e0100a0df77f53, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -171,7 +184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2076991542215298191, guid: d506382e121d5ae439e0100a0df77f53, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d506382e121d5ae439e0100a0df77f53, type: 3}

@@ -20,9 +20,8 @@ public class ClupMonster : Character
     public Transform groundCheck;
     public Transform wallCheck;
     public Transform boxpos;
-    public Vector2 direction;
-    public float distance;
     public AbyssMonster abyss;
+    public int layerMask = 1 << 8;
 
     [Header("Turn state")]
     public bool filp;
@@ -74,8 +73,13 @@ public class ClupMonster : Character
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;// 0.5f을 곱하는 이유는 우리가 보는 각도가 중앙이 되고 그 부분으로 시야각이 10이라면 -10, 10이렇게 되어야 하기 때문이다.
+        filp = true;
+        patroll = true;
+        trace = false;
+        anim = GetComponent<Animator>();
+        Online = true;
     }
-
+    /*
     void Start()
     {
         filp = true;
@@ -85,7 +89,7 @@ public class ClupMonster : Character
         Physics.IgnoreLayerCollision(0, 0);
         Online = true;
     }
-
+    */
     void Update()
     {
         if (patroll == true)
@@ -164,6 +168,7 @@ public class ClupMonster : Character
 
     public void ClupDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }
@@ -264,7 +269,6 @@ public class ClupMonster : Character
             {
                 player = GameObject.FindGameObjectWithTag("Player");
                 //player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;//플레이어 피봇 위치 트러짐 떄문에 사용
-                Debug.Log(player + "이새끼 때문임1");
 
                 if (playerTransform == null)
                 {
