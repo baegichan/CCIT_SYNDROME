@@ -321,11 +321,7 @@ public class GameResultManager : MonoBehaviour
     float cuntTime = 0.05f;
     IEnumerator ResultEffct()
     {
-        //юс╫ц
-        endTime = 2000;
-        countKillBoss = 5;
-        countKillMonster = 50;
-        AbyssManager.abyss.Darkfog = 100;
+      
         if (isTimeText)
         {
             
