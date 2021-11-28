@@ -165,6 +165,7 @@ public class FireflyBossUseMonster : Character
 
     public void FireflyBossUseDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         Destroy(gameObject);
     }
 

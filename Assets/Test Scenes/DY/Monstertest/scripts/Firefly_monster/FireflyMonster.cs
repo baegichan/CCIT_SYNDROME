@@ -168,6 +168,7 @@ public class FireflyMonster:Character
 
     public void FireflyDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }
