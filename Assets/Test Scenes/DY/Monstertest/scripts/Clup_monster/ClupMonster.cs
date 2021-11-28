@@ -21,6 +21,7 @@ public class ClupMonster : Character
     public Transform wallCheck;
     public Transform boxpos;
     public AbyssMonster abyss;
+    public int layerMask = 1 << 8;
 
     [Header("Turn state")]
     public bool filp;
