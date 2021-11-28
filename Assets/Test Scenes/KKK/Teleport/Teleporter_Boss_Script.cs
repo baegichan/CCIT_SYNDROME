@@ -41,7 +41,7 @@ public class Teleporter_Boss_Script : MonoBehaviour
             transform.GetChild(1).gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.W))
             {
-                Fade_out();
+                For_Fade.FadeOff_To_BossRoom();
                 //만약 보스맵으로 문을열고 들어가는 파티클때문에 시간이 걸린다면 어두워지는데
                 //필요하게 딜레이를 걸어주세요~
                 //그정도는 알잘딱합시다~
@@ -60,7 +60,7 @@ public class Teleporter_Boss_Script : MonoBehaviour
         }
     }
   
-
+    /*
     void Scene_Change_Boss()
     {
         SceneManager.LoadScene("Boss_Scene");
@@ -88,4 +88,5 @@ public class Teleporter_Boss_Script : MonoBehaviour
         Scene_Change_Boss();
         StopCoroutine(Fade_Out());
     }
+    */
 }
