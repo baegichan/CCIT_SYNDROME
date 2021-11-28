@@ -304,26 +304,16 @@ public class Boss : Character
         anim.SetBool("Dead", false);
         StopCoroutine(Respawn_Monster());//∏ÛΩ∫≈Õ ¡® ∏ÿ√„
 
-        ///////////////////////////////////
-        ///
-
+       
         Destroy(Frame2);
 
-        ////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //////////////////////////
+    
+    }
+    public void Boss_End()
+    {
+        GameResultManager.result.CountKillBoss++;
+        GameResultManager.result.ShowResult(true);
+        
     }
     public void Change_Abyss_Boss()
     {
