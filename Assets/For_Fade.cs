@@ -68,6 +68,7 @@ public class For_Fade : MonoBehaviour
     {
         if (Fade != null)
         {
+            Debug.Log(2312312321);
             Fade.Fad_out_To_StartRoom();
         }
     }

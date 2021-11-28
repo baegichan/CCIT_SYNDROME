@@ -166,6 +166,7 @@ public class DrillMonster : Character
     }
     public void DrillDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }
