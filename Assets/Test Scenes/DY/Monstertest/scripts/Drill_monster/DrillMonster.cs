@@ -10,7 +10,6 @@ public class DrillMonster : Character
     public float atkDelay;
     public int drillmonDamage;
     
-    
     [Header("Refernce")]
     public GameObject player;
     public Transform playerTransform;
@@ -30,7 +29,6 @@ public class DrillMonster : Character
     public bool Targeton;
     public bool Dead;
     private bool Online;
-
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
 
@@ -81,7 +79,7 @@ public class DrillMonster : Character
         anim = GetComponent<Animator>();
         Online = true;
     }
-    /*
+    
     void Start()
     {
         filp = true;
@@ -90,10 +88,10 @@ public class DrillMonster : Character
         Targeton = false;
         Dead = false;
         anim = GetComponent<Animator>();
-        Physics.IgnoreLayerCollision(0, 0);
+        //Physics.IgnoreLayerCollision(0, 0);
         Online = true;
     }
-    */
+    
     void Update()
     {
         if (patroll == true)
@@ -170,6 +168,7 @@ public class DrillMonster : Character
         abyss.MonsterDie();
         //Destroy(gameObject);
     }
+
 
     public void Filp()
     {
