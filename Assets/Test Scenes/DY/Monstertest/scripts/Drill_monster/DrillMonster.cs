@@ -79,7 +79,7 @@ public class DrillMonster : Character
         anim = GetComponent<Animator>();
         Online = true;
     }
-    /*
+    
     void Start()
     {
         filp = true;
@@ -88,10 +88,10 @@ public class DrillMonster : Character
         Targeton = false;
         Dead = false;
         anim = GetComponent<Animator>();
-        Physics.IgnoreLayerCollision(0, 0);
+        //Physics.IgnoreLayerCollision(0, 0);
         Online = true;
     }
-    */
+    
     void Update()
     {
         if (patroll == true)
