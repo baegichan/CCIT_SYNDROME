@@ -6,9 +6,11 @@ public class LoadBlockerEnable : MonoBehaviour
 {
     // Start is called before the first frame update
     ParticleSystem.MainModule module;
+    public ParticleSystem particle;
     private void Start()
     {
-        module = GetComponent<ParticleSystem.MainModule>();
+        particle = GetComponent<ParticleSystem>();
+        module = particle.main;
     }
     private void OnEnable()
     {
