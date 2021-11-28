@@ -167,6 +167,7 @@ public class ClupMonster : Character
 
     public void ClupDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }
