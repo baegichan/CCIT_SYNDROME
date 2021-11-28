@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Type9-3
   m_EditorClassIdentifier: 
   MonsterSet: {fileID: 11400000, guid: 19274a4d0aad71d4cad36e673b2d8b31, type: 2}
-  MapTypeCode: 0
+  MapTypeCode: 9
   TileCollider: {fileID: 0}
   BG:
   - BackGround: []
@@ -144,24 +144,34 @@ MonoBehaviour:
       m_Bits: 512
   Map_Event: {fileID: 4313084773086316378, guid: ad9c8b00d4d4bce4b8a97a7927d432f7, type: 3}
   Potals:
-  - EnablePotal: 0
+  - EnablePotal: 1
     Potaltype: 1
-    PotalDirection: 0
-    VertexPoints: []
-    PotalLocation: {x: 0, y: 0}
-  - EnablePotal: 0
+    PotalDirection: 1
+    VertexPoints:
+    - {x: -1, y: 2}
+    - {x: 1, y: 2}
+    - {x: 1, y: -2}
+    - {x: -1, y: -2}
+    - {x: -1, y: 2}
+    PotalLocation: {x: 1, y: 16}
+  - EnablePotal: 1
     Potaltype: 2
-    PotalDirection: 0
-    VertexPoints: []
-    PotalLocation: {x: 0, y: 0}
+    PotalDirection: 2
+    VertexPoints:
+    - {x: -1, y: 2}
+    - {x: 1, y: 2}
+    - {x: 1, y: -2}
+    - {x: -1, y: -2}
+    - {x: -1, y: 2}
+    PotalLocation: {x: 69, y: 16}
   - EnablePotal: 0
     Potaltype: 4
-    PotalDirection: 0
+    PotalDirection: 4
     VertexPoints: []
     PotalLocation: {x: 0, y: 0}
   - EnablePotal: 0
     Potaltype: 3
-    PotalDirection: 0
+    PotalDirection: 3
     VertexPoints: []
     PotalLocation: {x: 0, y: 0}
   direction: 0
