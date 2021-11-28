@@ -20,8 +20,6 @@ public class ResercherMonster : Character
     public Transform groundCheck;
     public Transform wallCheck;
     public Transform boxpos;
-    public Vector2 direction;
-    public float distance;
     public AbyssMonster abyss;
 
     [Header("Turn state")]
@@ -74,8 +72,15 @@ public class ResercherMonster : Character
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;// 0.5f을 곱하는 이유는 우리가 보는 각도가 중앙이 되고 그 부분으로 시야각이 10이라면 -10, 10이렇게 되어야 하기 때문이다.
+        filp = true;
+        patroll = true;
+        trace = false;
+        anim = GetComponent<Animator>();
+        Physics.IgnoreLayerCollision(0, 0);
+        Online = true;
     }
 
+    /*
     void Start()
     {
         filp = true;
@@ -85,7 +90,7 @@ public class ResercherMonster : Character
         Physics.IgnoreLayerCollision(0, 0);
         Online = true;
     }
-
+    */
     void Update()
     {
         if (patroll == true)
