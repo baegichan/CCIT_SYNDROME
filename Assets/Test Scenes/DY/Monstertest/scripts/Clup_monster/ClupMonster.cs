@@ -79,17 +79,17 @@ public class ClupMonster : Character
         anim = GetComponent<Animator>();
         Online = true;
     }
-    /*
+    
     void Start()
     {
         filp = true;
         patroll = true;
         trace = false;
         anim = GetComponent<Animator>();
-        Physics.IgnoreLayerCollision(0, 0);
+        //Physics.IgnoreLayerCollision(0, 0);
         Online = true;
     }
-    */
+    
     void Update()
     {
         if (patroll == true)
