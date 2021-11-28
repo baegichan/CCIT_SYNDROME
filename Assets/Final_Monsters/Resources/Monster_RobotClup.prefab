@@ -394,8 +394,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2498815425155300496}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6, y: -0.163, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.54, y: -0.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6908453953823221046}
@@ -672,10 +672,10 @@ GameObject:
   - component: {fileID: 6908453953823221046}
   - component: {fileID: 5947257934525574363}
   - component: {fileID: 4661385673086449579}
-  - component: {fileID: 9204756148408553550}
   - component: {fileID: 3941622753299243641}
   - component: {fileID: 8529250832628045646}
   - component: {fileID: 2297948543573012705}
+  - component: {fileID: 3882405519251958654}
   m_Layer: 14
   m_Name: Monster_RobotClup
   m_TagString: Monster
@@ -744,32 +744,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &9204756148408553550
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3941622753299243638}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.088163376, y: 0.68811584}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.2180061, y: 1.3805366}
-  m_EdgeRadius: 0
 --- !u!114 &3941622753299243641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -803,6 +777,7 @@ MonoBehaviour:
   wallCheck: {fileID: 2498815424149378442}
   boxpos: {fileID: 6283729137172480405}
   abyss: {fileID: 8529250832628045646}
+  layerMask: 256
   filp: 0
   patroll: 1
   trace: 0
@@ -856,6 +831,22 @@ MonoBehaviour:
   colors: []
   DefaultColor: {r: 1, g: 0.3686275, b: 0.1764706, a: 1}
   Change_time: 0.1
+--- !u!70 &3882405519251958654
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3941622753299243638}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.23781082, y: 0.48456314}
+  m_Size: {x: 1.4492143, y: 1.0417162}
+  m_Direction: 1
 --- !u!1 &4127974974922238141
 GameObject:
   m_ObjectHideFlags: 0
