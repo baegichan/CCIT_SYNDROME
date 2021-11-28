@@ -9,7 +9,7 @@ public class MapBlocker : MonoBehaviour
     public ParticleSystem.MainModule Lifetime;
     public bool Downning=false;
     // Update is called once per frame
-    private void Start()
+    private void Awake()
     {
         Lifetime = Wall.main;
         PotalEvent Potal = transform.parent.GetComponent<PotalEvent>();
@@ -44,12 +44,12 @@ public class MapBlocker : MonoBehaviour
                 break;
 
         }
-        edge.points = transform.parent.GetComponent<EdgeCollider2D>().points;
+        //edge.points = transform.parent.GetComponent<EdgeCollider2D>().points;
 
 
     }
-    public float Timer=3;
-    public float currentTime=3;
+    public float Timer=4;
+    public float currentTime=4;
     public IEnumerator StartLifeTimer()
     {
         Downning = true;
@@ -60,6 +60,7 @@ public class MapBlocker : MonoBehaviour
     }
     private void Update()
     {
+    
         if (MapManager.s_Instace.Map_Lock)
         {
             Lifetime.startLifetime = Timer;

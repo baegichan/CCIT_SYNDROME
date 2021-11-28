@@ -23,19 +23,24 @@ public class MapLoadTest : MonoBehaviour
                 {
                     case Room_data.RoomType.StartRoom:
                         testmap = Mapset.Get_RandomRoom(16);
+                        //testmap = Mapset.Get_RandomRoom(Target_Room.GetComponent<Room_data>().map_code);
                         Target_Room.GetComponent<Room_data>().Visit();
+
                         Debug.Log("Load StartRoom");
                         break;
                     case Room_data.RoomType.Shop:
                         testmap = Mapset.Get_RandomRoom(17);
+                        //testmap = Mapset.Get_RandomRoom(Target_Room.GetComponent<Room_data>().map_code);
                         Debug.Log("Load ShopRoom");
                         break;
                     case Room_data.RoomType.Boss:
                         testmap = Mapset.Get_RandomRoom(19);
+                        //testmap = Mapset.Get_RandomRoom(Target_Room.GetComponent<Room_data>().map_code);
                         Debug.Log("Load BossMap");
                         break;
                     case Room_data.RoomType.Crane:
                         testmap = Mapset.Get_RandomRoom(18);
+                        //testmap = Mapset.Get_RandomRoom(Target_Room.GetComponent<Room_data>().map_code);
                         Debug.Log("Load CraneRoom");
                         break;
                     default:
