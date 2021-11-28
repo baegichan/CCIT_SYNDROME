@@ -10,7 +10,6 @@ public class DrillMonster : Character
     public float atkDelay;
     public int drillmonDamage;
     
-    
     [Header("Refernce")]
     public GameObject player;
     public Transform playerTransform;
@@ -30,7 +29,6 @@ public class DrillMonster : Character
     public bool Targeton;
     public bool Dead;
     private bool Online;
-
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
 
@@ -166,9 +164,11 @@ public class DrillMonster : Character
     }
     public void DrillDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }
+
 
     public void Filp()
     {

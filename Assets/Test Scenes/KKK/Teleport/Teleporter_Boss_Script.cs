@@ -60,33 +60,4 @@ public class Teleporter_Boss_Script : MonoBehaviour
         }
     }
   
-    /*
-    void Scene_Change_Boss()
-    {
-        SceneManager.LoadScene("Boss_Scene");
-
-        //요것두 보스로 바꿔주도록 해요~
-    }
-
-    float Fade_out_in_canvas_Alpha;
-
-    void Fade_out()
-    {
-        Fade_out_in_canvas_Alpha = Fade_out_in_canvas.GetComponent<Image>().color.a;
-        StartCoroutine(Fade_Out());
-    }
-
-    IEnumerator Fade_Out()
-    {
-        while (Fade_out_in_canvas_Alpha < 1.0f)
-        {
-            Fade_out_in_canvas_Alpha += 0.01f;
-            yield return new WaitForSeconds(0.01f);
-            Fade_out_in_canvas.GetComponent<Image>().color = new Color(0, 0, 0, Fade_out_in_canvas_Alpha);
-        }
-
-        Scene_Change_Boss();
-        StopCoroutine(Fade_Out());
-    }
-    */
 }
