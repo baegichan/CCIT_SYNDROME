@@ -45,7 +45,8 @@ public class MapData : ScriptableObject
     }
     public GameObject Load_TileCollider(GameObject target)
     {
-       return Instantiate(TileCollider, target.transform.position, Quaternion.identity, target.transform);
+        return null;
+       //return Instantiate(TileCollider, target.transform.position, Quaternion.identity, target.transform);
     }
     public GameObject Load_DefaultTileCollider(GameObject target)
     {
