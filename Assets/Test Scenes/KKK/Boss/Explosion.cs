@@ -20,11 +20,14 @@ public class Explosion : MonoBehaviour
             {
                 collision.transform.parent.GetComponent<Character>().Damage(Normal_Boss_Bomb_Damage);
                 collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 3, false);
+                SoundManager.OneShot("GrenadeExplosion");
                 Destroy(gameObject,1f);
             }
             if (collision.CompareTag("Ground"))
             {
                 Destroy(gameObject,3);
+                SoundManager.OneShot("GrenadeExplosion");
+
             }
 
         }
