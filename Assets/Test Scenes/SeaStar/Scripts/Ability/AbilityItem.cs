@@ -140,17 +140,22 @@ public class AbilityItem : MonoBehaviour
                     case Ability.ABTYPE.Active:
                         pt.ActiveAbility = me;
                         pt.SelectAbility();
+                        PlayerSkillUI.skill.Image_Active.sprite = me.icon;
+                        PlayerSkillUI.skill.Image_CoolTime.sprite = me.CoolTime;
                         break;
                     case Ability.ABTYPE.Passive:
                         pt.PassiveAbility = me;
                         pt.UsePassive();
                         pt.passive();
+                        PlayerSkillUI.skill.Image_Passive.sprite = me.icon;
                         break;
                     case Ability.ABTYPE.HPDrink:
                         pt.MulYakInt++;
+                        PlayerSkillUI.skill.HpPotionInt.text = pt.MulYakInt.ToString();
                         break;
                     case Ability.ABTYPE.APDrink:
                         pt.AlYakInt++;
+                        PlayerSkillUI.skill.PillInt.text = pt.AlYakInt.ToString();
                         break;
                 }
                 pt.SaveAbilityHistory(me);
