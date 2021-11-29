@@ -39,9 +39,7 @@ public class BosStateUi : MonoBehaviour
     {
         set
         {
-           
-            if (value > maxHp) hp = maxHp;
-            else if (value < 0) hp = 0;
+            if (value < 0) hp = 0;
             else hp = value;
 
             hpFill = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
