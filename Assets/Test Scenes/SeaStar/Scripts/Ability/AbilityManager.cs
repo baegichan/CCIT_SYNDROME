@@ -34,6 +34,7 @@ public class AbilityManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && !CP.Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
+            PlayerSkillUI.skill.CoolTime = Char_Parent.Active_Cool_Max;//임시
             Char_Parent.Active_Cool = 0f;
             CP.Ani.SetTrigger("Ability");
             CP.Ani.SetBool("CanIThis", false);
@@ -44,6 +45,7 @@ public class AbilityManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
+            PlayerSkillUI.skill.CoolTime = Char_Parent.Active_Cool_Max;//임시
             Char_Parent.Active_Cool = 0f;
             CP.PharaoWandSwitch();
             py.GetComponent<Char_Eden>().active = Pharao;

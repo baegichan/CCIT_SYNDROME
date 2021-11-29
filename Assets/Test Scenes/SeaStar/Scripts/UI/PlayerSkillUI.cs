@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,33 @@ public class PlayerSkillUI : MonoBehaviour
 
     public Image Image_Active;
     public Image Image_Passive;
+    public Image Image_CoolTime;
+
     public Text HpPotionInt;
     public Text PillInt;
+    private float coolTime;
+
+    float time = 0;
+    IEnumerator CoolTimeStart(float coolTimes)
+    {
+        Image_CoolTime.fillAmount = 1;
+        time = 1f / coolTimes;
+        while (Image_CoolTime.fillAmount > 0)
+        {
+
+            Image_CoolTime.fillAmount -= time;
+            yield return new WaitForSeconds(1f);
+        }
+       
+    }
+
+    public float CoolTime
+    {
+        set
+        {
+            coolTime = value;
+            StartCoroutine(CoolTimeStart(coolTime));
+        }
+
+    }
 }
