@@ -77,7 +77,7 @@ public class GameResultManager : MonoBehaviour
     public void Go_Back()
     {
         Debug.Log(23);
-        For_Fade.FadeOff_To_StartRoom();
+        For_Fade.Fade.Fad_out_To_StartRoom();
     }
 
 
