@@ -14,10 +14,6 @@ public class Char_Wolf : MonoBehaviour
     public bool P_Attack_State;
     public float P_AttackMoveInt;
 
-    void Update()
-    {
-        GroundCheck();
-    }
     void OnEnable()
     {
         CP.Hp_Current += HP[CP.ActiveAbility.Enhance];
@@ -53,17 +49,6 @@ public class Char_Wolf : MonoBehaviour
         }
     }
 
-    void GroundCheck()
-    {
-        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
-        if (Ground.collider.gameObject.tag == "Ground")
-        {
-            Ani.SetBool("Jump", false);
-            CP.P_JumpInt = CP.P_MaxJumpInt;
-        }
-    }
-
     void AttackStart()
     {
         P_Attack_State = true;
@@ -71,5 +56,6 @@ public class Char_Wolf : MonoBehaviour
     void AttackEnd()
     {
         P_Attack_State = false;
+        Ani.SetBool("CanIThis", true);
     }
 }

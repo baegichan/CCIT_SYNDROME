@@ -1,28 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class SoundManager : MonoBehaviour
 {
    public static SoundManager instance;
-    private AudioSource Audio;
+    public AudioSource SFX;
+
+    public AudioSource BGM;
+
+    private bool looping;
     void Awake()
     {
 
         if(instance == null)
         {
-            Audio = GetComponent<AudioSource>();
-            instance = new SoundManager();
-            foreach(Sound audio in EFXs)
+            Debug.Log("Created");
+            instance = this;
+            for(int i = 0; i<EFXs.Length;i++)
             {
-                instance.EFX.Add(audio.Soundname, audio.Audio);
+                EFX.Add(EFXs[i].Soundname, i);
             }
-
-            foreach (Sound audio in BGs)
+            for (int j = 0; j < BGs.Length; j++)
             {
-                instance.BG.Add(audio.Soundname, audio.Audio);
+                BG.Add(BGs[j].Soundname, j);
+                Debug.Log(BGs[j].Soundname + "   ");
             }
-
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -32,43 +36,50 @@ public class SoundManager : MonoBehaviour
     public Sound[] EFXs;
     public Sound[] BGs;
     
-    public Dictionary<string, AudioClip> EFX = new Dictionary<string, AudioClip>();
-    public Dictionary<string, AudioClip> BG = new Dictionary<string, AudioClip>();
+    public Dictionary<string, int> EFX = new Dictionary<string, int>();
+    public Dictionary<string, int> BG = new Dictionary<string, int>();
     private void Start()
     {
-        OneShot("BG", SoundType.BG);
+
+       
     }
     public enum SoundType
     {
     BG,
     EFX
     }
-   
-    public void OneShot(string SoundName, SoundType type)
-    {
-        AudioClip sound;
 
-        switch (type)
+
+  
+   public static void BGLoop(string SoundName)
+   {
+        int sound;
+        if (instance.BG.TryGetValue(SoundName, out sound))
         {
-            case SoundType.EFX:
-                if (EFX.TryGetValue(SoundName, out sound))
+            instance.BGM.clip = instance.BGs[sound].Audio;
+            instance.BGM.Play();
+        }
+       
+    }
+
+
+
+    public static void OneShot(string SoundName)
+    {
+        int sound;
+
+      
+                if (instance.EFX.TryGetValue(SoundName, out sound))
                 {
                     Debug.Log("Sound on");
-                    Audio.PlayOneShot(sound, 40);
+                  instance.SFX.PlayOneShot(instance.EFXs[sound].Audio, 0.5f);
                 }
-                break;
-            case SoundType.BG:
-                if (BG.TryGetValue(SoundName, out sound))
-                {
-                    Debug.Log("Soundon");
-                    Audio.PlayOneShot(sound, 40);
-                }
-                break;
+          
         }
 
        
     }
-}
+
 [System.Serializable]
 public class Sound
 {

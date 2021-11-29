@@ -139,6 +139,8 @@ public class StateManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             HpBarEffect.color = new Color(1, 1, 1, 0);
             yield return new WaitForSeconds(0.5f);
+            if (hp < 0)
+                break;
         }
         isEnter = false;
     }

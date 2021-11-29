@@ -8,6 +8,6 @@ public class CameraFllow : MonoBehaviour
     public CinemachineVirtualCamera CVC;
     private void OnEnable()
     {
-        CVC.Follow = GetComponent<Transform>();
+        //CVC.Follow = GetComponent<Transform>();
     }
 }
