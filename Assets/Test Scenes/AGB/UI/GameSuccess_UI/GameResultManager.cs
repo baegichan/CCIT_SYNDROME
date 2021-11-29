@@ -76,31 +76,8 @@ public class GameResultManager : MonoBehaviour
     bool IsClear;
     public void Go_Back()
     {
-        Fade_out_in_canvas_Alpha = Fade_out_in_canvas.GetComponent<Image>().color.a;
-        StartCoroutine(Fade_Out());
-    }
-
-    void Fade_out()
-    {
-        Fade_out_in_canvas_Alpha = Fade_out_in_canvas.GetComponent<Image>().color.a;
-        StartCoroutine(Fade_Out());
-    }
-
-    void Load_Back_Scene()
-    {
-        SceneManager.LoadScene("main2");
-    }
-    IEnumerator Fade_Out()
-    {
-        while (Fade_out_in_canvas_Alpha < 1.0f)
-        {
-            Fade_out_in_canvas_Alpha += 0.01f;
-            yield return new WaitForSeconds(0.01f);
-            Fade_out_in_canvas.GetComponent<Image>().color = new Color(0, 0, 0, Fade_out_in_canvas_Alpha);
-        }
-        Destroy(Player);
-        Load_Back_Scene();
-        StopCoroutine(Fade_Out());
+        Debug.Log("DD");
+        For_Fade.FadeOff_To_StartRoom();
     }
 
 
