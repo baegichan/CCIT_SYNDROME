@@ -108,6 +108,7 @@ public class Char_Parent : Character
                 Hp_Current -= 5;
                 StateManager.state.Hp = Hp_Current;
                 AbyssManager.abyss.isHp = false;
+                AbyssManager.abyss.HpGage = Hp_Current;
             }
             if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
             Mouse = Input.mousePosition;

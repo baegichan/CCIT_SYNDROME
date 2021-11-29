@@ -76,6 +76,7 @@ public class AbyssManager : MonoBehaviour
 
     public bool isHp = false;
 
+   
 
     //[Header("MonsterBox")]
     //public GameObject RealBox;
@@ -117,24 +118,26 @@ public class AbyssManager : MonoBehaviour
 
     private void Update()
     {
+        
         if (Input.GetKey(KeyCode.Q) && isCoolTime)
         {
             isCoolTime = false;
             StartCoroutine(CoolTime());
-           
-           
+
+
             if (abyssState == AbyssState.Abyss)
             {
+                isHp = false;
                 GoReal();
                 MapChangeTester.AbyssMask.test.SetTrigger("Changed");
             }
-               
-            else if(abyssState == AbyssState.Reality && abyssGage >0)
+
+            else if (abyssState == AbyssState.Reality && abyssGage > 0)
             {
                 GoAbyss();
                 MapChangeTester.AbyssMask.test.SetTrigger("Changed");
             }
-               
+
         }
     }
 
@@ -144,41 +147,46 @@ public class AbyssManager : MonoBehaviour
         isCoolTime = true;
     }
 
-
     IEnumerator AbyssResource()
     {
-
         isAbyssEnd = false;
         int exint;
         while (isAbyssStay)
         {
             exint = abyssGage - abyssGageConsumption;
             if (exint > 0)
+            {
                 AbyssGage -= abyssGageConsumption;
+            }
+
             else
             {
                 AbyssGage = 0;
-                hpGage -= abyssGageConsumption;
+                isHp = true;
+                while (isHp)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                }
+                
             }
 
             if (hpGage <= 0)
             {
                 if (hpGage < 0)
                     hpGage = 0;
-
+                isHp = false;
                 isAbyssStay = false;
-                abyssState = AbyssState.Reality;
+                GoReal();
+                //MapChangeTester.AbyssMask.test.SetTrigger("Changed");
                 break;
-
             }
-
             yield return new WaitForSeconds(abyssConsumptionTime);
         }
+       
+ 
         abyssState = AbyssState.Reality;
-        MapChangeTester.AbyssMask.test.SetTrigger("Changed");
         isAbyssEnd = true;
     }
-
 
     #region 심연의 경계 변경 함수
 
@@ -245,7 +253,9 @@ public class AbyssManager : MonoBehaviour
         {
             hpGage = value;
         }
-      
+
+
+
     }
 
 
