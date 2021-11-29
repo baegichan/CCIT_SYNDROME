@@ -33,6 +33,6 @@ public class Use_Scene_Change : MonoBehaviour
 
     public static void Change_Start_Scene()//공략 실패시 마을로 돌아가는 함수
     {
-        SceneManager.LoadScene("main2");
+        SceneManager.LoadScene("Village");
     }
 }
