@@ -282,8 +282,6 @@ public class ResercherMonster : Character
             {
                 player = GameObject.FindGameObjectWithTag("Player");
                 //player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;//플레이어 피봇 위치 트러짐 떄문에 사용
-                Debug.Log(player + "이새끼 때문임1");
-             
                 if (playerTransform == null)
                 {
                   playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
