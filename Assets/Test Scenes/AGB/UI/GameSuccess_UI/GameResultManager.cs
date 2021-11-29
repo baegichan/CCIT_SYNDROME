@@ -505,7 +505,15 @@ public class GameResultManager : MonoBehaviour
         }
         finally
         {
-
+            if (Input.GetKey(KeyCode.Mouse0) || isSkip)
+            {
+                skiptime = 0;
+                TimeText.text = string.Format("{0}:{1}:{2}", (int)endTime / 3600, (int)endTime / 60 % 60, (int)endTime % 60);
+                KillMobText.text = Convert.ToString(countKillMonster);
+                KillBossText.text = Convert.ToString(countKillBoss);
+                DarkFogText.text = Convert.ToString(AbyssManager.abyss.Darkfog);
+                isSkip = false;
+            }
         }
         isSkip = false;
     }
