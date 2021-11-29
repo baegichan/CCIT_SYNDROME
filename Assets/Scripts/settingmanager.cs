@@ -223,6 +223,7 @@ public class settingmanager : MonoBehaviour
         else
         {
             float sound = -40 + (name.GetComponent<Slider>().value * 4);
+          
             masterMixer.SetFloat("BGM", sound);
         }
 
