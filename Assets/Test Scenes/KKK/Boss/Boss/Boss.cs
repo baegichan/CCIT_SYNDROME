@@ -115,7 +115,6 @@ public class Boss : Character
             if (Hp_Current != Boss_CurrentHP)
             {
                 Bs.Hp = Hp_Current;
-                Bs.Shield = Shield;
 
                 Boss_CurrentHP = Hp_Current;
 
@@ -243,6 +242,7 @@ public class Boss : Character
 
             //Bs.Shield = Shield;
 
+            Bs.Shield = Shield;
 
             if (Abyss_on == false)
             {
