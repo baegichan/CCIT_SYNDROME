@@ -7,10 +7,14 @@ public class Explosion : MonoBehaviour
     public int Normal_Boss_Bomb_Damage;
     private void Start()
     {
-
+        Invoke("anim_On", 1.4f);
         Destroy(gameObject, 1.5f);
     }
-
+    
+    void anim_On()
+    {
+        SoundManager.OneShot("GrenadeExplosion");
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

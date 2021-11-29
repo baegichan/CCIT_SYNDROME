@@ -10,11 +10,14 @@ public class Abycss_Explosion : MonoBehaviour
 
     private void Start()
     {
-
+        Invoke("anim_On", 1.4f);
         Destroy(gameObject, 1.5f);
     }
 
-
+    void anim_On()
+    {
+        SoundManager.OneShot("GrenadeExplosion");
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") || collision.CompareTag("Ground"))
