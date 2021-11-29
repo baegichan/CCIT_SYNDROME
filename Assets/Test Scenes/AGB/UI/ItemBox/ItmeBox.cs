@@ -8,7 +8,6 @@ public class ItmeBox : MonoBehaviour
     public Animator ani;
 
     public GameObject Item;
-    public GameObject DarkEnergy;
 
 
 
@@ -38,20 +37,9 @@ public class ItmeBox : MonoBehaviour
 
     void OpenItmeBox()
     {
-        int i = Random.Range(0, 2);
-        if(i == 0)
-        {
-            var dd = new Vector3(0.1f, 0.5f, 0);
-            Vector3 items = gameObject.transform.position + dd;
+        var dd = new Vector3(0.1f, 0.5f, 0);
+        Vector3 items = gameObject.transform.position + dd;
 
-            var d = Instantiate(Item, items, Quaternion.identity);
-        }
-        else
-        {
-            var dd = new Vector3(0.1f, 0.5f, 0);
-            Vector3 items = gameObject.transform.position + dd;
-
-            var d = Instantiate(DarkEnergy, items, Quaternion.identity);
-        }
+        var d = Instantiate(Item, items, Quaternion.identity);
     }
 }
