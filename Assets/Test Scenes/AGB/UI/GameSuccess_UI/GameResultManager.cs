@@ -71,9 +71,12 @@ public class GameResultManager : MonoBehaviour
     int dakrfog = 0;
     int endTime;
     bool IsClear;
+
+
+
     public void Go_Back()
     {
-        Debug.Log(23); 
+        Debug.Log(23);
         For_Fade.FadeOff_To_StartRoom();
     }
 
