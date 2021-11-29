@@ -24,6 +24,7 @@ public class DEVILSWORD : MonoBehaviour
             {
                 CameraShake.Cam_instance.Shake(ShakeT, ShakeF);
                 Current.GetComponent<Character>().Damage(AM.EvilAP[CP.ActiveAbility.Enhance], CP.UseApPostion, HitEffect);
+                Current.GetComponent<Character>().KnuckBack(transform, 2.5f, Current.GetComponent<Character>().IsBoss);
             }
         }
     }

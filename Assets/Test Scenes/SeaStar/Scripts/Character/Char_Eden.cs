@@ -10,11 +10,7 @@ public class Char_Eden : MonoBehaviour
     public Char_Parent CP;
     //
     [Header("АјАн")]
-    public float P_AttackForce;
-    public int P_AttackInt = 0;
-    public float P_AttackTimer = 1;
     public bool P_Attack_State = false;
-    public float P_AttackResetTimer;
     public float P_CombatTimer = 5;
     public float P_CombatInt;
     public GameObject HitEffect;
@@ -43,6 +39,7 @@ public class Char_Eden : MonoBehaviour
 
     public Animator Ani;
     Rigidbody2D rigid;
+    public LayerMask layerMask;
 
     void Start()
     {
@@ -52,7 +49,8 @@ public class Char_Eden : MonoBehaviour
     void Update()
     {
         BAI();
-        GroundCheck();
+        //GroundCheck();
+        DownPlatform();
     }
     public void Attack()
     {
@@ -65,7 +63,8 @@ public class Char_Eden : MonoBehaviour
 
             Ani.SetTrigger("Attack");
             Ani.SetBool("Combat", true);
-            Ani.SetBool("CanIThis", false);
+            if (CP.Ani.GetBool("Jump") == true) { Ani.SetBool("CanIThis", true); }
+            else { Ani.SetBool("CanIThis", false); }
             P_CombatTimer = 5;
             P_CombatInt = 1;
             P_Attack_State = true;
@@ -84,11 +83,14 @@ public class Char_Eden : MonoBehaviour
             }
         }
     }
-    public Transform Sword;
+
+    public Vector3 SwordPoint;
+    public Vector3 Boundary;
 
     void SwordAttack()
     {
-        Collider2D[] hit = Physics2D.OverlapBoxAll(Sword.position, new Vector2(1.8f, 1), 0);
+        Vector3 sp = new Vector3(transform.position.x + SwordPoint.x * transform.localScale.x, transform.position.y + SwordPoint.y);
+        Collider2D[] hit = Physics2D.OverlapBoxAll(sp, Boundary, 0);
 
         if (P_Attack_State == true)
         {
@@ -96,12 +98,18 @@ public class Char_Eden : MonoBehaviour
             {
                 if (Current.tag == "Monster")
                 {
-                    CameraShake.Cam_instance.Shake(0.1f, 2f);
+                    CameraShake.Cam_instance.CameraShake_Cinemachine(0.1f, 2f);
                     Current.GetComponent<Character>().Damage(CP.AP, CP.UseApPostion, HitEffect);
-                    Current.GetComponent<Character>().KnuckBack(transform, 5, Current.GetComponent<Character>().IsBoss);
+                    Current.GetComponent<Character>().KnuckBack(transform, 2.5f, Current.GetComponent<Character>().IsBoss);
                 }
             }
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(new Vector3(transform.position.x + SwordPoint.x * transform.localScale.x, transform.position.y + SwordPoint.y), Boundary);
     }
 
     void AttackEffect(GameObject Effect)
@@ -120,11 +128,7 @@ public class Char_Eden : MonoBehaviour
     void SwordLightOff() { SwordLight.SetActive(false); }
     void AxeLightOn() { AxeLight.SetActive(true); }
     void AxeLightOff() { AxeLight.SetActive(false); }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(Sword.position, new Vector2(1.8f, 1));
-    }
+ 
     public void Dash()
     {
         if (Ani.GetBool("Jump") == false)
@@ -135,7 +139,6 @@ public class Char_Eden : MonoBehaviour
                 {
                     P_DashTimer = 0;
                     Ani.SetBool("Dash", true);
-                    Physics2D.IgnoreLayerCollision(10, 11);
                     Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
                     Char_Parent.rigid.velocity = new Vector2(0, 0);
                 }
@@ -145,23 +148,18 @@ public class Char_Eden : MonoBehaviour
         {
             P_DashTimer += Time.deltaTime;
         }
-        if (!Ani.GetBool("Dash"))
-        {
-            Physics2D.IgnoreLayerCollision(10, 11, false);
-            if (!Ani.GetBool("CanIThis")) { CanIThisOn(); }
-        }
     }
 
-    void GroundCheck()
-    {
-        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
-        if (Ground.collider.gameObject.tag == "Ground")
-        {
-            Ani.SetBool("Jump", false);
-            CP.P_JumpInt = CP.P_MaxJumpInt;
-        }
-    }
+    //void GroundCheck()
+    //{
+    //    RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
+    //    Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
+    //    if (Ground.collider.gameObject.tag == "Ground")
+    //    {
+    //        Ani.SetBool("Jump", false);
+    //        CP.P_JumpInt = CP.P_MaxJumpInt;
+    //    }
+    //}
 
     public void PharaoWandSwitch()
     {
@@ -291,5 +289,25 @@ public class Char_Eden : MonoBehaviour
     {
         GameResultManager.result.Abilty(CP.AbilityHistory);
         GameResultManager.result.ShowResult(false);
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        CP.pf = col.transform.GetComponent<PlatformEffector2D>();
+    }
+
+    void DownPlatform()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            CP.pf.colliderMask = layerMask;
+            Invoke("AllLayerPlatform", 0.5f);
+        }
+    }
+
+    void AllLayerPlatform()
+    {
+        CP.pf.colliderMask = Physics.AllLayers;
+        CP.pf = null;
     }
 }

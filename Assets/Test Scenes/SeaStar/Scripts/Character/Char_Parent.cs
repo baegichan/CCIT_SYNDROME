@@ -93,6 +93,7 @@ public class Char_Parent : Character
             {
                 if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                 Move();
+                GroundCheck();
             }
         }
     }
@@ -259,15 +260,38 @@ public class Char_Parent : Character
     //
 
     //มกวม
+
+    public PlatformEffector2D pf;
+
     public void Jump()
     {
         if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0)
         {
             rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime, ForceMode2D.Impulse);
-           // rigid.velocity = new Vector2(0, 0);
+
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);
+
+            Vector2 vel = rigid.velocity;
+
+            if (vel.y > P_JumpForce)
+            {
+                vel.y = P_JumpForce;
+                rigid.velocity = vel;
+            }
+        }
+    }
+
+    public LayerMask layerMask;
+
+    void GroundCheck()
+    {
+        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - 0.05f), Vector2.down, RayDistance);
+        if (Ground.collider.gameObject.tag == "Ground")
+        {
+            Ani.SetBool("Jump", false);
+            P_JumpInt = P_MaxJumpInt;
         }
     }
     //
