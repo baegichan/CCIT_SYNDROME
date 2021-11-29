@@ -13,6 +13,7 @@ public class Ability
     public ABGRADE AbGrade;
     public int Enhance;
     public int[] Enhance_Cost;
+    public GameObject Effect;
     public int AbPrice;
     public bool IsSelect;
     public Sprite AbIcon;
@@ -24,7 +25,7 @@ public class Ability
     [TextArea]
     public string AbExplan;
     
-    public Ability(int AbCode, string AbName, ABTYPE AbType, ABGRADE AbGrade, int Enhance, int[] Enhance_Cost, int AbPrice, bool IsSelect,Sprite AbIcon, Sprite AbSprite, Sprite ResultIcon, Sprite icon, Sprite CoolTime, bool IsUsing, string AbExplan)
+    public Ability(int AbCode, string AbName, ABTYPE AbType, ABGRADE AbGrade, int Enhance, int[] Enhance_Cost, GameObject Effect, int AbPrice, bool IsSelect,Sprite AbIcon, Sprite AbSprite, Sprite ResultIcon, Sprite icon, Sprite CoolTime, bool IsUsing, string AbExplan)
     {
         this.AbCode = AbCode;
         this.AbName = AbName;
@@ -32,6 +33,7 @@ public class Ability
         this.AbGrade = AbGrade;
         this.Enhance = Enhance;
         this.Enhance_Cost = Enhance_Cost;
+        this.Effect = Effect;
         this.AbPrice = AbPrice;
         this.IsSelect = IsSelect;
         this.AbIcon = AbIcon;
