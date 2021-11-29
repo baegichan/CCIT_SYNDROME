@@ -220,7 +220,7 @@ public class AbyssManager : MonoBehaviour
     {
         get
         {
-            StateManager.state.DarkFog = darkfog;
+            //StateManager.state.DarkFog = darkfog;
             return darkfog;
 
         }
