@@ -226,6 +226,7 @@ public class Enhance : MonoBehaviour
             CP.P_Money -= EHNPC.SellItem[index].AbPrice;
             if (EHNPC.SellItem[index].AbType == Ability.ABTYPE.Active)
             {
+                PlayerSkillUI.skill.Image_Active.sprite = EHNPC.SellItem[index].icon;
                 EHNPC.py.ActiveAbility = EHNPC.SellItem[index];
                 EHNPC.py.SelectAbility();
                 if (EHNPC.SellItem[index].AbCode != 0) { EHNPC.py.DecideChar(); }
@@ -237,6 +238,7 @@ public class Enhance : MonoBehaviour
             }
             else if (EHNPC.SellItem[index].AbType == Ability.ABTYPE.Passive)
             {
+                PlayerSkillUI.skill.Image_Passive.sprite = EHNPC.SellItem[index].icon;
                 EHNPC.py.PassiveAbility = EHNPC.SellItem[index];
                 CP.UsePassive();
                 CP.passive();
