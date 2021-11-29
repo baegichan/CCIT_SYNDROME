@@ -101,8 +101,8 @@ public class BosStateUi : MonoBehaviour
 
         if (HpBar.fillAmount > hpFill)
         {
-            HpBarEffect.color = new Color(1, 0.827f, 0.635f, 1);
-            ChainEffect.color = new Color(1, 0.827f, 0.635f, 1);
+            HpBarEffect.color = new Color(0.749F, 0.117f, 0.039f, 1);
+            ChainEffect.color = new Color(0.749F, 0.117f, 0.039f, 1);
         }
           
         HpBar.fillAmount = hpFill;
