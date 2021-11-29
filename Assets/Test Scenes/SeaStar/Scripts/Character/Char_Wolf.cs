@@ -16,7 +16,7 @@ public class Char_Wolf : MonoBehaviour
 
     void Update()
     {
-        GroundCheck();
+        //GroundCheck();
     }
     void OnEnable()
     {
@@ -53,16 +53,16 @@ public class Char_Wolf : MonoBehaviour
         }
     }
 
-    void GroundCheck()
-    {
-        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
-        if (Ground.collider.gameObject.tag == "Ground")
-        {
-            Ani.SetBool("Jump", false);
-            CP.P_JumpInt = CP.P_MaxJumpInt;
-        }
-    }
+    //void GroundCheck()
+    //{
+    //    RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.03f), Vector2.down, CP.RayDistance);
+    //    Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.03f), Vector2.down * CP.RayDistance, Color.blue);
+    //    if (Ground.collider.gameObject.tag == "Ground")
+    //    {
+    //        Ani.SetBool("Jump", false);
+    //        CP.P_JumpInt = CP.P_MaxJumpInt;
+    //    }
+    //}
 
     void AttackStart()
     {
