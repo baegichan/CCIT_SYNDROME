@@ -81,6 +81,7 @@ public class Char_Parent : Character
         Cam = Camera.main;
         SelectChar = Char[0];
         ChangeChar(SelectChar);
+        Hp_Current = Hp_Max;
 
         AM.CP = this;
     }
@@ -92,6 +93,7 @@ public class Char_Parent : Character
             {
                 if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                 Move();
+                GroundCheck();
             }
         }
     }
@@ -106,7 +108,6 @@ public class Char_Parent : Character
             {
                 if (Ani.GetBool("CanIThis"))
                 {
-                   // if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                     UseItem();
                 }
                 ds();
@@ -133,12 +134,13 @@ public class Char_Parent : Character
     {
         if (Hp_Current <= 0 && !Dead)
         {
-            SelectChar = Char[0];
             Before_Position = SelectChar.transform.position;
+            SelectChar = Char[0];
             //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
             //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
             Dead = true;
             ChangeChar(SelectChar);
+            SelectChar.transform.position = Before_Position;
             Ani.SetTrigger("Die");
 
         }
@@ -210,7 +212,7 @@ public class Char_Parent : Character
         rigid = SelectChar.GetComponent<Rigidbody2D>();
         Ani = SelectChar.GetComponent<Animator>();
         Hp_Max = DefaultHP + CharHP + Enhance_Health_Point[Enhance_Health];
-        if (!Dead) { Hp_Current = Hp_Max; }
+        //if(!Dead) { Hp_Current = Hp_Max; }
         DP = CharDP;
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
         speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
@@ -258,15 +260,38 @@ public class Char_Parent : Character
     //
 
     //มกวม
+
+    public PlatformEffector2D pf;
+
     public void Jump()
     {
         if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0)
         {
             rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime, ForceMode2D.Impulse);
-           // rigid.velocity = new Vector2(0, 0);
+
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);
+
+            Vector2 vel = rigid.velocity;
+
+            if (vel.y > P_JumpForce)
+            {
+                vel.y = P_JumpForce;
+                rigid.velocity = vel;
+            }
+        }
+    }
+
+    public LayerMask layerMask;
+
+    void GroundCheck()
+    {
+        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - 0.05f), Vector2.down, RayDistance);
+        if (Ground.collider.gameObject.tag == "Ground")
+        {
+            Ani.SetBool("Jump", false);
+            P_JumpInt = P_MaxJumpInt;
         }
     }
     //
@@ -498,7 +523,7 @@ public class Char_Parent : Character
     public void Special_Load_Damage_Text(int Damage)
     {
         CurrentCha = GetComponent<Char_Parent>().SelectChar;
-        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj"), CurrentCha.transform.position + Vector3.up * 3 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj2"), CurrentCha.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
     }
 }

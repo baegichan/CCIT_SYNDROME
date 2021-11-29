@@ -20,8 +20,6 @@ public class MothMonster : Character
     public Transform upCheck;
     public Transform downCheck;
     public Transform atkpos; //공격 근접이면 가능이지만 원거리는 교체가 필요
-    public Vector2 direction;
-    public float distance;
     public Bullet_Attack bullet_Attack;
     public AbyssMonster abyss;
     
@@ -75,8 +73,14 @@ public class MothMonster : Character
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+        filp = true;
+        patroll = true;
+        trace = false;
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        Online = true;
     }
-
+    /*
     void Start()
     {
         filp = true;
@@ -86,7 +90,7 @@ public class MothMonster : Character
         rb = GetComponent<Rigidbody2D>();
         Online = true;
     }
-
+    */
     void Update()
     {
         if (patroll == true)
@@ -161,6 +165,7 @@ public class MothMonster : Character
 
     public void MothDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }

@@ -119,6 +119,7 @@ public class AbyssManager : MonoBehaviour
         {
             isCoolTime = false;
             StartCoroutine(CoolTime());
+            MapChangeTester.AbyssMask.test.SetTrigger("Changed");
             if (abyssState == AbyssState.Abyss)
                 GoReal();
             else

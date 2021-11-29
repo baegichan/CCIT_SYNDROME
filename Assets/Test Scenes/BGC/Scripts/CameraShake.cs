@@ -8,11 +8,13 @@ public class CameraShake : MonoBehaviour
 {
     public static CameraShake Cam_instance = null;
     public static GameObject Target;
-    private CinemachineVirtualCamera Cam;
+    public CinemachineVirtualCamera Cam;
     public GameObject Cm;
     private Vector3 pre_Cam_Vec;
+    [SerializeField]
     private float shake_time = 0.0f;
-    private float shake_power = 0.0f;
+    [SerializeField]
+    private float shake_power = 3f;
     private bool shaking;
   
     void Awake()
@@ -23,8 +25,8 @@ public class CameraShake : MonoBehaviour
         {
             Cam_instance = this;
             Target = gameObject;
-            //Cam= GetComponent<CinemachineVirtualCamera>();
-        
+            
+
         }
         else
         {
@@ -85,34 +87,40 @@ public class CameraShake : MonoBehaviour
     }
     public void Shake(float time, float power)
     {
-        //if(Cam_instance==null)
-        //{
-        //   return;
-        // }
 
-        StartCoroutine(Shaking(time, power));
+        CameraShake_Cinemachine(time, power);
+        //default
+        // StartCoroutine(Shaking(time, power));
     }
-
+    private void Start()
+    {
+     
+    }
 
     public  void CameraShake_Cinemachine(float time, float power)
     {
-        CinemachineBasicMultiChannelPerlin perlin = Cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
+        CinemachineBasicMultiChannelPerlin perlin = Cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         perlin.m_AmplitudeGain = power;
+        perlin.m_FrequencyGain = power;
+       
         shake_time = time;
     }
 
     private void Update()
     {
-       // CinemachineBasicMultiChannelPerlin perlin = Cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
+        
         if (shake_time>0)
         {
+            
+         
             shake_time -= Time.deltaTime;
-            if(shake_time<0)
-            {
-              
-                //perlin.m_AmplitudeGain = 0;
-            }
+        }
+        if (shake_time <= 0)
+        {
+            CinemachineBasicMultiChannelPerlin perlin = Cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            perlin.m_AmplitudeGain = 0;
+            perlin.m_FrequencyGain = 0;
         }
     }
 }

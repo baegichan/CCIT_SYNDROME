@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d390fb5042a8d458d39488bd5a5fb0, type: 3}
   m_Name: Type13-2
   m_EditorClassIdentifier: 
-  MonsterSet: {fileID: 0}
-  MapTypeCode: 0
+  MonsterSet: {fileID: 11400000, guid: 19274a4d0aad71d4cad36e673b2d8b31, type: 2}
+  MapTypeCode: 13
   TileCollider: {fileID: 0}
   BG:
   - BackGround: []
@@ -63,7 +63,7 @@ MonoBehaviour:
       m_Bits: 128
   - BackGround: []
     Tilemap: {fileID: 2281273812186844937, guid: 89cdf443cd6932642b1f04aa7687ed05, type: 3}
-    isAbyss: 0
+    isAbyss: 1
     Its_Object: 1
     TilemapName: Type13-2AbyssWall
     OrderInLayer: -31
@@ -99,7 +99,7 @@ MonoBehaviour:
       m_Bits: 128
   - BackGround: []
     Tilemap: {fileID: 5244206772411756982, guid: 576953dcf589eb5409c83110b7a152c1, type: 3}
-    isAbyss: 0
+    isAbyss: 1
     Its_Object: 0
     TilemapName: Type13-2AbyssMiddle1
     OrderInLayer: -36
@@ -108,7 +108,7 @@ MonoBehaviour:
       m_Bits: 512
   - BackGround: []
     Tilemap: {fileID: 4989740118936951408, guid: e9e472d5b68d40f4f964bf78ff6a352f, type: 3}
-    isAbyss: 0
+    isAbyss: 1
     Its_Object: 0
     TilemapName: Type13-2AbyssMiddle2
     OrderInLayer: -37
@@ -117,7 +117,7 @@ MonoBehaviour:
       m_Bits: 512
   - BackGround: []
     Tilemap: {fileID: 2990116252189214631, guid: 8baa12a1a01a67348aed4c316a51b5d5, type: 3}
-    isAbyss: 0
+    isAbyss: 1
     Its_Object: 0
     TilemapName: Type13-2AbyssMiddle3
     OrderInLayer: -37
@@ -135,7 +135,7 @@ MonoBehaviour:
       m_Bits: 128
   - BackGround: []
     Tilemap: {fileID: 8254953150341872763, guid: e80de4093cb1f2746b0b95a2a9d0d0ae, type: 3}
-    isAbyss: 0
+    isAbyss: 1
     Its_Object: 0
     TilemapName: Type13-2AbyssFar
     OrderInLayer: -40
@@ -144,24 +144,39 @@ MonoBehaviour:
       m_Bits: 512
   Map_Event: {fileID: 3123534262931662248, guid: 1e59eab2ad006164a8cfe5bae8375482, type: 3}
   Potals:
-  - EnablePotal: 0
+  - EnablePotal: 1
     Potaltype: 1
-    PotalDirection: 0
-    VertexPoints: []
-    PotalLocation: {x: 0, y: 0}
+    PotalDirection: 1
+    VertexPoints:
+    - {x: -1, y: 3}
+    - {x: 1, y: 3}
+    - {x: 1, y: -1}
+    - {x: -1, y: -1}
+    - {x: -1, y: 3}
+    PotalLocation: {x: 18.98, y: 2.04}
   - EnablePotal: 0
     Potaltype: 2
-    PotalDirection: 0
+    PotalDirection: 2
     VertexPoints: []
     PotalLocation: {x: 0, y: 0}
-  - EnablePotal: 0
+  - EnablePotal: 1
     Potaltype: 4
-    PotalDirection: 0
-    VertexPoints: []
-    PotalLocation: {x: 0, y: 0}
-  - EnablePotal: 0
+    PotalDirection: 4
+    VertexPoints:
+    - {x: -3, y: 1}
+    - {x: 1, y: 1}
+    - {x: 1, y: -1}
+    - {x: -3, y: -1}
+    - {x: -3, y: 1}
+    PotalLocation: {x: -6.02, y: 45.16}
+  - EnablePotal: 1
     Potaltype: 3
-    PotalDirection: 0
-    VertexPoints: []
-    PotalLocation: {x: 0, y: 0}
+    PotalDirection: 3
+    VertexPoints:
+    - {x: -3, y: 1}
+    - {x: 1, y: 1}
+    - {x: 1, y: -1}
+    - {x: -3, y: -1}
+    - {x: -3, y: 1}
+    PotalLocation: {x: 1.99, y: -6.97}
   direction: 0

@@ -14,6 +14,14 @@ public class Char_Wolf : MonoBehaviour
     public bool P_Attack_State;
     public float P_AttackMoveInt;
 
+    void Update()
+    {
+        GroundCheck();
+    }
+    void OnEnable()
+    {
+        CP.Hp_Current += HP[CP.ActiveAbility.Enhance];
+    }
     public void Attack()
     {
         if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
@@ -49,10 +57,8 @@ public class Char_Wolf : MonoBehaviour
     {
         RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
         Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
-        Debug.Log(Ground.collider.gameObject.tag);
         if (Ground.collider.gameObject.tag == "Ground")
         {
-            Debug.Log(Ground.collider.gameObject.tag);
             Ani.SetBool("Jump", false);
             CP.P_JumpInt = CP.P_MaxJumpInt;
         }

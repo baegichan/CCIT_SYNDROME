@@ -73,19 +73,23 @@ public class ResercherPoisonMonster : Character
 
     private void Awake()
     {
+        filp = true;
+        patroll = true;
+        trace = false;
+        anim = GetComponent<Animator>();
+        Online = true;
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;// 0.5f을 곱하는 이유는 우리가 보는 각도가 중앙이 되고 그 부분으로 시야각이 10이라면 -10, 10이렇게 되어야 하기 때문이다.
     }
-
+    /*
     void Start()
     {
         filp = true;
         patroll = true;
         trace = false;
         anim = GetComponent<Animator>();
-        Physics.IgnoreLayerCollision(0, 0);
         Online = true;
     }
-
+    */
     void Update()
     {
         if (patroll == true)
@@ -157,6 +161,7 @@ public class ResercherPoisonMonster : Character
 
     public void ResercherPoisonDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }
@@ -267,7 +272,7 @@ public class ResercherPoisonMonster : Character
             {
                 player = GameObject.FindGameObjectWithTag("Player");
                 //player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;//플레이어 피봇 위치 트러짐 떄문에 사용
-                Debug.Log(player + "이새끼 때문임1");
+
                 if (playerTransform == null)
                 {
                     playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용

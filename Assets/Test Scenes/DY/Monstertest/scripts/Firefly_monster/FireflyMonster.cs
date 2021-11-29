@@ -55,6 +55,12 @@ public class FireflyMonster:Character
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+        filp = true;
+        patroll = true;
+        trace = false;
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        Online = true;
     }
     private void OnEnable()
     {
@@ -75,7 +81,7 @@ public class FireflyMonster:Character
         current.x = 1;
         transform.localScale = current;
     }
-
+    /*
     void Start()
     {
         filp = true;
@@ -86,7 +92,7 @@ public class FireflyMonster:Character
         Online = true;
 
     }
-
+    */
     void Update()
     {
         if (patroll == true)
@@ -162,6 +168,7 @@ public class FireflyMonster:Character
 
     public void FireflyDestroy()
     {
+        GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
         //Destroy(gameObject);
     }

@@ -37,19 +37,6 @@ public class AbilityManager : MonoBehaviour
             Char_Parent.Active_Cool = 0f;
             CP.Ani.SetTrigger("Ability");
             CP.Ani.SetBool("CanIThis", false);
-            Vector2 pp = py.transform.position + new Vector3(0.5f,0);
-            Collider2D[] hit = Physics2D.OverlapBoxAll(pp, new Vector2(1, 1), 0, TargetLayer);
-            for(int i = 0; i < hit.Length; i++)
-            {
-                if (hit[i].tag == "Monster")
-                {
-                    if (hit[i].GetComponent<Character>().Hp_Current < WolfAP[CP.ActiveAbility.Enhance])
-                    {
-                        CP.Hp_Current++;
-                    }
-                    hit[i].GetComponent<Character>().Damage(WolfAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
-                }
-            }
         }
     }
 
@@ -82,6 +69,7 @@ public class AbilityManager : MonoBehaviour
                 if (Hit.transform.tag == "Monster")
                 {
                     Hit.transform.GetComponent<Character>().Damage(ParaoAP[CP.ActiveAbility.Enhance], CP.UseApPostion, PharaoHitEffect);
+                    GetComponent<Character>().KnuckBack(transform, 0.8f, Hit.transform.GetComponent<Character>().IsBoss);
                 }
             }
         }
