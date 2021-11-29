@@ -100,6 +100,7 @@ public class Char_Parent : Character
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.KeypadPlus)) { Time.timeScale = 0.01f; }
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
         {
@@ -274,24 +275,26 @@ public class Char_Parent : Character
     //มกวม
 
     public PlatformEffector2D pf;
+    Vector2 vel = rigid.velocity;
 
     public void Jump()
     {
+        if (vel.y >= 0)
+        {
+            RayDistance = 0.02f;
+            DownShootRay = 0.1f;
+        }
         if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0)
         {
             rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime, ForceMode2D.Impulse);
-
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);
-
-            Vector2 vel = rigid.velocity;
-
             if (vel.y > P_JumpForce)
             {
                 vel.y = P_JumpForce;
                 rigid.velocity = vel;
-            }
+            }     
         }
     }
 
@@ -302,6 +305,8 @@ public class Char_Parent : Character
         Debug.DrawRay(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - DownShootRay), Vector2.down * RayDistance, Color.blue);
         if (Ground.collider.gameObject.tag == "Ground")
         {
+            RayDistance = 0.0001f;
+            DownShootRay = 0;
             Ani.SetBool("Jump", false);
             P_JumpInt = P_MaxJumpInt;
         }
