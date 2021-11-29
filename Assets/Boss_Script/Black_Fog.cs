@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Black_Fog : MonoBehaviour
 {
-    public int Black_Fog_Damage = 15;
-    public int Abycss_Black_Fog_Damage = 25;
+    public int Black_Fog_Damage;
+    public int Abycss_Black_Fog_Damage;
     float Damage_Delay = 1.5f;
 
     public bool Abycss_Boss_Monster= false;
@@ -16,10 +16,13 @@ public class Black_Fog : MonoBehaviour
 
     private void Start()
     {
-        if(Abycss_Boss_Monster == true)
+        Black_Fog_Damage = Random.Range(2, 5);
+        Abycss_Black_Fog_Damage = Random.Range(4, 7);
+        if (Abycss_Boss_Monster == true)
         {
             Black_Fog_Damage = Abycss_Black_Fog_Damage;
         }
+        
         Destroy(this.gameObject, 1.5f);
     }
 
@@ -35,7 +38,7 @@ public class Black_Fog : MonoBehaviour
         if (collision.CompareTag("Player") && Damage_Delay == 0.5f)
         {
             collision.transform.parent.GetComponent<Character>().Damage(Black_Fog_Damage);
-            collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 3, false);
+            collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 6, false);
             Damage_Delay = 0;
         }
     }
