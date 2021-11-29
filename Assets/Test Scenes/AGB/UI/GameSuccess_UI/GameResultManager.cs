@@ -8,10 +8,7 @@ using System.Threading;
 
 public class GameResultManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public GameObject Player;
-    public GameObject Fade_out_in_canvas;
-    float Fade_out_in_canvas_Alpha;
+
 
     private int countKillMonster;
     private int countKillBoss;
@@ -74,33 +71,13 @@ public class GameResultManager : MonoBehaviour
     int dakrfog = 0;
     int endTime;
     bool IsClear;
+
+
+
     public void Go_Back()
     {
-        Fade_out_in_canvas_Alpha = Fade_out_in_canvas.GetComponent<Image>().color.a;
-        StartCoroutine(Fade_Out());
-    }
-
-    void Fade_out()
-    {
-        Fade_out_in_canvas_Alpha = Fade_out_in_canvas.GetComponent<Image>().color.a;
-        StartCoroutine(Fade_Out());
-    }
-
-    void Load_Back_Scene()
-    {
-        SceneManager.LoadScene("main2");
-    }
-    IEnumerator Fade_Out()
-    {
-        while (Fade_out_in_canvas_Alpha < 1.0f)
-        {
-            Fade_out_in_canvas_Alpha += 0.01f;
-            yield return new WaitForSeconds(0.01f);
-            Fade_out_in_canvas.GetComponent<Image>().color = new Color(0, 0, 0, Fade_out_in_canvas_Alpha);
-        }
-        Destroy(Player);
-        Load_Back_Scene();
-        StopCoroutine(Fade_Out());
+        Debug.Log(23);
+        For_Fade.Fade.Fad_out_To_StartRoom();
     }
 
 
@@ -505,7 +482,15 @@ public class GameResultManager : MonoBehaviour
         }
         finally
         {
-
+            if (Input.GetKey(KeyCode.Mouse0) || isSkip)
+            {
+                skiptime = 0;
+                TimeText.text = string.Format("{0}:{1}:{2}", (int)endTime / 3600, (int)endTime / 60 % 60, (int)endTime % 60);
+                KillMobText.text = Convert.ToString(countKillMonster);
+                KillBossText.text = Convert.ToString(countKillBoss);
+                DarkFogText.text = Convert.ToString(AbyssManager.abyss.Darkfog);
+                isSkip = false;
+            }
         }
         isSkip = false;
     }

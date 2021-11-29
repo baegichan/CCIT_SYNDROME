@@ -288,6 +288,7 @@ public class Char_Parent : Character
     void GroundCheck()
     {
         RaycastHit2D Ground = Physics2D.Raycast(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - 0.05f), Vector2.down, RayDistance);
+        Debug.DrawRay(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - 0.03f), Vector2.down * RayDistance, Color.blue);
         if (Ground.collider.gameObject.tag == "Ground")
         {
             Ani.SetBool("Jump", false);
