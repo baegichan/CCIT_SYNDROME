@@ -206,7 +206,7 @@ public class MothMonster : Character
         RaycastHit2D downcheck = Physics2D.Raycast(downCheck.position, Vector2.down, 0.2f);
         if (downcheck.collider == true)
         {
-            rb.AddForce(transform.up * 5f);
+            rb.AddForce(transform.up * 10f);
         }
     }
 
