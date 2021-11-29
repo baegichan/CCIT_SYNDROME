@@ -75,6 +75,7 @@ public class RealWorldShop : MonoBehaviour
         {
             CP.P_Money -= HPItem.AbPrice;
             CP.MulYakInt++;
+            PlayerSkillUI.skill.HpPotionInt.text = CP.MulYakInt.ToString();
         }
     }
 
@@ -84,6 +85,7 @@ public class RealWorldShop : MonoBehaviour
         {
             CP.P_Money -= APItem.AbPrice;
             CP.AlYakInt++;
+            PlayerSkillUI.skill.PillInt.text = CP.AlYakInt.ToString();
         }
     }
 
