@@ -46,12 +46,12 @@ public class Event_Wolf : MonoBehaviour
     void Hit_6() { SpawnEffect(Attack_Event_5); }
 
     void Skill() { SpawnEffect(Skill_Effect); }
-   
+
     public Collider2D[] L_hit;
     public Collider2D[] R_hit;
 
-    Vector3 RH;
-    Vector3 LH;
+    public Vector3 RH;
+    public Vector3 LH;
     void overLap_R()
     {
         RH = new Vector3(RightHand.x * transform.localScale.x + transform.position.x, RightHand.y + transform.position.y);
@@ -72,7 +72,7 @@ public class Event_Wolf : MonoBehaviour
             {
                 if (Current.tag == "Monster")
                 {
-                    if(!GetComponent<Char_Wolf>().Ani.GetBool("Jump"))
+                    if (!GetComponent<Char_Wolf>().Ani.GetBool("Jump"))
                     {
                         CameraShake.Cam_instance.Shake(0.1f, 0.05f);
                         Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect[AttackInt - 1]);
@@ -96,9 +96,17 @@ public class Event_Wolf : MonoBehaviour
             {
                 if (Current.tag == "Monster")
                 {
-                    CameraShake.Cam_instance.Shake(0.1f, 0.05f);
-                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect[AttackInt-1]);
-                    Current.GetComponent<Character>().KnuckBack(transform, 2.5f, Current.GetComponent<Character>().IsBoss);
+                    if (!GetComponent<Char_Wolf>().Ani.GetBool("Jump"))
+                    {
+                        CameraShake.Cam_instance.Shake(0.1f, 0.05f);
+                        Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect[AttackInt - 1]);
+                        Current.GetComponent<Character>().KnuckBack(transform, 2.5f, Current.GetComponent<Character>().IsBoss);
+                    }
+                    if (GetComponent<Char_Wolf>().Ani.GetBool("Jump"))
+                    {
+                        CameraShake.Cam_instance.Shake(0.1f, 0.05f);
+                        Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP + 10, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect[AttackInt - 1]);
+                    }
                 }
             }
         }
@@ -106,41 +114,42 @@ public class Event_Wolf : MonoBehaviour
 
     void attackInt()
     {
-        if(AttackInt == 3) { AttackInt = 1; }
-        else if(AttackInt < 3) { AttackInt++; }
+      if (AttackInt == 3) { AttackInt = 1; }
+      else if (AttackInt < 3) { AttackInt++; }
     }
 
     Vector2 pp;
     void WolfAttack()
-    {
-        Debug.Log("rotlqkf0");
-        pp = new Vector3(transform.position.x + wolfRange.x * transform.localScale.x, transform.position.y + wolfRange.y);
-        Collider2D[] hit = Physics2D.OverlapBoxAll(pp, BiteRange, 0, AM.TargetLayer);
-        for (int i = 0; i < hit.Length; i++)
-        {
-            Debug.Log("rotlqkf1");
-            if (hit[i].tag == "Monster")
+    { 
+            Debug.Log("rotlqkf0");
+            pp = new Vector3(transform.position.x + wolfRange.x * transform.localScale.x, transform.position.y + wolfRange.y);
+            Collider2D[] hit = Physics2D.OverlapBoxAll(pp, BiteRange, 0, AM.TargetLayer);
+            for (int i = 0; i < hit.Length; i++)
             {
-                Debug.Log("rotlqkf");
-                if (hit[i].GetComponent<Character>().Hp_Current < AM.WolfAP[CP.ActiveAbility.Enhance])
+                Debug.Log("rotlqkf1");
+                if (hit[i].tag == "Monster")
                 {
-                    Debug.Log("rotlqkf3");
-                    CP.Hp_Current++;
+                    Debug.Log("rotlqkf");
+                    if (hit[i].GetComponent<Character>().Hp_Current < AM.WolfAP[CP.ActiveAbility.Enhance])
+                    {
+                        Debug.Log("rotlqkf3");
+                        CP.Hp_Current++;
+                    }
+                    hit[i].GetComponent<Character>().Damage(AM.WolfAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
+                    hit[i].GetComponent<Character>().KnuckBack(transform, 1.5f, hit[i].GetComponent<Character>().IsBoss);
+
                 }
-                hit[i].GetComponent<Character>().Damage(AM.WolfAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
-                hit[i].GetComponent<Character>().KnuckBack(transform, 1.5f, hit[i].GetComponent<Character>().IsBoss);
-
             }
-        }
+
     }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(pp, BiteRange);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(LH, LeftHand);
-        Gizmos.color = Color.gray;
-        Gizmos.DrawWireCube(RH, RightHand);
-    }
+      void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(pp, BiteRange);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(LH, LeftHand);
+            Gizmos.color = Color.gray;
+            Gizmos.DrawWireCube(RH, RightHand);
+        }
 }
