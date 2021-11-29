@@ -33,8 +33,9 @@ public class MoveTile : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
+        Debug.Log(col.gameObject.tag);
         if(col.gameObject.tag == "Player")
-        {
+        {   
             col.transform.parent.SetParent(Target.transform);
         }
         else { col.gameObject.transform.SetParent(Target.transform); } 
