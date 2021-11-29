@@ -31,6 +31,7 @@ public class Char_Parent : Character
     public int CharDP;
     public int CharSpeed;
     public float RayDistance;
+    public float DownShootRay;
     //점프
     public float P_JumpForce;
     float P_DefaultJumpInt = 1;
@@ -102,6 +103,13 @@ public class Char_Parent : Character
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
         {
+            if (AbyssManager.abyss.isHp)
+            {
+                Hp_Current -= 5;
+                StateManager.state.Hp = Hp_Current;
+                AbyssManager.abyss.isHp = false;
+                AbyssManager.abyss.HpGage = Hp_Current;
+            }
             if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
             Mouse = Input.mousePosition;
             if (!ShopOn)
@@ -191,6 +199,8 @@ public class Char_Parent : Character
                 CharHP = eden.HP;
                 CharDP = eden.DP;
                 StateManager.state.CharImgSelect(0);
+                DownShootRay = 0.05f;
+                RayDistance = 0.001f;
                 break;
             case "Wolf":
                 Char_Wolf wolf = SelectChar.GetComponent<Char_Wolf>();
@@ -199,6 +209,8 @@ public class Char_Parent : Character
                 CharHP = wolf.HP[ActiveAbility.Enhance];
                 CharDP = wolf.DP;
                 StateManager.state.CharImgSelect(1);
+                DownShootRay = 0.04f;
+                RayDistance = 0.005f;
                 break;
             case "RockHuman":
                 Char_RockMan rock = SelectChar.GetComponent<Char_RockMan>();
@@ -284,11 +296,11 @@ public class Char_Parent : Character
     }
 
     public LayerMask layerMask;
-
     void GroundCheck()
     {
-        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - 0.05f), Vector2.down, RayDistance);
-        Debug.DrawRay(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - 0.03f), Vector2.down * RayDistance, Color.blue);
+        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - DownShootRay), Vector2.down, RayDistance);
+        Debug.DrawRay(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - DownShootRay), Vector2.down * RayDistance, Color.blue);
+        Debug.Log(Ground.collider.gameObject.tag);
         if (Ground.collider.gameObject.tag == "Ground")
         {
             Ani.SetBool("Jump", false);
@@ -378,7 +390,7 @@ public class Char_Parent : Character
     {
         switch (ActiveAbility.AbCode)
         {
-            case 0:
+            case 0:  
             case 1:
             case 2:
             case 3:

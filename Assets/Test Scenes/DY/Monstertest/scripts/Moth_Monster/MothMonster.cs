@@ -166,6 +166,7 @@ public class MothMonster : Character
     public void MothDestroy()
     {
         GameResultManager.result.CountKillMonster++;
+        Debug.Log("Á×À½");
         abyss.MonsterDie();
         //Destroy(gameObject);
     }

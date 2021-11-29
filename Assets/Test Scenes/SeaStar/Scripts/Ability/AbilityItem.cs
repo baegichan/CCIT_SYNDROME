@@ -15,6 +15,7 @@ public class AbilityItem : MonoBehaviour
     public List<Ability> uniqueList = new List<Ability>();
     public List<Ability> DrinkList = new List<Ability>();
     public List<Ability> AbList = new List<Ability>();
+    public LayerMask TargetMask;
 
     void Awake()
     {
@@ -29,7 +30,7 @@ public class AbilityItem : MonoBehaviour
 
     void Update()
     {
-        if (me.IsSelect && Ply != null) { BuyItem(); }
+        BuyItem();
     }
 
     public void AlyakList()
@@ -100,7 +101,7 @@ public class AbilityItem : MonoBehaviour
                     gameObject.name = AbList[i].AbName;
                     ThisPrice = AbList[i].AbPrice;
                 }
-                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].ResultIcon, AbList[i].icon, AbList[i].IsUsing, AbList[i].AbExplan);
+                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].ResultIcon, AbList[i].icon, AbList[i].CoolTime, AbList[i].IsUsing, AbList[i].AbExplan);
                 AbList.RemoveAt(i);
             }
         }
@@ -110,6 +111,7 @@ public class AbilityItem : MonoBehaviour
     {
         if (col.transform.tag == "Player")
         {
+            Debug.Log(0);
             Ply = col.gameObject;
             Char_Parent pt = col.transform.GetComponent<Char_Parent>();
             me.IsSelect = true;
@@ -118,54 +120,59 @@ public class AbilityItem : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D col)
     {
-        if (col.transform.tag == "Player") { me.IsSelect = false; }
+        if (col.transform.tag == "Player") { me.IsSelect = false; Debug.Log(1); }
     }
 
     void BuyItem()
     {
-        Char_Parent pt = Ply.GetComponentInParent<Char_Parent>();
-
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (IsBuy)
+            Physics2D.queriesStartInColliders = false;
+            Collider2D playerCol = Physics2D.OverlapBox(transform.position, new Vector2(5, 5), 0, TargetMask);
+            if(playerCol != null)
             {
-                switch (me.AbType)
+                Ply = playerCol.gameObject;
+                Char_Parent pt = playerCol.transform.GetComponentInParent<Char_Parent>();
+                if (IsBuy)
                 {
-                    case Ability.ABTYPE.Active:
-                        pt.ActiveAbility = me;
-                        pt.SelectAbility();
-                        break;
-                    case Ability.ABTYPE.Passive:
-                        pt.PassiveAbility = me;
-                        pt.UsePassive();
-                        pt.passive();
-                        break;
-                    case Ability.ABTYPE.HPDrink:
-                        pt.MulYakInt++; 
-                        break;
-                    case Ability.ABTYPE.APDrink:
-                        pt.AlYakInt++;
-                        break;
+                    switch (me.AbType)
+                    {
+                        case Ability.ABTYPE.Active:
+                            pt.ActiveAbility = me;
+                            pt.SelectAbility();
+                            break;
+                        case Ability.ABTYPE.Passive:
+                            pt.PassiveAbility = me;
+                            pt.UsePassive();
+                            pt.passive();
+                            break;
+                        case Ability.ABTYPE.HPDrink:
+                            pt.MulYakInt++;
+                            break;
+                        case Ability.ABTYPE.APDrink:
+                            pt.AlYakInt++;
+                            break;
+                    }
+                    pt.SaveAbilityHistory(me);
+                    if (me.AbCode != 0) { pt.DecideChar(); }
+                    else if (me.AbCode != 0)
+                    {
+                        pt.Ani.SetFloat("AbilityNum", 0);
+                        pt.Ani.SetTrigger("Ability");
+                    }
+                    Destroy(this.gameObject);
                 }
-                pt.SaveAbilityHistory(me);
-                if (me.AbCode != 0) { pt.DecideChar(); }
-                else if(me.AbCode != 0)
+                else
                 {
-                    pt.Ani.SetFloat("AbilityNum", 0);
-                    pt.Ani.SetTrigger("Ability");
-                }
-                Destroy(this.gameObject);
-            }
-            else
-            {
-                if (me.AbPrice > pt.P_Money)
-                {
-                    Debug.Log("돈이 부족합니다.");
-                }
-                else if (me.AbPrice <= pt.P_Money)
-                {
-                    pt.P_Money -= me.AbPrice;
-                    IsBuy = true;
+                    if (me.AbPrice > pt.P_Money)
+                    {
+                        Debug.Log("돈이 부족합니다.");
+                    }
+                    else if (me.AbPrice <= pt.P_Money)
+                    {
+                        pt.P_Money -= me.AbPrice;
+                        IsBuy = true;
+                    }
                 }
             }
         }
