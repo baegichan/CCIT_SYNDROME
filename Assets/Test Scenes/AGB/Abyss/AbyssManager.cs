@@ -74,6 +74,8 @@ public class AbyssManager : MonoBehaviour
 
     public enum AbyssState { Reality, Abyss };
 
+    public bool isHp = false;
+
 
     //[Header("MonsterBox")]
     //public GameObject RealBox;
