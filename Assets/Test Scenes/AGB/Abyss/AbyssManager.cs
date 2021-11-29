@@ -60,7 +60,7 @@ public class AbyssManager : MonoBehaviour
 
     //어비스 게이지 줄어드는 값
 
-    public int abyssGageConsumption = 1;
+    public int abyssGageConsumption = 2;
 
     //어비스 게이지 줄어드는 시간
     public float abyssConsumptionTime = 1f;
@@ -119,11 +119,20 @@ public class AbyssManager : MonoBehaviour
         {
             isCoolTime = false;
             StartCoroutine(CoolTime());
-            MapChangeTester.AbyssMask.test.SetTrigger("Changed");
+           
+           
             if (abyssState == AbyssState.Abyss)
+            {
                 GoReal();
-            else
+                MapChangeTester.AbyssMask.test.SetTrigger("Changed");
+            }
+               
+            else if(abyssState == AbyssState.Reality && abyssGage >0)
+            {
                 GoAbyss();
+                MapChangeTester.AbyssMask.test.SetTrigger("Changed");
+            }
+               
         }
     }
 
@@ -164,7 +173,7 @@ public class AbyssManager : MonoBehaviour
             yield return new WaitForSeconds(abyssConsumptionTime);
         }
         abyssState = AbyssState.Reality;
-
+        MapChangeTester.AbyssMask.test.SetTrigger("Changed");
         isAbyssEnd = true;
     }
 
@@ -226,6 +235,15 @@ public class AbyssManager : MonoBehaviour
             abyssGage = value;
             StateManager.state.AbyssGage = abyssGage;
         }
+    }
+
+    public int HpGage
+    {
+        set
+        {
+            hpGage = value;
+        }
+      
     }
 
 
