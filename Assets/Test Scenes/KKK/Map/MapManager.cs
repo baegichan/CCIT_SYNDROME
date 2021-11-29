@@ -253,7 +253,7 @@ public class MapManager : MonoBehaviour
     }
     public IEnumerator test()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         AllCreatedRoom();
         Maps.GetComponent<MapLoadTest>().Starting_Setting();
         MapAllOff();

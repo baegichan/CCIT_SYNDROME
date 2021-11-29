@@ -30,7 +30,11 @@ public class BosStateUi : MonoBehaviour
     [SerializeField]
     private Image ChainEffect;
 
-
+    private void Update()
+    {
+        if (hpFill != HpBarBack.fillAmount && isSlow)
+            HpBarBack.fillAmount = Mathf.Lerp(HpBarBack.fillAmount, hpFill, Time.deltaTime * 20f);
+    }
     public int Hp
     {
         set
@@ -47,7 +51,7 @@ public class BosStateUi : MonoBehaviour
             isSlow = false;
             StartCoroutine(HpBarEffects());
             StartCoroutine(AddDamgeCount());
-            HpBar.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
+            //HpBar.fillAmount = Convert.ToSingle(hp) / Convert.ToSingle(maxHp);
         }
         get
         {
