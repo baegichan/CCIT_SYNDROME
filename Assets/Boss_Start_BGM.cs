@@ -5,7 +5,7 @@ using UnityEngine;
 public class Boss_Start_BGM : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SoundManager.BGLoop("BattleBGM");
     }

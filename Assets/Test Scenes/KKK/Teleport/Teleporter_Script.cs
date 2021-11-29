@@ -44,36 +44,5 @@ public class Teleporter_Script : MonoBehaviour
         }
         For_Fade.FadeOff_To_Dungeon();
     }
-    //}
-
-    //void Scene_Change()
-    //{
-    //    SceneManager.LoadScene("main2");
-
-    //    //던전 Scene로 바꿔야하겟죠?
-    //}
-
-    //float Fade_out_in_canvas_Alpha;
-    //void Fad_out()
-    //{
-    //    Fade_out_in_canvas_Alpha = Fade_out_in_canvas.GetComponent<Image>().color.a;
-    //    StartCoroutine(Fade_Out());
-    //}
-
-    //Fade_out_in_canvas요걸 ui의 레이어 중에서도 맨위에 놓으면 될거 같습니다요
-    //IEnumerator Fade_Out()
-    //{
-    //    while (Fade_out_in_canvas_Alpha < 1.0f)
-    //    {
-    //        Fade_out_in_canvas_Alpha += 0.01f;
-    //        yield return new WaitForSeconds(0.01f);
-    //        Fade_out_in_canvas.GetComponent<Image>().color = new Color(0, 0, 0, Fade_out_in_canvas_Alpha);
-    //    }
-        
-    //    Scene_Change();
-    //    StopCoroutine(Fade_Out());
-    //}
-
-
-
+    
 }

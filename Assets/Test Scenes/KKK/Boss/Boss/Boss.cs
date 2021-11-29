@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boss : Character
 {
-    
+   
     public bool Boss_Active_on;//플레이어가 보스 방에 들어오기 전까지 False 
                                //플레이어가 보스방에 입장하면 True
 
@@ -317,6 +317,8 @@ public class Boss : Character
                         {
                             Destroy(Boss_Use_lns_Zone.transform.GetChild(a).gameObject);
                         }
+
+                    
                 }
             }
 
@@ -344,8 +346,10 @@ public class Boss : Character
     {
         MapChangeTester.AbyssMask.test.SetTrigger("Changed");
         AbyssManager.abyss.GoAbyss();
-        Boss_Controll.transform.GetChild(1).gameObject.SetActive(true);
 
+        Boss_Controll.transform.GetChild(1).GetComponent<Boss>().Boss_Active_on = true;
+        Boss_Controll.transform.GetChild(1).gameObject.SetActive(true);
+        
 
         //2PAGE애니메이션에서 맵 전체를 뒤엎어주는 애니메이션 나왔을때 보스를 사라지게 해줘야함
         this.gameObject.SetActive(false);
