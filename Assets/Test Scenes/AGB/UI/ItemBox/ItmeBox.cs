@@ -28,7 +28,6 @@ public class ItmeBox : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Player") { isPlayer = true; }
-
     }
 
     void OnTriggerExit2D(Collider2D col)
@@ -38,13 +37,9 @@ public class ItmeBox : MonoBehaviour
 
     void OpenItmeBox()
     {
-
-        var dd = new Vector3(0, 1, 0);
+        var dd = new Vector3(0.1f, 0.5f, 0);
         Vector3 items = gameObject.transform.position + dd;
 
         var d = Instantiate(Item, items, Quaternion.identity);
-   
-        
-      
     }
 }
