@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3161398897990511146}
   - component: {fileID: 723507172643404377}
   - component: {fileID: 5251223734423537743}
-  - component: {fileID: 2262174677140295191}
   - component: {fileID: 7655454366916781591}
   m_Layer: 8
   m_Name: Type2-4AbyssGroundPass
@@ -231,7 +230,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 1
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -243,7 +242,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6774606255076488498}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -256,54 +255,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!66 &2262174677140295191
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6774606255076488498}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 723507172643404377}
-    m_ColliderPaths:
-    - - X: -200102048
-        Y: -13571429
-      - X: -198061216
-        Y: -20102040
-      - X: -152142864
-        Y: -20102040
-      - X: -151938768
-        Y: -19897960
-      - X: -150306112
-        Y: -13775511
-      - X: -149897952
-        Y: -12142857
-      - X: -149897952
-        Y: -9897959
-      - X: -200102048
-        Y: -9897959
-  m_CompositePaths:
-    m_Paths:
-    - - {x: -15.214298, y: -2.010204}
-      - {x: -15.193875, y: -1.9897894}
-      - {x: -15.030611, y: -1.3775512}
-      - {x: -14.989796, y: -1.2142829}
-      - {x: -14.989824, y: -0.9897959}
-      - {x: -20.010204, y: -0.9898252}
-      - {x: -20.010204, y: -1.3571469}
-      - {x: -19.8061, y: -2.010204}
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
 --- !u!251 &7655454366916781591
 PlatformEffector2D:
   m_ObjectHideFlags: 0

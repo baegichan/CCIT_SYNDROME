@@ -133,7 +133,7 @@ public class Boss : Character
         Bs = BossUI.transform.GetComponent<BosStateUi>();
         if (Abyss_on == false)
         {
-            Hp_Max = 2000;
+            Hp_Max = 500;
             Hp_Current = Hp_Max;
             BossUI.SetActive(true);
             Bs.MaxHp = Hp_Max;
@@ -286,7 +286,7 @@ public class Boss : Character
                     anim_off();
                     anim.SetBool("Move_ON", false);
                     anim.SetBool("Dead", true);
-                    Boss_Dead_Check = true;
+                    //Boss_Dead_Check = true;
                     if (Boss_Use_lns_Zone.transform.childCount != 0)
                         for (int a = 0; a < Boss_Use_lns_Zone.transform.childCount; a++)
                         {
@@ -304,29 +304,21 @@ public class Boss : Character
         anim.SetBool("Dead", false);
         StopCoroutine(Respawn_Monster());//몬스터 젠 멈춤
 
-        ///////////////////////////////////
-        ///
-
+       
         Destroy(Frame2);
 
-        ////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //////////////////////////
+    
+    }
+    public void Boss_End()
+    {
+        GameResultManager.result.CountKillBoss++;
+        GameResultManager.result.ShowResult(true);
+        
     }
     public void Change_Abyss_Boss()
     {
+        MapChangeTester.AbyssMask.test.SetTrigger("Changed");
+        AbyssManager.abyss.GoAbyss();
         Boss_Controll.transform.GetChild(1).gameObject.SetActive(true);
 
 
@@ -943,7 +935,7 @@ public class Boss : Character
         if (Abyss_on == false)
         {
             Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
-            Frame = Instantiate(Stom_Obj, new Vector3(0, 7, 0), Quaternion.identity);
+            Frame = Instantiate(Stom_Obj, new Vector3(20,6, 0), Quaternion.identity);
             Frame.name = "Frame";// 삭제할 때 Find용으로다가
             Frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
             Frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
@@ -951,7 +943,7 @@ public class Boss : Character
         else if(Abyss_on == true)
         {
             Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
-            Frame2 = Instantiate(Big_Stom_Obj, new Vector3(0, 7, 0), Quaternion.identity);
+            Frame2 = Instantiate(Big_Stom_Obj, new Vector3(20,6, 0), Quaternion.identity);
             Frame2.name = "Frame2";// 삭제할 때 Find용으로다가
             Frame2.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
             Frame2.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);

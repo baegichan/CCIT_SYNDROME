@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3082426378180285537}
   - component: {fileID: 6392630522299679825}
   - component: {fileID: 3286484950395201224}
-  - component: {fileID: 4238856706955294256}
   m_Layer: 6
   m_Name: Type11-1NomalGroundPass
   m_TagString: Ground
@@ -631,7 +630,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 1
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -662,7 +661,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4946349692896004390}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -675,122 +674,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!66 &4238856706955294256
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946349692896004390}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 3082426378180285537}
-    m_ColliderPaths:
-    - - X: 130102040
-        Y: 100102040
-      - X: 19897960
-        Y: 100102040
-      - X: 19897960
-        Y: 89897960
-      - X: 130102040
-        Y: 89897960
-    - - X: 150102048
-        Y: 36836732
-      - X: 150102048
-        Y: 40102044
-      - X: -30102040
-        Y: 40102044
-      - X: -30102040
-        Y: 29897960
-      - X: 148061232
-        Y: 29897960
-    - - X: 10102041
-        Y: -13163265
-      - X: 10102041
-        Y: -9897959
-      - X: -30102040
-        Y: -9897959
-      - X: -30102040
-        Y: -12551020
-      - X: -27857142
-        Y: -20102040
-      - X: 8061224
-        Y: -20102040
-    - - X: 150102048
-        Y: -13163265
-      - X: 150102048
-        Y: -9897959
-      - X: 109897960
-        Y: -9897959
-      - X: 109897960
-        Y: -12551020
-      - X: 112142856
-        Y: -20102040
-      - X: 148061232
-        Y: -20102040
-    - - X: 80102040
-        Y: -13163265
-      - X: 80102040
-        Y: -9897959
-      - X: 39897960
-        Y: -9897959
-      - X: 39897960
-        Y: -12551020
-      - X: 42142860
-        Y: -20102040
-      - X: 78061224
-        Y: -20102040
-    - - X: -79897960
-        Y: -69897960
-      - X: -120102040
-        Y: -69897960
-      - X: -120102040
-        Y: -80102040
-      - X: -79897960
-        Y: -80102040
-  - m_Collider: {fileID: 3082426378180285537}
-    m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths:
-    - - {x: 13.010175, y: 8.989796}
-      - {x: 13.010175, y: 10.010204}
-      - {x: 1.989796, y: 10.010175}
-      - {x: 1.9898252, y: 8.989796}
-    - - {x: 14.806103, y: 2.989796}
-      - {x: 15.010205, y: 3.683677}
-      - {x: 15.010176, y: 4.0102043}
-      - {x: -3.010204, y: 4.010175}
-      - {x: -3.0101748, y: 2.989796}
-    - - {x: 14.806103, y: -2.010204}
-      - {x: 15.010205, y: -1.3163232}
-      - {x: 15.010176, y: -0.9897959}
-      - {x: 10.989796, y: -0.9898252}
-      - {x: 10.989797, y: -1.2551055}
-      - {x: 11.214307, y: -2.010204}
-    - - {x: 7.806102, y: -2.010204}
-      - {x: 8.010204, y: -1.3163232}
-      - {x: 8.010175, y: -0.9897959}
-      - {x: 3.9897962, y: -0.9898252}
-      - {x: 3.9897969, y: -1.2551055}
-      - {x: 4.214307, y: -2.010204}
-    - - {x: 0.8061017, y: -2.010204}
-      - {x: 1.0102041, y: -1.3163232}
-      - {x: 1.0101749, y: -0.9897959}
-      - {x: -3.010204, y: -0.9898252}
-      - {x: -3.0102031, y: -1.2551055}
-      - {x: -2.7856936, y: -2.010204}
-    - - {x: -7.9898257, y: -8.010204}
-      - {x: -7.9898257, y: -6.989796}
-      - {x: -12.010204, y: -6.9898257}
-      - {x: -12.010175, y: -8.010204}
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
