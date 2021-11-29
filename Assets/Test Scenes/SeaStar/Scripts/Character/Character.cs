@@ -126,6 +126,7 @@ public class Character : MonoBehaviour
         }
         if (Shield > 0)
             Shield -= firstDamage - DP;
+
         Load_Damage_Text(this, firstDamage);
     }
 

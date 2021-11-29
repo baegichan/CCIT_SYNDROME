@@ -79,7 +79,7 @@ public class Boss : Character
 
 
     int aa = 0;int bb = 0;//몰?루
-    public int P_bossHP 
+    public int P_bossShield 
     { 
         get
         { 
@@ -103,7 +103,25 @@ public class Boss : Character
         }
     }
 
+    int Boss_CurrentHP;
+    public int P_bossHP
+    {
+        get
+        {
+            return Hp_Current;
+        }
+        set
+        {
+            if (Hp_Current != Boss_CurrentHP)
+            {
+                Bs.Hp = Hp_Current;
+                Bs.Shield = Shield;
 
+                Boss_CurrentHP = Hp_Current;
+
+            }
+        }
+    }
 
     int Shield_Value;
 
@@ -116,6 +134,9 @@ public class Boss : Character
         IsBoss = true;
         
         anim = GetComponent<Animator>();
+
+        Boss_CurrentHP = Hp_Current;
+
         if (Abyss_on == false)
         { 
             speed = 1;
@@ -215,11 +236,12 @@ public class Boss : Character
             }
 
 
-            P_bossHP = Shield_Value;//보스 보호막 있을때 히트 이펙트
+            P_bossShield = Shield_Value;//보스 보호막 있을때 히트 이펙트
 
-            Bs.Hp = Hp_Current;
+            P_bossHP = Hp_Current;
+            //Bs.Hp = Hp_Current;
 
-            Bs.Shield = Shield;
+            //Bs.Shield = Shield;
 
 
             if (Abyss_on == false)
