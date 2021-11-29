@@ -72,9 +72,17 @@ public class Event_Wolf : MonoBehaviour
             {
                 if (Current.tag == "Monster")
                 {
-                    CameraShake.Cam_instance.Shake(0.1f, 0.05f);
-                    Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect[AttackInt-1]);
-                    Current.GetComponent<Character>().KnuckBack(transform, 2.5f, Current.GetComponent<Character>().IsBoss);
+                    if(!GetComponent<Char_Wolf>().Ani.GetBool("Jump"))
+                    {
+                        CameraShake.Cam_instance.Shake(0.1f, 0.05f);
+                        Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect[AttackInt - 1]);
+                        Current.GetComponent<Character>().KnuckBack(transform, 2.5f, Current.GetComponent<Character>().IsBoss);
+                    }
+                    if (GetComponent<Char_Wolf>().Ani.GetBool("Jump"))
+                    {
+                        CameraShake.Cam_instance.Shake(0.1f, 0.05f);
+                        Current.GetComponent<Character>().Damage(GetComponentInParent<Char_Parent>().AP + 10, GetComponentInParent<Char_Parent>().UseApPostion, HitEffect[AttackInt - 1]);
+                    }
                 }
             }
         }
@@ -130,5 +138,9 @@ public class Event_Wolf : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(pp, BiteRange);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(LH, LeftHand);
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireCube(RH, RightHand);
     }
 }
