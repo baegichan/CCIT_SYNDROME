@@ -14,9 +14,9 @@ public class PlayerStartingPosition : MonoBehaviour
     }
     public IEnumerator Delay()
     {
-        yield return new WaitForSeconds(1.9f);
-        Transform StartingPosition = MapManager.s_Instace.map[(int)MapManager.s_Instace.Level, (int)MapManager.s_Instace.Level].transform.Find("NPC");
-        transform.position = new Vector3 (StartingPosition.position.x, StartingPosition.position.y+2,3);
+        yield return new WaitForSeconds(4.5f);
+        Transform StartingPosition = MapManager.s_Instace.map[(int)MapManager.s_Instace.Level, (int)MapManager.s_Instace.Level].GetComponentInChildren<NPCManager>().gameObject.transform;
+        transform.position = new Vector3 (StartingPosition.position.x, StartingPosition.position.y+4,3);
         GetComponent<Rigidbody2D>().gravityScale = 1;
     }
 }

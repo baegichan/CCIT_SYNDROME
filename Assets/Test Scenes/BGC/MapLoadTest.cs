@@ -47,13 +47,20 @@ public class MapLoadTest : MonoBehaviour
                        // Target_Room.transform.Find("NPC").GetComponent<NPCManager>().Setting(Room_data.RoomType.Crane);
                         Debug.Log("Load CraneRoom");
                         break;
-                    default:
+                    case Room_data.RoomType.Nomal:
+
                         testmap = Mapset.Get_RandomRoom(Target_Room.GetComponent<Room_data>().map_code);
                         Debug.Log("Load NomalRoom");
                         break;
+                        
                 }
-                testmap.Load_MapData(Target_Room);
-                testmap.Load_TileCollider(Target_Room);
+               // Debug.Log("Current  :" + testmap.name + "      Target :" + Target_Room.name);
+               if(testmap!=null)
+                {
+                    testmap.Load_MapData(Target_Room);
+                    testmap.Load_TileCollider(Target_Room);
+                }
+           
                 
             }
         }

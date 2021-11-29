@@ -178,7 +178,6 @@ public class ClupMonster : Character
         RaycastHit2D wallcheck = Physics2D.Raycast(wallCheck.position, Vector2.right, 0.3f); //레이케스트를 옆으로 쏴서 확인 된다면 플립 벽체크 넣어야 됨
         if (wallcheck.collider != null)
         {
-            Debug.Log(wallcheck.collider.name + "이새기 떄무임");
             if (wallcheck.collider.CompareTag("Wall") == true)
             {
                 
