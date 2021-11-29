@@ -103,6 +103,12 @@ public class Char_Parent : Character
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
         {
+            if (AbyssManager.abyss.isHp)
+            {
+                Hp_Current -= 5;
+                StateManager.state.Hp = Hp_Current;
+                AbyssManager.abyss.isHp = false;
+            }
             if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
             Mouse = Input.mousePosition;
             if (!ShopOn)
