@@ -144,8 +144,8 @@ public class Char_Parent : Character
         {
             Before_Position = SelectChar.transform.position;
             SelectChar = Char[0];
-            //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
-            //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
+            AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
+            PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
             Dead = true;
             ChangeChar(SelectChar);
             SelectChar.transform.position = Before_Position;
@@ -200,7 +200,7 @@ public class Char_Parent : Character
                 CharDP = eden.DP;
                 StateManager.state.CharImgSelect(0);
                 DownShootRay = 0.05f;
-                RayDistance = 0.001f;
+                RayDistance = 0.003f;
                 break;
             case "Wolf":
                 Char_Wolf wolf = SelectChar.GetComponent<Char_Wolf>();
@@ -509,7 +509,7 @@ public class Char_Parent : Character
         Enhance_Health = PlayerPrefs.HasKey("E_Health") ? PlayerPrefs.GetInt("E_Health") : 0;
         Enhance_Strength = PlayerPrefs.HasKey("E_Strength") ? PlayerPrefs.GetInt("E_Strength") : 0;
         Enhance_Speed = PlayerPrefs.HasKey("E_Speed") ? PlayerPrefs.GetInt("E_Speed") : 0;
-        //AbyssManager.abyss.Darkfog = PlayerPrefs.HasKey("DarkFog") ? PlayerPrefs.GetInt("DarkFog") : 0;
+        AbyssManager.abyss.Darkfog = PlayerPrefs.HasKey("DarkFog") ? PlayerPrefs.GetInt("DarkFog") : 0;
     }
 
     public void Save_StateEnhance()
@@ -517,7 +517,7 @@ public class Char_Parent : Character
         PlayerPrefs.SetInt("E_Health", Enhance_Health);
         PlayerPrefs.SetInt("E_Strength", Enhance_Strength);
         PlayerPrefs.SetInt("E_Speed", Enhance_Speed);
-        //PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
+        PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
     }
 
     public void SaveAbilityHistory(Ability ability)
