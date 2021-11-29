@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AbyssManager : MonoBehaviour
 {
@@ -118,7 +119,7 @@ public class AbyssManager : MonoBehaviour
 
     private void Update()
     {
-        
+        if(SceneManager.GetActiveScene().name != "Boss_Scene")//현재 씬 체크해서 보스 씬에서는 자동으로 심연으로 넘어가니까 작동 안하게 해줬어여
         if (Input.GetKey(KeyCode.Q) && isCoolTime)
         {
             isCoolTime = false;

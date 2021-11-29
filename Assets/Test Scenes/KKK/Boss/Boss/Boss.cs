@@ -141,7 +141,7 @@ public class Boss : Character
 
         if (Abyss_on == false)
         { 
-            speed = 1;
+            speed = 3;
         }
       
         
@@ -400,7 +400,7 @@ public class Boss : Character
 
 
 
-    IEnumerator Respawn_Monster()//몬스터 리스폰 쿨타임 25초로 잡아놈
+    IEnumerator Respawn_Monster()
     {
 
         if (FireFly_Monster != null)
@@ -415,7 +415,7 @@ public class Boss : Character
             d.transform.SetParent(Boss_Use_lns_Zone.transform);
         }
 
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(10f);
         Boss_HP_Half = false;
     }
     
@@ -1054,9 +1054,9 @@ public class Boss : Character
     void speed_back()//Invoke용
     {
         if (Abyss_on == false)
-            speed = 1;
+            speed = 2;
         else
-            speed = 3;
+            speed = 4;
         Boss_State_Check = true;
         Attack_Cool = Boss_Attack_Cooltime;
 
