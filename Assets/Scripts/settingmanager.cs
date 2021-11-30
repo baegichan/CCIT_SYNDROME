@@ -265,35 +265,39 @@ public class settingmanager : MonoBehaviour
 
     public void BGMvolumechanger(GameObject name)
     {
-        if (CANVAS.activeSelf) { audio.PlayOneShot(clip); }
+        SoundManager.BgmVol = name.GetComponent<Slider>().value;
+        //if (CANVAS.activeSelf) { audio.PlayOneShot(clip); }
 
-        if (name.GetComponent<Slider>().value == 0)
-        {
-            masterMixer.SetFloat("BGM", -80f);
-        }
-        else
-        {
-            float sound = -40 + (name.GetComponent<Slider>().value * 4);
+        //if (name.GetComponent<Slider>().value == 0)
+        //{
 
-            masterMixer.SetFloat("BGM", sound);
-        }
+        //    //masterMixer.SetFloat("BGM", -80f);
+        //}
+        //else
+        //{
+        //    float sound = -40 + (name.GetComponent<Slider>().value * 4);
+
+        //    masterMixer.SetFloat("BGM", sound);
+        //}
 
         PlayerPrefs.SetFloat(name.name, name.GetComponent<Slider>().value);
     }
 
     public void SFXvolumechanger(GameObject name)
     {
-        if (CANVAS.activeSelf) { audio.PlayOneShot(clip); }
 
-        if (name.GetComponent<Slider>().value == 0)
-        {
-            masterMixer.SetFloat("SFX", -80f);
-        }
-        else
-        {
-            float sound = -40 + (name.GetComponent<Slider>().value * 4);
-            masterMixer.SetFloat("SFX", sound);
-        }
+        SoundManager.EffVol = name.GetComponent<Slider>().value;
+        //if (CANVAS.activeSelf) { audio.PlayOneShot(clip); }
+
+        //if (name.GetComponent<Slider>().value == 0)
+        //{
+        //    masterMixer.SetFloat("SFX", -80f);
+        //}
+        //else
+        //{
+        //    float sound = -40 + (name.GetComponent<Slider>().value * 4);
+        //    masterMixer.SetFloat("SFX", sound);
+        //}
 
         PlayerPrefs.SetFloat(name.name, name.GetComponent<Slider>().value);
     }

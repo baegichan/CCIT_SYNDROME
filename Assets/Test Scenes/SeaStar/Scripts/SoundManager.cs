@@ -10,6 +10,10 @@ public class SoundManager : MonoBehaviour
     public AudioSource BGM;
 
     private bool looping;
+
+    float bgmvol;
+    float effvol;
+
     void Awake()
     {
 
@@ -49,7 +53,7 @@ public class SoundManager : MonoBehaviour
     EFX
     }
 
-
+    
   
    public static void BGLoop(string SoundName)
    {
@@ -63,6 +67,31 @@ public class SoundManager : MonoBehaviour
     }
 
 
+    public static float BgmVol
+    {
+        get
+        {
+            return instance.bgmvol;
+        }
+        set
+        {
+            instance.bgmvol = value;
+            instance.BGM.volume = instance.bgmvol;
+        }
+    }
+
+    public static float EffVol
+    {
+        get
+        {
+            return instance.effvol;
+        }
+        set
+        {
+            instance.effvol = value;
+            instance.SFX.volume = instance.effvol;
+        }
+    }
 
     public static void OneShot(string SoundName)
     {
