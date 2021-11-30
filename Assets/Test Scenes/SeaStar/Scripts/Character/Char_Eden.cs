@@ -54,7 +54,7 @@ public class Char_Eden : MonoBehaviour
     }
     public void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
+        if (Input.GetKeyDown(settingmanager.GM.nomalattack) && Char_Parent.ShopOn == false)
         {
             if (CP.Ani.GetBool("Jump") == false)
             {
@@ -69,7 +69,7 @@ public class Char_Eden : MonoBehaviour
             P_CombatInt = 1;
             P_Attack_State = true;
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetKeyUp(settingmanager.GM.nomalattack))
         {
             P_CombatInt = 0;
         }
@@ -142,7 +142,7 @@ public class Char_Eden : MonoBehaviour
     {
         if (Ani.GetBool("Jump") == false)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKeyDown(settingmanager.GM.dash))
             {
                 if (P_DashTimer >= 5)
                 {
@@ -307,7 +307,7 @@ public class Char_Eden : MonoBehaviour
 
     void DownPlatform()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(settingmanager.GM.down))
         {
             CP.pf.colliderMask = layerMask;
             Invoke("AllLayerPlatform", 0.5f);

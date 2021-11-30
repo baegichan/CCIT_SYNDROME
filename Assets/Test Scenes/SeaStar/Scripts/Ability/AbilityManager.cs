@@ -11,10 +11,11 @@ public class AbilityManager : MonoBehaviour
     Rigidbody2D rg;
     public LayerMask TargetLayer;
     public int RockAP;
-    public int[] ParaoAP = { 20, 30, 40, 50};
+    public float[] DoubleJumpP = { 5, 10, 15, 20};
+    public int[] ParaoAP = { 20, 25, 30, 35};
     public int[] BoomAP = { 10, 13, 16, 20 };
-    public int[] WolfAP = { 2, 3, 4, 5 };
-    public int[] AxeAP = { 5, 10, 15, 20 };
+    public int[] WolfAP = { 3, 4, 5, 6 };
+    public int[] AxeAP = { 1, 3, 5, 7 };
     public int[] EvilAP = { 6, 9, 12, 15 };
     public GameObject PharaoHitEffect;
 
@@ -32,9 +33,9 @@ public class AbilityManager : MonoBehaviour
 
     public void Werewolf()
     {
-        if (Input.GetMouseButtonDown(1) && !CP.Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if (Input.GetKeyDown(settingmanager.GM.skillattack) && !CP.Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
-            PlayerSkillUI.skill.CoolTime = Char_Parent.Active_Cool_Max;//임시
+            PlayerSkillUI.skill.CoolTime = Char_Parent.Active_Cool_Max;
             Char_Parent.Active_Cool = 0f;
             CP.Ani.SetTrigger("Ability");
             CP.Ani.SetBool("CanIThis", false);
@@ -43,9 +44,9 @@ public class AbilityManager : MonoBehaviour
 
     public void Parao()
     {
-        if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if (Input.GetKeyDown(settingmanager.GM.skillattack) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
-            PlayerSkillUI.skill.CoolTime = Char_Parent.Active_Cool_Max;//임시
+            PlayerSkillUI.skill.CoolTime = Char_Parent.Active_Cool_Max;
             Char_Parent.Active_Cool = 0f;
             CP.PharaoWandSwitch();
             py.GetComponent<Char_Eden>().active = Pharao;
@@ -125,12 +126,12 @@ public class AbilityManager : MonoBehaviour
     public void BattleAxe()
     {
         CP.Ani.SetInteger("AbilityNum", 4);
-        if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if (Input.GetKeyDown(settingmanager.GM.skillattack) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             A_Attack();
             py.GetComponent<Char_Eden>().P_CombatInt = 1;
         }
-        if (Input.GetMouseButtonUp(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if (Input.GetKeyUp(settingmanager.GM.skillattack) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
             py.GetComponent<Char_Eden>().P_CombatInt = 0;
             py.GetComponent<Char_Eden>().P_CombatTimer = 5;
@@ -145,7 +146,7 @@ public class AbilityManager : MonoBehaviour
 
     public void Ability_E()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(settingmanager.GM.skillattack))
         {
             EvilSword_Attack();
             if(Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
@@ -160,7 +161,7 @@ public class AbilityManager : MonoBehaviour
             }
             py.GetComponent<Char_Eden>().P_CombatInt = 1;
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetKeyUp(settingmanager.GM.skillattack))
         {
             py.GetComponent<Char_Eden>().P_CombatInt = 0;
             py.GetComponent<Char_Eden>().P_CombatTimer = 5;

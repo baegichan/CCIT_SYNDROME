@@ -126,7 +126,7 @@ public class Character : MonoBehaviour
         }
         if (Shield > 0)
             Shield -= firstDamage - DP;
-
+        AbyssManager.abyss.abyssGage++;
         Load_Damage_Text(this, firstDamage);
     }
 
@@ -144,6 +144,7 @@ public class Character : MonoBehaviour
         }
         if (Shield > 0)
             Shield -= firstDamage - DP;
+        AbyssManager.abyss.abyssGage++;
         Load_Damage_Text(this, firstDamage);
     }
 
