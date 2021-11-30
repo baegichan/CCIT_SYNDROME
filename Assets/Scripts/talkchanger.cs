@@ -44,7 +44,7 @@ public class talkchanger : MonoBehaviour
             Debug.Log(text_counter+"text");
             text_counter++;
             intext_counter = 0;
-            StartCoroutine(textchanger());
+        //    StartCoroutine(textchanger());
         }
         else if(text_counter==7 && Input.GetKey(KeyCode.R))
         {
