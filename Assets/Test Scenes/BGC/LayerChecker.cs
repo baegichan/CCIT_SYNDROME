@@ -20,5 +20,14 @@ public class LayerChecker : MonoBehaviour
                 transform.parent.GetComponent<Layers>().NomalLayer.Add(gameObject);
             }
         }
+    
+    }
+
+    private void OnEnable()
+    {
+        if (GetComponent<PlatformEffector2D>() != null)
+        {
+            GetComponent<PlatformEffector2D>().colliderMask = Physics2D.AllLayers;
+        }
     }
 }
