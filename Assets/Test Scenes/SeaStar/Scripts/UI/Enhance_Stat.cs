@@ -12,7 +12,7 @@ public class Enhance_Stat : MonoBehaviour
     public Image Level_Health;
     public Sprite[] Level_Health_Image;
     public Text T_Cost_Health;
-    int[] Cost_Health = { 100, 200, 300, 400, 500};
+    int[] Cost_Health = { 100, 150, 200, 250, 300};
     public GameObject Health_Button;
 
     [Header("공격력 강화 UI")]
@@ -26,7 +26,7 @@ public class Enhance_Stat : MonoBehaviour
     public Image Level_Speed;
     public Sprite[] Level_Speed_Image;
     public Text T_Cost_Speed;
-    int[] Cost_Speed = { 100, 200, 300, 400, 500 };
+    int[] Cost_Speed = { 50, 100, 150, 200, 250 };
     public GameObject Speed_Button;
 
     public void UpdateText()
@@ -67,11 +67,11 @@ public class Enhance_Stat : MonoBehaviour
     {
         if (py.Enhance_Health < 4)
         {
-            if (py.P_Money > Cost_Health[py.Enhance_Health])
+            if (AbyssManager.abyss.Darkfog > Cost_Health[py.Enhance_Health])
             {
                 py.Enhance_Health++;
                 py.UpdateStat();
-                py.P_Money -= Cost_Health[py.Enhance_Health];
+                AbyssManager.abyss.Darkfog -= Cost_Health[py.Enhance_Health];
                 py.Save_StateEnhance();
                 UpdateText();
             }
@@ -82,11 +82,11 @@ public class Enhance_Stat : MonoBehaviour
     {
         if (py.Enhance_Strength < 4)
         {
-            if (py.P_Money > Cost_Strength[py.Enhance_Strength])
+            if (AbyssManager.abyss.Darkfog > Cost_Strength[py.Enhance_Strength])
             {
                 py.Enhance_Strength++;
                 py.UpdateStat();
-                py.P_Money -= Cost_Strength[py.Enhance_Strength];
+                AbyssManager.abyss.Darkfog -= Cost_Strength[py.Enhance_Strength];
                 py.Save_StateEnhance();
                 UpdateText();
             }
@@ -97,11 +97,11 @@ public class Enhance_Stat : MonoBehaviour
     {
         if (py.Enhance_Speed < 4)
         {
-            if (py.P_Money > Cost_Speed[py.Enhance_Speed])
+            if (AbyssManager.abyss.Darkfog > Cost_Speed[py.Enhance_Speed])
             {
                 py.Enhance_Speed++;
                 py.UpdateStat();
-                py.P_Money -= Cost_Speed[py.Enhance_Speed];
+                AbyssManager.abyss.Darkfog -= Cost_Speed[py.Enhance_Speed];
                 py.Save_StateEnhance();
                 UpdateText();
             }

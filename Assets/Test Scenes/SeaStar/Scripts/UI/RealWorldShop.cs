@@ -71,9 +71,9 @@ public class RealWorldShop : MonoBehaviour
 
     public void BuyHP()
     {
-        if(CP.P_Money >= HPItem.AbPrice)
+        if(AbyssManager.abyss.Darkfog >= HPItem.AbPrice)
         {
-            CP.P_Money -= HPItem.AbPrice;
+            AbyssManager.abyss.Darkfog -= HPItem.AbPrice;
             CP.MulYakInt++;
             PlayerSkillUI.skill.HpPotionInt.text = CP.MulYakInt.ToString();
         }
@@ -81,9 +81,9 @@ public class RealWorldShop : MonoBehaviour
 
     public void BuyAP()
     {
-        if (CP.P_Money >= APItem.AbPrice)
+        if (AbyssManager.abyss.Darkfog >= APItem.AbPrice)
         {
-            CP.P_Money -= APItem.AbPrice;
+            AbyssManager.abyss.Darkfog -= APItem.AbPrice;
             CP.AlYakInt++;
             PlayerSkillUI.skill.PillInt.text = CP.AlYakInt.ToString();
         }
