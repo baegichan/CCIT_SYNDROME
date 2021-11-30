@@ -28,6 +28,7 @@ public class DEVILSWORD_ANI : MonoBehaviour
     {
         Attack_int = 0;
         Char_Parent.Active_Cool = 0f;
+        PlayerSkillUI.skill.CoolTime = Char_Parent.Active_Cool_Max;
     }
 
     public void int1()
