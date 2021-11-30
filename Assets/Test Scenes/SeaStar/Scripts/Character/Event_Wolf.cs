@@ -12,7 +12,7 @@ public class Event_Wolf : MonoBehaviour
     public GameObject Attack_Event_5;
     public GameObject Skill_Effect;
     public Vector3 RightHand, LeftHand;
-    public Vector3[] RightBox, LeftBox;
+    public Vector3 RightBox, LeftBox;
     public Char_Wolf wolf;
     public GameObject[] HitEffect;
     public Char_Parent CP;
@@ -55,26 +55,28 @@ public class Event_Wolf : MonoBehaviour
 
     void L_Initialization()
     {
-        L_hit = null;
+        L_hit = new Collider2D[AttackInt];
     }
     void R_Initialization()
     {
-        R_hit = null;
+        R_hit = new Collider2D[AttackInt];
     }
-    void overLap_R()
-    {
-        RH = new Vector3(RightHand.x * transform.localScale.x + transform.position.x, RightHand.y + transform.position.y);
-        R_hit = Physics2D.OverlapBoxAll(RH, RightBox[AttackInt], 0, AM.TargetLayer);
-    }
+    //void overLap_R()
+    //{
+    //    RH = new Vector3(RightHand.x * transform.localScale.x + transform.position.x, RightHand.y + transform.position.y);
+    //    R_hit = Physics2D.OverlapBoxAll(RH, RightBox, 0, AM.TargetLayer);
+    //}
 
-    void overLap_L()
-    {
-        LH = new Vector3(LeftHand.x * transform.localScale.x + transform.position.x, LeftHand.y + transform.position.y);
-        L_hit = Physics2D.OverlapBoxAll(LH, LeftBox[AttackInt], 0, AM.TargetLayer);
-    }
+    //void overLap_L()
+    //{
+    //    LH = new Vector3(LeftHand.x * transform.localScale.x + transform.position.x, LeftHand.y + transform.position.y);
+    //    L_hit = Physics2D.OverlapBoxAll(LH, LeftBox, 0, AM.TargetLayer);
+    //}
 
     void WolfAttack_R()
     {
+        RH = new Vector3(RightHand.x * transform.localScale.x + transform.position.x, RightHand.y + transform.position.y);
+        R_hit = Physics2D.OverlapBoxAll(RH, RightBox, 0, AM.TargetLayer);
         if (wolf.P_Attack_State == true)
         {
             foreach (Collider2D Current in R_hit)
@@ -99,6 +101,8 @@ public class Event_Wolf : MonoBehaviour
 
     void WolfAttack_L()
     {
+        LH = new Vector3(LeftHand.x * transform.localScale.x + transform.position.x, LeftHand.y + transform.position.y);
+        L_hit = Physics2D.OverlapBoxAll(LH, LeftBox, 0, AM.TargetLayer);
         if (wolf.P_Attack_State == true)
         {
             foreach (Collider2D Current in L_hit)
@@ -152,8 +156,8 @@ public class Event_Wolf : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(pp, BiteRange);
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(LH, LeftHand);
+        Gizmos.DrawWireCube(new Vector3(LeftHand.x * transform.localScale.x + transform.position.x, LeftHand.y + transform.position.y), LeftBox);
         Gizmos.color = Color.gray;
-        Gizmos.DrawWireCube(RH, RightHand);
+        Gizmos.DrawWireCube(new Vector3(RightHand.x * transform.localScale.x + transform.position.x, RightHand.y + transform.position.y), RightBox);
     }
 }
