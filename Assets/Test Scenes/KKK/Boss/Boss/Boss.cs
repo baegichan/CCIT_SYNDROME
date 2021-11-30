@@ -405,13 +405,13 @@ public class Boss : Character
 
         if (FireFly_Monster != null)
         {
-            GameObject a = Instantiate(FireFly_Monster, new Vector3(5, 7, 0), Quaternion.identity);
+            GameObject a = Instantiate(FireFly_Monster, new Vector3(0, 0, 0), Quaternion.identity);
             a.transform.SetParent(Boss_Use_lns_Zone.transform);
-            GameObject b = Instantiate(FireFly_Monster, new Vector3(-5, 7, 0), Quaternion.identity);
+            GameObject b = Instantiate(FireFly_Monster, new Vector3(15, 0, 0), Quaternion.identity);
             b.transform.SetParent(Boss_Use_lns_Zone.transform);
-            GameObject c = Instantiate(FireFly_Monster, new Vector3(-7, 4, 0), Quaternion.identity);
+            GameObject c = Instantiate(FireFly_Monster, new Vector3(30, 0, 0), Quaternion.identity);
             c.transform.SetParent(Boss_Use_lns_Zone.transform);
-            GameObject d = Instantiate(FireFly_Monster, new Vector3(7, 4, 0), Quaternion.identity);
+            GameObject d = Instantiate(FireFly_Monster, new Vector3(45, 0, 0), Quaternion.identity);
             d.transform.SetParent(Boss_Use_lns_Zone.transform);
         }
 
