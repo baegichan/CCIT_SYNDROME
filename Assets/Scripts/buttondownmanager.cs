@@ -17,13 +17,17 @@ public class buttondownmanager : MonoBehaviour
 
     private void Start()
     {
-        
-        MANAGER = GameObject.Find("Settingmanager");
-        SETTING = MANAGER.GetComponent<keychanger>().settinginfo;
+
+
+        //MANAGER = GameObject.Find("Settingmanager");
+        //SETTING = MANAGER.GetComponent<keychanger>().settinginfo;
+        MANAGER = GameObject.Find("SettingManager");
+        SETTING = MANAGER.transform.GetChild(0).gameObject;
+
     }
     public void cancelbutton()
     {
-        audio.PlayOneShot(clip);
+        //audio.PlayOneShot(clip);
         MANAGER.GetComponent<settingmanager>().cancelsetkey();
         SETTING.SetActive(false);
 
@@ -31,7 +35,7 @@ public class buttondownmanager : MonoBehaviour
 
     public void checkbutton()
     {
-        audio.PlayOneShot(clip);
+        //audio.PlayOneShot(clip);
         MANAGER.GetComponent<settingmanager>().setkey();
         SETTING.SetActive(false);
     }
@@ -57,18 +61,18 @@ public class buttondownmanager : MonoBehaviour
             Screen.SetResolution(savedx, savedy, screenmode);
         }
     }
-    public void exitbutton() 
+    public void exitbutton()
     {
-    
-    
+
+
     }
     public void setting()
     {
         SETTING.SetActive(true);
     }
-   public void GameQuit()
+    public void GameQuit()
     {
-        
+
         Application.Quit();
     }
 

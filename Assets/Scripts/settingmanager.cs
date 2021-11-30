@@ -5,11 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 public class settingmanager : MonoBehaviour
 {
-    public static settingmanager GM;
-    public static GameObject CAN;
+    //public static settingmanager GM;
+    public GameObject CAN;
+    public GameObject ExitPanel;
     public GameObject[] button_ar;
     public GameObject[] volume_ar;
     public GameObject CANVAS;
+
 
     public AudioMixer masterMixer;
     public AudioSource audio;
@@ -22,62 +24,111 @@ public class settingmanager : MonoBehaviour
     public KeyCode dash { get; set; }
     public KeyCode right { get; set; }
     public KeyCode item1 { get; set; }
-    
+
     public KeyCode item2 { get; set; }
     public KeyCode skillchange { get; set; }
     public KeyCode comunication { get; set; }
     public KeyCode nomalattack { get; set; }
     public KeyCode skillattack { get; set; }
     public KeyCode abyss { get; set; }
-    void Awake()
+    //void Awake()
+    //{
+    //    PlayerPrefs.DeleteAll();
+    //    defalutsetter();
+
+    //    update_keycode();
+
+
+    //    if (GM == null)
+    //    {
+    //        DontDestroyOnLoad(gameObject);
+    //        GM = this;
+    //    }
+    //    else if (GM != this)
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //    if (CAN == null)
+    //    {
+
+
+    //        CAN = CANVAS;
+    //        DontDestroyOnLoad(CAN);
+
+    //    }
+    //    else if (CAN != this)
+    //    {
+    //        Destroy(CAN);
+    //    }
+
+
+
+    //}
+
+    private static settingmanager _state;
+
+    public static settingmanager GM
+    {
+        get
+        {
+            // 인스턴스가 없는 경우에 접근하려 하면 인스턴스를 할당해준다.
+            if (!_state)
+            {
+                _state = FindObjectOfType(typeof(settingmanager)) as settingmanager;
+
+                if (_state == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return _state;
+        }
+    }
+
+    private void Awake()
     {
         PlayerPrefs.DeleteAll();
         defalutsetter();
 
         update_keycode();
 
-
-        if (GM == null)
+        if (_state == null)
         {
-            DontDestroyOnLoad(gameObject);
-            GM = this;
+            _state = this;
         }
-        else if (GM != this)
+        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
+        else if (_state != this)
         {
             Destroy(gameObject);
         }
-        if (CAN == null)
-        {
-
-
-            CAN = CANVAS;
-            DontDestroyOnLoad(CAN);
-
-        }
-        else if (CAN != this)
-        {
-            Destroy(CAN);
-        }
-
-
-
+        // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
+        DontDestroyOnLoad(gameObject);
     }
+
+    private void OnDisable()
+    {
+        update_keycode();
+    }
+
+
+
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (CAN.gameObject.activeSelf)
             {
                 cancelsetkey();
                 CAN.gameObject.SetActive(false);
-                   Time.timeScale=1;
+                ExitPanel.SetActive(false);
+                Time.timeScale = 1;
             }
             else
             {
 
                 CAN.gameObject.SetActive(true);
-                 Time.timeScale = 0;
+                Time.timeScale = 0;
             }
+
 
 
         }
@@ -117,7 +168,7 @@ public class settingmanager : MonoBehaviour
         for (int i = 0; i < button_ar.Length; i++)
         {
             button_ar[i].GetComponent<keymatcher>().updateui();
-          
+
         }
     }
 
@@ -201,7 +252,7 @@ public class settingmanager : MonoBehaviour
         if (PlayerPrefs.GetInt("PlayerHP").ToString() == "0")
         {
             PlayerPrefs.SetInt("PlayerHP", 100);
-           
+
         }
     }
 
@@ -223,7 +274,7 @@ public class settingmanager : MonoBehaviour
         else
         {
             float sound = -40 + (name.GetComponent<Slider>().value * 4);
-          
+
             masterMixer.SetFloat("BGM", sound);
         }
 
@@ -232,7 +283,7 @@ public class settingmanager : MonoBehaviour
 
     public void SFXvolumechanger(GameObject name)
     {
-        if(CANVAS.activeSelf) { audio.PlayOneShot(clip); }
+        if (CANVAS.activeSelf) { audio.PlayOneShot(clip); }
 
         if (name.GetComponent<Slider>().value == 0)
         {
