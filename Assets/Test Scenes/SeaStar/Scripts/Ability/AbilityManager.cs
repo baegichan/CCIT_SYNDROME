@@ -18,7 +18,7 @@ public class AbilityManager : MonoBehaviour
     public int[] AxeAP = { 1, 3, 5, 7 };
     public int[] EvilAP = { 6, 9, 12, 15 };
     public GameObject PharaoHitEffect;
-
+    public AudioSource AS;
     //¸¶°Ë
     public bool E_Attack_State = false;
     //
@@ -31,6 +31,10 @@ public class AbilityManager : MonoBehaviour
     public Animator EA;
     public Char_Parent CP;
 
+    void Start()
+    {
+        AS = GetComponent<AudioSource>();
+    }
     public void Werewolf()
     {
         if (Input.GetKeyDown(settingmanager.GM.skillattack) && !CP.Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
@@ -67,6 +71,7 @@ public class AbilityManager : MonoBehaviour
         {
             if (MonsterCol[i].tag == "Monster")
             {
+                AS.PlayOneShot(SoundManager.instance.EFXs[4].Audio);
                 Vector2 enemy = new Vector2(MonsterCol[i].transform.position.x, MonsterCol[i].transform.position.y) - pp;
                 RaycastHit2D Hit = Physics2D.Raycast(pp, enemy, TargetLayer);
                 if (Hit.transform.tag == "Monster")

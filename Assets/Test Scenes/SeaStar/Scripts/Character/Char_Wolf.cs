@@ -7,6 +7,7 @@ public class Char_Wolf : MonoBehaviour
     public int[] HP;
     public int DP;
     public Char_Parent CP;
+    public AbilityManager AM;
     public float WereWolf_Gauge = 0;
     float WereWolf_Max = 5;
     public int power;
@@ -20,7 +21,7 @@ public class Char_Wolf : MonoBehaviour
     }
     public void Attack()
     {
-        if (Input.GetKeyDown(settingmanager.GM.nomalattack) && Char_Parent.ShopOn == false)
+        if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
         {
             if (CP.Ani.GetBool("Jump") == false)
             {
@@ -33,14 +34,15 @@ public class Char_Wolf : MonoBehaviour
 
     public void Dash()
     {
-        if (Input.GetKey(settingmanager.GM.dash))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            AM.AS.PlayOneShot(SoundManager.instance.EFXs[7].Audio);
             Ani.SetBool("Dash", true);
             Ani.SetBool("CanIThis", false);
             WereWolf_Gauge = Time.deltaTime;
         }
 
-        if (Input.GetKeyUp(settingmanager.GM.dash))
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             Ani.SetBool("Dash", false);
             Ani.SetBool("CanIThis", true);

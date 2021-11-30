@@ -37,12 +37,14 @@ public class Char_Eden : MonoBehaviour
     public GameObject SwordLight;
     public GameObject AxeLight;
 
+    AudioSource AS;
     public Animator Ani;
     Rigidbody2D rigid;
     public LayerMask layerMask;
 
     void Start()
     {
+        AS = GetComponent<AudioSource>();
         Ani = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
     }
@@ -127,12 +129,12 @@ public class Char_Eden : MonoBehaviour
         Effect.SetActive(true);
     }
 
-    void SwordAttackEffect1() { AttackEffect(One); }
-    void SwordAttackEffect2() { AttackEffect(Two); }
-    void SwordAttackEffect3() { AttackEffect(Three); Two.SetActive(false); }
-    void AxeAttackEffect1() { AttackEffect(A_One); }
-    void AxeAttackEffect2() { AttackEffect(A_Two); }
-    void AxeAttackEffect3() { AttackEffect(A_Three); A_Two.SetActive(false); }
+    void SwordAttackEffect1() { AttackEffect(One); AS.PlayOneShot(SoundManager.instance.EFXs[0].Audio); }
+    void SwordAttackEffect2() { AttackEffect(Two); AS.PlayOneShot(SoundManager.instance.EFXs[1].Audio); }
+    void SwordAttackEffect3() { AttackEffect(Three); Two.SetActive(false); AS.PlayOneShot(SoundManager.instance.EFXs[2].Audio); }
+    void AxeAttackEffect1() { AttackEffect(A_One); AS.PlayOneShot(SoundManager.instance.EFXs[3].Audio); }
+    void AxeAttackEffect2() { AttackEffect(A_Two); AS.PlayOneShot(SoundManager.instance.EFXs[3].Audio); }
+    void AxeAttackEffect3() { AttackEffect(A_Three); A_Two.SetActive(false); AS.PlayOneShot(SoundManager.instance.EFXs[3].Audio); }
     void SwordLightOn() { SwordLight.SetActive(true); }
     void SwordLightOff() { SwordLight.SetActive(false); }
     void AxeLightOn() { AxeLight.SetActive(true); }
@@ -146,6 +148,7 @@ public class Char_Eden : MonoBehaviour
             {
                 if (P_DashTimer >= 5)
                 {
+                    AS.PlayOneShot(SoundManager.instance.EFXs[15].Audio);
                     P_DashTimer = 0;
                     Ani.SetBool("Dash", true);
                     Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h, 0.1f) * P_DashForce * 2);
