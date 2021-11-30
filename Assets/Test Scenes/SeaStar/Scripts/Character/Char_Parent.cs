@@ -30,8 +30,6 @@ public class Char_Parent : Character
     public int CharAP;
     public int CharDP;
     public int CharSpeed;
-    public float RayDistance;
-    public float DownShootRay;
     //มกวม
     public float Default_JumpForce;
     public float P_JumpForce
@@ -106,7 +104,7 @@ public class Char_Parent : Character
         {
             if (Ani.GetBool("CanIThis"))
             {
-                if (Input.GetKeyDown(settingmanager.GM.jump)) { Jump(); }
+                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                 Move();
             }
         }
@@ -209,8 +207,6 @@ public class Char_Parent : Character
                 ds = eden.Dash;
                 CharHP = eden.HP;
                 CharDP = eden.DP;
-                RayDistance = 0.008f;
-                DownShootRay = 0.05f;
                 StateManager.state.CharImgSelect(0);
                 break;
             case "Wolf":
@@ -219,8 +215,6 @@ public class Char_Parent : Character
                 ds = wolf.Dash;
                 CharHP = wolf.HP[ActiveAbility.Enhance];
                 CharDP = wolf.DP;
-                //RayDistance = 0.00000000001f;
-                //DownShootRay = 0.048f;
                 StateManager.state.CharImgSelect(1);
                 break;
             case "RockHuman":
@@ -252,12 +246,12 @@ public class Char_Parent : Character
 
     public void Move()
     {
-        if (Input.GetKeyDown(settingmanager.GM.left)) { h = -1; }
-        if (Input.GetKeyUp(settingmanager.GM.left)) { h = 0; }
+        //if (Input.GetKeyDown(settingmanager.GM.left)) { h = -1; }
+        //if (Input.GetKeyUp(settingmanager.GM.left)) { h = 0; }
 
-        if (Input.GetKeyDown(settingmanager.GM.right)) { h = 1; }
-        if (Input.GetKeyUp(settingmanager.GM.right)) { h = 0; }
-
+        //if (Input.GetKeyDown(settingmanager.GM.right)) { h = 1; }
+        //if (Input.GetKeyUp(settingmanager.GM.right)) { h = 0; }
+        h = Input.GetAxisRaw("Horizontal");
         SelectChar.transform.position += new Vector3(h * speed * Time.deltaTime, 0);
 
         switch (h)
@@ -301,11 +295,6 @@ public class Char_Parent : Character
             rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime, ForceMode2D.Impulse);
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);
-            if(vel.y == 0)
-            {
-                RayDistance = 0.001f;
-                DownShootRay = 0.048f;
-            }
             if (vel.y > P_JumpForce)
             {
                 vel.y = P_JumpForce;
@@ -357,7 +346,7 @@ public class Char_Parent : Character
         GameObject B = GameObject.FindGameObjectWithTag("OtherPlayer");
         if (P_OtherWorld == false)
         {
-            if (Input.GetKeyDown(settingmanager.GM.abyss))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 P_OtherWorld = true;
                 Instantiate(B, A.transform);
@@ -366,7 +355,7 @@ public class Char_Parent : Character
         }
         if (P_OtherWorld == true)
         {
-            if (Input.GetKeyDown(settingmanager.GM.abyss))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 P_OtherWorld = false;
                 Instantiate(A, B.transform);
@@ -447,14 +436,14 @@ public class Char_Parent : Character
 
     void UseItem()
     {
-        if (MulYakInt > 0 && Input.GetKeyDown(settingmanager.GM.item1))
+        if (MulYakInt > 0 && Input.GetKeyDown(KeyCode.Alpha1))
         {
             MulYakInt--;
             Hp_Current += 50;
             if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
             UpdateState();
         }
-        else if (AlYakInt > 0 && Input.GetKeyDown(settingmanager.GM.item2))
+        else if (AlYakInt > 0 && Input.GetKeyDown(KeyCode.Alpha2))
         {
             AlYakInt--;
             AP_Timer = AP_Duration;

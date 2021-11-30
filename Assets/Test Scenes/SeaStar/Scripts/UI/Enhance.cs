@@ -230,6 +230,7 @@ public class Enhance : MonoBehaviour
                 PlayerSkillUI.skill.Image_CoolTime.sprite = EHNPC.SellItem[index].CoolTime;
                 EHNPC.py.ActiveAbility = EHNPC.SellItem[index];
                 EHNPC.py.SelectAbility();
+                EHNPC.py.DecideChar();
                 if (EHNPC.SellItem[index].AbCode != 0) { EHNPC.py.DecideChar(); }
                 else if (EHNPC.SellItem[index].AbCode == 0)
                 {
