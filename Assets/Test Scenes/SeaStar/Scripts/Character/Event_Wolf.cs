@@ -53,6 +53,14 @@ public class Event_Wolf : MonoBehaviour
     public Vector3 RH;
     public Vector3 LH;
 
+    void L_Initialization()
+    {
+        L_hit = null;
+    }
+    void R_Initialization()
+    {
+        R_hit = null;
+    }
     void overLap_R()
     {
         RH = new Vector3(RightHand.x * transform.localScale.x + transform.position.x, RightHand.y + transform.position.y);

@@ -14,6 +14,7 @@ public class Char_Wolf : MonoBehaviour
     public Animator Ani;
     public bool P_Attack_State;
     public float P_AttackMoveInt;
+    public GameObject Wolf_GageBar;
 
     void OnEnable()
     {
@@ -37,17 +38,21 @@ public class Char_Wolf : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             AM.AS.PlayOneShot(SoundManager.instance.EFXs[7].Audio);
+            Wolf_GageBar.SetActive(true);
             Ani.SetBool("Dash", true);
             Ani.SetBool("CanIThis", false);
             WereWolf_Gauge = Time.deltaTime;
+            Wolf_GageBar.GetComponent<WolfGage>().WolfDashGage = WereWolf_Gauge;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
+            Wolf_GageBar.SetActive(false);
             Ani.SetBool("Dash", false);
             Ani.SetBool("CanIThis", true);
             Char_Parent.rigid.AddForce(new Vector2(Char_Parent.h * 4, 0.6f) * WereWolf_Gauge * power);
             WereWolf_Gauge = 0;
+            Wolf_GageBar.GetComponent<WolfGage>().WolfDashGage = WereWolf_Gauge;
         }
     }
 
