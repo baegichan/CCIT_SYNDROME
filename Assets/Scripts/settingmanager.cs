@@ -103,6 +103,10 @@ public class settingmanager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void OnDisable()
+    {
+        update_keycode();
+    }
 
 
 
