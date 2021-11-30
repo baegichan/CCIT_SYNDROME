@@ -21,7 +21,7 @@ public class Damagetextspawn : MonoBehaviour
         }
         else if (target.tag == "Boss")
         {
-            target_damaged.GetComponent<SpawnDamage>().setATF2(AKF);
+            target_damaged.GetComponent<SpawnDamage>().setATF2(AKF);s
         }
        
     }
