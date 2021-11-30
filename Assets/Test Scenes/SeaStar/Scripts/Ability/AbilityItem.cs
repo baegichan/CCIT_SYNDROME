@@ -15,11 +15,10 @@ public class AbilityItem : MonoBehaviour
     public List<Ability> uniqueList = new List<Ability>();
     public List<Ability> DrinkList = new List<Ability>();
     public List<Ability> AbList = new List<Ability>();
-    public LayerMask TargetMask;
+    public bool isthisShop;
 
     void Awake()
     {
-        Physics2D.IgnoreLayerCollision(7, 30);
         AlyakList();
     }
 
@@ -30,7 +29,7 @@ public class AbilityItem : MonoBehaviour
 
     void Update()
     {
-        BuyItem();
+        if(me.IsSelect && Ply != null && transform.tag == "Pill") { BuyItem(); }
     }
 
     public void AlyakList()
@@ -62,17 +61,17 @@ public class AbilityItem : MonoBehaviour
         if(ItemType <= 75)
         {
             int DecideGrade = Random.Range(0, 10000);
-            if (DecideGrade <= 7000)
+            if (DecideGrade <= 5000)
             {
                 int i = Random.Range(0, commonList.Count);
                 ThisCode = commonList[i].AbCode;
             }
-            else if(DecideGrade > 7000 && DecideGrade <= 9000)
+            else if(DecideGrade > 5000 && DecideGrade <= 8000)
             {
                 int i = Random.Range(0, rareList.Count);
                 ThisCode = rareList[i].AbCode;
             }
-            else if (DecideGrade > 9000 && DecideGrade <= 10000)
+            else if (DecideGrade > 8000 && DecideGrade <= 10000)
             {
                 int i = Random.Range(0, uniqueList.Count);
                 ThisCode = uniqueList[i].AbCode;
@@ -101,78 +100,84 @@ public class AbilityItem : MonoBehaviour
                     gameObject.name = AbList[i].AbName;
                     ThisPrice = AbList[i].AbPrice;
                 }
-                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].ResultIcon, AbList[i].icon, AbList[i].CoolTime, AbList[i].IsUsing, AbList[i].AbExplan);
+                me = new Ability(AbList[i].AbCode, AbList[i].AbName, AbList[i].AbType, AbList[i].AbGrade, AbList[i].Enhance, AbList[i].Enhance_Cost, AbList[i].Effect, AbList[i].AbPrice, AbList[i].IsSelect, AbList[i].AbIcon, AbList[i].AbSprite, AbList[i].ResultIcon, AbList[i].icon, AbList[i].CoolTime, AbList[i].IsUsing, AbList[i].AbExplan);
                 AbList.RemoveAt(i);
+                if (!isthisShop)
+                {
+                    Vector2 EffectPosition = new Vector2(transform.position.x, transform.position.y - 0.6f);
+                    GameObject Effect = Instantiate(me.Effect, EffectPosition, Quaternion.identity);
+                    Effect.transform.parent = transform;
+                }
             }
         }
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    Char_Parent pt;
+
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.transform.tag == "Player")
+        if (col.tag == "Player")
         {
-            Debug.Log(0);
             Ply = col.gameObject;
-            Char_Parent pt = col.transform.GetComponent<Char_Parent>();
+            pt = col.GetComponentInParent<Char_Parent>();
             me.IsSelect = true;
         }
     }
 
-    void OnCollisionExit2D(Collision2D col)
+    void OnTriggerExit2D(Collider2D col)
     {
-        if (col.transform.tag == "Player") { me.IsSelect = false; Debug.Log(1); }
+        if (col.tag == "Player") { me.IsSelect = false; }
     }
 
     void BuyItem()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Physics2D.queriesStartInColliders = false;
-            Collider2D playerCol = Physics2D.OverlapBox(transform.position, new Vector2(5, 5), 0, TargetMask);
-            if(playerCol != null)
+            if (IsBuy)
             {
-                Ply = playerCol.gameObject;
-                Char_Parent pt = playerCol.transform.GetComponentInParent<Char_Parent>();
-                if (IsBuy)
+                switch (me.AbType)
                 {
-                    switch (me.AbType)
-                    {
-                        case Ability.ABTYPE.Active:
-                            pt.ActiveAbility = me;
-                            pt.SelectAbility();
-                            break;
-                        case Ability.ABTYPE.Passive:
-                            pt.PassiveAbility = me;
-                            pt.UsePassive();
-                            pt.passive();
-                            break;
-                        case Ability.ABTYPE.HPDrink:
-                            pt.MulYakInt++;
-                            break;
-                        case Ability.ABTYPE.APDrink:
-                            pt.AlYakInt++;
-                            break;
-                    }
-                    pt.SaveAbilityHistory(me);
-                    if (me.AbCode != 0) { pt.DecideChar(); }
-                    else if (me.AbCode != 0)
-                    {
-                        pt.Ani.SetFloat("AbilityNum", 0);
-                        pt.Ani.SetTrigger("Ability");
-                    }
-                    Destroy(this.gameObject);
+                    case Ability.ABTYPE.Active:
+                        pt.ActiveAbility = me;
+                        pt.DecideChar();
+                        pt.SelectAbility();
+                        PlayerSkillUI.skill.Image_Active.sprite = me.icon;
+                        PlayerSkillUI.skill.Image_CoolTime.sprite = me.CoolTime;
+                        break;
+                    case Ability.ABTYPE.Passive:
+                        pt.PassiveAbility = me;
+                        pt.UsePassive();
+                        pt.passive();
+                        PlayerSkillUI.skill.Image_Passive.sprite = me.icon;
+                        break;
+                    case Ability.ABTYPE.HPDrink:
+                        pt.MulYakInt++;
+                        PlayerSkillUI.skill.HpPotionInt.text = pt.MulYakInt.ToString();
+                        break;
+                    case Ability.ABTYPE.APDrink:
+                        pt.AlYakInt++;
+                        PlayerSkillUI.skill.PillInt.text = pt.AlYakInt.ToString();
+                        break;
                 }
-                else
+                pt.SaveAbilityHistory(me);
+                if (me.AbCode != 0) { pt.DecideChar(); }
+                else if (me.AbCode != 0)
                 {
-                    if (me.AbPrice > pt.P_Money)
-                    {
-                        Debug.Log("돈이 부족합니다.");
-                    }
-                    else if (me.AbPrice <= pt.P_Money)
-                    {
-                        pt.P_Money -= me.AbPrice;
-                        IsBuy = true;
-                    }
+                    pt.Ani.SetFloat("AbilityNum", 0);
+                    pt.Ani.SetTrigger("Ability");
+                }
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                if (me.AbPrice > pt.P_Money)
+                {
+                    Debug.Log("돈이 부족합니다.");
+                }
+                else if (me.AbPrice <= pt.P_Money)
+                {
+                    pt.P_Money -= me.AbPrice;
+                    IsBuy = true;
                 }
             }
         }
