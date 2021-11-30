@@ -227,6 +227,7 @@ public class Char_Parent : Character
         }
 
         rigid = SelectChar.GetComponent<Rigidbody2D>();
+        vel = rigid.velocity;
         Ani = SelectChar.GetComponent<Animator>();
         Hp_Max = DefaultHP + CharHP + Enhance_Health_Point[Enhance_Health];
         //if(!Dead) { Hp_Current = Hp_Max; }
@@ -284,7 +285,7 @@ public class Char_Parent : Character
     //มกวม
 
     public PlatformEffector2D pf;
-    Vector2 vel = rigid.velocity;
+    Vector2 vel;
 
     public void Jump()
     {
@@ -309,7 +310,7 @@ public class Char_Parent : Character
 
     void GroundCheck()
     {
-        RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.localPosition, Vector2.down, 5, lm);
+        RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.localPosition, Vector2.down, 5);
         Debug.DrawRay(SelectChar.transform.localPosition, Vector2.down, Color.blue);
         Physics2D.queriesStartInColliders = false;
         if (Ground.collider.gameObject.tag == "Ground")
@@ -319,6 +320,10 @@ public class Char_Parent : Character
                 Ani.SetBool("Jump", false);
                 P_JumpInt = P_MaxJumpInt;
             }
+        }
+        else if(Ground.collider.gameObject.tag != "Ground")
+        {
+
         }
     }
     //
