@@ -26,7 +26,6 @@ public class Gacha : MonoBehaviour
     {
         GameObject gacha = Instantiate(Item, Item_Pos + transform.position, Quaternion.identity);
         GameObject particle = Instantiate(Particle, Particle_Pos + transform.position, Quaternion.identity);
-        gacha.GetComponent<AbilityItem>().IsBuy = true;
     }
 
     void OnTriggerEnter2D(Collider2D col)
