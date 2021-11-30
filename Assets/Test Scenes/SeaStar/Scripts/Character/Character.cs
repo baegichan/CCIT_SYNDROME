@@ -146,6 +146,10 @@ public class Character : MonoBehaviour
             Shield -= firstDamage - DP;
         AbyssManager.abyss.abyssGage++;
         Load_Damage_Text(this, firstDamage);
+        if (tag == "Monster")
+        {
+            gameObject.GetComponent<Sound_P>().HitSound();
+        }
     }
 
     public void KnuckBack(Transform Attacker, float Power, bool IsBoss)
