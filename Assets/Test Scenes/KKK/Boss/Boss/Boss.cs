@@ -311,7 +311,6 @@ public class Boss : Character
                     anim_off();
                     anim.SetBool("Move_ON", false);
                     anim.SetBool("Dead", true);
-                    //Boss_Dead_Check = true;
                     if (Boss_Use_lns_Zone.transform.childCount != 0)
                         for (int a = 0; a < Boss_Use_lns_Zone.transform.childCount; a++)
                         {
@@ -338,6 +337,9 @@ public class Boss : Character
     }
     public void Boss_End()
     {
+
+        Boss_Dead_Check = true;
+        anim.SetBool("Dead", false);
         GameResultManager.result.CountKillBoss++;
         GameResultManager.result.ShowResult(true);
         
