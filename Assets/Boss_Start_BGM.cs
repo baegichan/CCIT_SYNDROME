@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss__Start_BGM : MonoBehaviour
+public class Boss_Start_BGM : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SoundManager.BGLoop("BattleBGM");
     }
@@ -15,8 +15,4 @@ public class Boss__Start_BGM : MonoBehaviour
     {
         
     }
-
-
-
-
 }

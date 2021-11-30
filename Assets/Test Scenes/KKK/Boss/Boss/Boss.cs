@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boss : Character
 {
-    
+   
     public bool Boss_Active_on;//플레이어가 보스 방에 들어오기 전까지 False 
                                //플레이어가 보스방에 입장하면 True
 
@@ -97,6 +97,7 @@ public class Boss : Character
                 if (bb != Shield) 
                 {
                     Instantiate(Barrier_Hit, transform.position, Quaternion.identity);
+                    SoundManager.OneShot("BossHit");
                     aa = 0;
                 }
             }; 
@@ -114,6 +115,8 @@ public class Boss : Character
         {
             if (Hp_Current != Boss_CurrentHP)
             {
+                SoundManager.OneShot("BossHit");
+
                 Bs.Hp = Hp_Current;
 
                 Boss_CurrentHP = Hp_Current;
@@ -138,7 +141,7 @@ public class Boss : Character
 
         if (Abyss_on == false)
         { 
-            speed = 1;
+            speed = 3;
         }
       
         
@@ -314,6 +317,8 @@ public class Boss : Character
                         {
                             Destroy(Boss_Use_lns_Zone.transform.GetChild(a).gameObject);
                         }
+
+                    
                 }
             }
 
@@ -341,8 +346,10 @@ public class Boss : Character
     {
         MapChangeTester.AbyssMask.test.SetTrigger("Changed");
         AbyssManager.abyss.GoAbyss();
-        Boss_Controll.transform.GetChild(1).gameObject.SetActive(true);
 
+        Boss_Controll.transform.GetChild(1).GetComponent<Boss>().Boss_Active_on = true;
+        Boss_Controll.transform.GetChild(1).gameObject.SetActive(true);
+        
 
         //2PAGE애니메이션에서 맵 전체를 뒤엎어주는 애니메이션 나왔을때 보스를 사라지게 해줘야함
         this.gameObject.SetActive(false);
@@ -393,7 +400,7 @@ public class Boss : Character
 
 
 
-    IEnumerator Respawn_Monster()//몬스터 리스폰 쿨타임 25초로 잡아놈
+    IEnumerator Respawn_Monster()
     {
 
         if (FireFly_Monster != null)
@@ -408,7 +415,7 @@ public class Boss : Character
             d.transform.SetParent(Boss_Use_lns_Zone.transform);
         }
 
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(10f);
         Boss_HP_Half = false;
     }
     
@@ -957,7 +964,7 @@ public class Boss : Character
         if (Abyss_on == false)
         {
             Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
-            Frame = Instantiate(Stom_Obj, new Vector3(20,6, 0), Quaternion.identity);
+            Frame = Instantiate(Stom_Obj, new Vector3(20,15, 0), Quaternion.identity);
             Frame.name = "Frame";// 삭제할 때 Find용으로다가
             Frame.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
             Frame.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
@@ -965,7 +972,7 @@ public class Boss : Character
         else if(Abyss_on == true)
         {
             Instantiate(Dark_Syclone_Obj, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
-            Frame2 = Instantiate(Big_Stom_Obj, new Vector3(20,6, 0), Quaternion.identity);
+            Frame2 = Instantiate(Big_Stom_Obj, new Vector3(20,15, 0), Quaternion.identity);
             Frame2.name = "Frame2";// 삭제할 때 Find용으로다가
             Frame2.GetComponent<Bullet_Attack>().target = Player_Transform.gameObject;
             Frame2.GetComponent<Bullet_Attack>().CycleAttack(Player_Transform.gameObject);
@@ -1047,9 +1054,9 @@ public class Boss : Character
     void speed_back()//Invoke용
     {
         if (Abyss_on == false)
-            speed = 1;
+            speed = 2;
         else
-            speed = 3;
+            speed = 4;
         Boss_State_Check = true;
         Attack_Cool = Boss_Attack_Cooltime;
 
