@@ -5,9 +5,10 @@ using Cinemachine;
 public class CameraFllow : MonoBehaviour
 {
     // Start is called before the first frame update
-    public CinemachineVirtualCamera CVC;
+    
     private void OnEnable()
     {
-        //CVC.Follow = GetComponent<Transform>();
+        Camera.main.transform.Find("CM vcam1").GetComponent<CinemachineVirtualCameraBase>().Follow =transform;
+     
     }
 }

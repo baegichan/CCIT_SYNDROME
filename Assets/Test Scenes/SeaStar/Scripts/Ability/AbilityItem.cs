@@ -29,7 +29,7 @@ public class AbilityItem : MonoBehaviour
 
     void Update()
     {
-        if(me.IsSelect && Ply != null) { BuyItem(); }
+        if(me.IsSelect && Ply != null && transform.tag == "Pill") { BuyItem(); }
     }
 
     public void AlyakList()
@@ -139,6 +139,7 @@ public class AbilityItem : MonoBehaviour
                 {
                     case Ability.ABTYPE.Active:
                         pt.ActiveAbility = me;
+                        pt.DecideChar();
                         pt.SelectAbility();
                         PlayerSkillUI.skill.Image_Active.sprite = me.icon;
                         PlayerSkillUI.skill.Image_CoolTime.sprite = me.CoolTime;

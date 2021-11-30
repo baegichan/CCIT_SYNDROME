@@ -20,7 +20,7 @@ public class Char_Wolf : MonoBehaviour
     }
     public void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && Char_Parent.ShopOn == false)
+        if (Input.GetKeyDown(settingmanager.GM.nomalattack) && Char_Parent.ShopOn == false)
         {
             if (CP.Ani.GetBool("Jump") == false)
             {
@@ -33,14 +33,14 @@ public class Char_Wolf : MonoBehaviour
 
     public void Dash()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(settingmanager.GM.dash))
         {
             Ani.SetBool("Dash", true);
             Ani.SetBool("CanIThis", false);
             WereWolf_Gauge = Time.deltaTime;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(settingmanager.GM.dash))
         {
             Ani.SetBool("Dash", false);
             Ani.SetBool("CanIThis", true);

@@ -33,7 +33,15 @@ public class Char_Parent : Character
     public float RayDistance;
     public float DownShootRay;
     //점프
-    public float P_JumpForce;
+    public float Default_JumpForce;
+    public float P_JumpForce
+    {
+        get
+        {
+            if (PassiveAbility.AbCode != 6) { return Default_JumpForce; }
+            else { return Default_JumpForce + Default_JumpForce * (AM.DoubleJumpP[PassiveAbility.Enhance] * 0.01f); }
+        }
+    }
     float P_DefaultJumpInt = 1;
     public float P_MaxJumpInt
     {
@@ -67,6 +75,12 @@ public class Char_Parent : Character
     public int[] Enhance_Strength_Point = { 0, 1, 2, 3, 4, 5 };
     public int[] Enhance_Speed_Point = { 0, 1, 2, 3, 4, 5 };
 
+    [Header("스킬 쿨타임")]
+    public int WereWolfCool;
+    public int PharaoCool;
+    public int EvilSworldCool;
+    public int BattleAxeCool;
+
     [Header("소지 물약&능력")]
     public int MulYakInt;
     public int AlYakInt;
@@ -92,18 +106,17 @@ public class Char_Parent : Character
         {
             if (Ani.GetBool("CanIThis"))
             {
-                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                if (Input.GetKeyDown(settingmanager.GM.jump)) { Jump(); }
                 Move();
-                GroundCheck();
             }
         }
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadPlus)) { Time.timeScale = 0.01f; }
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
         {
+            GroundCheck();
             if (AbyssManager.abyss.isHp)
             {
                 Hp_Current -= 5;
@@ -111,7 +124,6 @@ public class Char_Parent : Character
                 AbyssManager.abyss.isHp = false;
                 AbyssManager.abyss.HpGage = Hp_Current;
             }
-            if (Input.GetKeyDown(KeyCode.O)) { Damage(20); } //테스트용
             Mouse = Input.mousePosition;
             if (!ShopOn)
             {
@@ -131,8 +143,6 @@ public class Char_Parent : Character
                 MouseFilp();
             }
             if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
-
-            if (Input.GetKeyDown(KeyCode.P)) { PlayerPrefs.DeleteAll(); } //테스트용
             if (AP_Timer > 0) { AP_Time(); }
             else { if (UseApPostion) { UseApPostion = false; } }
             Die();
@@ -199,9 +209,9 @@ public class Char_Parent : Character
                 ds = eden.Dash;
                 CharHP = eden.HP;
                 CharDP = eden.DP;
-                StateManager.state.CharImgSelect(0);
+                RayDistance = 0.008f;
                 DownShootRay = 0.05f;
-                RayDistance = 0.003f;
+                StateManager.state.CharImgSelect(0);
                 break;
             case "Wolf":
                 Char_Wolf wolf = SelectChar.GetComponent<Char_Wolf>();
@@ -209,9 +219,9 @@ public class Char_Parent : Character
                 ds = wolf.Dash;
                 CharHP = wolf.HP[ActiveAbility.Enhance];
                 CharDP = wolf.DP;
+                //RayDistance = 0.00000000001f;
+                //DownShootRay = 0.048f;
                 StateManager.state.CharImgSelect(1);
-                DownShootRay = 0.04f;
-                RayDistance = 0.005f;
                 break;
             case "RockHuman":
                 Char_RockMan rock = SelectChar.GetComponent<Char_RockMan>();
@@ -242,7 +252,12 @@ public class Char_Parent : Character
 
     public void Move()
     {
-        h = Input.GetAxisRaw("Horizontal");
+        if (Input.GetKeyDown(settingmanager.GM.left)) { h = -1; }
+        if (Input.GetKeyUp(settingmanager.GM.left)) { h = 0; }
+
+        if (Input.GetKeyDown(settingmanager.GM.right)) { h = 1; }
+        if (Input.GetKeyUp(settingmanager.GM.right)) { h = 0; }
+
         SelectChar.transform.position += new Vector3(h * speed * Time.deltaTime, 0);
 
         switch (h)
@@ -279,36 +294,42 @@ public class Char_Parent : Character
 
     public void Jump()
     {
-        if (vel.y >= 0)
-        {
-            RayDistance = 0.02f;
-            DownShootRay = 0.1f;
-        }
         if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
         else if (P_JumpInt > 0)
         {
+            Debug.Log(P_JumpForce);
             rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime, ForceMode2D.Impulse);
             P_JumpInt -= 1;
             Ani.SetBool("Jump", true);
+            if(vel.y == 0)
+            {
+                RayDistance = 0.001f;
+                DownShootRay = 0.048f;
+            }
             if (vel.y > P_JumpForce)
             {
                 vel.y = P_JumpForce;
                 rigid.velocity = vel;
-            }     
+            }
         }
     }
 
-    public LayerMask layerMask;
+    [Range(0f, 10f)]
+    public float Distance;
+    public LayerMask lm;
+
     void GroundCheck()
     {
-        RaycastHit2D Ground = Physics2D.Raycast(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - DownShootRay), Vector2.down, RayDistance);
-        Debug.DrawRay(new Vector2(SelectChar.transform.position.x, SelectChar.transform.position.y - DownShootRay), Vector2.down * RayDistance, Color.blue);
+        RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.localPosition, Vector2.down, 5, lm);
+        Debug.DrawRay(SelectChar.transform.localPosition, Vector2.down, Color.blue);
+        Physics2D.queriesStartInColliders = false;
         if (Ground.collider.gameObject.tag == "Ground")
         {
-            RayDistance = 0.0001f;
-            DownShootRay = 0;
-            Ani.SetBool("Jump", false);
-            P_JumpInt = P_MaxJumpInt;
+            if(Ground.distance < Distance)
+            {
+                Ani.SetBool("Jump", false);
+                P_JumpInt = P_MaxJumpInt;
+            }
         }
     }
     //
@@ -336,7 +357,7 @@ public class Char_Parent : Character
         GameObject B = GameObject.FindGameObjectWithTag("OtherPlayer");
         if (P_OtherWorld == false)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(settingmanager.GM.abyss))
             {
                 P_OtherWorld = true;
                 Instantiate(B, A.transform);
@@ -345,7 +366,7 @@ public class Char_Parent : Character
         }
         if (P_OtherWorld == true)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(settingmanager.GM.abyss))
             {
                 P_OtherWorld = false;
                 Instantiate(A, B.transform);
@@ -426,14 +447,14 @@ public class Char_Parent : Character
 
     void UseItem()
     {
-        if (MulYakInt > 0 && Input.GetKeyDown(KeyCode.E))
+        if (MulYakInt > 0 && Input.GetKeyDown(settingmanager.GM.item1))
         {
             MulYakInt--;
             Hp_Current += 50;
             if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
             UpdateState();
         }
-        else if (AlYakInt > 0 && Input.GetKeyDown(KeyCode.Q))
+        else if (AlYakInt > 0 && Input.GetKeyDown(settingmanager.GM.item2))
         {
             AlYakInt--;
             AP_Timer = AP_Duration;
@@ -453,12 +474,12 @@ public class Char_Parent : Character
         switch (AbilityCode)
         {
             case 0:
-                Active_Cool_Max = 4f;
+                Active_Cool_Max = WereWolfCool;
                 break;
             case 1:
                 PharaoWandSwitch();
                 Current_Use = PharaoWand_Senaka;
-                Active_Cool_Max = 4f;
+                Active_Cool_Max = PharaoCool;
                 break;
             case 2:
                 Active_Cool_Max = 4f;
@@ -469,13 +490,13 @@ public class Char_Parent : Character
             case 4:
                 OffBattleAxe();
                 Current_Use = BattleAxe_Senaka;
-                Active_Cool_Max = 0.5f;
+                Active_Cool_Max = BattleAxeCool;
                 break;
             case 5:
                 EvillSwordSwitch();
                 Current_Use = EvilSword;
                 AM.EA = Current_Use.GetComponent<Animator>();
-                Active_Cool_Max = 5f; 
+                Active_Cool_Max = EvilSworldCool; 
                 break;
             case 9:
                 Active_Cool_Max = 4f;
