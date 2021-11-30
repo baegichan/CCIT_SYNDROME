@@ -313,7 +313,7 @@ public class Char_Eden : MonoBehaviour
         if (Input.GetKeyDown(settingmanager.GM.down))
         {
             CP.pf.colliderMask = layerMask;
-            Invoke("AllLayerPlatform", 0.5f);
+            Invoke("AllLayerPlatform", 1f);
         }
     }
 
