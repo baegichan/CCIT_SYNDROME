@@ -11,7 +11,7 @@ public class FIre : MonoBehaviour
     private void Start()
     {
         SR = GetComponent<SpriteRenderer>();
-        StartCoroutine(SpriteChanger());
+        //StartCoroutine(SpriteChanger());
     }
     // Update is called once per frame
     public IEnumerator SpriteChanger()
