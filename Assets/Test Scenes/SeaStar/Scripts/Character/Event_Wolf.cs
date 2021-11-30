@@ -130,6 +130,7 @@ public class Event_Wolf : MonoBehaviour
             {
                 if (hit[i].GetComponent<Character>().Hp_Current < AM.WolfAP[CP.ActiveAbility.Enhance])
                 {
+                   AM.AS.PlayOneShot(SoundManager.instance.EFXs[6].Audio);
                     CP.Hp_Current++;
                 }
                 hit[i].GetComponent<Character>().Damage(AM.WolfAP[CP.ActiveAbility.Enhance], CP.UseApPostion);
