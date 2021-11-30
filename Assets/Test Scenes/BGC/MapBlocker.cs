@@ -22,24 +22,24 @@ public class MapBlocker : MonoBehaviour
          
             case Potals.PotalType.L:
                 shape.rotation = new Vector3(0,90,90);
-                Wall.gameObject.transform.localPosition = new Vector3(0, (Mathf.Abs(Line.T_Area) + Mathf.Abs(Line.B_Area) - 2) / 2, 0);          
+                Wall.gameObject.transform.localPosition = new Vector3(0, /*(Mathf.Abs(Line.T_Area) + Mathf.Abs(Line.B_Area) - 2) / 2*/0, 0);          
                 shape.scale = new Vector3(Mathf.Abs(Line.T_Area)+ Mathf.Abs(Line.B_Area), 1, 0.03f);
                 break;
             case Potals.PotalType.R:
                 shape.rotation = new Vector3(0, -90, 90);
-                Wall.gameObject.transform.localPosition = new Vector3(0, (Mathf.Abs(Line.T_Area) + Mathf.Abs(Line.B_Area) - 2) / 2, 0);
+                Wall.gameObject.transform.localPosition = new Vector3(0, /*(Mathf.Abs(Line.T_Area) + Mathf.Abs(Line.B_Area) - 2) / 2*/0, 0);
 
                 shape.scale = new Vector3(Mathf.Abs(Line.T_Area) + Mathf.Abs(Line.B_Area), 1, 0.03f);
                 break;
             case Potals.PotalType.T:
                 shape.rotation = new Vector3(90, 90, 90);
-                Wall.gameObject.transform.localPosition = new Vector3((Mathf.Abs(Line.L_Area) + Mathf.Abs(Line.R_Area) - 2) / 2, 0, 0);
+                Wall.gameObject.transform.localPosition = new Vector3(/*(Mathf.Abs(Line.L_Area) + Mathf.Abs(Line.R_Area) - 2) / 2*/0, 0, 0);
 
                 shape.scale = new Vector3(Mathf.Abs(Line.L_Area) + Mathf.Abs(Line.R_Area), 1, 0.03f);
                 break;
             case Potals.PotalType.B:
                 shape.rotation = new Vector3(-90, 90, 90);
-                Wall.gameObject.transform.localPosition = new Vector3((Mathf.Abs(Line.L_Area) + Mathf.Abs(Line.R_Area)-2)/2 , 0, 0);
+                Wall.gameObject.transform.localPosition = new Vector3(/*(Mathf.Abs(Line.L_Area) + Mathf.Abs(Line.R_Area)-2)/2*/0 , 0, 0);
                 shape.scale = new Vector3(Mathf.Abs(Line.L_Area) + Mathf.Abs(Line.R_Area), 1, 0.03f);
                 break;
 
