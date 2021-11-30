@@ -29,7 +29,7 @@ public class Teleporter_Boss_Script : MonoBehaviour
     //보스씬으로 가니까 계속 카메라가 없어서 오류가 나는데 DontDestroy해줘야할듯 합니다~
 
 
-
+    GameObject Player_For_DonDestroy;
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -39,8 +39,14 @@ public class Teleporter_Boss_Script : MonoBehaviour
             DontDestroyOnLoad(collision.transform.parent.gameObject);
             transform.GetChild(0).gameObject.SetActive(true);
             transform.GetChild(1).gameObject.SetActive(true);
+
+            Player_For_DonDestroy = collision.transform.parent.gameObject;
+            
+           
+            
             if (Input.GetKeyDown(KeyCode.W))
             {
+                DontDestroyOnLoad(Player_For_DonDestroy);
                 For_Fade.FadeOff_To_BossRoom();
                 //만약 보스맵으로 문을열고 들어가는 파티클때문에 시간이 걸린다면 어두워지는데
                 //필요하게 딜레이를 걸어주세요~
@@ -56,6 +62,7 @@ public class Teleporter_Boss_Script : MonoBehaviour
         {
             transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);
+            Player_For_DonDestroy = null;
             //transform.GetChild(1).gameObject.SetActive(false); 문이라서 필요없을거 같아서 지웠어요~
         }
     }
