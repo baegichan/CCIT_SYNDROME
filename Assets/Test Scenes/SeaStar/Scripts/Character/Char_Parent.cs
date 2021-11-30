@@ -106,7 +106,7 @@ public class Char_Parent : Character
         {
             if (Ani.GetBool("CanIThis"))
             {
-                if (Input.GetKeyDown(settingmanager.GM.jump)) { Jump(); }
+                if (Input.GetKeyDown((KeyCode)settingmanager.GM.jump)) { Jump(); }
                 Move();
             }
         }
@@ -252,11 +252,11 @@ public class Char_Parent : Character
 
     public void Move()
     {
-        if (Input.GetKeyDown(settingmanager.GM.left)) { h = -1; }
-        if (Input.GetKeyUp(settingmanager.GM.left)) { h = 0; }
+        if (Input.GetKeyDown((KeyCode)settingmanager.GM.left)) { h = -1; }
+        if (Input.GetKeyUp((KeyCode)settingmanager.GM.left)) { h = 0; }
 
-        if (Input.GetKeyDown(settingmanager.GM.right)) { h = 1; }
-        if (Input.GetKeyUp(settingmanager.GM.right)) { h = 0; }
+        if (Input.GetKeyDown((KeyCode)settingmanager.GM.right)) { h = 1; }
+        if (Input.GetKeyUp((KeyCode)settingmanager.GM.right)) { h = 0; }
 
         SelectChar.transform.position += new Vector3(h * speed * Time.deltaTime, 0);
 
@@ -357,7 +357,7 @@ public class Char_Parent : Character
         GameObject B = GameObject.FindGameObjectWithTag("OtherPlayer");
         if (P_OtherWorld == false)
         {
-            if (Input.GetKeyDown(settingmanager.GM.abyss))
+            if (Input.GetKeyDown((KeyCode)settingmanager.GM.abyss))
             {
                 P_OtherWorld = true;
                 Instantiate(B, A.transform);
@@ -366,7 +366,7 @@ public class Char_Parent : Character
         }
         if (P_OtherWorld == true)
         {
-            if (Input.GetKeyDown(settingmanager.GM.abyss))
+            if (Input.GetKeyDown((KeyCode)settingmanager.GM.abyss))
             {
                 P_OtherWorld = false;
                 Instantiate(A, B.transform);
@@ -447,14 +447,14 @@ public class Char_Parent : Character
 
     void UseItem()
     {
-        if (MulYakInt > 0 && Input.GetKeyDown(settingmanager.GM.item1))
+        if (MulYakInt > 0 && Input.GetKeyDown((KeyCode)settingmanager.GM.item1))
         {
             MulYakInt--;
             Hp_Current += 50;
             if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
             UpdateState();
         }
-        else if (AlYakInt > 0 && Input.GetKeyDown(settingmanager.GM.item2))
+        else if (AlYakInt > 0 && Input.GetKeyDown((KeyCode)settingmanager.GM.item2))
         {
             AlYakInt--;
             AP_Timer = AP_Duration;
