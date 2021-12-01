@@ -37462,6 +37462,7 @@ MonoBehaviour:
   Ani: {fileID: 3349820096216749868}
   P_Attack_State: 0
   P_AttackMoveInt: 0.7
+  Wolf_GageBar: {fileID: 0}
 --- !u!114 &3349820096216749870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37483,14 +37484,8 @@ MonoBehaviour:
   Skill_Effect: {fileID: 3349820096806861351}
   RightHand: {x: 2.49, y: 1, z: 0}
   LeftHand: {x: 2.28, y: 1, z: 0}
-  RightBox:
-  - {x: 2, y: 0.97, z: 0}
-  - {x: 2.5, y: 0.97, z: 0}
-  - {x: 2.5, y: 97, z: 0}
-  LeftBox:
-  - {x: 2, y: 0.97, z: 0}
-  - {x: 2.5, y: 0.97, z: 0}
-  - {x: 2.5, y: 0.97, z: 0}
+  RightBox: {x: 0, y: 0, z: 0}
+  LeftBox: {x: 0, y: 0, z: 0}
   wolf: {fileID: 3349820096216749871}
   HitEffect:
   - {fileID: 1523429900734316478, guid: dce9928f755c2284cb83b3e6042d5425, type: 3}
@@ -119795,45 +119790,46 @@ MonoBehaviour:
   Enhance_Speed_Point: 000000000100000002000000030000000400000005000000
   WereWolfCool: 5
   PharaoCool: 5
-  EvilSworldCool: 5
+  EvilSworldCool: 0
   BattleAxeCool: 5
-  MulYakInt: 0
-  AlYakInt: 0
+  MulYakInt: 10
+  AlYakInt: 10
   P_Money: 10000
   ActiveAbility:
-    AbCode: 99
-    AbName: 
+    AbCode: 5
+    AbName: Ability_E
     AbType: 0
-    AbGrade: 0
+    AbGrade: 2
     Enhance: 0
-    Enhance_Cost: 
-    Effect: {fileID: 0}
-    AbPrice: 0
+    Enhance_Cost: 500000005a00000067000000
+    Effect: {fileID: 3961982406814001880, guid: b9203e3f6818b764c9a2e503dfa544ab, type: 3}
+    AbPrice: 1250
     IsSelect: 0
-    AbIcon: {fileID: 0}
-    AbSprite: {fileID: 0}
-    ResultIcon: {fileID: 0}
-    icon: {fileID: 0}
-    CoolTime: {fileID: 0}
-    IsUsing: 0
-    AbExplan: 
+    AbIcon: {fileID: 21300000, guid: f681505f7025d8e45bcdbc1367b7fd8e, type: 3}
+    AbSprite: {fileID: 21300000, guid: f959460f310b7664684eae74f1461afa, type: 3}
+    ResultIcon: {fileID: 21300000, guid: f7227da53cc56d44aa2e7912dc747127, type: 3}
+    icon: {fileID: 21300000, guid: 08b36239c30d50142b205485eed5ae4c, type: 3}
+    CoolTime: {fileID: 21300000, guid: 0a35c58428b0551459c18e1ce11ac796, type: 3}
+    IsUsing: 1
+    AbExplan: "\uAC80\uC744 \uB0A0\uB824 \uB370\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4.\r\n\uAC80\uC740
+      \uCD5C\uB300 3\uD68C \uAE4C\uC9C0 \uCF64\uBCF4\uAC00 \uC788\uC2B5\uB2C8\uB2E4."
   PassiveAbility:
-    AbCode: 0
-    AbName: 
-    AbType: 0
+    AbCode: 6
+    AbName: DoubleJump
+    AbType: 1
     AbGrade: 0
     Enhance: 0
-    Enhance_Cost: 
-    Effect: {fileID: 0}
-    AbPrice: 0
+    Enhance_Cost: 0a0000001900000028000000
+    Effect: {fileID: 1389155211830742184, guid: 4ab2398e42bc3624fb3a2366494581d2, type: 3}
+    AbPrice: 350
     IsSelect: 0
-    AbIcon: {fileID: 0}
-    AbSprite: {fileID: 0}
-    ResultIcon: {fileID: 0}
-    icon: {fileID: 0}
-    CoolTime: {fileID: 0}
-    IsUsing: 0
-    AbExplan: 
+    AbIcon: {fileID: 21300000, guid: dde975452d369694286544446c6463b2, type: 3}
+    AbSprite: {fileID: 21300000, guid: 17f68d7f28f7203418a58706e390b655, type: 3}
+    ResultIcon: {fileID: 21300000, guid: 7b417985cbb283a438819fd20748d6df, type: 3}
+    icon: {fileID: 21300000, guid: 3c2df36092696f0478a6b263c139631d, type: 3}
+    CoolTime: {fileID: 21300000, guid: a39a0799bd365294ba0818309a03ab3e, type: 3}
+    IsUsing: 1
+    AbExplan: "\uD55C \uBC88 \uB354 \uC810\uD504\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   pf: {fileID: 0}
   Distance: 0.1
   lm:
@@ -132536,7 +132532,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &3349820097764075750
