@@ -44,7 +44,7 @@ public class SoundManager : MonoBehaviour
     public Dictionary<string, int> BG = new Dictionary<string, int>();
     private void Start()
     {
-        // SoundManager.BGLoop("BattleBGM");
+        //SoundManager.BGLoop("BattleBGM");
        
     }
     public enum SoundType

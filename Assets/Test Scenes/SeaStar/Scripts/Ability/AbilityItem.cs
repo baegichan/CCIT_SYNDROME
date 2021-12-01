@@ -143,12 +143,14 @@ public class AbilityItem : MonoBehaviour
                         pt.SelectAbility();
                         PlayerSkillUI.skill.Image_Active.sprite = me.icon;
                         PlayerSkillUI.skill.Image_CoolTime.sprite = me.CoolTime;
+                        pt.SaveAbilityHistory(me);
                         break;
                     case Ability.ABTYPE.Passive:
                         pt.PassiveAbility = me;
                         pt.UsePassive();
                         pt.passive();
                         PlayerSkillUI.skill.Image_Passive.sprite = me.icon;
+                        pt.SaveAbilityHistory(me);
                         break;
                     case Ability.ABTYPE.HPDrink:
                         pt.MulYakInt++;
@@ -159,7 +161,6 @@ public class AbilityItem : MonoBehaviour
                         PlayerSkillUI.skill.PillInt.text = pt.AlYakInt.ToString();
                         break;
                 }
-                pt.SaveAbilityHistory(me);
                 if (me.AbCode != 0) { pt.DecideChar(); }
                 else if (me.AbCode != 0)
                 {

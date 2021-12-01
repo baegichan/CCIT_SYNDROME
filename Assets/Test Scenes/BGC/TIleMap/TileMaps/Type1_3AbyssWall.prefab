@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1188811236920767700}
   - component: {fileID: 1515384624705725799}
   - component: {fileID: 8762648826175641073}
+  - component: {fileID: 5755465130803578973}
   m_Layer: 9
   m_Name: Type1_3AbyssWall
   m_TagString: Wall
@@ -7646,7 +7647,7 @@ TilemapRenderer:
   m_SortingLayer: 3
   m_SortingOrder: -31
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.010204077, y: 0.010204077, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -7679,7 +7680,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -7704,3 +7705,99 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!66 &5755465130803578973
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6591275224485680725}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1515384624705725799}
+    m_ColliderPaths:
+    - - X: 129948976
+        Y: 170051024
+      - X: 129948976
+        Y: 90051024
+      - X: 99948976
+        Y: 90051024
+      - X: 99948976
+        Y: 64948980
+      - X: 189948976
+        Y: 64948980
+      - X: 189948976
+        Y: 10051020
+      - X: 100051024
+        Y: 10051020
+      - X: 100051024
+        Y: 35051020
+      - X: 70051024
+        Y: 35051020
+      - X: 70051024
+        Y: 55051020
+      - X: 40051020
+        Y: 55051020
+      - X: 40051020
+        Y: 75051024
+      - X: 10051020
+        Y: 75051024
+      - X: 10051020
+        Y: 129948976
+      - X: 40051020
+        Y: 129948976
+      - X: 40051020
+        Y: 144948976
+      - X: 70051024
+        Y: 144948976
+      - X: 70051024
+        Y: 159948976
+      - X: 110051024
+        Y: 159948976
+      - X: 110051024
+        Y: 170051024
+      - X: -51020
+        Y: 170051024
+      - X: -51020
+        Y: -51020
+      - X: 200051024
+        Y: -51020
+      - X: 200051024
+        Y: 170051024
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 20.005074, y: -0.005102}
+      - {x: 20.005074, y: 17.005102}
+      - {x: 12.994898, y: 17.005074}
+      - {x: 12.994868, y: 9.005102}
+      - {x: 9.994898, y: 9.005073}
+      - {x: 9.994927, y: 6.494898}
+      - {x: 18.994898, y: 6.4948688}
+      - {x: 18.99487, y: 1.005102}
+      - {x: 10.005102, y: 1.0051314}
+      - {x: 10.005073, y: 3.5051022}
+      - {x: 7.0051026, y: 3.5051312}
+      - {x: 7.005073, y: 5.505102}
+      - {x: 4.005102, y: 5.5051312}
+      - {x: 4.005073, y: 7.5051026}
+      - {x: 1.005102, y: 7.505132}
+      - {x: 1.0051314, y: 12.994898}
+      - {x: 4.005102, y: 12.994927}
+      - {x: 4.0051312, y: 14.494898}
+      - {x: 7.0051026, y: 14.494926}
+      - {x: 7.005132, y: 15.994898}
+      - {x: 11.005102, y: 15.994926}
+      - {x: 11.005073, y: 17.005102}
+      - {x: -0.005102, y: 17.005074}
+      - {x: -0.0050727, y: -0.005102}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005

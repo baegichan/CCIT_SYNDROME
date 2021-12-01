@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 470038050472854338}
   - component: {fileID: 1396748554445899735}
   - component: {fileID: 8121313919923496261}
+  - component: {fileID: 5715364680080192149}
   m_Layer: 8
   m_Name: Type1_4AbyssGroundPass
   m_TagString: Ground
@@ -177,7 +178,7 @@ TilemapRenderer:
   m_SortingLayer: 3
   m_SortingOrder: -30
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.010204077, y: 0.010204077, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -209,8 +210,8 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -254,3 +255,41 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!66 &5715364680080192149
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910983049833468317}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 470038050472854338}
+    m_ColliderPaths:
+    - - X: 114961928
+        Y: 74733504
+      - X: 130038072
+        Y: 74733504
+      - X: 130038072
+        Y: 75038072
+      - X: 114961928
+        Y: 75038072
+  - m_Collider: {fileID: 470038050472854338}
+    m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 13.0037775, y: 7.4733505}
+      - {x: 13.0037775, y: 7.503807}
+      - {x: 11.496193, y: 7.5037775}
+      - {x: 11.4962225, y: 7.4733505}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005

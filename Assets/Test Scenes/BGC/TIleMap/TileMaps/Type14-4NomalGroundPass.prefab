@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1805514347}
   - component: {fileID: 2497310201513034348}
   - component: {fileID: 8913249410347742117}
+  - component: {fileID: 6533443703279107244}
   m_Layer: 6
   m_Name: Type14-4NomalGroundPass
   m_TagString: Ground
@@ -339,7 +340,7 @@ TilemapRenderer:
   m_SortingLayer: 4
   m_SortingOrder: -30
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.010204077, y: 0.010204077, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -371,8 +372,8 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -416,3 +417,65 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!66 &6533443703279107244
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805514345}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1805514347}
+    m_ColliderPaths:
+    - - X: -34961928
+        Y: -34961928
+      - X: -70038072
+        Y: -34961928
+      - X: -70038072
+        Y: -35266496
+      - X: -34961928
+        Y: -35266496
+    - - X: 30038070
+        Y: -34961928
+      - X: -5038070
+        Y: -34961928
+      - X: -5038070
+        Y: -35266496
+      - X: 30038070
+        Y: -35266496
+    - - X: -104961928
+        Y: -59961928
+      - X: -125038072
+        Y: -59961928
+      - X: -125038072
+        Y: -60266500
+      - X: -104961928
+        Y: -60266500
+  - m_Collider: {fileID: 1805514347}
+    m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 3.0037777, y: -3.5266497}
+      - {x: 3.0037777, y: -3.496193}
+      - {x: -0.503807, y: -3.496222}
+      - {x: -0.5037777, y: -3.5266497}
+    - - {x: -3.496222, y: -3.5266497}
+      - {x: -3.496222, y: -3.496193}
+      - {x: -7.003807, y: -3.496222}
+      - {x: -7.0037775, y: -3.5266497}
+    - - {x: -10.4962225, y: -6.02665}
+      - {x: -10.4962225, y: -5.996193}
+      - {x: -12.503807, y: -5.996222}
+      - {x: -12.5037775, y: -6.02665}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005

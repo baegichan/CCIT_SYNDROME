@@ -64,10 +64,7 @@ public class Punchermonster : Character
 
     private void OnDisable()
     {
-        if (Dead == true)
-        {
-            abyss.MonsterDie();
-        }
+       
         anim.SetFloat("Direction", 1);
         Vector2 current = transform.localScale;
         current.x = 1;
