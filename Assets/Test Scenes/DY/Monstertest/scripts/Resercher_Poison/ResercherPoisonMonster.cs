@@ -53,10 +53,7 @@ public class ResercherPoisonMonster : Character
 
     private void OnEnable()
     {
-        if(Dead == true)
-        {
-            abyss.MonsterDie();
-        }
+       
         playerTransform = null;
         Targeton = false;
         if (Online)
@@ -69,10 +66,7 @@ public class ResercherPoisonMonster : Character
 
     private void OnDisable()
     {
-        if (Dead == true)
-        {
-            abyss.MonsterDie();
-        }
+        
         anim.SetFloat("Direction", 1);
         Vector2 current = transform.localScale;
         current.x = 1;
