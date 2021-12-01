@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,11 @@ public class DarkEnergy : MonoBehaviour
     private bool teststopper;
     public float speed;
 
-  
+
+    private void Awake()
+    {
+        player = Camera.main.transform.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>().Follow.gameObject;
+    }
     private void Start()
     {
         StartCoroutine(onsokunosonic());
