@@ -53,6 +53,7 @@ public class ResercherPoisonMonster : Character
 
     private void OnEnable()
     {
+       
         playerTransform = null;
         Targeton = false;
         if (Online)
@@ -65,6 +66,7 @@ public class ResercherPoisonMonster : Character
 
     private void OnDisable()
     {
+        
         anim.SetFloat("Direction", 1);
         Vector2 current = transform.localScale;
         current.x = 1;
@@ -106,7 +108,7 @@ public class ResercherPoisonMonster : Character
             Dead = true;
             patroll = false;
             trace = false;
-            anim.SetTrigger("Dead");
+            anim.SetBool("Dead", true);
         }
         
     }

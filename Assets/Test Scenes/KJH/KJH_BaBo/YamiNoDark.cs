@@ -7,7 +7,7 @@ public class YamiNoDark : MonoBehaviour
     bool isPlayer = false;
     bool isOpen = false;
     public GameObject Effect;
-    Vector3 EffectPosition = new Vector2(0, 0);
+    Vector3 EffectPosition = new Vector2(0, -0.6f);
 
     void Awake()
     {

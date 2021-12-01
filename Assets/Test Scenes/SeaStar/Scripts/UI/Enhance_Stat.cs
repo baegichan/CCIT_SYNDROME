@@ -35,7 +35,7 @@ public class Enhance_Stat : MonoBehaviour
         Level_Strength.sprite = Level_Strength_Image[py.Enhance_Strength];
         Level_Speed.sprite = Level_Speed_Image[py.Enhance_Speed];
 
-        if (py.Enhance_Health < 4)
+        if (py.Enhance_Health < 6)
             T_Cost_Health.text = Cost_Health[py.Enhance_Health].ToString();
         else
         {
@@ -44,7 +44,7 @@ public class Enhance_Stat : MonoBehaviour
             Health_Button.GetComponent<Button>().enabled = false;
         }
 
-        if (py.Enhance_Strength < 4)
+        if (py.Enhance_Strength < 6)
             T_Cost_Strength.text = Cost_Strength[py.Enhance_Strength].ToString();
         else
         {
@@ -53,7 +53,7 @@ public class Enhance_Stat : MonoBehaviour
             Strength_Button.GetComponent<Button>().enabled = false;
         }
 
-        if (py.Enhance_Speed < 4)
+        if (py.Enhance_Speed < 6)
             T_Cost_Speed.text = Cost_Speed[py.Enhance_Speed].ToString();
         else
         {
@@ -65,13 +65,14 @@ public class Enhance_Stat : MonoBehaviour
 
     public void Enhance_Health()
     {
-        if (py.Enhance_Health < 4)
+        if (py.Enhance_Health < 6)
         {
             if (AbyssManager.abyss.Darkfog > Cost_Health[py.Enhance_Health])
             {
-                py.Enhance_Health++;
-                py.UpdateStat();
                 AbyssManager.abyss.Darkfog -= Cost_Health[py.Enhance_Health];
+                py.Enhance_Health++;
+                py.Hp_Current += 10;
+                py.UpdateStat();
                 py.Save_StateEnhance();
                 UpdateText();
             }
@@ -80,13 +81,13 @@ public class Enhance_Stat : MonoBehaviour
     
     public void Enhance_Strength()
     {
-        if (py.Enhance_Strength < 4)
+        if (py.Enhance_Strength < 6)
         {
             if (AbyssManager.abyss.Darkfog > Cost_Strength[py.Enhance_Strength])
             {
+                AbyssManager.abyss.Darkfog -= Cost_Strength[py.Enhance_Strength];
                 py.Enhance_Strength++;
                 py.UpdateStat();
-                AbyssManager.abyss.Darkfog -= Cost_Strength[py.Enhance_Strength];
                 py.Save_StateEnhance();
                 UpdateText();
             }
@@ -95,13 +96,13 @@ public class Enhance_Stat : MonoBehaviour
     
     public void Enhance_Speed()
     {
-        if (py.Enhance_Speed < 4)
+        if (py.Enhance_Speed < 6)
         {
             if (AbyssManager.abyss.Darkfog > Cost_Speed[py.Enhance_Speed])
             {
+                AbyssManager.abyss.Darkfog -= Cost_Speed[py.Enhance_Speed];
                 py.Enhance_Speed++;
                 py.UpdateStat();
-                AbyssManager.abyss.Darkfog -= Cost_Speed[py.Enhance_Speed];
                 py.Save_StateEnhance();
                 UpdateText();
             }

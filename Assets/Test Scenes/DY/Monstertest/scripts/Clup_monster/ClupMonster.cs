@@ -64,6 +64,7 @@ public class ClupMonster : Character
 
     private void OnDisable()
     {
+       
         anim.SetFloat("Direction", 1);
         Vector2 current = transform.localScale;
         current.x = 1;
@@ -106,7 +107,7 @@ public class ClupMonster : Character
             Dead = true;
             patroll = false;
             trace = false;
-            anim.SetTrigger("Dead");
+            anim.SetBool("Dead", true);
         }
 
     }

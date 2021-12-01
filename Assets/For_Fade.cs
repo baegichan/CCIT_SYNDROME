@@ -3,30 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Cinemachine;
 public class For_Fade : MonoBehaviour
-{/*
-    public static For_Fade Fade;
+{
 
-    public static For_Fade fade
-    {
-        get
-        {
-            if (Fade == null)
-            {
-                fade = 
-            }
-        }
-        set
-        {
+    public static List<GameObject> aa = new List<GameObject>();
 
-        }
-    }
-    */
-    
     public static For_Fade Fade;
     Image fadeimage;
     float i_alpha;
-   
+
+
+
     public void Awake()
     {
         if(Fade==null)
@@ -38,7 +26,11 @@ public class For_Fade : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     
+
+
+
     /// <summary>
     /// 던전 Scene으로 이동
     /// </summary>
@@ -46,7 +38,6 @@ public class For_Fade : MonoBehaviour
     {
         if(Fade!=null)
         {
-            Debug.Log(23);
             Fade.Fad_out_To_Dungeon();
 
         }
@@ -61,6 +52,11 @@ public class For_Fade : MonoBehaviour
             Fade.Fad_out_To_BossRoom();
         }
     }
+
+   
+
+    
+
     /// <summary>
     /// 마을로 이동
     /// </summary>
@@ -68,7 +64,6 @@ public class For_Fade : MonoBehaviour
     {
         if (Fade != null)
         {
-            Debug.Log(2312312321);
             Fade.Fad_out_To_StartRoom();
         }
     }
@@ -101,6 +96,8 @@ public class For_Fade : MonoBehaviour
         Use_Scene_Change.Change_Dungeon_Scene();
         StopCoroutine(Fade_Out_To_Dungeon());
     }
+
+    Camera a;
     public void Fad_out_To_BossRoom()
     {
         i_alpha = GetComponent<Image>().color.a;
@@ -115,9 +112,73 @@ public class For_Fade : MonoBehaviour
             GetComponent<Image>().color = new Color(0, 0, 0, i_alpha);
         }
         Use_Scene_Change.Change_Boss_Scene();
+        
+        Invoke("Delay_a_back", 1.5f);
+       
         StopCoroutine(Fade_out_To_BossRoom());
 
+        Invoke("Player_Camera_Set", 3f);
+        Invoke("aaaa", 3f);
+        
+
     }
+
+    Camera MaskCamera;
+
+    void Player_Camera_Set()
+    {
+        a = Camera.main;
+        GameObject Player1 = GameObject.Find("Player").gameObject;
+        Debug.Log(a.name);
+        if(a != null)
+        Player1.GetComponent<Char_Parent>().Cam = a;
+
+    }
+
+
+    void aaaa()
+    {
+            a = Camera.main;
+            MaskCamera = Camera.main.transform.GetChild(2).gameObject.GetComponent<Camera>();
+            GameObject Canvas1 = GameObject.Find("Player").transform.GetChild(3).gameObject;
+            GameObject Canvas2 = GameObject.Find("Player").transform.GetChild(4).gameObject;
+            GameObject Canvas3 = GameObject.Find("Player").transform.GetChild(0).transform.GetChild(6).gameObject;
+            GameObject Canvas4 = GameObject.Find("Player").transform.GetChild(0).transform.GetChild(5).gameObject;
+            GameObject Player_UI = GameObject.Find("Player_UI_Manager").gameObject;
+            Canvas1.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+            Canvas2.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+            Canvas3.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+            Canvas4.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+            Player_UI.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+            Canvas1.GetComponent<Canvas>().worldCamera = a;
+            Canvas2.GetComponent<Canvas>().worldCamera = a;
+            Canvas3.GetComponent<Canvas>().worldCamera = a;
+            Canvas4.GetComponent<Canvas>().worldCamera = MaskCamera;
+            Player_UI.GetComponent<Canvas>().worldCamera = a;
+
+
+        Invoke("Boss_Active_On", 3f);
+    }
+
+    void Boss_Active_On()
+    {
+        GameObject Boss = GameObject.Find("Boss_Controll").transform.GetChild(0).gameObject;
+        Boss.GetComponent<Boss>().Boss_Active_on = true;
+    }
+
+    public void Delay_a_back()
+    {
+        GameObject a2 = GameObject.Find("2222");
+        a2.gameObject.SetActive(false);
+        GetComponent<Image>().color = new Color(0, 0, 0, 0);
+
+        GameObject Player = GameObject.Find("Player");
+        Player.GetComponent<Char_Parent>().SelectChar.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        GameObject CurrentPlayer = Player.GetComponent<Char_Parent>().SelectChar;
+        CurrentPlayer.transform.position = new Vector3(-6.5f, 1, 0);
+    }
+
+
     public void Fad_out_To_StartRoom()
     {
 
@@ -132,6 +193,20 @@ public class For_Fade : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
             GetComponent<Image>().color = new Color(0, 0, 0, i_alpha);
         }
+      
+
+        GameObject Fade = GameObject.Find("fade");
+        for(int i = 0; i< aa.Count; i++)
+        {
+            if(aa[i] != Fade)
+            {
+                Destroy(aa[i]);
+            }
+        }
+
+        Destroy(Fade);
+
+
         Use_Scene_Change.Change_Start_Scene();
         StopCoroutine(Fade_out_To_StartRoom());
 

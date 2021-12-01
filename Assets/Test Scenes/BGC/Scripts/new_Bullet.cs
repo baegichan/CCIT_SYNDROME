@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class new_Bullet : MonoBehaviour
 {
+    public AbyssManager.AbyssState stateBullet;
     // Start is called before the first frame update
     public float Speed;
     public Rigidbody2D rigid;
@@ -75,7 +76,7 @@ public class new_Bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Bullet_Target == Target.Player)
+        if (Bullet_Target == Target.Player && AbyssManager.abyss.abyssState == stateBullet)
         {
             if (collision.tag == "Player")
             {
@@ -93,15 +94,6 @@ public class new_Bullet : MonoBehaviour
                 collision.GetComponentInParent<Character>().PlayerKnuckBack(transform, collision.transform, 2, false);
                 Destroy(gameObject);
             }
-        }
-
-        if (collision.tag == "Wall")
-        {
-            Destroy(gameObject);
-        }
-        if(collision.tag=="Ground")
-        {
-            Destroy(gameObject);
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Character : MonoBehaviour
 {
     [Header("공통 스테이터스")]
@@ -61,27 +61,27 @@ public class Character : MonoBehaviour
     }
     public  void Load_Heal_Text(Character target,int Healint)
     {
-        GameObject Text = (GameObject)Instantiate(Resources.Load("HealObj"), target.transform.position + Vector3.up * 1+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+        GameObject Text = (GameObject)Instantiate(Resources.Load("HEALCANVAS"), target.transform.position + Vector3.up * 1+ new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().HealText(Healint);
 
-     
-        float fontExtra = Mathf.Clamp(Healint / 10,1, 1.5f);
-        float fontsize = Random.Range(1 * fontExtra, 1.2f * fontExtra);
-        Text.transform.localScale = new Vector3(fontsize, fontsize, 1);
+
+        float fontExtra = Mathf.Clamp(Healint / 3, 5.0f, 10.0f);
+        float fontsize = Random.Range(0.8f * fontExtra, 1.0f * fontExtra);
+        Text.GetComponentInChildren<Text>().fontSize = (int)fontsize;
     }
     public  void Load_Damage_Text(Character target,int Damage)
     { 
         if(transform.tag == "Player" && AbyssManager.abyss != null) { AbyssManager.abyss.GetAbyssGage(10); }
         GameObject Text = null;
       
-            Text = (GameObject)Instantiate(Resources.Load("DamageObj"), target.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+            Text = (GameObject)Instantiate(Resources.Load("DMGCANVAS"), target.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
        
    
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
-        float fontExtra = Mathf.Clamp(Damage / 10,0.8f,1.5f);
-        float fontsize = Random.Range(0.8f* fontExtra, 1.0f* fontExtra);
-        Text.transform.localScale = new Vector3(fontsize, fontsize, 1);
-       
+        float fontExtra = Mathf.Clamp(Damage / 3, 5.0f, 10.0f);
+        float fontsize = Random.Range(0.8f * fontExtra, 1.0f * fontExtra);
+        Text.GetComponentInChildren<Text>().fontSize = (int)fontsize;
+
     }
     public void Damage(int DamageValue)
     {

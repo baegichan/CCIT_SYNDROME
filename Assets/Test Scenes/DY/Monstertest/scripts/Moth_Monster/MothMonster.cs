@@ -64,6 +64,7 @@ public class MothMonster : Character
 
     private void OnDisable()
     {
+        
         anim.SetFloat("Direction", 1);
         Vector2 current = transform.localScale;
         current.x = 1;
@@ -108,7 +109,7 @@ public class MothMonster : Character
             Dead = true;
             patroll = false;
             trace = false;
-            anim.SetTrigger("Dead");
+            anim.SetBool("Dead", true);
         }
     }
     private void FixedUpdate()
@@ -166,7 +167,6 @@ public class MothMonster : Character
     public void MothDestroy()
     {
         GameResultManager.result.CountKillMonster++;
-        Debug.Log("Á×À½");
         abyss.MonsterDie();
         //Destroy(gameObject);
     }

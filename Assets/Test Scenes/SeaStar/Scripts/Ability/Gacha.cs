@@ -12,12 +12,14 @@ public class Gacha : MonoBehaviour
     public Vector3 Item_Pos;
     public Vector3 Particle_Pos;
     public Animator ani;
+    public bool IsUse;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && IsPlayer && player.GetComponentInParent<Char_Parent>().P_Money >= 10)
+        if (!IsUse && Input.GetKeyDown(KeyCode.F) && IsPlayer && AbyssManager.abyss.Darkfog >= 10)
         {
-            player.GetComponentInParent<Char_Parent>().P_Money -= 10;
+            IsUse = true;
+            AbyssManager.abyss.Darkfog -= 10;
             ani.SetTrigger("Gacha");
         }
     }

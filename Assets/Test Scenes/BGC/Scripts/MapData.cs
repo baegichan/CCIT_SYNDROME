@@ -39,9 +39,9 @@ public class MapData : ScriptableObject
 
     public void Save_TileCollider(GameObject TileCollider)
     {
-        GameObject tile =  PrefabUtility.SaveAsPrefabAsset(TileCollider, "Assets/Test Scenes/BGC/TileMap/TileColliders/" + this.name+"_Tilecol" + ".prefab");
-        Debug.Log(tile.name+"               adfafs");
-        TileCollider = tile;
+     //   GameObject tile =  PrefabUtility.SaveAsPrefabAsset(TileCollider, "Assets/Test Scenes/BGC/TileMap/TileColliders/" + this.name+"_Tilecol" + ".prefab");
+      //  Debug.Log(tile.name+"               adfafs");
+      //  TileCollider = tile;
     }
     public GameObject Load_TileCollider(GameObject target)
     {

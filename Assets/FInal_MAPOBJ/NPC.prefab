@@ -283,7 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b4a2d979b043e41b6133e6999c4e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fade_out_in_canvas: {fileID: 0}
   Camera: {fileID: 0}
 --- !u!61 &7535365544127330603
 BoxCollider2D:
@@ -409,7 +408,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b4a2d979b043e41b6133e6999c4e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fade_out_in_canvas: {fileID: 0}
   Camera: {fileID: 0}
 --- !u!61 &9007749567981327028
 BoxCollider2D:
@@ -912,7 +910,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 300
+  m_SortingOrder: 500
   m_TargetDisplay: 0
 --- !u!114 &4130656478100840448
 MonoBehaviour:
@@ -5156,6 +5154,7 @@ MonoBehaviour:
   Item_Pos: {x: 0, y: -0.5, z: 0}
   Particle_Pos: {x: 0, y: -0.5, z: 0}
   ani: {fileID: 4130656479477432504}
+  IsUse: 0
 --- !u!95 &4130656479477432504
 Animator:
   serializedVersion: 3
@@ -7247,7 +7246,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 300
+  m_SortingOrder: 500
   m_TargetDisplay: 0
 --- !u!114 &4130656480206047490
 MonoBehaviour:
@@ -7401,7 +7400,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9177589245457522578}
-  - component: {fileID: 8761443349636368624}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -7425,32 +7423,6 @@ Transform:
   m_Father: {fileID: 4130656478473224950}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8761443349636368624
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8818741964630168364}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.11514723, y: -0.06665754}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.5290658, y: 4.5755196}
-  m_EdgeRadius: 0
 --- !u!1001 &795086108006763265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7544,6 +7516,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3060299799511335471}
     m_Modifications:
+    - target: {fileID: 8530166157282928929, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8530166157282928942, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}
       propertyPath: m_Color.b
       value: 0.23923102
@@ -7635,6 +7611,10 @@ PrefabInstance:
     - target: {fileID: 8530166157653486286, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}
       propertyPath: m_Name
       value: AbyssLightControl
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530166157653486286, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}
@@ -7772,6 +7752,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3485082144206250280}
     m_Modifications:
+    - target: {fileID: 8530166157282928929, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8530166157282928942, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}
       propertyPath: m_Color.b
       value: 0.23921569
@@ -7871,6 +7855,10 @@ PrefabInstance:
     - target: {fileID: 8530166157653486286, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}
       propertyPath: m_Name
       value: AbyssLightControl (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530166157653486286, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bb8df66638bb4e48a02f3cea6900a86, type: 3}

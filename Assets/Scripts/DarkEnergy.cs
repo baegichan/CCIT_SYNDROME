@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,11 @@ public class DarkEnergy : MonoBehaviour
     private bool teststopper;
     public float speed;
 
-  
+
+    private void Awake()
+    {
+        player = Camera.main.transform.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>().Follow.gameObject;
+    }
     private void Start()
     {
         StartCoroutine(onsokunosonic());
@@ -37,7 +42,7 @@ void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Player")
         {
-            AbyssManager.abyss.Darkfog += 10;
+            AbyssManager.abyss.Darkfog += Random.Range(80, 141);
             Destroy(transform.gameObject);
         }
 
