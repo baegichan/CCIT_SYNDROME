@@ -153,8 +153,6 @@ public class Char_Parent : Character
         {
             Before_Position = SelectChar.transform.position;
             SelectChar = Char[0];
-            AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.9f);
-            PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
             Dead = true;
             ChangeChar(SelectChar);
             SelectChar.transform.position = Before_Position;
@@ -235,6 +233,8 @@ public class Char_Parent : Character
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
         speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
         AM.py = SelectChar;
+        //if (ActiveAbility != null) { ResourceManager.re.ActiveAbility = ActiveAbility; }
+        //if (PassiveAbility != null) { ResourceManager.re.PassiveAbility = PassiveAbility; }
         switchItem(ActiveAbility.AbCode);
         UpdateState();
     }
@@ -313,16 +313,16 @@ public class Char_Parent : Character
         RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.position, Vector2.down, 5);
         Debug.DrawRay(SelectChar.transform.position, Vector2.down, Color.blue);
         Physics2D.queriesStartInColliders = false;
+        Debug.Log(Ground.collider.tag);
         if (Ground.collider.gameObject.tag == "Ground")
         {
-            if(Ground.distance < Distance)
+            if (Ground.distance < Distance)
             {
                 Ani.SetBool("Jump", false);
                 P_JumpInt = P_MaxJumpInt;
             }
         }
     }
-    //
 
     //마우스 플립
 
@@ -341,29 +341,29 @@ public class Char_Parent : Character
         }
     }
 
-    public void WorldChange()
-    {
-        GameObject A = GameObject.FindGameObjectWithTag("Player");
-        GameObject B = GameObject.FindGameObjectWithTag("OtherPlayer");
-        if (P_OtherWorld == false)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                P_OtherWorld = true;
-                Instantiate(B, A.transform);
-                Destroy(A, 0f);
-            }
-        }
-        if (P_OtherWorld == true)
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                P_OtherWorld = false;
-                Instantiate(A, B.transform);
-                Destroy(B, 0f);
-            }
-        }
-    }
+    //public void WorldChange()
+    //{
+    //    GameObject A = GameObject.FindGameObjectWithTag("Player");
+    //    GameObject B = GameObject.FindGameObjectWithTag("OtherPlayer");
+    //    if (P_OtherWorld == false)
+    //    {
+    //        if (Input.GetKeyDown(KeyCode.Q))
+    //        {
+    //            P_OtherWorld = true;
+    //            Instantiate(B, A.transform);
+    //            Destroy(A, 0f);
+    //        }
+    //    }
+    //    if (P_OtherWorld == true)
+    //    {
+    //        if (Input.GetKeyDown(KeyCode.Q))
+    //        {
+    //            P_OtherWorld = false;
+    //            Instantiate(A, B.transform);
+    //            Destroy(B, 0f);
+    //        }
+    //    }
+    //}
 
     //능력
     public delegate void useAbility();
@@ -521,18 +521,23 @@ public class Char_Parent : Character
 
     void Load_StateEnhance()
     {
-        Enhance_Health = PlayerPrefs.HasKey("E_Health") ? PlayerPrefs.GetInt("E_Health") : 0;
-        Enhance_Strength = PlayerPrefs.HasKey("E_Strength") ? PlayerPrefs.GetInt("E_Strength") : 0;
-        Enhance_Speed = PlayerPrefs.HasKey("E_Speed") ? PlayerPrefs.GetInt("E_Speed") : 0;
-        AbyssManager.abyss.Darkfog = PlayerPrefs.HasKey("DarkFog") ? PlayerPrefs.GetInt("DarkFog") : 0;
+       
+        Enhance_Health = ResourceManager.re.Enhance_Health;
+        Enhance_Strength = ResourceManager.re.Enhance_Strength;
+        Enhance_Speed = ResourceManager.re.Enhance_Speed;
+        //ActiveAbility = ResourceManager.re.ActiveAbility;
+        //PassiveAbility = ResourceManager.re.PassiveAbility;
+        StateManager.state.DarkFog = AbyssManager.abyss.Darkfog;
+
+
     }
 
     public void Save_StateEnhance()
     {
-        PlayerPrefs.SetInt("E_Health", Enhance_Health);
-        PlayerPrefs.SetInt("E_Strength", Enhance_Strength);
-        PlayerPrefs.SetInt("E_Speed", Enhance_Speed);
-        PlayerPrefs.SetInt("DarkFog", AbyssManager.abyss.Darkfog);
+        ResourceManager.re.Enhance_Health = Enhance_Health;
+        ResourceManager.re.Enhance_Strength = Enhance_Strength;
+        ResourceManager.re.Enhance_Speed = Enhance_Speed;
+        AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.1f);
     }
 
     public void SaveAbilityHistory(Ability ability)
