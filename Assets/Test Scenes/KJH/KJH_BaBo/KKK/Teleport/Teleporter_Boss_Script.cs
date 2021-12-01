@@ -20,11 +20,6 @@ public class Teleporter_Boss_Script : MonoBehaviour
 
 
 
-    //public GameObject Scene_Translate_Partical;
-    public GameObject Fade_out_in_canvas;//포탈 탈때 생기는 이미지인데 이거 투명도 조절하면서 
-                                         //Fade효과 줘가지고 일부러 DontDestroy걸어놨음ㅁㄴㅇㅁㄴㅇㅁㄴ이ㅏㄴ우리ㅏㅁㅇㄴ랑니라
-
-
     public GameObject Camera;
     //보스씬으로 가니까 계속 카메라가 없어서 오류가 나는데 DontDestroy해줘야할듯 합니다~
 
@@ -34,32 +29,41 @@ public class Teleporter_Boss_Script : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+
+            
             //문 열고 들어가는거 틀어주고
-            DontDestroyOnLoad(Fade_out_in_canvas.transform.parent.gameObject);
-            DontDestroyOnLoad(collision.transform.parent.gameObject);
+           
             transform.GetChild(0).gameObject.SetActive(true);
             transform.GetChild(1).gameObject.SetActive(true);
 
+
+            
+
             Player_For_DonDestroy = collision.transform.parent.gameObject;
-            
-           
-            
+
+
+
             if (Input.GetKeyDown(KeyCode.W))
             {
                 DontDestroyOnLoad(Player_For_DonDestroy);
                 For_Fade.FadeOff_To_BossRoom();
-                //만약 보스맵으로 문을열고 들어가는 파티클때문에 시간이 걸린다면 어두워지는데
-                //필요하게 딜레이를 걸어주세요~
-                //그정도는 알잘딱합시다~
+                //For_Fade.Translate_Player(collision.gameObject) ;
+                StartCoroutine(aaa(collision.gameObject));
             }
 
         }
     }
+    IEnumerator aaa(GameObject a)
+    {
+        yield return new WaitForSeconds(0.5f);
+        For_Fade.Translate_Player(a.gameObject);
 
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            
             transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);
             Player_For_DonDestroy = null;
