@@ -34,6 +34,10 @@ public class PotalEvent : MonoBehaviour
         }
         
     }
+    private void Start()
+    {
+        Instantiate(Resources.Load("PotalCol"), transform.position, Quaternion.identity, transform);
+    }
     private void OnEnable()
     {
         StartCoroutine(Mapon()); 
@@ -210,7 +214,7 @@ public class PotalEvent : MonoBehaviour
                 MapManager.s_Instace.Minimap.CurrentOn(MapManager.s_Instace.PCurrent_Room);
                 break;
         }
-        Instantiate(Resources.Load("PotalCol"), transform.position, Quaternion.identity, transform);
+        
     }
     public void Connecting(GameObject Potal)
     {
