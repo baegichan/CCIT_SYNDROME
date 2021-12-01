@@ -55,7 +55,7 @@ public class Teleporter_Boss_Script : MonoBehaviour
     }
     IEnumerator aaa(GameObject a)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         For_Fade.Translate_Player(a.gameObject);
 
     }
