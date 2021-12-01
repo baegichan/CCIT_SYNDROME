@@ -310,8 +310,8 @@ public class Char_Parent : Character
 
     void GroundCheck()
     {
-        RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.localPosition, Vector2.down, 5);
-        Debug.DrawRay(SelectChar.transform.localPosition, Vector2.down, Color.blue);
+        RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.position, Vector2.down, 5);
+        Debug.DrawRay(SelectChar.transform.position, Vector2.down, Color.blue);
         Physics2D.queriesStartInColliders = false;
         if (Ground.collider.gameObject.tag == "Ground")
         {
@@ -320,10 +320,6 @@ public class Char_Parent : Character
                 Ani.SetBool("Jump", false);
                 P_JumpInt = P_MaxJumpInt;
             }
-        }
-        else if(Ground.collider.gameObject.tag != "Ground")
-        {
-
         }
     }
     //
