@@ -164,9 +164,9 @@ public class Enhance : MonoBehaviour
 
     public void EnhaceAbility()
     {
-        if(CP.ActiveAbility.Enhance < 3 && CP.P_Money >= CP.ActiveAbility.Enhance_Cost[CP.ActiveAbility.Enhance])
+        if(CP.ActiveAbility.Enhance < 3 && AbyssManager.abyss.Darkfog >= CP.ActiveAbility.Enhance_Cost[CP.ActiveAbility.Enhance])
         {
-            CP.P_Money -= CP.ActiveAbility.Enhance_Cost[CP.ActiveAbility.Enhance];
+            AbyssManager.abyss.Darkfog -= CP.ActiveAbility.Enhance_Cost[CP.ActiveAbility.Enhance];
             CP.ActiveAbility.Enhance++;
             SettingAbility();
         }
@@ -174,9 +174,9 @@ public class Enhance : MonoBehaviour
 
     public void EnhacePassive()
     {
-        if (CP.PassiveAbility.Enhance < 3 && CP.P_Money >= CP.PassiveAbility.Enhance_Cost[CP.PassiveAbility.Enhance])
+        if (CP.PassiveAbility.Enhance < 3 && AbyssManager.abyss.Darkfog >= CP.PassiveAbility.Enhance_Cost[CP.PassiveAbility.Enhance])
         {
-            CP.P_Money -= CP.PassiveAbility.Enhance_Cost[CP.PassiveAbility.Enhance];
+            AbyssManager.abyss.Darkfog -= CP.PassiveAbility.Enhance_Cost[CP.PassiveAbility.Enhance];
             CP.PassiveAbility.Enhance++;
             SettingAbility();
         }
@@ -221,9 +221,9 @@ public class Enhance : MonoBehaviour
 
     void BuyItem(int index)
     {
-        if (CP.P_Money >= EHNPC.SellItem[index].AbPrice)
+        if (AbyssManager.abyss.Darkfog >= EHNPC.SellItem[index].AbPrice)
         {
-            CP.P_Money -= EHNPC.SellItem[index].AbPrice;
+            AbyssManager.abyss.Darkfog -= EHNPC.SellItem[index].AbPrice;
             if (EHNPC.SellItem[index].AbType == Ability.ABTYPE.Active)
             {
                 PlayerSkillUI.skill.Image_Active.sprite = EHNPC.SellItem[index].icon;
