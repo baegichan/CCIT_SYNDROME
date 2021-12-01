@@ -15,6 +15,9 @@ public class buttondownmanager : MonoBehaviour
     public static bool screenmode = true;
     public AudioSource audio;
     public AudioClip clip;
+
+    [SerializeField]
+    Texture2D Cursors;
     // Start is called before the first frame update
 
     private void Start()
@@ -49,7 +52,7 @@ public class buttondownmanager : MonoBehaviour
             savedx = screensizex;
             savedy = screensizey;
 
-            Debug.Log(string.Format("{0} {1} {2}", savedx, savedy, screenmode));
+            
             Screen.SetResolution(savedx, savedy, screenmode);
         }
     }
@@ -80,6 +83,11 @@ public class buttondownmanager : MonoBehaviour
     {
 
         Application.Quit();
+    }
+
+    public void Cussor()
+    {
+        Cursor.SetCursor(Cursors, Vector2.zero, CursorMode.ForceSoftware);
     }
 
 }
