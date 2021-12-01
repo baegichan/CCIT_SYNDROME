@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Char_Parent : Character
 {
     [Header("게임 오브젝트")]
@@ -546,7 +546,11 @@ public class Char_Parent : Character
     public void Special_Load_Damage_Text(int Damage)
     {
         CurrentCha = GetComponent<Char_Parent>().SelectChar;
-        GameObject Text = (GameObject)Instantiate(Resources.Load("DamageObj2"), CurrentCha.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
+        GameObject Text = (GameObject)Instantiate(Resources.Load("DMGCANVAS2"), CurrentCha.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
+      
+        float fontExtra = Mathf.Clamp(Damage / 3 , 5.0f, 10.0f);
+        float fontsize = Random.Range(0.8f * fontExtra, 1.0f * fontExtra);
+        Text.GetComponent<Text>().fontSize = (int)fontsize;
     }
 }
