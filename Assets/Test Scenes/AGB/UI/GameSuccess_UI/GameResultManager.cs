@@ -215,10 +215,19 @@ public class GameResultManager : MonoBehaviour
         endTime = Convert.ToInt32(playTime);
         Debug.Log(endTime);
         if (isGameClear)
+        {
             EffectResult = EffectPanel.transform.GetChild(0).gameObject; // 성공
+        }
         else
+        {
             EffectResult = EffectPanel.transform.GetChild(1).gameObject; // 실패
-
+            if (SceneManager.GetActiveScene().name == "Boss_Scene")
+            {
+                GameObject boss = GameObject.Find("Boss_Controll");
+                boss.transform.GetChild(0).GetComponent<Boss>().Boss_Active_on = false;
+                boss.transform.GetChild(1).GetComponent<Boss>().Boss_Active_on = false;
+            }
+        }
         EffectBack = EffectResult.transform.GetChild(0).gameObject;
         textImage = EffectBack.transform.GetChild(0).gameObject;
         EffectBack.transform.localScale = new Vector3(1, 0, 1);
