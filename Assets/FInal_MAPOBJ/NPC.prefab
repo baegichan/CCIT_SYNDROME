@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 8996581664894841423}
   - component: {fileID: 381858431860543992}
   - component: {fileID: 2026130326}
+  - component: {fileID: 7535365544127330603}
   m_Layer: 9
   m_Name: BossRoom_Atlas_1
   m_TagString: Untagged
@@ -284,6 +285,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Fade_out_in_canvas: {fileID: 0}
   Camera: {fileID: 0}
+--- !u!61 &7535365544127330603
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915427884293034595}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.11514723, y: -0.06665754}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.8666666, y: 4.9}
+    newSize: {x: 3.8666666, y: 4.9}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.5290658, y: 4.5755196}
+  m_EdgeRadius: 0
 --- !u!1 &2193120005956000257
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +322,7 @@ GameObject:
   - component: {fileID: 9198969090487339094}
   - component: {fileID: 2917806643188296178}
   - component: {fileID: 2026130327}
+  - component: {fileID: 9007749567981327028}
   m_Layer: 7
   m_Name: BossRoom_Atlas_0
   m_TagString: Untagged
@@ -383,6 +411,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Fade_out_in_canvas: {fileID: 0}
   Camera: {fileID: 0}
+--- !u!61 &9007749567981327028
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193120005956000257}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.11514723, y: -0.06665754}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.7, y: 4.8166666}
+    newSize: {x: 3.7, y: 4.8166666}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.5290658, y: 4.5755196}
+  m_EdgeRadius: 0
 --- !u!1 &3776578080655461721
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,7 +912,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 200
+  m_SortingOrder: 300
   m_TargetDisplay: 0
 --- !u!114 &4130656478100840448
 MonoBehaviour:
@@ -5095,12 +5149,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  Item: {fileID: 8470304931355078204, guid: 3977b87dabf772f41afa3c2feb8ba05c, type: 3}
+  Item: {fileID: 7695169114057697069, guid: 1b0042b35265da04c85f78e9f1e23531, type: 3}
   IsPlayer: 0
   lht: {fileID: 4130656478145043235}
   Particle: {fileID: 5151260724824491629, guid: 5c81738b2d22924418fa75795baade01, type: 3}
-  Item_Pos: {x: 0, y: 1.2, z: 0}
-  Particle_Pos: {x: 0, y: 0.3, z: 0}
+  Item_Pos: {x: 0, y: 0, z: 0}
+  Particle_Pos: {x: 0, y: 0, z: 0}
   ani: {fileID: 4130656479477432504}
 --- !u!95 &4130656479477432504
 Animator:
@@ -7193,7 +7247,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 200
+  m_SortingOrder: 300
   m_TargetDisplay: 0
 --- !u!114 &4130656480206047490
 MonoBehaviour:
@@ -7348,7 +7402,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9177589245457522578}
   - component: {fileID: 8761443349636368624}
-  - component: {fileID: 7292843680456919219}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -7398,18 +7451,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.5290658, y: 4.5755196}
   m_EdgeRadius: 0
---- !u!114 &7292843680456919219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8818741964630168364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 877813cf0d11b4e4f93b43aa0fca2b81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &795086108006763265
 PrefabInstance:
   m_ObjectHideFlags: 0
