@@ -17,7 +17,7 @@ public class StartMasking : MonoBehaviour
 
     public IEnumerator Wait()
     {
-        yield return new WaitForSeconds(5.5f);
+        yield return new WaitForSeconds(8f);
         StartCoroutine(Fadeout());
 
     }

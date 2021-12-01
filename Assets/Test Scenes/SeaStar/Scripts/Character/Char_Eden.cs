@@ -319,7 +319,7 @@ public class Char_Eden : MonoBehaviour
         {
             Debug.Log("´Ù¿îÇÃ·§Æû ");
             CP.pf.colliderMask = layerMask;
-            Invoke("AllLayerPlatform", 0.3f);
+            Invoke("AllLayerPlatform", 0.6f);
         }
     }
 

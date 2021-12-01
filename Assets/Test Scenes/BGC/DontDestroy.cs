@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class DontDestroy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        For_Fade.aa.Add(this.gameObject);
     }
 
- 
+    private void Update()
+    {
+        
+    }
+
 }

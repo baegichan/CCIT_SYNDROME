@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class buttondownmanager : MonoBehaviour
 {
     private GameObject SETTING;
@@ -13,6 +15,9 @@ public class buttondownmanager : MonoBehaviour
     public static bool screenmode = true;
     public AudioSource audio;
     public AudioClip clip;
+
+    [SerializeField]
+    Texture2D Cursors;
     // Start is called before the first frame update
 
     private void Start()
@@ -22,7 +27,7 @@ public class buttondownmanager : MonoBehaviour
         //MANAGER = GameObject.Find("Settingmanager");
         //SETTING = MANAGER.GetComponent<keychanger>().settinginfo;
         MANAGER = GameObject.Find("SettingManager");
-        SETTING = MANAGER.transform.GetChild(0).gameObject;
+        SETTING = MANAGER.transform.GetChild(0).GetChild(0).gameObject;
 
     }
     public void cancelbutton()
@@ -41,11 +46,15 @@ public class buttondownmanager : MonoBehaviour
     }
     public void screensize()
     {
-        audio.PlayOneShot(clip);
-        savedx = screensizex;
+        if (this.gameObject.GetComponent<Toggle>().isOn)
+        {
+            //audio.PlayOneShot(clip);
+            savedx = screensizex;
+            savedy = screensizey;
 
-        savedy = screensizey;
-        Screen.SetResolution(savedx, savedy, screenmode);
+            
+            Screen.SetResolution(savedx, savedy, screenmode);
+        }
     }
     public void screenmodechange()
     {
@@ -74,6 +83,11 @@ public class buttondownmanager : MonoBehaviour
     {
 
         Application.Quit();
+    }
+
+    public void Cussor()
+    {
+        Cursor.SetCursor(Cursors, Vector2.zero, CursorMode.ForceSoftware);
     }
 
 }

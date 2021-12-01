@@ -47,17 +47,9 @@ public class Teleporter_Boss_Script : MonoBehaviour
             {
                 DontDestroyOnLoad(Player_For_DonDestroy);
                 For_Fade.FadeOff_To_BossRoom();
-                //For_Fade.Translate_Player(collision.gameObject) ;
-                StartCoroutine(aaa(collision.gameObject));
             }
 
         }
-    }
-    IEnumerator aaa(GameObject a)
-    {
-        yield return new WaitForSeconds(0.5f);
-        For_Fade.Translate_Player(a.gameObject);
-
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

@@ -69,9 +69,9 @@ public class Char_Parent : Character
     public int Enhance_Health;
     public int Enhance_Strength;
     public int Enhance_Speed;
-    public int[] Enhance_Health_Point = { 0, 10, 20, 30, 40, 50};
+    public int[] Enhance_Health_Point = { 0, 10, 20, 30, 40, 50 };
     public int[] Enhance_Strength_Point = { 0, 5, 10, 15, 20, 25 };
-    public int[] Enhance_Speed_Point = { 0, 5, 10, 15, 20, 25 };
+    public int[] Enhance_Speed_Point = { 0, 3, 6, 9, 12, 15 };
 
     [Header("스킬 쿨타임")]
     public int WereWolfCool;
@@ -102,7 +102,7 @@ public class Char_Parent : Character
 
     void FixedUpdate()
     {
-        if(!ShopOn && !Dead)
+        if (!ShopOn && !Dead)
         {
             if (Ani.GetBool("CanIThis"))
             {
@@ -187,7 +187,7 @@ public class Char_Parent : Character
 
     void ChangeChar(GameObject Char)
     {
-        for(int i = 0; i < this.Char.Length; i++)
+        for (int i = 0; i < this.Char.Length; i++)
         {
             this.Char[i].SetActive(false);
         }
@@ -233,7 +233,7 @@ public class Char_Parent : Character
         //if(!Dead) { Hp_Current = Hp_Max; }
         DP = CharDP;
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
-        speed = CharSpeed + Enhance_Speed_Point[Enhance_Speed];
+        speed = CharSpeed + (CharSpeed * 0.01f * Enhance_Speed_Point[Enhance_Speed]);
         AM.py = SelectChar;
         //if (ActiveAbility != null) { ResourceManager.re.ActiveAbility = ActiveAbility; }
         //if (PassiveAbility != null) { ResourceManager.re.PassiveAbility = PassiveAbility; }
@@ -310,7 +310,7 @@ public class Char_Parent : Character
             Ani.SetBool("Jump", true);
             if (vel.y > P_JumpForce)
             {
-                vel.y = P_JumpForce;
+                vel.y = -P_JumpForce;
                 rigid.velocity = vel;
             }
         }
@@ -318,22 +318,45 @@ public class Char_Parent : Character
 
     [Range(0f, 10f)]
     public float Distance;
+    public float Distance_X;
+    public float Distance_Y;
+
     public LayerMask lm;
 
     void GroundCheck()
     {
-        RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.position, Vector2.down, 5);
-        Debug.DrawRay(SelectChar.transform.position, Vector2.down, Color.blue);
+        //RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.position * Distance, 5);
+        //Debug.DrawRay(SelectChar.transform.position, Vector2.down * Distance, Color.blue);
+        RaycastHit2D LGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.left * Distance_X, Distance);
+        Debug.DrawRay(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.left * Distance_X, Color.yellow);
+        RaycastHit2D RGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.right * Distance_X, Distance);
+        Debug.DrawRay(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.right * Distance_X, Color.cyan);
         Physics2D.queriesStartInColliders = false;
-        Debug.Log(Ground.collider.tag);
-        if (Ground.collider.gameObject.tag == "Ground")
+
+
+        if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
         {
-            if (Ground.distance < Distance)
-            {
-                Ani.SetBool("Jump", false);
-                P_JumpInt = P_MaxJumpInt;
-            }
+            Ani.SetBool("Jump", false);
+            P_JumpInt = P_MaxJumpInt;
         }
+
+        //if (Ground.collider.gameObject.tag == "Ground")
+        //{
+        //    if (Ground.distance < Distance)
+        //    {
+        //        Ani.SetBool("Jump", false);
+        //        P_JumpInt = P_MaxJumpInt;
+        //    }
+        //}
+
+        //if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
+        //{
+        //    if (LGround.distance < Distance2 || RGround.distance < Distance2)
+        //    {
+        //        Ani.SetBool("Jump", false);
+        //        P_JumpInt = P_MaxJumpInt;
+        //    }
+        //}
     }
 
     //마우스 플립
@@ -378,7 +401,7 @@ public class Char_Parent : Character
                 active = new useAbility(AM.BattleAxe);
                 break;
             case 5:
-               active = new useAbility(AM.Ability_E);
+                active = new useAbility(AM.Ability_E);
                 break;
             case 6:
                 active = new useAbility(AM.Double_Jump);
@@ -393,7 +416,7 @@ public class Char_Parent : Character
     {
         switch (ActiveAbility.AbCode)
         {
-            case 0:  
+            case 0:
             case 1:
             case 2:
             case 3:
@@ -429,7 +452,7 @@ public class Char_Parent : Character
         {
             MulYakInt--;
             Hp_Current += 50;
-            if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
+            if (Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
             UpdateState();
             PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
         }
@@ -450,7 +473,7 @@ public class Char_Parent : Character
 
     public void switchItem(int AbilityCode)
     {
-        if(Current_Use != null) { Current_Use.SetActive(false); }
+        if (Current_Use != null) { Current_Use.SetActive(false); }
         switch (AbilityCode)
         {
             case 0:
@@ -476,7 +499,7 @@ public class Char_Parent : Character
                 EvillSwordSwitch();
                 Current_Use = EvilSword;
                 AM.EA = Current_Use.GetComponent<Animator>();
-                Active_Cool_Max = EvilSworldCool; 
+                Active_Cool_Max = EvilSworldCool;
                 break;
             case 9:
                 Active_Cool_Max = 4f;
@@ -511,7 +534,7 @@ public class Char_Parent : Character
 
     void Load_StateEnhance()
     {
-       
+
         Enhance_Health = ResourceManager.re.Enhance_Health;
         Enhance_Strength = ResourceManager.re.Enhance_Strength;
         Enhance_Speed = ResourceManager.re.Enhance_Speed;
@@ -532,13 +555,13 @@ public class Char_Parent : Character
 
     public void SaveAbilityHistory(Ability ability)
     {
-        if(AbilityHistory.Count == 0) { AbilityHistory.Add(ability); }
-        else if(AbilityHistory.Count > 0)
+        if (AbilityHistory.Count == 0) { AbilityHistory.Add(ability); }
+        else if (AbilityHistory.Count > 0)
         {
-            for(int i = 0; i < AbilityHistory.Count; i++)
+            for (int i = 0; i < AbilityHistory.Count; i++)
             {
-                if(AbilityHistory[i].AbCode == ability.AbCode) { break; }
-                else if(i == AbilityHistory.Count - 1 && AbilityHistory[i].AbCode != ability.AbCode) { AbilityHistory.Add(ability); }
+                if (AbilityHistory[i].AbCode == ability.AbCode) { break; }
+                else if (i == AbilityHistory.Count - 1 && AbilityHistory[i].AbCode != ability.AbCode) { AbilityHistory.Add(ability); }
             }
         }
     }
@@ -551,6 +574,6 @@ public class Char_Parent : Character
       
         float fontExtra = Mathf.Clamp(Damage / 3 , 5.0f, 10.0f);
         float fontsize = Random.Range(0.8f * fontExtra, 1.0f * fontExtra);
-        Text.GetComponent<Text>().fontSize = (int)fontsize;
+        Text.GetComponentInChildren<Text>().fontSize = (int)fontsize;
     }
 }
