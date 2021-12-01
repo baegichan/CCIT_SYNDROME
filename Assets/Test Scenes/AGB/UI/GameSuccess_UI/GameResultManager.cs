@@ -224,8 +224,8 @@ public class GameResultManager : MonoBehaviour
             if (SceneManager.GetActiveScene().name == "Boss_Scene")
             {
                 GameObject boss = GameObject.Find("Boss_Controll");
-                boss.transform.GetChild(0).GetComponent<Boss>().Boss_Active_on = false;
-                boss.transform.GetChild(1).GetComponent<Boss>().Boss_Active_on = false;
+                boss.transform.GetChild(0).GetComponent<Boss>().Boss_Active_on = false;//bose 이동 멈추기 위해서~
+                boss.transform.GetChild(1).GetComponent<Boss>().Boss_Active_on = false;//bose 이동 멈추기 위해서@
             }
         }
         EffectBack = EffectResult.transform.GetChild(0).gameObject;
