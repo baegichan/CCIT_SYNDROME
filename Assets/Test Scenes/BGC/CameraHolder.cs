@@ -8,5 +8,6 @@ public class CameraHolder : MonoBehaviour
     private void OnEnable()
     {
        Camera.main.GetComponentInChildren<Cinemachine.CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
+        MIniMapSingleton.Minimap.GetComponentInChildren<Cinemachine.CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
     }
 }
