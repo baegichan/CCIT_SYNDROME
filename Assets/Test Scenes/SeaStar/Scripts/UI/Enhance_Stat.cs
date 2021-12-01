@@ -69,9 +69,10 @@ public class Enhance_Stat : MonoBehaviour
         {
             if (AbyssManager.abyss.Darkfog > Cost_Health[py.Enhance_Health])
             {
-                py.Enhance_Health++;
-                py.UpdateStat();
                 AbyssManager.abyss.Darkfog -= Cost_Health[py.Enhance_Health];
+                py.Enhance_Health++;
+                py.Hp_Current += 10;
+                py.UpdateStat();
                 py.Save_StateEnhance();
                 UpdateText();
             }
@@ -84,9 +85,9 @@ public class Enhance_Stat : MonoBehaviour
         {
             if (AbyssManager.abyss.Darkfog > Cost_Strength[py.Enhance_Strength])
             {
+                AbyssManager.abyss.Darkfog -= Cost_Strength[py.Enhance_Strength];
                 py.Enhance_Strength++;
                 py.UpdateStat();
-                AbyssManager.abyss.Darkfog -= Cost_Strength[py.Enhance_Strength];
                 py.Save_StateEnhance();
                 UpdateText();
             }
@@ -99,9 +100,9 @@ public class Enhance_Stat : MonoBehaviour
         {
             if (AbyssManager.abyss.Darkfog > Cost_Speed[py.Enhance_Speed])
             {
+                AbyssManager.abyss.Darkfog -= Cost_Speed[py.Enhance_Speed];
                 py.Enhance_Speed++;
                 py.UpdateStat();
-                AbyssManager.abyss.Darkfog -= Cost_Speed[py.Enhance_Speed];
                 py.Save_StateEnhance();
                 UpdateText();
             }

@@ -102,12 +102,14 @@ public class Char_Eden : MonoBehaviour
                 {
                     if(!Ani.GetBool("Jump"))
                     {
+                        Boundary = new Vector2(2, 1.3f);
                         CameraShake.Cam_instance.CameraShake_Cinemachine(0.1f, 2f);
                         Current.GetComponent<Character>().Damage(CP.AP, CP.UseApPostion, HitEffect);
                         Current.GetComponent<Character>().KnuckBack(transform, 2.5f, Current.GetComponent<Character>().IsBoss);
                     }
                     if(Ani.GetBool("Jump"))
                     {
+                        Boundary = new Vector2(3, 1.5f);
                         CameraShake.Cam_instance.CameraShake_Cinemachine(0.1f, 2f);
                         Current.GetComponent<Character>().Damage(CP.AP + 10, CP.UseApPostion, HitEffect);
                         
@@ -317,7 +319,7 @@ public class Char_Eden : MonoBehaviour
         {
             Debug.Log("´Ù¿îÇÃ·§Æû ");
             CP.pf.colliderMask = layerMask;
-            Invoke("AllLayerPlatform", 1f);
+            Invoke("AllLayerPlatform", 0.3f);
         }
     }
 

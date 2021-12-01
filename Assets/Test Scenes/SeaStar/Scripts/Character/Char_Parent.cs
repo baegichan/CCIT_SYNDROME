@@ -69,9 +69,9 @@ public class Char_Parent : Character
     public int Enhance_Health;
     public int Enhance_Strength;
     public int Enhance_Speed;
-    public int[] Enhance_Health_Point = { 0, 1, 2, 3, 4, 5};
-    public int[] Enhance_Strength_Point = { 0, 1, 2, 3, 4, 5 };
-    public int[] Enhance_Speed_Point = { 0, 1, 2, 3, 4, 5 };
+    public int[] Enhance_Health_Point = { 0, 10, 20, 30, 40, 50};
+    public int[] Enhance_Strength_Point = { 0, 5, 10, 15, 20, 25 };
+    public int[] Enhance_Speed_Point = { 0, 5, 10, 15, 20, 25 };
 
     [Header("스킬 쿨타임")]
     public int WereWolfCool;
@@ -88,6 +88,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
+        AbyssManager.abyss.Darkfog = 2000;
         Before_Position = transform.position;
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
@@ -98,6 +99,7 @@ public class Char_Parent : Character
 
         AM.CP = this;
     }
+
     void FixedUpdate()
     {
         if(!ShopOn && !Dead)
@@ -235,8 +237,18 @@ public class Char_Parent : Character
         AM.py = SelectChar;
         //if (ActiveAbility != null) { ResourceManager.re.ActiveAbility = ActiveAbility; }
         //if (PassiveAbility != null) { ResourceManager.re.PassiveAbility = PassiveAbility; }
+        AbilityCheat();
         switchItem(ActiveAbility.AbCode);
         UpdateState();
+    }
+
+    void AbilityCheat()
+    {
+        SelectAbility();
+        PlayerSkillUI.skill.Image_Active.sprite = ActiveAbility.icon;
+        PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
+        PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
+        PlayerSkillUI.skill.PillInt.text = AlYakInt.ToString();
     }
 
     void UpdateState()
@@ -341,30 +353,6 @@ public class Char_Parent : Character
         }
     }
 
-    //public void WorldChange()
-    //{
-    //    GameObject A = GameObject.FindGameObjectWithTag("Player");
-    //    GameObject B = GameObject.FindGameObjectWithTag("OtherPlayer");
-    //    if (P_OtherWorld == false)
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.Q))
-    //        {
-    //            P_OtherWorld = true;
-    //            Instantiate(B, A.transform);
-    //            Destroy(A, 0f);
-    //        }
-    //    }
-    //    if (P_OtherWorld == true)
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.Q))
-    //        {
-    //            P_OtherWorld = false;
-    //            Instantiate(A, B.transform);
-    //            Destroy(B, 0f);
-    //        }
-    //    }
-    //}
-
     //능력
     public delegate void useAbility();
     useAbility active;
@@ -443,11 +431,13 @@ public class Char_Parent : Character
             Hp_Current += 50;
             if(Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
             UpdateState();
+            PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
         }
         else if (AlYakInt > 0 && Input.GetKeyDown(KeyCode.Alpha2))
         {
             AlYakInt--;
             AP_Timer = AP_Duration;
+            PlayerSkillUI.skill.PillInt.text = AlYakInt.ToString();
         }
     }
 
@@ -537,7 +527,7 @@ public class Char_Parent : Character
         ResourceManager.re.Enhance_Health = Enhance_Health;
         ResourceManager.re.Enhance_Strength = Enhance_Strength;
         ResourceManager.re.Enhance_Speed = Enhance_Speed;
-        AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.1f);
+        //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.1f);
     }
 
     public void SaveAbilityHistory(Ability ability)
