@@ -48,7 +48,7 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(SceneLoad(Scenes[Sceneindex]));
      if(currentScenenum==0)
         {
-            doorani.SetBool("start", true); 
+            doorani.SetBool("start", true);
         }
         pre_sceneindex = currentScenenum;
         currentScenenum = Sceneindex;
@@ -75,10 +75,7 @@ public class SceneLoader : MonoBehaviour
         operation.allowSceneActivation = false;
         while(!operation.isDone)
         {
-            
-            
-            yield return null;
-           
+            yield return null;         
             if ( operation.progress>=0.9f)
             {
                 yield return new WaitForSeconds(loadingtime);
