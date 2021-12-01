@@ -391,6 +391,7 @@ public class MapData : ScriptableObject
     {
         for(int i=0; i<BG.Length;i++)
         {
+
            GameObject MapPrefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
             BG[i].Tilemap = MapPrefab;
             //추가로 이벤트도 저장해야됨
