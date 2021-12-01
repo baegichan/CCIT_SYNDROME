@@ -210,6 +210,7 @@ public class PotalEvent : MonoBehaviour
                 MapManager.s_Instace.Minimap.CurrentOn(MapManager.s_Instace.PCurrent_Room);
                 break;
         }
+        Instantiate(Resources.Load("PotalCol"), transform.position, Quaternion.identity, transform);
     }
     public void Connecting(GameObject Potal)
     {
