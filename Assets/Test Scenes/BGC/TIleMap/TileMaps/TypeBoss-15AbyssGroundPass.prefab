@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4077457908803515820}
   - component: {fileID: 1232269457060083116}
   - component: {fileID: 6876163093920890355}
+  - component: {fileID: 2880948971848307876}
+  - component: {fileID: 2425047588363741514}
   m_Layer: 8
   m_Name: TypeBoss-15AbyssGroundPass
   m_TagString: Ground
@@ -426,7 +428,7 @@ TilemapRenderer:
   m_SortingLayer: 3
   m_SortingOrder: -30
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.010204077, y: 0.010204077, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -458,8 +460,8 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -482,3 +484,120 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!50 &2880948971848307876
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710154641766713973}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!66 &2425047588363741514
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710154641766713973}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1232269457060083116}
+    m_ColliderPaths:
+    - - X: 15038071
+        Y: 30038070
+      - X: -10038071
+        Y: 30038070
+      - X: -10038071
+        Y: 29733502
+      - X: 15038071
+        Y: 29733502
+    - - X: -24961930
+        Y: 38070
+      - X: -55038072
+        Y: 38070
+      - X: -55038072
+        Y: -266497
+      - X: -24961930
+        Y: -266497
+    - - X: 60038072
+        Y: 38070
+      - X: 29961930
+        Y: 38070
+      - X: 29961930
+        Y: -266497
+      - X: 60038072
+        Y: -266497
+    - - X: -69961928
+        Y: -4961929
+      - X: -85038072
+        Y: -4961929
+      - X: -85038072
+        Y: -5266497
+      - X: -69961928
+        Y: -5266497
+    - - X: 90038072
+        Y: -4961929
+      - X: 74961928
+        Y: -4961929
+      - X: 74961928
+        Y: -5266497
+      - X: 90038072
+        Y: -5266497
+    - - X: 15038071
+        Y: -34961928
+      - X: -10038071
+        Y: -34961928
+      - X: -10038071
+        Y: -35266496
+      - X: 15038071
+        Y: -35266496
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 1.5037779, y: 2.9733503}
+      - {x: 1.5037779, y: 3.003807}
+      - {x: -1.0038071, y: 3.0037777}
+      - {x: -1.0037779, y: 2.9733503}
+    - - {x: 6.003778, y: -0.0266497}
+      - {x: 6.003778, y: 0.0038070001}
+      - {x: 2.996193, y: 0.0037777}
+      - {x: 2.9962225, y: -0.0266497}
+    - - {x: -2.4962225, y: -0.0266497}
+      - {x: -2.4962225, y: 0.0038070001}
+      - {x: -5.503807, y: 0.0037777}
+      - {x: -5.503778, y: -0.0266497}
+    - - {x: 9.0037775, y: -0.5266497}
+      - {x: 9.0037775, y: -0.4961929}
+      - {x: 7.496193, y: -0.4962222}
+      - {x: 7.4962225, y: -0.5266497}
+    - - {x: -6.9962225, y: -0.5266497}
+      - {x: -6.9962225, y: -0.4961929}
+      - {x: -8.503807, y: -0.4962222}
+      - {x: -8.5037775, y: -0.5266497}
+    - - {x: 1.5037779, y: -3.5266497}
+      - {x: 1.5037779, y: -3.496193}
+      - {x: -1.0038071, y: -3.496222}
+      - {x: -1.0037779, y: -3.5266497}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005

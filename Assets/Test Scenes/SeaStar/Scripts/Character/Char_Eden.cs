@@ -146,10 +146,13 @@ public class Char_Eden : MonoBehaviour
     {
         if (Ani.GetBool("Jump") == false)
         {
+            Debug.Log("1");
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                Debug.Log("2");
                 if (P_DashTimer >= 5)
                 {
+                    Debug.Log("3");
                     AS.PlayOneShot(SoundManager.instance.EFXs[15].Audio);
                     P_DashTimer = 0;
                     Ani.SetBool("Dash", true);
