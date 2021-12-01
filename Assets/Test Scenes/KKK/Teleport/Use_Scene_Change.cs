@@ -24,7 +24,7 @@ public class Use_Scene_Change : MonoBehaviour
 
     public static void Change_Dungeon_Scene()//마을에서 던전으로 가는 함수
     {
-        SceneManager.LoadScene("InCha");
+        SceneManager.LoadScene("InCha 2");
     }
 
     public static void Change_Boss_Scene()//보스 맵 씬으로 이동
