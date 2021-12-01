@@ -1056,9 +1056,9 @@ public class Boss : Character
     void speed_back()//Invoke¿ë
     {
         if (Abyss_on == false)
-            speed = 2;
-        else
             speed = 4;
+        else
+            speed = 6;
         Boss_State_Check = true;
         Attack_Cool = Boss_Attack_Cooltime;
 
