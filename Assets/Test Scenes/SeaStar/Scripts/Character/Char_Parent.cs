@@ -574,6 +574,6 @@ public class Char_Parent : Character
       
         float fontExtra = Mathf.Clamp(Damage / 3 , 5.0f, 10.0f);
         float fontsize = Random.Range(0.8f * fontExtra, 1.0f * fontExtra);
-        Text.GetComponent<Text>().fontSize = (int)fontsize;
+        Text.GetComponentInChildren<Text>().fontSize = (int)fontsize;
     }
 }
