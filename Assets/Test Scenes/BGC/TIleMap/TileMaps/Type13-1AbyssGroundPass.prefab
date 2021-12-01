@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3686670525166400860}
   - component: {fileID: 4479809714209158738}
   - component: {fileID: 8569845818163829385}
+  - component: {fileID: 2533178610638384278}
   m_Layer: 8
   m_Name: Type13-1AbyssGroundPass
   m_TagString: Ground
@@ -987,7 +988,7 @@ TilemapRenderer:
   m_SortingLayer: 3
   m_SortingOrder: -30
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.010204077, y: 0.010204077, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -1019,8 +1020,8 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -1064,3 +1065,123 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!66 &2533178610638384278
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219245863141475328}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 3686670525166400860}
+    m_ColliderPaths:
+    - - X: 205038064
+        Y: 70038072
+      - X: 184961936
+        Y: 70038072
+      - X: 184961936
+        Y: 69733504
+      - X: 205038064
+        Y: 69733504
+    - - X: 205038064
+        Y: 40038072
+      - X: 174961936
+        Y: 40038072
+      - X: 174961936
+        Y: 39733504
+      - X: 205038064
+        Y: 39733504
+    - - X: 80038072
+        Y: 40038072
+      - X: 24961930
+        Y: 40038072
+      - X: 24961930
+        Y: 39733504
+      - X: 80038072
+        Y: 39733504
+    - - X: 100038072
+        Y: 15038071
+      - X: 4961929
+        Y: 15038071
+      - X: 4961929
+        Y: 14733503
+      - X: 100038072
+        Y: 14733503
+    - - X: 205038064
+        Y: 10038071
+      - X: 144961936
+        Y: 10038071
+      - X: 144961936
+        Y: 9733503
+      - X: 205038064
+        Y: 9733503
+    - - X: 130038072
+        Y: -9961929
+      - X: 49961928
+        Y: -9961929
+      - X: 49961928
+        Y: -10266497
+      - X: 130038072
+        Y: -10266497
+    - - X: 20038070
+        Y: -9961929
+      - X: -35038072
+        Y: -9961929
+      - X: -35038072
+        Y: -10266497
+      - X: 20038070
+        Y: -10266497
+    - - X: 110038072
+        Y: -34961928
+      - X: 84961928
+        Y: -34961928
+      - X: 84961928
+        Y: -35266496
+      - X: 110038072
+        Y: -35266496
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 20.503778, y: 6.9733505}
+      - {x: 20.503778, y: 7.003807}
+      - {x: 18.496193, y: 7.0037775}
+      - {x: 18.496223, y: 6.9733505}
+    - - {x: 20.503778, y: 3.9733505}
+      - {x: 20.503778, y: 4.003807}
+      - {x: 17.496193, y: 4.003778}
+      - {x: 17.496223, y: 3.9733505}
+    - - {x: 8.0037775, y: 3.9733505}
+      - {x: 8.0037775, y: 4.003807}
+      - {x: 2.496193, y: 4.003778}
+      - {x: 2.4962225, y: 3.9733505}
+    - - {x: 10.0037775, y: 1.4733503}
+      - {x: 10.0037775, y: 1.5038071}
+      - {x: 0.4961929, y: 1.5037779}
+      - {x: 0.4962222, y: 1.4733503}
+    - - {x: 20.503778, y: 0.9733503}
+      - {x: 20.503778, y: 1.0038071}
+      - {x: 14.496194, y: 1.0037779}
+      - {x: 14.4962225, y: 0.9733503}
+    - - {x: 13.0037775, y: -1.0266497}
+      - {x: 13.0037775, y: -0.99619293}
+      - {x: 4.996193, y: -0.9962222}
+      - {x: 4.996222, y: -1.0266497}
+    - - {x: 2.0037777, y: -1.0266497}
+      - {x: 2.0037777, y: -0.99619293}
+      - {x: -3.5038073, y: -0.9962222}
+      - {x: -3.503778, y: -1.0266497}
+    - - {x: 11.0037775, y: -3.5266497}
+      - {x: 11.0037775, y: -3.496193}
+      - {x: 8.496193, y: -3.496222}
+      - {x: 8.4962225, y: -3.5266497}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
