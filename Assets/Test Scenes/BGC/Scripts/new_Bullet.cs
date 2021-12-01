@@ -94,14 +94,5 @@ public class new_Bullet : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
-        if (collision.tag == "Wall")
-        {
-            Destroy(gameObject);
-        }
-        if(collision.tag=="Ground")
-        {
-            Destroy(gameObject);
-        }
     }
 }

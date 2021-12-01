@@ -63,6 +63,10 @@ public class ResercherMonster : Character
 
     private void OnDisable()
     {
+        if (Dead == true)
+        {
+            abyss.MonsterDie();
+        }
         anim.SetFloat("Direction", 1);
         Vector2 current = transform.localScale;
         current.x = 1;
@@ -107,7 +111,7 @@ public class ResercherMonster : Character
             Dead = true;
             patroll = false;
             trace = false;
-            anim.SetTrigger("Dead");
+            anim.SetBool("Dead", true);
         }
         
     }
