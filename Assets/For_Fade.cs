@@ -62,7 +62,7 @@ public class For_Fade : MonoBehaviour
 
     public static void Translate_Player(GameObject a)
     {
-        a.transform.position = new Vector3(-5, 8, 0);
+        a.transform.position = new Vector3(-6.5f, 5, 0);
     }
 
     
@@ -122,6 +122,7 @@ public class For_Fade : MonoBehaviour
             GetComponent<Image>().color = new Color(0, 0, 0, i_alpha);
         }
         Use_Scene_Change.Change_Boss_Scene();
+        
         Invoke("Delay_a_back", 1f);
        
         StopCoroutine(Fade_out_To_BossRoom());
@@ -179,6 +180,8 @@ public class For_Fade : MonoBehaviour
     public void Delay_a_back()
     {
         GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        GameObject Player = GameObject.Find("Player").transform.GetChild(0).gameObject;
+        Player.transform.position = new Vector3(-5, 5, 0);
     }
 
 
