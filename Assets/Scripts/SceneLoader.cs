@@ -39,6 +39,8 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(SceneLoad(Scenes[Sceneindex]));
         
     }
+
+    
     public void loadscene(int Sceneindex)
     {
 
@@ -50,6 +52,19 @@ public class SceneLoader : MonoBehaviour
         }
         pre_sceneindex = currentScenenum;
         currentScenenum = Sceneindex;
+
+    }
+    public void  NewLoadscene(string Sceneindex)
+    {
+
+
+        StartCoroutine(SceneLoad(Sceneindex));
+        if (currentScenenum == 0)
+        {
+            doorani.SetBool("start", true);
+        }
+        pre_sceneindex = currentScenenum;
+        //currentScenenum = Sceneindex;
 
     }
     IEnumerator SceneLoad(string Scenenum)
