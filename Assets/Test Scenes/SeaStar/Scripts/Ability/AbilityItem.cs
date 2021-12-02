@@ -16,6 +16,7 @@ public class AbilityItem : MonoBehaviour
     public List<Ability> DrinkList = new List<Ability>();
     public List<Ability> AbList = new List<Ability>();
     public bool isthisShop;
+    public GameObject Box;
 
     void Awake()
     {
@@ -167,6 +168,7 @@ public class AbilityItem : MonoBehaviour
                     pt.Ani.SetFloat("AbilityNum", 0);
                     pt.Ani.SetTrigger("Ability");
                 }
+                Box.GetComponent<ItmeBox>().destroy();
                 Destroy(this.gameObject);
             }
             else

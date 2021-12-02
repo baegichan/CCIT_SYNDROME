@@ -45,6 +45,7 @@ public class ItmeBox : MonoBehaviour
             Vector3 items = gameObject.transform.position + dd;
 
             var d = Instantiate(Item, items, Quaternion.identity);
+            d.GetComponent<AbilityItem>().Box = this.gameObject;
         }
         else
         {
@@ -52,6 +53,12 @@ public class ItmeBox : MonoBehaviour
             Vector3 items = gameObject.transform.position + dd;
 
             var d = Instantiate(DarkEnergy, items, Quaternion.identity);
+            d.GetComponent<AbilityItem>().Box = this.gameObject;
         }
+    }
+
+    public void destroy()
+    {
+        Destroy(gameObject, 2f);
     }
 }
