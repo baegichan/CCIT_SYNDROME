@@ -50,6 +50,7 @@ public class DrillMonster : Character
 
     private void OnEnable()
     {
+        
         playerTransform = null;
         Targeton = false;
         if (Online)
