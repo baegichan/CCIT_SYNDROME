@@ -8,6 +8,7 @@ public class DarkEnergy : MonoBehaviour
     public GameObject player;
     private bool teststopper;
     public float speed;
+    public GameObject box;
 
 
     private void Awake()
@@ -43,6 +44,7 @@ void OnTriggerEnter2D(Collider2D col)
         if(col.tag == "Player")
         {
             AbyssManager.abyss.Darkfog += Random.Range(80, 141);
+            if(box != null) { box.GetComponent<ItmeBox>().destroy(); }
             Destroy(transform.gameObject);
         }
 

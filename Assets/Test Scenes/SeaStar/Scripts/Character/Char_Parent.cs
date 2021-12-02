@@ -107,6 +107,7 @@ public class Char_Parent : Character
         {
             if (Ani.GetBool("CanIThis"))
             {
+                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                 Move();
                 GroundCheck();
             }
@@ -117,7 +118,7 @@ public class Char_Parent : Character
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
         {
-            if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+            //if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
             if (AbyssManager.abyss.isHp)
             {
                 Hp_Current -= 5;
@@ -190,7 +191,8 @@ public class Char_Parent : Character
     {
         for (int i = 0; i < this.Char.Length; i++)
         {
-            this.Char[i].SetActive(false);
+            if(this.Char[i] != SelectChar) { this.Char[i].SetActive(false); }
+
         }
         Char.transform.position = Before_Position;
         Char.SetActive(true);

@@ -71,7 +71,7 @@ public class Char_Eden : MonoBehaviour
             P_CombatInt = 1;
             P_Attack_State = true;
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && Char_Parent.ShopOn == false)
         {
             P_CombatInt = 0;
         }
@@ -100,7 +100,7 @@ public class Char_Eden : MonoBehaviour
             {
                 if (Current.tag == "Monster")
                 {
-                    if(!Ani.GetBool("Jump"))
+                    if (!Ani.GetBool("Jump"))
                     {
                         Boundary = new Vector2(2, 1.3f);
                         CameraShake.Cam_instance.CameraShake_Cinemachine(0.1f, 2f);
