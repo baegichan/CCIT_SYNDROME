@@ -50,8 +50,8 @@ public class Event_Wolf : MonoBehaviour
     public Collider2D[] L_hit;
     public Collider2D[] R_hit;
 
-    public Vector3 RH;
-    public Vector3 LH;
+     Vector3 RH;
+     Vector3 LH;
 
     void L_Initialization()
     {
