@@ -135,6 +135,8 @@ public class For_Fade : MonoBehaviour
         if(a != null)
         Player1.GetComponent<Char_Parent>().Cam = a;
 
+        GameObject Boss = GameObject.Find("Boss_Controll").transform.GetChild(0).gameObject;
+        Boss.GetComponent<Boss>().Boss_Active_on = true;
     }
 
 
@@ -159,11 +161,12 @@ public class For_Fade : MonoBehaviour
             Player_UI.GetComponent<Canvas>().worldCamera = a;
             MIniMapSingleton.Minimap.GetComponentInChildren<CinemachineVirtualCameraBase>().Follow = GameObject.Find("Player").GetComponent<Char_Parent>().SelectChar.transform;
 
-        Invoke("Boss_Active_On", 3f);
+        //Invoke("Boss_Active_On", 1.5f);
     }
 
     void Boss_Active_On()
     {
+        Debug.Log(23);
         GameObject Boss = GameObject.Find("Boss_Controll").transform.GetChild(0).gameObject;
         Boss.GetComponent<Boss>().Boss_Active_on = true;
     }
