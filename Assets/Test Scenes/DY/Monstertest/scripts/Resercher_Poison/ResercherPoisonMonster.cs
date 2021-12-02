@@ -165,7 +165,7 @@ public class ResercherPoisonMonster : Character
     {
         GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     public void Movetrue()
