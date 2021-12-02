@@ -72,7 +72,7 @@ public class StateManager : MonoBehaviour
 
 
     [SerializeField]
-    private Text DarkFogText;
+    public Text DarkFogText;
 
     [SerializeField]
     private GameObject PlayerImgBox;
@@ -81,6 +81,15 @@ public class StateManager : MonoBehaviour
 
     #region 리소스 가져오기
 
+    private void OnDisable()
+    {
+        if (ResourceManager.re.DarkFog != 0)
+        {
+            AbyssManager.abyss.Darkfog = ResourceManager.re.DarkFog;
+         
+        }
+           
+    }
     public int MaxHp
     {
         set
