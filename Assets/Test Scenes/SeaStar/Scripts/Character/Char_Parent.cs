@@ -79,6 +79,8 @@ public class Char_Parent : Character
     public int PharaoCool;
     public int EvilSworldCool;
     public int BattleAxeCool;
+    public float DoubleJumpCool;
+    public float JumpCool;
 
     [Header("소지 물약&능력")]
     public int MulYakInt;
@@ -211,6 +213,7 @@ public class Char_Parent : Character
                 CharHP = eden.HP;
                 CharDP = eden.DP;
                 StateManager.state.CharImgSelect(0);
+                DI = 0;
                 break;
             case "Wolf":
                 Char_Wolf wolf = SelectChar.GetComponent<Char_Wolf>();
@@ -219,6 +222,7 @@ public class Char_Parent : Character
                 CharHP = wolf.HP[ActiveAbility.Enhance];
                 CharDP = wolf.DP;
                 StateManager.state.CharImgSelect(1);
+                DI = 1;
                 break;
             case "RockHuman":
                 Char_RockMan rock = SelectChar.GetComponent<Char_RockMan>();
@@ -304,7 +308,6 @@ public class Char_Parent : Character
     
     public void Jump()
     {
-        Debug.Log("잠푸" + P_JumpInt);
         if (!Ani.GetBool("Jump"))
         {
             rigid.AddForce(Vector3.up * P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
@@ -316,7 +319,7 @@ public class Char_Parent : Character
                 rigid.velocity = vel;
             }
         }
-        else if (Ani.GetBool("Jump") && P_JumpInt == 1)
+        else if (Ani.GetBool("Jump") && P_JumpInt == 1 && 0 > JumpCool)
         {
             if (PassiveAbility.AbCode == 6) { Instantiate(DoubleJump, SelectChar.transform.position, Quaternion.identity); }
             rigid.AddForce(Vector3.up * P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
@@ -330,28 +333,32 @@ public class Char_Parent : Character
         }
     }
     
-    [Range(0f, 10f)]
-    public float Distance;
-    public float Distance_X;
-    public float Distance_Y;
-    public float Distance_;
+    public float[] Distance;
+    public float[] Distance_X;
+    public float[] Distance_Y;
+    public float[] Distance_;
+    int DI;
 
     public LayerMask lm;
     RaycastHit2D LGround, RGround;
     void GroundCheck()
     {
-        LGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(-Distance_X, Distance_Y, 0), Vector2.down * Distance_, Distance);
-        Debug.DrawRay(SelectChar.transform.position + new Vector3(-Distance_X, Distance_Y, 0), Vector2.down * Distance_, Color.yellow);
-        RGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(Distance_X, Distance_Y, 0), Vector2.down * Distance_, Distance);
-        Debug.DrawRay(SelectChar.transform.position + new Vector3(Distance_X, Distance_Y, 0), Vector2.down * Distance_, Color.cyan);
+        LGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
+        Debug.DrawRay(SelectChar.transform.position + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.yellow);
+        RGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
+        Debug.DrawRay(SelectChar.transform.position + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.cyan);
         Physics2D.queriesStartInColliders = false;
 
-        if(rigid.velocity.y < 0)
-        {
+        if (Ani.GetBool("Jump")) { JumpCool -= Time.deltaTime; }
+
+        if(rigid.velocity.y < 0 && (LGround != false || RGround != false))
+        { Debug.Log(LGround.collider.gameObject.tag + "1");
+         Debug.Log(RGround.collider.gameObject.tag);
             if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
             {
                 Ani.SetBool("Jump", false);
                 P_JumpInt = P_MaxJumpInt;
+                JumpCool = DoubleJumpCool;
             }
         }
     }
@@ -535,8 +542,6 @@ public class Char_Parent : Character
         Enhance_Health = ResourceManager.re.Enhance_Health;
         Enhance_Strength = ResourceManager.re.Enhance_Strength;
         Enhance_Speed = ResourceManager.re.Enhance_Speed;
-        //ActiveAbility = ResourceManager.re.ActiveAbility;
-        //PassiveAbility = ResourceManager.re.PassiveAbility;
         StateManager.state.DarkFog = AbyssManager.abyss.Darkfog;
 
 
@@ -547,7 +552,6 @@ public class Char_Parent : Character
         ResourceManager.re.Enhance_Health = Enhance_Health;
         ResourceManager.re.Enhance_Strength = Enhance_Strength;
         ResourceManager.re.Enhance_Speed = Enhance_Speed;
-        //AbyssManager.abyss.Darkfog = Mathf.RoundToInt(AbyssManager.abyss.Darkfog * 0.1f);
     }
 
     public void SaveAbilityHistory(Ability ability)

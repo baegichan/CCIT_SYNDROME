@@ -50,6 +50,7 @@ public class DrillMonster : Character
 
     private void OnEnable()
     {
+        
         playerTransform = null;
         Targeton = false;
         if (Online)
@@ -167,7 +168,7 @@ public class DrillMonster : Character
     {
         GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 
 

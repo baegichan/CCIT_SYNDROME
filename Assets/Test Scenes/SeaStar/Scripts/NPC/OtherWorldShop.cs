@@ -36,6 +36,7 @@ public class OtherWorldShop : NPC
         py = ply.GetComponent<Char_Parent>();
         EH.CP = py;
         EH.EnhanceNPC = gameObject;
+        Char_Parent.ShopOn = true;
         Enhance_UI.SetActive(true);
         EH.SettingShop();
         EH.SettingAbility();
