@@ -136,7 +136,6 @@ public class For_Fade : MonoBehaviour
         Player1.GetComponent<Char_Parent>().Cam = a;
         GameObject Boss = GameObject.Find("Boss_Controll").transform.GetChild(0).gameObject;
         Boss.GetComponent<Boss>().Boss_Active_on = true;
-
     }
 
 
