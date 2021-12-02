@@ -20,7 +20,11 @@ public class Stat_NPC : NPC
     void Update()
     {
         Flip();
-        talkWithPlayer();
+        if(PlayerPrefs.GetFloat("Tuto")==1)
+        {
+            talkWithPlayer();
+        }
+       
     }
 
     void OnTriggerEnter2D(Collider2D col)
