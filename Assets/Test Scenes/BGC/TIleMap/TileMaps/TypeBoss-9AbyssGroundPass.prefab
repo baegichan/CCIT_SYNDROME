@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2099924721072811888}
   - component: {fileID: 4942893218123011134}
   - component: {fileID: 4756261787879798138}
+  - component: {fileID: 7954247679451345286}
   - component: {fileID: 5486113813689198095}
-  - component: {fileID: 7211614772804663154}
   m_Layer: 8
   m_Name: TypeBoss-9AbyssGroundPass
   m_TagString: Ground
@@ -230,8 +230,8 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -254,6 +254,18 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &7954247679451345286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537613759477781050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbca9b332196de40b8cefd813ed4f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &5486113813689198095
 Rigidbody2D:
   serializedVersion: 4
@@ -275,39 +287,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!66 &7211614772804663154
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1537613759477781050}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 4942893218123011134}
-    m_ColliderPaths:
-    - - X: -30038070
-        Y: -35266496
-      - X: -4961929
-        Y: -35266496
-      - X: -4961929
-        Y: -34961928
-      - X: -30038070
-        Y: -34961928
-  m_CompositePaths:
-    m_Paths:
-    - - {x: -0.4962222, y: -3.5266497}
-      - {x: -0.4962222, y: -3.496193}
-      - {x: -3.003807, y: -3.496222}
-      - {x: -3.0037777, y: -3.5266497}
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005

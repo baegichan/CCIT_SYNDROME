@@ -155,7 +155,7 @@ public class For_Fade : MonoBehaviour
             Canvas3.GetComponent<Canvas>().worldCamera = a;
             Canvas4.GetComponent<Canvas>().worldCamera = MaskCamera;
             Player_UI.GetComponent<Canvas>().worldCamera = a;
-
+              MIniMapSingleton.Minimap.GetComponentInChildren<CinemachineVirtualCameraBase>().Follow = GameObject.Find("Player").GetComponent<Char_Parent>().SelectChar.transform;
 
         Invoke("Boss_Active_On", 3f);
     }

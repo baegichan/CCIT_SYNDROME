@@ -28,7 +28,9 @@ public class buttondownmanager : MonoBehaviour
         //SETTING = MANAGER.GetComponent<keychanger>().settinginfo;
         MANAGER = GameObject.Find("SettingManager");
         SETTING = MANAGER.transform.GetChild(0).GetChild(0).gameObject;
-
+        savedx = 1920;
+        savedy = 1080;
+        Screen.SetResolution(savedx, savedy, true);
     }
     public void cancelbutton()
     {

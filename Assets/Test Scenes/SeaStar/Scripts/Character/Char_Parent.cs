@@ -108,7 +108,7 @@ public class Char_Parent : Character
             if (Ani.GetBool("CanIThis"))
             {
                 Move();
-                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                GroundCheck();
             }
         }
     }
@@ -116,7 +116,8 @@ public class Char_Parent : Character
     {
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
-        {           
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
             if (AbyssManager.abyss.isHp)
             {
                 Hp_Current -= 5;
@@ -146,7 +147,6 @@ public class Char_Parent : Character
             if (AP_Timer > 0) { AP_Time(); }
             else { if (UseApPostion) { UseApPostion = false; } }
             Die();
-            GroundCheck();
         }
     }
 
@@ -298,12 +298,12 @@ public class Char_Parent : Character
     //Á¡ÇÁ
 
     public PlatformEffector2D pf;
-    Vector2 vel;
+    public Vector2 vel;
     
     public void Jump()
     {
         Debug.Log("ÀáÇª" + P_JumpInt);
-        if(!Ani.GetBool("Jump"))
+        if (!Ani.GetBool("Jump"))
         {
             rigid.AddForce(Vector3.up * P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
             P_JumpInt--;
@@ -332,24 +332,25 @@ public class Char_Parent : Character
     public float Distance;
     public float Distance_X;
     public float Distance_Y;
+    public float Distance_;
 
     public LayerMask lm;
-
+    RaycastHit2D LGround, RGround;
     void GroundCheck()
     {
-        //RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.position * Distance, 5);
-        //Debug.DrawRay(SelectChar.transform.position, Vector2.down * Distance, Color.blue);
-        RaycastHit2D LGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.left * Distance_X, Distance);
-        Debug.DrawRay(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.left * Distance_X, Color.yellow);
-        RaycastHit2D RGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.right * Distance_X, Distance);
-        Debug.DrawRay(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.right * Distance_X, Color.cyan);
+        LGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(-Distance_X, Distance_Y, 0), Vector2.down * Distance_, Distance);
+        Debug.DrawRay(SelectChar.transform.position + new Vector3(-Distance_X, Distance_Y, 0), Vector2.down * Distance_, Color.yellow);
+        RGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(Distance_X, Distance_Y, 0), Vector2.down * Distance_, Distance);
+        Debug.DrawRay(SelectChar.transform.position + new Vector3(Distance_X, Distance_Y, 0), Vector2.down * Distance_, Color.cyan);
         Physics2D.queriesStartInColliders = false;
 
-
-        if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
+        if(rigid.velocity.y < 0)
         {
-            Ani.SetBool("Jump", false);
-            P_JumpInt = P_MaxJumpInt;
+            if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
+            {
+                Ani.SetBool("Jump", false);
+                P_JumpInt = P_MaxJumpInt;
+            }
         }
     }
 
