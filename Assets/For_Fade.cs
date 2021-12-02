@@ -113,7 +113,7 @@ public class For_Fade : MonoBehaviour
         }
         Use_Scene_Change.Change_Boss_Scene();
         
-        Invoke("Delay_a_back", 1.5f);
+        Invoke("Delay_a_back", 3f);
        
         StopCoroutine(Fade_out_To_BossRoom());
 
@@ -143,7 +143,7 @@ public class For_Fade : MonoBehaviour
             GameObject Canvas1 = GameObject.Find("Player").transform.GetChild(3).gameObject;
             GameObject Canvas2 = GameObject.Find("Player").transform.GetChild(4).gameObject;
             GameObject Canvas3 = GameObject.Find("Player").transform.GetChild(0).transform.GetChild(6).gameObject;
-            GameObject Canvas4 = GameObject.Find("Player").transform.GetChild(0).transform.GetChild(5).gameObject;
+            GameObject Canvas4 = GameObject.Find("Player").transform.GetChild(0).transform.GetChild(0).gameObject;
             GameObject Player_UI = GameObject.Find("Player_UI_Manager").gameObject;
             Canvas1.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
             Canvas2.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
@@ -169,13 +169,14 @@ public class For_Fade : MonoBehaviour
     public void Delay_a_back()
     {
         GameObject a2 = GameObject.Find("2222");
+        if(a2 != null)
         a2.gameObject.SetActive(false);
         GetComponent<Image>().color = new Color(0, 0, 0, 0);
 
         GameObject Player = GameObject.Find("Player");
         Player.GetComponent<Char_Parent>().SelectChar.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         GameObject CurrentPlayer = Player.GetComponent<Char_Parent>().SelectChar;
-        CurrentPlayer.transform.position = new Vector3(-6.5f, 1, 0);
+        CurrentPlayer.transform.position = new Vector3(-3.37f, 2f, 0);
     }
 
 
