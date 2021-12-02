@@ -89,7 +89,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
-        AbyssManager.abyss.Darkfog = 2000;
+        //AbyssManager.abyss.Darkfog = 2000;
         Before_Position = transform.position;
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Cinemachine;
+using System;
+
 public class For_Fade : MonoBehaviour
 {
 
@@ -182,10 +184,11 @@ public class For_Fade : MonoBehaviour
 
     public void Fad_out_To_StartRoom()
     {
-
         i_alpha = GetComponent<Image>().color.a;
         StartCoroutine(Fade_out_To_StartRoom());
     }
+    int Abyss_10 = 0;
+    public GameObject aby;
     IEnumerator Fade_out_To_StartRoom()
     {
         while (i_alpha < 1.0f)
@@ -197,22 +200,23 @@ public class For_Fade : MonoBehaviour
       
 
         GameObject Fade = GameObject.Find("fade");
-        for(int i = 0; i< aa.Count; i++)
+        GameObject ResourceManager1 = GameObject.Find("ResourceManager");
+        GameObject AbyssManager1 = GameObject.Find("AbyssManager");
+        Abyss_10 =Convert.ToInt32( AbyssManager.abyss.Darkfog * 0.1f);
+        ResourceManager.re.DarkFog = Abyss_10;
+        for (int i = 0; i< aa.Count; i++)
         {
-            if(aa[i] != Fade)
+            if(aa[i] != Fade || aa[i] != ResourceManager1)
             {
                 Destroy(aa[i]);
             }
         }
-
         Destroy(Fade);
-
-
         Use_Scene_Change.Change_Start_Scene();
         StopCoroutine(Fade_out_To_StartRoom());
 
     }
-
+   
 
 
 
