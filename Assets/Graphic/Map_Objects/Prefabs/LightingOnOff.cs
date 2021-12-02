@@ -12,7 +12,7 @@ public class LightingOnOff : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(AbyssManager.abyss.abyssState== AbyssManager.AbyssState.Abyss)
+        if(AbyssManager.abyss.abyssState== AbyssManager.AbyssState.Reality)
         {
             foreach(GameObject a in Lights)
             {
