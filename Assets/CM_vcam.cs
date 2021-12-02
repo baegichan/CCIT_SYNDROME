@@ -8,9 +8,9 @@ public class CM_vcam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject Player = GameObject.Find("Player");
+        GameObject Player = GameObject.Find("Player").GetComponent<Char_Parent>().SelectChar.gameObject;
         if (Player != null)
-        GetComponent<CinemachineVirtualCamera>().Follow = Player.transform.GetChild(0).gameObject.transform;
+        GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
     }
 
    
