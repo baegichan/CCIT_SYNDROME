@@ -244,7 +244,12 @@ public class AbyssManager : MonoBehaviour
 
         set
         {
-            abyssGage = value;
+            int ex = abyssGage + value;
+            if (ex > maxAbyssGage)
+                abyssGage = maxAbyssGage;
+            else
+                abyssGage += value;
+           
             StateManager.state.AbyssGage = abyssGage;
         }
     }
