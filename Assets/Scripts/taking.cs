@@ -12,11 +12,11 @@ public class taking : MonoBehaviour
 
         if (col.tag == "Player")
         {
-            GameObject gamemaster= GameObject.Find("GameManager");
-            if (gamemaster != null && Input.GetKey(settingmanager.GM.comunication))
-            {
+          
+            if (Input.GetKey(KeyCode.F) && PlayerPrefs.GetFloat("Tuto")!=1)
+            {ddddd
 
-                gamemaster.GetComponent<talkchanger>().tutorialstarter();
+               GetComponent<talkchanger>().tutorialstarter();
             }
 
         }
