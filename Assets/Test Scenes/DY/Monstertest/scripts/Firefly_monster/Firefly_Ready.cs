@@ -20,7 +20,7 @@ public class Firefly_Ready : StateMachineBehaviour
             animator.SetTrigger("Attack");
         if (fireflyMon.Targeton == true)
         {
-            if (Vector2.Distance(fireflyMon.playerTransform.position, fireflyTransform.position) > 4f) //따가라가서 공격 하는 범위
+            if (Vector2.Distance(fireflyMon.playerTransform.position, fireflyTransform.position) > 3f) //따가라가서 공격 하는 범위
                 animator.SetBool("Follow", true);
         }
 

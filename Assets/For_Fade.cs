@@ -142,22 +142,22 @@ public class For_Fade : MonoBehaviour
     {
             a = Camera.main;
             MaskCamera = Camera.main.transform.GetChild(2).gameObject.GetComponent<Camera>();
-            GameObject Canvas1 = GameObject.Find("Player").transform.GetChild(3).gameObject;
-            GameObject Canvas2 = GameObject.Find("Player").transform.GetChild(4).gameObject;
+            //GameObject Canvas1 = GameObject.Find("Player").transform.GetChild(3).gameObject;
+            //GameObject Canvas2 = GameObject.Find("Player").transform.GetChild(4).gameObject;
             GameObject Canvas3 = GameObject.Find("Player").transform.GetChild(0).transform.GetChild(6).gameObject;
             GameObject Canvas4 = GameObject.Find("Player").transform.GetChild(0).transform.GetChild(0).gameObject;
             GameObject Player_UI = GameObject.Find("Player_UI_Manager").gameObject;
-            Canvas1.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
-            Canvas2.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+            //Canvas1.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+            //Canvas2.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
             Canvas3.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
             Canvas4.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
             Player_UI.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
-            Canvas1.GetComponent<Canvas>().worldCamera = a;
-            Canvas2.GetComponent<Canvas>().worldCamera = a;
+            //Canvas1.GetComponent<Canvas>().worldCamera = a;
+            //Canvas2.GetComponent<Canvas>().worldCamera = a;
             Canvas3.GetComponent<Canvas>().worldCamera = a;
             Canvas4.GetComponent<Canvas>().worldCamera = MaskCamera;
             Player_UI.GetComponent<Canvas>().worldCamera = a;
-              MIniMapSingleton.Minimap.GetComponentInChildren<CinemachineVirtualCameraBase>().Follow = GameObject.Find("Player").GetComponent<Char_Parent>().SelectChar.transform;
+            MIniMapSingleton.Minimap.GetComponentInChildren<CinemachineVirtualCameraBase>().Follow = GameObject.Find("Player").GetComponent<Char_Parent>().SelectChar.transform;
 
         Invoke("Boss_Active_On", 3f);
     }

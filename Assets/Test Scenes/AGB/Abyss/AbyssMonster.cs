@@ -28,13 +28,13 @@ public class AbyssMonster : MonoBehaviour
             monsterBox = transform.parent.parent.GetComponent<MonsterBox>();
             monsterBox.AbyssMonsterAdd(id, transform.position);
              
-            Destroy(transform.gameObject);
+            
 
         }
         else
         {
             Instantiate(DarkFog,transform.position, Quaternion.identity);
-            Destroy(transform.gameObject);
+      
         
         }
 
