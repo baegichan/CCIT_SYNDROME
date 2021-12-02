@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 1446552848924200525}
   - component: {fileID: 1508675137}
   - component: {fileID: 1508675135}
+  - component: {fileID: 2900583173906331273}
+  - component: {fileID: -2887086920457531554}
   m_Layer: 8
   m_Name: Type2-3AbyssGroundPass
   m_TagString: Ground
@@ -897,7 +899,7 @@ TilemapRenderer:
   m_SortingLayer: 3
   m_SortingOrder: -30
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.010204077, y: 0.010204077, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -929,8 +931,8 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -970,7 +972,190 @@ PlatformEffector2D:
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
+  m_SurfaceArc: 150
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!66 &2900583173906331273
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4462556795061736780}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1446552848924200525}
+    m_ColliderPaths:
+    - - X: -9961929
+        Y: 110038072
+      - X: -40038072
+        Y: 110038072
+      - X: -40038072
+        Y: 109733504
+      - X: -9961929
+        Y: 109733504
+    - - X: -59961928
+        Y: 110038072
+      - X: -100038072
+        Y: 110038072
+      - X: -100038072
+        Y: 109733504
+      - X: -59961928
+        Y: 109733504
+    - - X: -129961928
+        Y: 110038072
+      - X: -170038064
+        Y: 110038072
+      - X: -170038064
+        Y: 109733504
+      - X: -129961928
+        Y: 109733504
+    - - X: -199961936
+        Y: 110038072
+      - X: -240038064
+        Y: 110038072
+      - X: -240038064
+        Y: 109733504
+      - X: -199961936
+        Y: 109733504
+    - - X: -259961936
+        Y: 95038072
+      - X: -290038080
+        Y: 95038072
+      - X: -290038080
+        Y: 94733504
+      - X: -259961936
+        Y: 94733504
+    - - X: -309961920
+        Y: 75038072
+      - X: -340038080
+        Y: 75038072
+      - X: -340038080
+        Y: 74733504
+      - X: -309961920
+        Y: 74733504
+    - - X: -264961936
+        Y: 55038072
+      - X: -295038080
+        Y: 55038072
+      - X: -295038080
+        Y: 54733500
+      - X: -264961936
+        Y: 54733500
+    - - X: -309961920
+        Y: 35038072
+      - X: -340038080
+        Y: 35038072
+      - X: -340038080
+        Y: 34733504
+      - X: -309961920
+        Y: 34733504
+    - - X: -204961936
+        Y: 30038070
+      - X: -235038064
+        Y: 30038070
+      - X: -235038064
+        Y: 29733502
+      - X: -204961936
+        Y: 29733502
+    - - X: -249961936
+        Y: 15038071
+      - X: -295038080
+        Y: 15038071
+      - X: -295038080
+        Y: 14733503
+      - X: -249961936
+        Y: 14733503
+    - - X: -134961936
+        Y: -4961929
+      - X: -165038064
+        Y: -4961929
+      - X: -165038064
+        Y: -5266497
+      - X: -134961936
+        Y: -5266497
+  - m_Collider: {fileID: 1446552848924200525}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 1446552848924200525}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 1446552848924200525}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 1446552848924200525}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 1446552848924200525}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 1446552848924200525}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 1446552848924200525}
+    m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths:
+    - - {x: -0.9962222, y: 10.973351}
+      - {x: -0.9962222, y: 11.003807}
+      - {x: -4.003807, y: 11.0037775}
+      - {x: -4.003778, y: 10.973351}
+    - - {x: -5.996222, y: 10.973351}
+      - {x: -5.996222, y: 11.003807}
+      - {x: -10.003807, y: 11.0037775}
+      - {x: -10.0037775, y: 10.973351}
+    - - {x: -12.9962225, y: 10.973351}
+      - {x: -12.9962225, y: 11.003807}
+      - {x: -17.003807, y: 11.0037775}
+      - {x: -17.003778, y: 10.973351}
+    - - {x: -19.996223, y: 10.973351}
+      - {x: -19.996223, y: 11.003807}
+      - {x: -24.003807, y: 11.0037775}
+      - {x: -24.003778, y: 10.973351}
+    - - {x: -25.996223, y: 9.473351}
+      - {x: -25.996223, y: 9.503807}
+      - {x: -29.003809, y: 9.5037775}
+      - {x: -29.00378, y: 9.473351}
+    - - {x: -30.996222, y: 7.4733505}
+      - {x: -30.996222, y: 7.503807}
+      - {x: -34.003807, y: 7.5037775}
+      - {x: -34.00378, y: 7.4733505}
+    - - {x: -26.496223, y: 5.47335}
+      - {x: -26.496223, y: 5.503807}
+      - {x: -29.503809, y: 5.503778}
+      - {x: -29.50378, y: 5.47335}
+    - - {x: -30.996222, y: 3.4733505}
+      - {x: -30.996222, y: 3.5038073}
+      - {x: -34.003807, y: 3.503778}
+      - {x: -34.00378, y: 3.4733505}
+    - - {x: -20.496223, y: 2.9733503}
+      - {x: -20.496223, y: 3.003807}
+      - {x: -23.503807, y: 3.0037777}
+      - {x: -23.503778, y: 2.9733503}
+    - - {x: -24.996223, y: 1.4733503}
+      - {x: -24.996223, y: 1.5038071}
+      - {x: -29.503809, y: 1.5037779}
+      - {x: -29.50378, y: 1.4733503}
+    - - {x: -13.4962225, y: -0.5266497}
+      - {x: -13.4962225, y: -0.4961929}
+      - {x: -16.503807, y: -0.4962222}
+      - {x: -16.503778, y: -0.5266497}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+--- !u!114 &-2887086920457531554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4462556795061736780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbca9b332196de40b8cefd813ed4f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 1

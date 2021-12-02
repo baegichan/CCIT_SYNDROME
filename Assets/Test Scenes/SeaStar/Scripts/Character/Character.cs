@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
     [Tooltip("최대 체력")]
     public int Hp_Max;
     [Tooltip("현재 체력")]
-    public int Hp_Current;
+    public int Hp_Current = 1;
     [Tooltip("쉴드")]
     public int Shield;
     [Tooltip("공격력")]

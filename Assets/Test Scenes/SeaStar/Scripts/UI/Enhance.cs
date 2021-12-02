@@ -231,8 +231,7 @@ public class Enhance : MonoBehaviour
                 EHNPC.py.ActiveAbility = EHNPC.SellItem[index];
                 EHNPC.py.SelectAbility();
                 EHNPC.py.DecideChar();
-                if (EHNPC.SellItem[index].AbCode != 0) { EHNPC.py.DecideChar(); }
-                else if (EHNPC.SellItem[index].AbCode == 0)
+                if (EHNPC.SellItem[index].AbCode == 0)
                 {
                     EHNPC.py.Ani.SetFloat("AbilityNum",0);
                     EHNPC.py.Ani.SetTrigger("Ability");

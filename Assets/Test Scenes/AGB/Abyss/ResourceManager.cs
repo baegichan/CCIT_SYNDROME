@@ -42,15 +42,26 @@ public class ResourceManager : MonoBehaviour
     }
     #endregion
 
-    private int darkFog;
+    public int darkFog;
 
     private int enhance_Health = 0;
     private int enhance_Strength = 0;
     private int enhance_Speed = 0;
     private Ability activeAbility;
     private Ability passiveAbility;
+   
 
-
+    public int DarkFog 
+    {
+        get
+        {
+            return darkFog;
+        }
+        set
+        {
+            darkFog = value;
+        }
+    }
 
     public int Enhance_Health
     {
@@ -107,4 +118,6 @@ public class ResourceManager : MonoBehaviour
             passiveAbility = value;
         }
     }
+
+   
 }

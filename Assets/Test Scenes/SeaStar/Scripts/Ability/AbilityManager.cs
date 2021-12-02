@@ -15,7 +15,7 @@ public class AbilityManager : MonoBehaviour
     public int[] ParaoAP = { 20, 25, 30, 35};
     public int[] BoomAP = { 10, 13, 16, 20 };
     public int[] WolfAP = { 3, 4, 5, 6 };
-    public int[] AxeAP = { 1, 3, 5, 7 };
+    public int[] AxeAP = { 15, 18, 21, 23 };
     public int[] EvilAP = { 6, 9, 12, 15 };
     public GameObject PharaoHitEffect;
     public AudioSource AS;

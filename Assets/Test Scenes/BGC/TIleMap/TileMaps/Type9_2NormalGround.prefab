@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7235339493186134355}
   - component: {fileID: 4205019422835739651}
   - component: {fileID: 5395894052877405061}
+  - component: {fileID: 4895508216515412830}
+  - component: {fileID: -1533212079836869275}
   m_Layer: 6
   m_Name: Type9_2NormalGround
   m_TagString: Ground
@@ -1146,7 +1148,7 @@ TilemapRenderer:
   m_SortingLayer: 4
   m_SortingOrder: -30
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.010204077, y: 0.010204077, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -1179,7 +1181,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -1204,3 +1206,120 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!66 &4895508216515412830
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270074880835354003}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 4205019422835739651}
+    m_ColliderPaths:
+    - - X: 260051024
+        Y: 75051024
+      - X: 139948976
+        Y: 75051024
+      - X: 139948976
+        Y: 69948976
+      - X: 260051024
+        Y: 69948976
+    - - X: 390051008
+        Y: 55051020
+      - X: 339948992
+        Y: 55051020
+      - X: 339948992
+        Y: 49948980
+      - X: 390051008
+        Y: 49948980
+    - - X: 60051020
+        Y: 55051020
+      - X: 9948980
+        Y: 55051020
+      - X: 9948980
+        Y: 49948980
+      - X: 60051020
+        Y: 49948980
+    - - X: 110051024
+        Y: 35051020
+      - X: 59948980
+        Y: 35051020
+      - X: 59948980
+        Y: 29948978
+      - X: 110051024
+        Y: 29948978
+    - - X: 340051008
+        Y: 35051020
+      - X: 289948992
+        Y: 35051020
+      - X: 289948992
+        Y: 29948978
+      - X: 340051008
+        Y: 29948978
+    - - X: 290051008
+        Y: 15051020
+      - X: 109948976
+        Y: 15051020
+      - X: 109948976
+        Y: 9948980
+      - X: 290051008
+        Y: 9948980
+  - m_Collider: {fileID: 4205019422835739651}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 4205019422835739651}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 4205019422835739651}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 4205019422835739651}
+    m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 26.005074, y: 6.994898}
+      - {x: 26.005074, y: 7.5051026}
+      - {x: 13.994898, y: 7.505073}
+      - {x: 13.994926, y: 6.994898}
+    - - {x: 39.005074, y: 4.994898}
+      - {x: 39.005074, y: 5.505102}
+      - {x: 33.9949, y: 5.505073}
+      - {x: 33.99493, y: 4.994898}
+    - - {x: 6.005073, y: 4.994898}
+      - {x: 6.005073, y: 5.505102}
+      - {x: 0.994898, y: 5.505073}
+      - {x: 0.9949273, y: 4.994898}
+    - - {x: 34.005074, y: 2.9948978}
+      - {x: 34.005074, y: 3.5051022}
+      - {x: 28.9949, y: 3.5050728}
+      - {x: 28.994928, y: 2.9948978}
+    - - {x: 11.005073, y: 2.9948978}
+      - {x: 11.005073, y: 3.5051022}
+      - {x: 5.994898, y: 3.5050728}
+      - {x: 5.9949274, y: 2.9948978}
+    - - {x: 29.005072, y: 0.994898}
+      - {x: 29.005072, y: 1.505102}
+      - {x: 10.994898, y: 1.5050727}
+      - {x: 10.994927, y: 0.994898}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+--- !u!114 &-1533212079836869275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270074880835354003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbca9b332196de40b8cefd813ed4f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0

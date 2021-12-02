@@ -9,6 +9,6 @@ public class CameraFllow : MonoBehaviour
     private void OnEnable()
     {
         Camera.main.transform.Find("CM vcam1").GetComponent<CinemachineVirtualCameraBase>().Follow =transform;
-     
+        MIniMapSingleton.Minimap.GetComponentInChildren<CinemachineVirtualCameraBase>().Follow = transform;
     }
 }

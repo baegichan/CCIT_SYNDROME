@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 6262276067633839952}
   - component: {fileID: 4495989344758681529}
   - component: {fileID: 3480258565753272462}
+  - component: {fileID: 1674396755856317858}
+  - component: {fileID: 8893328534602702979}
   m_Layer: 6
   m_Name: Type15-1NomalGroundPass
   m_TagString: Ground
@@ -467,7 +469,7 @@ TilemapRenderer:
   m_SortingLayer: 4
   m_SortingOrder: -30
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.010204077, y: 0.010204077, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -500,7 +502,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 1
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -540,7 +542,98 @@ PlatformEffector2D:
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
+  m_SurfaceArc: 150
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!66 &1674396755856317858
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572276569567674795}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 6262276067633839952}
+    m_ColliderPaths:
+    - - X: 20038070
+        Y: 55038072
+      - X: -20038070
+        Y: 55038072
+      - X: -20038070
+        Y: 54733500
+      - X: 20038070
+        Y: 54733500
+    - - X: 20038070
+        Y: 30038070
+      - X: -40038072
+        Y: 30038070
+      - X: -40038072
+        Y: 29733502
+      - X: 20038070
+        Y: 29733502
+    - - X: 15038071
+        Y: 5038070
+      - X: -25038070
+        Y: 5038070
+      - X: -25038070
+        Y: 4733502
+      - X: 15038071
+        Y: 4733502
+    - - X: -4961929
+        Y: -24961930
+      - X: -25038070
+        Y: -24961930
+      - X: -25038070
+        Y: -25266498
+      - X: -4961929
+        Y: -25266498
+  - m_Collider: {fileID: 6262276067633839952}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 6262276067633839952}
+    m_ColliderPaths: []
+  - m_Collider: {fileID: 6262276067633839952}
+    m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 2.0037777, y: 5.47335}
+      - {x: 2.0037777, y: 5.503807}
+      - {x: -2.003807, y: 5.503778}
+      - {x: -2.0037777, y: 5.47335}
+    - - {x: 2.0037777, y: 2.9733503}
+      - {x: 2.0037777, y: 3.003807}
+      - {x: -4.003807, y: 3.0037777}
+      - {x: -4.003778, y: 2.9733503}
+    - - {x: 1.5037779, y: 0.4733502}
+      - {x: 1.5037779, y: 0.503807}
+      - {x: -2.503807, y: 0.5037777}
+      - {x: -2.5037777, y: 0.4733502}
+    - - {x: -0.4962222, y: -2.5266497}
+      - {x: -0.4962222, y: -2.496193}
+      - {x: -2.503807, y: -2.4962225}
+      - {x: -2.5037777, y: -2.5266497}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+--- !u!114 &8893328534602702979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572276569567674795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbca9b332196de40b8cefd813ed4f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 1

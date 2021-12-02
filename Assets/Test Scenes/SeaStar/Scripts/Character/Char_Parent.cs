@@ -62,6 +62,7 @@ public class Char_Parent : Character
     public static bool RedBullDash = false;
     public static float Active_Cool_Max;
     public static float Active_Cool = 0f;
+    public GameObject DoubleJump;
     Vector2 Mouse;
     Vector2 PlayerPosition;
 
@@ -88,7 +89,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
-        AbyssManager.abyss.Darkfog = 2000;
+        //AbyssManager.abyss.Darkfog = 2000;
         Before_Position = transform.position;
         Load_StateEnhance();
         AM = GetComponent<AbilityManager>();
@@ -108,6 +109,7 @@ public class Char_Parent : Character
             {
                 if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
                 Move();
+                GroundCheck();
             }
         }
     }
@@ -116,7 +118,7 @@ public class Char_Parent : Character
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
         {
-            GroundCheck();
+            //if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
             if (AbyssManager.abyss.isHp)
             {
                 Hp_Current -= 5;
@@ -189,7 +191,8 @@ public class Char_Parent : Character
     {
         for (int i = 0; i < this.Char.Length; i++)
         {
-            this.Char[i].SetActive(false);
+            if(this.Char[i] != SelectChar) { this.Char[i].SetActive(false); }
+
         }
         Char.transform.position = Before_Position;
         Char.SetActive(true);
@@ -297,66 +300,60 @@ public class Char_Parent : Character
     //점프
 
     public PlatformEffector2D pf;
-    Vector2 vel;
-
+    public Vector2 vel;
+    
     public void Jump()
     {
-        if (P_JumpInt == 0) { rigid.AddForce(Vector3.up * 0); }
-        else if (P_JumpInt > 0)
+        Debug.Log("잠푸" + P_JumpInt);
+        if (!Ani.GetBool("Jump"))
         {
-            Debug.Log(P_JumpForce);
-            rigid.AddForce(Vector3.up * P_JumpForce * 100 * Time.deltaTime, ForceMode2D.Impulse);
-            P_JumpInt -= 1;
+            rigid.AddForce(Vector3.up * P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
+            P_JumpInt--;
             Ani.SetBool("Jump", true);
             if (vel.y > P_JumpForce)
             {
-                vel.y = -P_JumpForce;
+                vel.y = P_JumpForce;
+                rigid.velocity = vel;
+            }
+        }
+        else if (Ani.GetBool("Jump") && P_JumpInt == 1)
+        {
+            if (PassiveAbility.AbCode == 6) { Instantiate(DoubleJump, SelectChar.transform.position, Quaternion.identity); }
+            rigid.AddForce(Vector3.up * P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
+            P_JumpInt--;
+            Ani.SetBool("Jump", true);
+            if (vel.y > P_JumpForce)
+            {
+                vel.y = P_JumpForce;
                 rigid.velocity = vel;
             }
         }
     }
-
+    
     [Range(0f, 10f)]
     public float Distance;
     public float Distance_X;
     public float Distance_Y;
+    public float Distance_;
 
     public LayerMask lm;
-
+    RaycastHit2D LGround, RGround;
     void GroundCheck()
     {
-        //RaycastHit2D Ground = Physics2D.Raycast(SelectChar.transform.position * Distance, 5);
-        //Debug.DrawRay(SelectChar.transform.position, Vector2.down * Distance, Color.blue);
-        RaycastHit2D LGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.left * Distance_X, Distance);
-        Debug.DrawRay(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.left * Distance_X, Color.yellow);
-        RaycastHit2D RGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.right * Distance_X, Distance);
-        Debug.DrawRay(SelectChar.transform.position + new Vector3(0, Distance_Y, 0), Vector2.right * Distance_X, Color.cyan);
+        LGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(-Distance_X, Distance_Y, 0), Vector2.down * Distance_, Distance);
+        Debug.DrawRay(SelectChar.transform.position + new Vector3(-Distance_X, Distance_Y, 0), Vector2.down * Distance_, Color.yellow);
+        RGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(Distance_X, Distance_Y, 0), Vector2.down * Distance_, Distance);
+        Debug.DrawRay(SelectChar.transform.position + new Vector3(Distance_X, Distance_Y, 0), Vector2.down * Distance_, Color.cyan);
         Physics2D.queriesStartInColliders = false;
 
-
-        if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
+        if(rigid.velocity.y < 0)
         {
-            Ani.SetBool("Jump", false);
-            P_JumpInt = P_MaxJumpInt;
+            if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
+            {
+                Ani.SetBool("Jump", false);
+                P_JumpInt = P_MaxJumpInt;
+            }
         }
-
-        //if (Ground.collider.gameObject.tag == "Ground")
-        //{
-        //    if (Ground.distance < Distance)
-        //    {
-        //        Ani.SetBool("Jump", false);
-        //        P_JumpInt = P_MaxJumpInt;
-        //    }
-        //}
-
-        //if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
-        //{
-        //    if (LGround.distance < Distance2 || RGround.distance < Distance2)
-        //    {
-        //        Ani.SetBool("Jump", false);
-        //        P_JumpInt = P_MaxJumpInt;
-        //    }
-        //}
     }
 
     //마우스 플립
