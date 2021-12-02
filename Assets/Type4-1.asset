@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Type4-1
   m_EditorClassIdentifier: 
   MonsterSet: {fileID: 11400000, guid: 19274a4d0aad71d4cad36e673b2d8b31, type: 2}
-  MapTypeCode: 0
+  MapTypeCode: 4
   TileCollider: {fileID: 0}
   BG:
   - BackGround: []
@@ -60,7 +60,7 @@ MonoBehaviour:
     OrderInLayer: -31
     Layer:
       serializedVersion: 2
-      m_Bits: 128
+      m_Bits: 64
   - BackGround: []
     Tilemap: {fileID: 8954293921940851691, guid: 4c40eb6c8bc43284db6e190e2c8ab258, type: 3}
     isAbyss: 1
@@ -69,7 +69,7 @@ MonoBehaviour:
     OrderInLayer: -31
     Layer:
       serializedVersion: 2
-      m_Bits: 512
+      m_Bits: 256
   - BackGround: []
     Tilemap: {fileID: 8897608565587148401, guid: 1d2399cf730df464093a38648ecc815c, type: 3}
     isAbyss: 0
@@ -144,11 +144,16 @@ MonoBehaviour:
       m_Bits: 512
   Map_Event: {fileID: 1571278414045844687, guid: c3d5ee8b5925bfb4e833d3560778fa9d, type: 3}
   Potals:
-  - EnablePotal: 0
+  - EnablePotal: 1
     Potaltype: 1
     PotalDirection: 1
-    VertexPoints: []
-    PotalLocation: {x: 0, y: 0}
+    VertexPoints:
+    - {x: -1, y: 2}
+    - {x: 1, y: 2}
+    - {x: 1, y: -1}
+    - {x: -1, y: -1}
+    - {x: -1, y: 2}
+    PotalLocation: {x: -15, y: 8.01}
   - EnablePotal: 0
     Potaltype: 2
     PotalDirection: 2

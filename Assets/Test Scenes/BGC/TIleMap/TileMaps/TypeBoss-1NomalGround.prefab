@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 1205031146904632874}
   - component: {fileID: 8369253939492714194}
   - component: {fileID: 8893335317514121587}
-  - component: {fileID: 9128334623534920864}
-  - component: {fileID: 1319010085999266698}
+  - component: {fileID: 3429736160676755454}
   m_Layer: 6
   m_Name: TypeBoss-1NomalGround
   m_TagString: Ground
@@ -45,6 +44,16 @@ Tilemap:
   m_GameObject: {fileID: 2050506394868146501}
   m_Enabled: 1
   m_Tiles:
+  - first: {x: -9, y: -8, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: -8, y: -8, z: 0}
     second:
       serializedVersion: 2
@@ -170,6 +179,16 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 0
       m_TileSpriteIndex: 0
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 5, y: -8, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -449,31 +468,31 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 32
     m_Data: {fileID: 11400000, guid: 3fcc3df7e57f612428a5fb227083a955, type: 2}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: e121da4dd5b4fb443a6d2adb697339be, type: 2}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 77349bc9d71908c41911016cde0b3b9f, type: 2}
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 0ff9ac12f9f8ed4409e6f127179f4346, type: 2}
+    m_Data: {fileID: 11400000, guid: 6b0415f8cb182524e8c5b7c9209b6596, type: 2}
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 3f1488a53628b794dab08758d2b03a7e, type: 2}
+    m_Data: {fileID: 11400000, guid: 8d35a5614deab1949b0dc29f5f23c0c5, type: 2}
   - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: fb092b29e8bb5004a8a665670e25cf0f, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 32
     m_Data: {fileID: 5960039505266964966, guid: d74515c0462e3694e9a97b030d922136, type: 3}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: -5545402777811339698, guid: d74515c0462e3694e9a97b030d922136, type: 3}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: -8564435148422777211, guid: d74515c0462e3694e9a97b030d922136, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: 1408171290989579489, guid: d74515c0462e3694e9a97b030d922136, type: 3}
+    m_Data: {fileID: -1881088584349222255, guid: d74515c0462e3694e9a97b030d922136, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: -7478566727754633405, guid: d74515c0462e3694e9a97b030d922136, type: 3}
+    m_Data: {fileID: -7231104539491102669, guid: d74515c0462e3694e9a97b030d922136, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: -6828489687320784505, guid: d74515c0462e3694e9a97b030d922136, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 40
+  - m_RefCount: 42
     m_Data:
       e00: 1
       e01: 0
@@ -492,7 +511,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 40
+  - m_RefCount: 42
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -592,102 +611,19 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!50 &9128334623534920864
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2050506394868146501}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!66 &1319010085999266698
-CompositeCollider2D:
+--- !u!114 &3429736160676755454
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2050506394868146501}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 8893335317514121587}
-    m_ColliderPaths:
-    - - X: 100051024
-        Y: -24948978
-      - X: 94948976
-        Y: -24948978
-      - X: 94948976
-        Y: -29948978
-      - X: 24948978
-        Y: -29948978
-      - X: 24948978
-        Y: -34948980
-      - X: -39948980
-        Y: -34948980
-      - X: -39948980
-        Y: -29948978
-      - X: -84948976
-        Y: -29948978
-      - X: -84948976
-        Y: -24948978
-      - X: -90051024
-        Y: -24948978
-      - X: -90051024
-        Y: -35051020
-      - X: -40051020
-        Y: -35051020
-      - X: -40051020
-        Y: -40051020
-      - X: 25051022
-        Y: -40051020
-      - X: 25051022
-        Y: -35051020
-      - X: 100051024
-        Y: -35051020
-  - m_Collider: {fileID: 8893335317514121587}
-    m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths:
-    - - {x: 2.5050728, y: -4.005102}
-      - {x: 2.5051317, y: -3.5051022}
-      - {x: 10.005102, y: -3.5050728}
-      - {x: 10.005073, y: -2.4948978}
-      - {x: 9.494898, y: -2.4949272}
-      - {x: 9.494868, y: -2.9948978}
-      - {x: 2.4948978, y: -2.9949272}
-      - {x: 2.4948685, y: -3.494898}
-      - {x: -3.994898, y: -3.4948688}
-      - {x: -3.9949272, y: -2.9948978}
-      - {x: -8.494898, y: -2.9948685}
-      - {x: -8.494927, y: -2.4948978}
-      - {x: -9.005102, y: -2.4949272}
-      - {x: -9.005073, y: -3.5051022}
-      - {x: -4.005102, y: -3.5051312}
-      - {x: -4.005073, y: -4.005102}
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbca9b332196de40b8cefd813ed4f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

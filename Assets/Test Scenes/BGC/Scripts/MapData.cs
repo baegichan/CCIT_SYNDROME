@@ -548,7 +548,7 @@ public class Potal
     {
         EnablePotal = true;
         VertexPoints = Potal.GetComponent<EdgeCollider2D>().points;
-        PotalLocation = Potal.transform.position;
+        PotalLocation = Potal.transform.localPosition;
     }
     public void DestroyPotal()
     {
@@ -569,7 +569,7 @@ public class Potal
             Potal.L_Area = VertexPoints[0].x;
             Potal.R_Area = VertexPoints[1].x;
             SpawnedPotal.GetComponent<EdgeCollider2D>().points = VertexPoints;
-            SpawnedPotal.transform.position = (Vector2)SpawnedPotal.transform.position+ PotalLocation;
+            SpawnedPotal.transform.localPosition = (Vector2)SpawnedPotal.transform.localPosition + PotalLocation;
             SpawnedPotal.GetComponent<PotalEvent>().Potal_setting(Potaltype);
             SpawnedPotal.GetComponent<PotalEvent>().PotalD_setting(PotalDirection);
             SpawnedPotal.GetComponent<PotalEvent>().SetinterBlock();

@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2285888596838077464}
   - component: {fileID: 6183061232243094814}
   - component: {fileID: 2586277395938069350}
-  - component: {fileID: 1825440318380812117}
-  - component: {fileID: 2398920413906772651}
+  - component: {fileID: 6264793985625850255}
+  - component: {fileID: 6975276902007076717}
   m_Layer: 8
   m_Name: TypeBoss-3AbyssGroundPass
   m_TagString: Ground
@@ -300,8 +300,8 @@ TilemapCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -324,7 +324,19 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
---- !u!50 &1825440318380812117
+--- !u!114 &6264793985625850255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5721508345615287792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbca9b332196de40b8cefd813ed4f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &6975276902007076717
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -332,7 +344,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5721508345615287792}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -345,53 +357,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!66 &2398920413906772651
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5721508345615287792}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 6183061232243094814}
-    m_ColliderPaths:
-    - - X: -49961928
-        Y: 38070
-      - X: -85038072
-        Y: 38070
-      - X: -85038072
-        Y: -266497
-      - X: -49961928
-        Y: -266497
-    - - X: 5038070
-        Y: -34961928
-      - X: -20038070
-        Y: -34961928
-      - X: -20038070
-        Y: -35266496
-      - X: 5038070
-        Y: -35266496
-  - m_Collider: {fileID: 6183061232243094814}
-    m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths:
-    - - {x: -4.996222, y: -0.0266497}
-      - {x: -4.996222, y: 0.0038070001}
-      - {x: -8.503807, y: 0.0037777}
-      - {x: -8.5037775, y: -0.0266497}
-    - - {x: 0.5037777, y: -3.5266497}
-      - {x: 0.5037777, y: -3.496193}
-      - {x: -2.003807, y: -3.496222}
-      - {x: -2.0037777, y: -3.5266497}
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005

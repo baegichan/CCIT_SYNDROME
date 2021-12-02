@@ -22,6 +22,7 @@ public class Addtilesinspecter : Editor
         if (GUILayout.Button("맵데이터 세이브"))
         {
             map.Save_MapData();
+            EditorUtility.SetDirty(map);
         }
         if (GUILayout.Button("맵데이터 로드"))
         {

@@ -329,4 +329,33 @@ public class Char_Eden : MonoBehaviour
         CP.pf.colliderMask = Physics.AllLayers;
         CP.pf = null;
     }
+
+    void TestJump()
+    {
+        Debug.Log("ÀáÇª" + CP.P_JumpInt);
+        if (!Ani.GetBool("Jump"))
+        {
+            Debug.Log("1´Ü Á¡ÇÁ");
+            rigid.AddForce(Vector3.up * CP.P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
+            CP.P_JumpInt--;
+            //Ani.SetBool("Jump", true);
+            if (CP.vel.y > CP.P_JumpForce)
+            {
+                CP.vel.y = CP.P_JumpForce;
+                rigid.velocity = CP.vel;
+            }
+        }
+        else if (Ani.GetBool("Jump") && CP.P_JumpInt == 1)
+        {
+            if (CP.PassiveAbility.AbCode == 6) { Instantiate(CP.DoubleJump, transform.position, Quaternion.identity); }
+            rigid.AddForce(Vector3.up * CP.P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
+            CP.P_JumpInt--;
+            //Ani.SetBool("Jump", true);
+            if (CP.vel.y > CP.P_JumpForce)
+            {
+                CP.vel.y = CP.P_JumpForce;
+                rigid.velocity = CP.vel;
+            }
+        }
+    }
 }
