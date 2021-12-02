@@ -37,6 +37,7 @@ public class nRealWorldShop : NPC
     {
         RealWorldShop RS = RealWorldShop_UI.GetComponent<RealWorldShop>();
         RS.CP = ply.GetComponent<Char_Parent>();
+        Char_Parent.ShopOn = true;
         RealWorldShop_UI.SetActive(true);
         RS.HPItem = item[0];
         RS.APItem = item[1];

@@ -40,6 +40,7 @@ public class Stat_NPC : NPC
         ESH.player = ply;
         ESH.py = py;
 
+        Char_Parent.ShopOn = true;
         Enhance_Stat_UI.SetActive(true);
         Enhance_Stat_UI.GetComponent<Enhance_Stat>().UpdateText();
     }

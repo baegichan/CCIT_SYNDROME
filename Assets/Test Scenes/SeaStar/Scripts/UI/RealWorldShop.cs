@@ -97,7 +97,7 @@ public class RealWorldShop : MonoBehaviour
         PillShop_Box.SetActive(false);
         PetShopButton.GetComponent<Image>().sprite = PetShopButton.GetComponent<Button>().spriteState.disabledSprite;
         PillShopButton.GetComponent<Image>().sprite = PillShopButton.GetComponent<Button>().spriteState.disabledSprite;
-        gameObject.SetActive(false);
         Char_Parent.ShopOn = false;
+        gameObject.SetActive(false);
     }
 }
