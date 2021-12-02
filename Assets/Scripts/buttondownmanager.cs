@@ -37,7 +37,7 @@ public class buttondownmanager : MonoBehaviour
         //audio.PlayOneShot(clip);
         MANAGER.GetComponent<settingmanager>().cancelsetkey();
         SETTING.SetActive(false);
-
+        Time.timeScale = 1;
     }
 
     public void checkbutton()
@@ -45,6 +45,7 @@ public class buttondownmanager : MonoBehaviour
         //audio.PlayOneShot(clip);
         MANAGER.GetComponent<settingmanager>().setkey();
         SETTING.SetActive(false);
+        Time.timeScale = 1;
     }
     public void screensize()
     {
