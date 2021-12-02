@@ -4,6 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Char_Parent : Character
 {
+    private static Char_Parent _player;
+
+    public static Char_Parent player
+    {
+        get
+        {
+            if (!_player)
+            {
+                _player = FindObjectOfType(typeof(Char_Parent)) as Char_Parent;
+
+                if (_player == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return _player;
+        }
+    }
+
     [Header("게임 오브젝트")]
     [Tooltip("변신할 캐릭터 리스트")]
     public GameObject[] Char;
@@ -13,6 +30,7 @@ public class Char_Parent : Character
     AbilityManager AM;
     public Camera Cam;
     public static bool ShopOn;
+    public bool CheatON;
 
     [Header("플레이어 장비")]
     public GameObject Current_Use;
@@ -79,6 +97,8 @@ public class Char_Parent : Character
     public int PharaoCool;
     public int EvilSworldCool;
     public int BattleAxeCool;
+    public float DoubleJumpCool;
+    public float JumpCool;
 
     [Header("소지 물약&능력")]
     public int MulYakInt;
@@ -191,7 +211,7 @@ public class Char_Parent : Character
     {
         for (int i = 0; i < this.Char.Length; i++)
         {
-            if(this.Char[i] != SelectChar) { this.Char[i].SetActive(false); }
+            if (this.Char[i] != SelectChar) { this.Char[i].SetActive(false); }
 
         }
         Char.transform.position = Before_Position;
@@ -242,18 +262,21 @@ public class Char_Parent : Character
         AM.py = SelectChar;
         //if (ActiveAbility != null) { ResourceManager.re.ActiveAbility = ActiveAbility; }
         //if (PassiveAbility != null) { ResourceManager.re.PassiveAbility = PassiveAbility; }
-        AbilityCheat();
+        //AbilityCheat();
         switchItem(ActiveAbility.AbCode);
         UpdateState();
     }
 
     void AbilityCheat()
     {
-        SelectAbility();
-        PlayerSkillUI.skill.Image_Active.sprite = ActiveAbility.icon;
-        PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
-        PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
-        PlayerSkillUI.skill.PillInt.text = AlYakInt.ToString();
+        if(CheatON)
+        {
+            SelectAbility();
+            PlayerSkillUI.skill.Image_Active.sprite = ActiveAbility.icon;
+            PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
+            PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
+            PlayerSkillUI.skill.PillInt.text = AlYakInt.ToString();
+        }
     }
 
     void UpdateState()
@@ -303,7 +326,7 @@ public class Char_Parent : Character
 
     public PlatformEffector2D pf;
     public Vector2 vel;
-    
+
     public void Jump()
     {
         if (!Ani.GetBool("Jump"))
@@ -317,7 +340,7 @@ public class Char_Parent : Character
                 rigid.velocity = vel;
             }
         }
-        else if (Ani.GetBool("Jump") && P_JumpInt == 1)
+        else if (Ani.GetBool("Jump") && P_JumpInt == 1 && 0 > JumpCool)
         {
             if (PassiveAbility.AbCode == 6) { Instantiate(DoubleJump, SelectChar.transform.position, Quaternion.identity); }
             rigid.AddForce(Vector3.up * P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
@@ -330,7 +353,7 @@ public class Char_Parent : Character
             }
         }
     }
-    
+
     public float[] Distance;
     public float[] Distance_X;
     public float[] Distance_Y;
@@ -347,13 +370,17 @@ public class Char_Parent : Character
         Debug.DrawRay(SelectChar.transform.position + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.cyan);
         Physics2D.queriesStartInColliders = false;
 
-        if(rigid.velocity.y < 0 && (LGround != false || RGround != false))
-        { Debug.Log(LGround.collider.gameObject.tag + "1");
-         Debug.Log(RGround.collider.gameObject.tag);
+        if (Ani.GetBool("Jump")) { JumpCool -= Time.deltaTime; }
+
+        if (rigid.velocity.y < 0 && (LGround != false || RGround != false))
+        {
+            Debug.Log(LGround.collider.gameObject.tag + "1");
+            Debug.Log(RGround.collider.gameObject.tag);
             if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
             {
                 Ani.SetBool("Jump", false);
                 P_JumpInt = P_MaxJumpInt;
+                JumpCool = DoubleJumpCool;
             }
         }
     }
@@ -450,7 +477,7 @@ public class Char_Parent : Character
         if (MulYakInt > 0 && Input.GetKeyDown(KeyCode.Alpha1))
         {
             MulYakInt--;
-            Hp_Current += 50;
+            Hp_Current += 30;
             if (Hp_Current > Hp_Max) { Hp_Current = Hp_Max; }
             UpdateState();
             PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
@@ -567,8 +594,8 @@ public class Char_Parent : Character
         CurrentCha = GetComponent<Char_Parent>().SelectChar;
         GameObject Text = (GameObject)Instantiate(Resources.Load("DMGCANVAS2"), CurrentCha.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
-      
-        float fontExtra = Mathf.Clamp(Damage / 3 , 5.0f, 10.0f);
+
+        float fontExtra = Mathf.Clamp(Damage / 3, 5.0f, 10.0f);
         float fontsize = Random.Range(0.8f * fontExtra, 1.0f * fontExtra);
         Text.GetComponentInChildren<Text>().fontSize = (int)fontsize;
     }
