@@ -39,8 +39,8 @@ public class MapData : ScriptableObject
 
     public void Save_TileCollider(GameObject TileCollider)
     {
-     //   GameObject tile =  PrefabUtility.SaveAsPrefabAsset(TileCollider, "Assets/Test Scenes/BGC/TileMap/TileColliders/" + this.name+"_Tilecol" + ".prefab");
-      //  Debug.Log(tile.name+"               adfafs");
+     //  GameObject tile =  PrefabUtility.SaveAsPrefabAsset(TileCollider, "Assets/Test Scenes/BGC/TileMap/TileColliders/" + this.name+"_Tilecol" + ".prefab");
+     //   Debug.Log(tile.name+"               adfafs");
       //  TileCollider = tile;
     }
     public GameObject Load_TileCollider(GameObject target)
@@ -87,7 +87,7 @@ public class MapData : ScriptableObject
     }
     public void MapDataLengthSet(int index)
     {
-      //  Map_Event = new Event[index];
+     //   Map_Event = new Event[index];
     }
 
     public Map_Direction direction = Map_Direction.x;
@@ -117,9 +117,9 @@ public class MapData : ScriptableObject
         for (int i = 0; i <Map_Event.Length; i++)
         {
            
-               // Map_Event[i].Spawn_Event_Object(Parent,Map_Event[i].MapEventType);
+                Map_Event[i].Spawn_Event_Object(Parent,Map_Event[i].MapEventType);
            
-
+                    
         }*/
     }
     #region 신경안써도되는부분
@@ -392,16 +392,16 @@ public class MapData : ScriptableObject
         for(int i=0; i<BG.Length;i++)
         {
 
-         //  GameObject MapPrefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
-         //   BG[i].Tilemap = MapPrefab;
+       //   GameObject MapPrefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
+       //     BG[i].Tilemap = MapPrefab;
             //추가로 이벤트도 저장해야됨
             
         }
-      //  Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
+     //   Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
     }
     public void Save_Event(GameObject Event)
     {
-   //     Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
+   //    Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
     }
 
     public Sprite Get_Sprite(int index)

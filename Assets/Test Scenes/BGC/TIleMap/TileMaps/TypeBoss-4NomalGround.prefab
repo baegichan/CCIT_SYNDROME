@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2866951101900122897}
   - component: {fileID: -3895499022161126752}
   - component: {fileID: 6012520111461150491}
+  - component: {fileID: 56105479576618181}
   m_Layer: 6
   m_Name: TypeBoss-4NomalGround
   m_TagString: Ground
@@ -602,7 +603,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -618,6 +619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbca9b332196de40b8cefd813ed4f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
 --- !u!50 &6012520111461150491
 Rigidbody2D:
   serializedVersion: 4
@@ -639,3 +641,87 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!66 &56105479576618181
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3815099944189962402}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 2866951101900122897}
+    m_ColliderPaths:
+    - - X: 90051024
+        Y: -24948978
+      - X: 84948976
+        Y: -24948978
+      - X: 84948976
+        Y: -29948978
+      - X: 19948980
+        Y: -29948978
+      - X: 19948980
+        Y: -30000000
+      - X: 19693878
+        Y: -30000000
+      - X: 15000000
+        Y: -34693876
+      - X: 15000000
+        Y: -34948980
+      - X: -50000000
+        Y: -34948980
+      - X: -50000000
+        Y: -34693876
+      - X: -54693876
+        Y: -30000000
+      - X: -54948980
+        Y: -30000000
+      - X: -54948980
+        Y: -29948978
+      - X: -100051024
+        Y: -29948978
+      - X: -100051024
+        Y: -35051020
+      - X: -55051020
+        Y: -35051020
+      - X: -55051020
+        Y: -40051020
+      - X: 20051022
+        Y: -40051020
+      - X: 20051022
+        Y: -35051020
+      - X: 90051024
+        Y: -35051020
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 2.0050728, y: -4.005102}
+      - {x: 2.0051317, y: -3.5051022}
+      - {x: 9.005102, y: -3.5050728}
+      - {x: 9.005073, y: -2.4948978}
+      - {x: 8.494898, y: -2.4949272}
+      - {x: 8.494868, y: -2.9948978}
+      - {x: 1.9948981, y: -2.9949272}
+      - {x: 1.9948686, y: -3}
+      - {x: 1.9693803, y: -3.0000076}
+      - {x: 1.5, y: -3.4693985}
+      - {x: 1.4999707, y: -3.494898}
+      - {x: -5, y: -3.4948688}
+      - {x: -5.0000076, y: -3.4693801}
+      - {x: -5.4693985, y: -3}
+      - {x: -5.494898, y: -2.9999707}
+      - {x: -5.4949274, y: -2.9948978}
+      - {x: -10.005102, y: -2.9949272}
+      - {x: -10.005073, y: -3.5051022}
+      - {x: -5.505102, y: -3.5051312}
+      - {x: -5.505073, y: -4.005102}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
