@@ -79,6 +79,8 @@ public class Char_Parent : Character
     public int PharaoCool;
     public int EvilSworldCool;
     public int BattleAxeCool;
+    public float DoubleJumpCool;
+    public float JumpCool;
 
     [Header("소지 물약&능력")]
     public int MulYakInt;
@@ -317,7 +319,7 @@ public class Char_Parent : Character
                 rigid.velocity = vel;
             }
         }
-        else if (Ani.GetBool("Jump") && P_JumpInt == 1)
+        else if (Ani.GetBool("Jump") && P_JumpInt == 1 && 0 > JumpCool)
         {
             if (PassiveAbility.AbCode == 6) { Instantiate(DoubleJump, SelectChar.transform.position, Quaternion.identity); }
             rigid.AddForce(Vector3.up * P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
@@ -347,6 +349,8 @@ public class Char_Parent : Character
         Debug.DrawRay(SelectChar.transform.position + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.cyan);
         Physics2D.queriesStartInColliders = false;
 
+        if (Ani.GetBool("Jump")) { JumpCool -= Time.deltaTime; }
+
         if(rigid.velocity.y < 0 && (LGround != false || RGround != false))
         { Debug.Log(LGround.collider.gameObject.tag + "1");
          Debug.Log(RGround.collider.gameObject.tag);
@@ -354,6 +358,7 @@ public class Char_Parent : Character
             {
                 Ani.SetBool("Jump", false);
                 P_JumpInt = P_MaxJumpInt;
+                JumpCool = DoubleJumpCool;
             }
         }
     }
