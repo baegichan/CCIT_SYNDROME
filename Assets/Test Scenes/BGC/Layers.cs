@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 public class Layers : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Layers : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.Q) && SceneManager.GetActiveScene().name != "StartPoint")
         {
            StartCoroutine( Change());
         }

@@ -77,7 +77,7 @@ public class AbyssManager : MonoBehaviour
 
     public bool isHp = false;
 
-   
+
 
     //[Header("MonsterBox")]
     //public GameObject RealBox;
@@ -119,28 +119,28 @@ public class AbyssManager : MonoBehaviour
 
     private void Update()
     {
-        if(SceneManager.GetActiveScene().name != "Boss_Scene")//현재 씬 체크해서 보스 씬에서는 자동으로 심연으로 넘어가니까 작동 안하게 해줬어여
+        if (SceneManager.GetActiveScene().name != "Boss_Scene")//현재 씬 체크해서 보스 씬에서는 자동으로 심연으로 넘어가니까 작동 안하게 해줬어여
             if (SceneManager.GetActiveScene().name != "StartPoint")
                 if (Input.GetKey(KeyCode.Q) && isCoolTime)
-        {
-            isCoolTime = false;
-            StartCoroutine(CoolTime());
+                {
+                    isCoolTime = false;
+                    StartCoroutine(CoolTime());
 
 
-            if (abyssState == AbyssState.Abyss)
-            {
-                isHp = false;
-                GoReal();
-                MapChangeTester.AbyssMask.test.SetTrigger("Changed");
-            }
+                    if (abyssState == AbyssState.Abyss)
+                    {
+                        isHp = false;
+                        GoReal();
+                        MapChangeTester.AbyssMask.test.SetTrigger("Changed");
+                    }
 
-            else if (abyssState == AbyssState.Reality && abyssGage > 0)
-            {
-                GoAbyss();
-                MapChangeTester.AbyssMask.test.SetTrigger("Changed");
-            }
+                    else if (abyssState == AbyssState.Reality)
+                    {
+                        GoAbyss();
+                        MapChangeTester.AbyssMask.test.SetTrigger("Changed");
+                    }
 
-        }
+                }
     }
 
     IEnumerator CoolTime()
@@ -169,7 +169,7 @@ public class AbyssManager : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.1f);
                 }
-                
+
             }
 
             if (hpGage <= 0)
@@ -184,8 +184,8 @@ public class AbyssManager : MonoBehaviour
             }
             yield return new WaitForSeconds(abyssConsumptionTime);
         }
-       
- 
+
+
         abyssState = AbyssState.Reality;
         isAbyssEnd = true;
     }
