@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2617738117547420477}
   - component: {fileID: 6600606494477959910}
   - component: {fileID: 1408138517}
+  - component: {fileID: 1434503019820975667}
   m_Layer: 6
   m_Name: TypeBoss-2NomalGroundPass
   m_TagString: Ground
@@ -287,7 +288,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 1
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -322,6 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbca9b332196de40b8cefd813ed4f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 1
 --- !u!50 &1408138517
 Rigidbody2D:
   serializedVersion: 4
@@ -343,3 +345,39 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!66 &1434503019820975667
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6100621083407743449}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 5878129824547793745}
+    m_ColliderPaths:
+    - - X: 34961928
+        Y: -5266497
+      - X: 90038072
+        Y: -5266497
+      - X: 90038072
+        Y: -4961929
+      - X: 34961928
+        Y: -4961929
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 9.0037775, y: -0.5266497}
+      - {x: 9.0037775, y: -0.4961929}
+      - {x: 3.496193, y: -0.4962222}
+      - {x: 3.496222, y: -0.5266497}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005

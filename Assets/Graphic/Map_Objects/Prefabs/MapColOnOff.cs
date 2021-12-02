@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class MapColOnOff : MonoBehaviour
 {
-    AbyssManager.AbyssState state;
+   public AbyssManager.AbyssState state;
     // Start is called before the first frame update
     void Start()
     {

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3605010409437813857}
   - component: {fileID: 4251008068158573049}
   - component: {fileID: 272951680215241131}
+  - component: {fileID: 4092858548342957731}
   m_Layer: 8
   m_Name: TypeBoss-12AbyssGroundPass
   m_TagString: Ground
@@ -361,7 +362,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 1
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -380,7 +381,7 @@ PlatformEffector2D:
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
+  m_SurfaceArc: 150
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
@@ -396,6 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbca9b332196de40b8cefd813ed4f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 1
 --- !u!50 &272951680215241131
 Rigidbody2D:
   serializedVersion: 4
@@ -417,3 +419,77 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!66 &4092858548342957731
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4201996954587304003}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 9002716470947337880}
+    m_ColliderPaths:
+    - - X: 10038071
+        Y: 25038070
+      - X: -15038071
+        Y: 25038070
+      - X: -15038071
+        Y: 24733502
+      - X: 10038071
+        Y: 24733502
+    - - X: -24961930
+        Y: 38070
+      - X: -50038072
+        Y: 38070
+      - X: -50038072
+        Y: -266497
+      - X: -24961930
+        Y: -266497
+    - - X: 45038072
+        Y: 38070
+      - X: 19961930
+        Y: 38070
+      - X: 19961930
+        Y: -266497
+      - X: 45038072
+        Y: -266497
+    - - X: 5038070
+        Y: -4961929
+      - X: -10038071
+        Y: -4961929
+      - X: -10038071
+        Y: -5266497
+      - X: 5038070
+        Y: -5266497
+  - m_Collider: {fileID: 9002716470947337880}
+    m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 1.0037779, y: 2.4733503}
+      - {x: 1.0037779, y: 2.503807}
+      - {x: -1.5038071, y: 2.5037777}
+      - {x: -1.5037779, y: 2.4733503}
+    - - {x: 4.503778, y: -0.0266497}
+      - {x: 4.503778, y: 0.0038070001}
+      - {x: 1.996193, y: 0.0037777}
+      - {x: 1.9962224, y: -0.0266497}
+    - - {x: -2.4962225, y: -0.0266497}
+      - {x: -2.4962225, y: 0.0038070001}
+      - {x: -5.003807, y: 0.0037777}
+      - {x: -5.003778, y: -0.0266497}
+    - - {x: 0.5037777, y: -0.5266497}
+      - {x: 0.5037777, y: -0.4961929}
+      - {x: -1.0038071, y: -0.4962222}
+      - {x: -1.0037779, y: -0.5266497}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005

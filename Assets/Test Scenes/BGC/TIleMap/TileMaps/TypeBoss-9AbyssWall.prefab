@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 8784792864249879341}
   - component: {fileID: 8267091432777503886}
   - component: {fileID: 1269107179090535663}
-  m_Layer: 9
+  - component: {fileID: 58484430}
+  m_Layer: 8
   m_Name: TypeBoss-9AbyssWall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -4551,7 +4552,7 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
@@ -4576,3 +4577,111 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!66 &58484430
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4377523956365971239}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 8267091432777503886}
+    m_ColliderPaths:
+    - - X: -89948976
+        Y: -5051020
+      - X: -84540816
+        Y: -5051020
+      - X: -79948976
+        Y: -459183
+      - X: -79948976
+        Y: 9948980
+      - X: -49540816
+        Y: 9948980
+      - X: -44948980
+        Y: 14540817
+      - X: -44948980
+        Y: 14948980
+      - X: 49948980
+        Y: 14948980
+      - X: 49948980
+        Y: 14540817
+      - X: 54540816
+        Y: 9948980
+      - X: 79948976
+        Y: 9948980
+      - X: 79948976
+        Y: -459183
+      - X: 84540816
+        Y: -5051020
+      - X: 89948976
+        Y: -5051020
+      - X: 89948976
+        Y: -10051020
+      - X: 100051024
+        Y: -10051020
+      - X: 100051024
+        Y: 50051020
+      - X: -100051024
+        Y: 50051020
+      - X: -100051024
+        Y: -10051020
+      - X: -89948976
+        Y: -10051020
+    - - X: 100051024
+        Y: -34948980
+      - X: 29948978
+        Y: -34948980
+      - X: 29948978
+        Y: -39948980
+      - X: -44948980
+        Y: -39948980
+      - X: -44948980
+        Y: -34948980
+      - X: -100051024
+        Y: -34948980
+      - X: -100051024
+        Y: -50051020
+      - X: 100051024
+        Y: -50051020
+  m_CompositePaths:
+    m_Paths:
+    - - {x: -8.994927, y: -1.005102}
+      - {x: -8.994868, y: -0.505102}
+      - {x: -8.454074, y: -0.5050944}
+      - {x: -7.994898, y: -0.0459075}
+      - {x: -7.9948683, y: 0.994898}
+      - {x: -4.954074, y: 0.9949056}
+      - {x: -4.494898, y: 1.4540925}
+      - {x: -4.4948688, y: 1.494898}
+      - {x: 4.994898, y: 1.4948686}
+      - {x: 4.9949055, y: 1.4540741}
+      - {x: 5.4540925, y: 0.994898}
+      - {x: 7.994898, y: 0.99486864}
+      - {x: 7.9949055, y: -0.0459259}
+      - {x: 8.454093, y: -0.505102}
+      - {x: 8.994898, y: -0.5051314}
+      - {x: 8.994927, y: -1.005102}
+      - {x: 10.005102, y: -1.0050727}
+      - {x: 10.005073, y: 5.005102}
+      - {x: -10.005102, y: 5.005073}
+      - {x: -10.005073, y: -1.005102}
+    - - {x: 10.005073, y: -5.005102}
+      - {x: 10.005073, y: -3.494898}
+      - {x: 2.9948978, y: -3.4949272}
+      - {x: 2.9948685, y: -3.994898}
+      - {x: -4.494898, y: -3.9948688}
+      - {x: -4.4949274, y: -3.494898}
+      - {x: -10.005102, y: -3.4949272}
+      - {x: -10.005073, y: -5.005102}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
