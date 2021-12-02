@@ -8,7 +8,7 @@ public class KnuckBack_Fog : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponentInParent<Char_Parent>().PlayerKnuckBack(transform, collision.transform, 5, false);
+            collision.GetComponentInParent<Char_Parent>().PlayerKnuckBack(transform, collision.transform, 10, false);
         }
     }
 }
