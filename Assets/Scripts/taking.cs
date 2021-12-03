@@ -14,7 +14,7 @@ public class taking : MonoBehaviour
         {
           
             if (Input.GetKey(KeyCode.F) && PlayerPrefs.GetFloat("Tuto")!=1)
-            {ddddd
+            {
 
                GetComponent<talkchanger>().tutorialstarter();
             }

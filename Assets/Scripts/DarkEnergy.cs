@@ -39,7 +39,7 @@ public class DarkEnergy : MonoBehaviour
         teststopper = true;
     }
 
-void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Player")
         {
@@ -47,7 +47,6 @@ void OnTriggerEnter2D(Collider2D col)
             if(box != null) { box.GetComponent<ItmeBox>().destroy(); }
             Destroy(transform.gameObject);
         }
-
     }
 
 }

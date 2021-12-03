@@ -158,54 +158,54 @@ public class AddTiles : MonoBehaviour
         MapData.SpawnEvent(Event);
        tileSet=MapData.Load_TileCollider(Editor);
     }
-    public void Save_MapData()
-    {
-        mapcode = 0;
-        MapData.Save_MapData(Editor.transform.GetChild(0).gameObject,Event);
-        if(!PotalnameCheck("LeftPotal",false)) 
-        {
-            MapData.Save_Potal(PotalObjectCheck("LeftPotal"),0);
-            mapcode += 0b1000;
-        }
-        else
-        {
-            MapData.DestroyPotal(0);
-        }
-        if (!PotalnameCheck("RightPotal", false))
-        {
-            MapData.Save_Potal(PotalObjectCheck("RightPotal"), 1);
-            mapcode += 0b0100;
-        }
-        else
-        {
-            MapData.DestroyPotal(1);
-        }
-        if (!PotalnameCheck("TopPotal", false))
-        {
-            MapData.Save_Potal(PotalObjectCheck("TopPotal"), 2);
-            mapcode += 0b0010;
-        }
-        else
-        {
-            MapData.DestroyPotal(2);
-        }
-        if (!PotalnameCheck("BottomPotal", false))
-        {
-            MapData.Save_Potal(PotalObjectCheck("BottomPotal"), 3);
-            mapcode += 0b0001;
-        }
-        else
-        {
-            MapData.DestroyPotal(3);
-        }
-        //배열 초기화 생각해야됨
-        MapData.MapDataLengthSet(Event.transform.childCount);
-        RoomConverterset();
-        RoomConverter.TryGetValue(mapcode, out int ChangedRoomcode);
-        MapData.Map_Code_Save(ChangedRoomcode);
-        MapData.Save_TileCollider(tileSet);
+    //public void Save_MapData()
+    //{
+    //    mapcode = 0;
+    //    MapData.Save_MapData(Editor.transform.GetChild(0).gameObject,Event);
+    //    if(!PotalnameCheck("LeftPotal",false)) 
+    //    {
+    //        MapData.Save_Potal(PotalObjectCheck("LeftPotal"),0);
+    //        mapcode += 0b1000;
+    //    }
+    //    else
+    //    {
+    //        MapData.DestroyPotal(0);
+    //    }
+    //    if (!PotalnameCheck("RightPotal", false))
+    //    {
+    //        MapData.Save_Potal(PotalObjectCheck("RightPotal"), 1);
+    //        mapcode += 0b0100;
+    //    }
+    //    else
+    //    {
+    //        MapData.DestroyPotal(1);
+    //    }
+    //    if (!PotalnameCheck("TopPotal", false))
+    //    {
+    //        MapData.Save_Potal(PotalObjectCheck("TopPotal"), 2);
+    //        mapcode += 0b0010;
+    //    }
+    //    else
+    //    {
+    //        MapData.DestroyPotal(2);
+    //    }
+    //    if (!PotalnameCheck("BottomPotal", false))
+    //    {
+    //        MapData.Save_Potal(PotalObjectCheck("BottomPotal"), 3);
+    //        mapcode += 0b0001;
+    //    }
+    //    else
+    //    {
+    //        MapData.DestroyPotal(3);
+    //    }
+    //    //배열 초기화 생각해야됨
+    //    MapData.MapDataLengthSet(Event.transform.childCount);
+    //    RoomConverterset();
+    //    RoomConverter.TryGetValue(mapcode, out int ChangedRoomcode);
+    //    MapData.Map_Code_Save(ChangedRoomcode);
+    //    MapData.Save_TileCollider(tileSet);
      
-    }
+    //}
     public  void Save_EventData()
     {
 

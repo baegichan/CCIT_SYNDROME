@@ -10,10 +10,12 @@ public class AXE : MonoBehaviour
     public AbilityManager AM;
     public float KnuckBackForce;
     public GameObject HitEffect;
-
+    public Vector3 Point;
+    public Vector3 Size;
     public void AxeAttack()
     {
-        Collider2D[] hitAxe = Physics2D.OverlapBoxAll(transform.position, new Vector2(1.8f, 1), 0);
+        Vector3 Axe = new Vector3(transform.position.x + Point.x * transform.localScale.x, transform.position.y + Point.y);
+        Collider2D[] hitAxe = Physics2D.OverlapBoxAll(Axe, Size, 0);
 
         if (AbilityManager.A_Attack_State == true)
         {
@@ -33,7 +35,7 @@ public class AXE : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(transform.position, new Vector2(1.8f, 1));
+        Gizmos.DrawWireCube(new Vector3(transform.position.x + Point.x * transform.localScale.x, transform.position.y + Point.y), Size);
     }
     private void Fourth(Collider2D col)
     {

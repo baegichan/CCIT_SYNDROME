@@ -44,11 +44,15 @@ public class Char_Wolf : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            AM.AS.PlayOneShot(SoundManager.instance.EFXs[7].Audio);
+            //AM.AS.PlayOneShot(SoundManager.instance.EFXs[7].Audio);
             Wolf_GageBar.SetActive(true);
             Ani.SetBool("Dash", true);
             Ani.SetBool("CanIThis", false);
-            WereWolf_Gauge = Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            WereWolf_Gauge += Time.deltaTime * 2;
             Wolf_GageBar.GetComponent<WolfGage>().WolfDashGage = WereWolf_Gauge;
         }
 
@@ -77,7 +81,6 @@ public class Char_Wolf : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         CP.pf = col.transform.GetComponent<PlatformEffector2D>();
-        Debug.Log("ªÏ∑¡¡“");
     }
 
     void DownPlatform()
@@ -85,8 +88,8 @@ public class Char_Wolf : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             CP.pf.colliderMask = layerMask;
-
-            StartCoroutine(Cool());
+            CP.pf.GetComponent<PassBlock>().IsUse = true;
+            //StartCoroutine(Cool());
             //Invoke("AllLayerPlatform", 0.6f);
         }
     }

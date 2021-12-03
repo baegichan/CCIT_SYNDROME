@@ -144,36 +144,27 @@ public class For_Fade : MonoBehaviour
     {
             a = Camera.main;
             MaskCamera = Camera.main.transform.GetChild(2).gameObject.GetComponent<Camera>();
-            //GameObject Canvas1 = GameObject.Find("Player").transform.GetChild(3).gameObject;
-            //GameObject Canvas2 = GameObject.Find("Player").transform.GetChild(4).gameObject;
-            GameObject Canvas3 = GameObject.Find("Player").transform.GetChild(0).transform.GetChild(6).gameObject;
-            GameObject Canvas4 = GameObject.Find("Player").transform.GetChild(0).transform.GetChild(0).gameObject;
-            GameObject Player_UI = GameObject.Find("Player_UI_Manager").gameObject;
-            //Canvas1.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
-            //Canvas2.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+        GameObject Canvas3 = GameObject.Find("Player").transform.GetChild(3).gameObject;//Canvas (1)
+        GameObject Canvas4 = GameObject.Find("Player").transform.GetChild(4).gameObject;//Canvas
+        GameObject Canvas5 = GameObject.Find("Player").transform.GetChild(5).gameObject;
+        GameObject Player_UI = GameObject.Find("Player_UI_Manager").gameObject;
             Canvas3.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
             Canvas4.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
             Player_UI.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
-            //Canvas1.GetComponent<Canvas>().worldCamera = a;
-            //Canvas2.GetComponent<Canvas>().worldCamera = a;
             Canvas3.GetComponent<Canvas>().worldCamera = a;
-            Canvas4.GetComponent<Canvas>().worldCamera = MaskCamera;
+            Canvas4.GetComponent<Canvas>().worldCamera = a;
+            MaskCamera = Camera.main.transform.GetChild(2).gameObject.GetComponent<Camera>();
+        Canvas5.GetComponent<Canvas>().worldCamera = MaskCamera;
             Player_UI.GetComponent<Canvas>().worldCamera = a;
+            
             MIniMapSingleton.Minimap.GetComponentInChildren<CinemachineVirtualCameraBase>().Follow = GameObject.Find("Player").GetComponent<Char_Parent>().SelectChar.transform;
 
-        //Invoke("Boss_Active_On", 1.5f);
-    }
-
-    void Boss_Active_On()
-    {
-        Debug.Log(23);
-        GameObject Boss = GameObject.Find("Boss_Controll").transform.GetChild(0).gameObject;
-        Boss.GetComponent<Boss>().Boss_Active_on = true;
     }
 
     public void Delay_a_back()
     {
         GameObject a2 = GameObject.Find("2222");
+
         if(a2 != null)
         a2.gameObject.SetActive(false);
         GetComponent<Image>().color = new Color(0, 0, 0, 0);
@@ -205,11 +196,12 @@ public class For_Fade : MonoBehaviour
         GameObject Fade = GameObject.Find("fade");
         GameObject ResourceManager1 = GameObject.Find("ResourceManager");
         GameObject AbyssManager1 = GameObject.Find("AbyssManager");
+        GameObject SettingManager = GameObject.Find("SettingManager");
         Abyss_10 =Convert.ToInt32( AbyssManager.abyss.Darkfog * 0.1f);
         ResourceManager.re.DarkFog = Abyss_10;
         for (int i = 0; i< aa.Count; i++)
         {
-            if(aa[i] != Fade || aa[i] != ResourceManager1)
+            if(aa[i] != Fade || aa[i] != ResourceManager1 || aa[i] != SettingManager)
             {
                 Destroy(aa[i]);
             }

@@ -53,7 +53,7 @@ public class ItmeBox : MonoBehaviour
             Vector3 items = gameObject.transform.position + dd;
 
             var d = Instantiate(DarkEnergy, items, Quaternion.identity);
-            d.GetComponent<AbilityItem>().Box = this.gameObject;
+            d.GetComponent<DarkEnergy>().box = this.gameObject;
         }
     }
 

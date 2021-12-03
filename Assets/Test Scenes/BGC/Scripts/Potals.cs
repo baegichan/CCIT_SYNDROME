@@ -52,4 +52,25 @@ public GameObject GetPotal(PotalType potaltype)
         }
         return null;
     }
+    public Vector3 GetONPotals()
+    {
+  
+        if(T_Potal!=null)
+        {
+            return new  Vector2(T_Potal.transform.position.x, T_Potal.transform.position.y-2);
+        }
+        if(R_Potal!=null)
+        {
+            return new Vector2(R_Potal.transform.position.x - 2, R_Potal.transform.position.y );
+        }
+        if (B_Potal != null)
+        {
+            return new Vector2(B_Potal.transform.position.x, B_Potal.transform.position.y+2 );
+        }
+        if (L_Potal != null)
+        {
+            return new Vector2(L_Potal.transform.position.x+2, L_Potal.transform.position.y );
+        }
+        return transform.position;
+    }
 }
