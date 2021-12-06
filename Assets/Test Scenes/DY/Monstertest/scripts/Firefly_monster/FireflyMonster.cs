@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,11 +65,15 @@ public class FireflyMonster:Character
     }
     private void OnEnable()
     {
-        playerTransform = null;
+       //playerTransform = null;
         Targeton = false;
         if (Online)
         {
             anim.SetFloat("Direction", 1);
+        }
+        if(Hp_Current==0)
+        {
+            FireflyDestroy();
         }
 
         transform.eulerAngles = new Vector3(0, 0, 0);
@@ -96,6 +101,7 @@ public class FireflyMonster:Character
     */
     void Update()
     {
+        //FindViewTargets();
         if (patroll == true)
         {
             Patroll();
@@ -270,14 +276,16 @@ public class FireflyMonster:Character
 
             if (angle <= m_horizontalViewHalfAngle) //나의 시야에 있다면
             {
-                player = GameObject.FindGameObjectWithTag("Player");
+
+                player = Camera.main.transform.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>().Follow.gameObject;
+                //player = GameObject.FindGameObjectWithTag("Player");
                 //player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;//플레이어 피봇 위치 트러짐 떄문에 사용
                 if (playerTransform == null)
                 {
-                    playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                    playerTransform = player.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 }
                 else
-                    playerTransform = player.GetComponent<Char_Parent>().SelectChar.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
+                    playerTransform = player.transform;//플레이어 피봇 위치 트러짐 떄문에 사용
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask); //대상을 가리고 있는 오브젝트가 있는지 확인하는 레이캐스트
                 if(rayHitedTarget != false)
                     Debug.Log(rayHitedTarget.collider.name);

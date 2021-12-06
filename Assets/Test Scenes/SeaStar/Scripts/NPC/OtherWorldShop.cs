@@ -11,7 +11,6 @@ public class OtherWorldShop : NPC
 
     void Awake()
     {
-        ply = GameObject.FindGameObjectWithTag("Player");
         item = GetComponent<AbilityItem>();
         sellItem();
 
@@ -33,9 +32,10 @@ public class OtherWorldShop : NPC
     void OpenEngance()
     {
         Enhance EH = Enhance_UI.GetComponent<Enhance>();
-        py = ply.GetComponent<Char_Parent>();
+        py = ply.GetComponentInParent<Char_Parent>();
         EH.CP = py;
         EH.EnhanceNPC = gameObject;
+        Char_Parent.ShopOn = true;
         Enhance_UI.SetActive(true);
         EH.SettingShop();
         EH.SettingAbility();

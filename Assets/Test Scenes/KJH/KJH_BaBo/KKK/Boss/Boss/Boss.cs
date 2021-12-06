@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -146,11 +147,11 @@ public class Boss : Character
       
         
         
-        Player_Transform = GameObject.FindGameObjectWithTag("Player").GetComponent<Char_Parent>().SelectChar.transform;
+        Player_Transform = Camera.main.transform.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>().Follow.gameObject.transform;
 
-        
 
-      
+
+
 
 
         Bs = BossUI.transform.GetComponent<BosStateUi>();

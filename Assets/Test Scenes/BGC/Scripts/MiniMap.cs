@@ -80,14 +80,7 @@ public class MiniMap : MonoBehaviour
         {        //이후 KeyManager 키로 변경요망
             if (Input.GetKeyDown(KeyCode.M))
             {
-                if(Time.timeScale ==1)
-                 {
-                    Time.timeScale = 0;
-                }
-                else
-                {
-                    Time.timeScale = 1;
-                }
+              
                 if (Loaded == false)
                 {
                     WolrdMap.transform.localPosition = -WorldMap[(int)MapManager.PCurrent_Room.y, (int)MapManager.PCurrent_Room.x].transform.localPosition;
@@ -115,14 +108,7 @@ public class MiniMap : MonoBehaviour
     }
     public void TimeScaleChanger()
     {
-        if (Time.timeScale == 1)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
+      
     }
     public void CanvasOff()
     {
