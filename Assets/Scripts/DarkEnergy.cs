@@ -18,8 +18,6 @@ public class DarkEnergy : MonoBehaviour
     private void Start()
     {
         StartCoroutine(onsokunosonic());
-    
-       
     }
     
     void Update()
@@ -28,7 +26,6 @@ public class DarkEnergy : MonoBehaviour
         {
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z), step);
-           
         }
     }
     
@@ -48,5 +45,4 @@ public class DarkEnergy : MonoBehaviour
             Destroy(transform.gameObject);
         }
     }
-
 }

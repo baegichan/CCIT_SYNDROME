@@ -17,18 +17,16 @@ public class ItmeBox : MonoBehaviour
     bool isPlayer = false;
     private void Update()
     {
-        Debug.Log(isPlayer);
-        if (Input.GetKeyDown(KeyCode.F) && !isOpen && isPlayer)
-        {
-
-            isOpen = true;
-            ani.SetBool("Open", true);
-        }
+        //if (isPlayer && !isOpen)
+        //{
+        //    ani.SetBool("Open", true);
+        //    OpenItmeBox();
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Player") { isPlayer = true; }
+        if (col.tag == "Player" && !isOpen) { ani.SetBool("Open", true); }
     }
 
     void OnTriggerExit2D(Collider2D col)
@@ -38,6 +36,7 @@ public class ItmeBox : MonoBehaviour
 
     void OpenItmeBox()
     {
+        isOpen = true;
         int i = Random.Range(0, 2);
         if(i == 0)
         {
