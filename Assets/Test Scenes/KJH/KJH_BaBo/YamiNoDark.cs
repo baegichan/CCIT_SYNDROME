@@ -27,7 +27,12 @@ public class YamiNoDark : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Player") { isPlayer = true; }
+        if (col.tag == "Player")
+        {
+            AbyssManager.abyss.Darkfog += Random.Range(80, 141);
+            Destroy(transform.gameObject);
+            isPlayer = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)

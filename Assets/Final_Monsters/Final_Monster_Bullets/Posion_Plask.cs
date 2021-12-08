@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,9 +24,9 @@ public class Posion_Plask : MonoBehaviour
 
     private void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+         Player = Camera.main.transform.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>().Follow.gameObject;
         //Player = GameObject.FindGameObjectWithTag("Player").transform.parent.gameObject;
-        Transform Player_Transform = Player.GetComponent<Char_Parent>().SelectChar.transform;
+        Transform Player_Transform = Player.transform;
 
 
         p1 = transform.position;

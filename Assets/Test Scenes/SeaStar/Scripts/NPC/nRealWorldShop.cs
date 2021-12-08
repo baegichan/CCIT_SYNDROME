@@ -9,8 +9,6 @@ public class nRealWorldShop : NPC
 
     void Awake()
     {
-        ply = GameObject.FindGameObjectWithTag("Player");
-
         Scale = transform.localScale;
         DefaultX = Scale.x;
         FlipX = -Scale.x;
@@ -36,7 +34,8 @@ public class nRealWorldShop : NPC
     void OpenShop()
     {
         RealWorldShop RS = RealWorldShop_UI.GetComponent<RealWorldShop>();
-        RS.CP = ply.GetComponent<Char_Parent>();
+        RS.CP = ply.GetComponentInParent<Char_Parent>();
+        Char_Parent.ShopOn = true;
         RealWorldShop_UI.SetActive(true);
         RS.HPItem = item[0];
         RS.APItem = item[1];

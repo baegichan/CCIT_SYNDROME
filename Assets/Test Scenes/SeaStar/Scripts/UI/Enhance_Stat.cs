@@ -35,29 +35,29 @@ public class Enhance_Stat : MonoBehaviour
         Level_Strength.sprite = Level_Strength_Image[py.Enhance_Strength];
         Level_Speed.sprite = Level_Speed_Image[py.Enhance_Speed];
 
-        if (py.Enhance_Health < 6)
+        if (py.Enhance_Health < 5)
             T_Cost_Health.text = Cost_Health[py.Enhance_Health].ToString();
         else
         {
-            T_Cost_Health.text = "Max";
+            T_Cost_Health.text = "mAx";
             Health_Button.GetComponent<Image>().sprite = Health_Button.GetComponent<Button>().spriteState.disabledSprite;
             Health_Button.GetComponent<Button>().enabled = false;
         }
 
-        if (py.Enhance_Strength < 6)
+        if (py.Enhance_Strength < 5)
             T_Cost_Strength.text = Cost_Strength[py.Enhance_Strength].ToString();
         else
         {
-            T_Cost_Strength.text = "Max";
+            T_Cost_Strength.text = "mAx";
             Strength_Button.GetComponent<Image>().sprite = Strength_Button.GetComponent<Button>().spriteState.disabledSprite;
             Strength_Button.GetComponent<Button>().enabled = false;
         }
 
-        if (py.Enhance_Speed < 6)
+        if (py.Enhance_Speed < 5)
             T_Cost_Speed.text = Cost_Speed[py.Enhance_Speed].ToString();
         else
         {
-            T_Cost_Speed.text = "Max";
+            T_Cost_Speed.text = "mAx";
             Speed_Button.GetComponent<Image>().sprite = Speed_Button.GetComponent<Button>().spriteState.disabledSprite;
             Speed_Button.GetComponent<Button>().enabled = false;
         }
@@ -65,7 +65,7 @@ public class Enhance_Stat : MonoBehaviour
 
     public void Enhance_Health()
     {
-        if (py.Enhance_Health < 6)
+        if (py.Enhance_Health < 5)
         {
             if (AbyssManager.abyss.Darkfog > Cost_Health[py.Enhance_Health])
             {
@@ -81,7 +81,7 @@ public class Enhance_Stat : MonoBehaviour
     
     public void Enhance_Strength()
     {
-        if (py.Enhance_Strength < 6)
+        if (py.Enhance_Strength < 5)
         {
             if (AbyssManager.abyss.Darkfog > Cost_Strength[py.Enhance_Strength])
             {
@@ -96,7 +96,7 @@ public class Enhance_Stat : MonoBehaviour
     
     public void Enhance_Speed()
     {
-        if (py.Enhance_Speed < 6)
+        if (py.Enhance_Speed < 5)
         {
             if (AbyssManager.abyss.Darkfog > Cost_Speed[py.Enhance_Speed])
             {
@@ -111,6 +111,7 @@ public class Enhance_Stat : MonoBehaviour
 
     public void Exit()
     {
+        Char_Parent.ShopOn = false;
         gameObject.SetActive(false);
     }
 }

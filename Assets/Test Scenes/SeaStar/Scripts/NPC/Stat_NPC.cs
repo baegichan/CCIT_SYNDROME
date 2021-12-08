@@ -8,8 +8,6 @@ public class Stat_NPC : NPC
 
     void Start()
     {
-        ply = GameObject.FindGameObjectWithTag("Player");
-
         Scale = transform.localScale;
         DefaultX = Scale.x;
         FlipX = -Scale.x;
@@ -20,7 +18,11 @@ public class Stat_NPC : NPC
     void Update()
     {
         Flip();
-        talkWithPlayer();
+        if(PlayerPrefs.GetFloat("Tuto")==1)
+        {
+            talkWithPlayer();
+        }
+       
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -33,13 +35,16 @@ public class Stat_NPC : NPC
         if (col.tag == "Player") { IsPlayer = false; }
     }
 
+    public Char_Parent py;
+
     void OpenEnhance()
     {
         Enhance_Stat ESH = Enhance_Stat_UI.GetComponent<Enhance_Stat>();
-        Char_Parent py = ply.GetComponent<Char_Parent>();
+        py = ply.GetComponentInParent<Char_Parent>();
         ESH.player = ply;
         ESH.py = py;
 
+        Char_Parent.ShopOn = true;
         Enhance_Stat_UI.SetActive(true);
         Enhance_Stat_UI.GetComponent<Enhance_Stat>().UpdateText();
     }

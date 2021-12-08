@@ -5,6 +5,7 @@ using UnityEngine;
 public class Char_Wolf : MonoBehaviour
 {
     public int[] HP;
+    public int[] AP;
     public int DP;
     public Char_Parent CP;
     public AbilityManager AM;
@@ -15,10 +16,16 @@ public class Char_Wolf : MonoBehaviour
     public bool P_Attack_State;
     public float P_AttackMoveInt;
     public GameObject Wolf_GageBar;
+    public LayerMask layerMask;
 
+    private void Update()
+    {
+        DownPlatform();
+    }
     void OnEnable()
     {
         CP.Hp_Current += HP[CP.ActiveAbility.Enhance];
+        CP.CharAP += AP[CP.ActiveAbility.Enhance];
     }
     public void Attack()
     {
@@ -37,11 +44,15 @@ public class Char_Wolf : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            AM.AS.PlayOneShot(SoundManager.instance.EFXs[7].Audio);
+            //AM.AS.PlayOneShot(SoundManager.instance.EFXs[7].Audio);
             Wolf_GageBar.SetActive(true);
             Ani.SetBool("Dash", true);
             Ani.SetBool("CanIThis", false);
-            WereWolf_Gauge = Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            WereWolf_Gauge += Time.deltaTime * 2;
             Wolf_GageBar.GetComponent<WolfGage>().WolfDashGage = WereWolf_Gauge;
         }
 
@@ -60,9 +71,38 @@ public class Char_Wolf : MonoBehaviour
     {
         P_Attack_State = true;
     }
+
     void AttackEnd()
     {
         P_Attack_State = false;
         Ani.SetBool("CanIThis", true);
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        CP.pf = col.transform.GetComponent<PlatformEffector2D>();
+    }
+
+    void DownPlatform()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            CP.pf.colliderMask = layerMask;
+            CP.pf.GetComponent<PassBlock>().IsUse = true;
+            //StartCoroutine(Cool());
+            //Invoke("AllLayerPlatform", 0.6f);
+        }
+    }
+
+    IEnumerator Cool()
+    {
+        yield return new WaitForSeconds(0.6f);
+        CP.pf.colliderMask = Physics.AllLayers;
+        CP.pf = null;
+    }
+    void AllLayerPlatform()
+    {
+        CP.pf.colliderMask = Physics.AllLayers;
+        CP.pf = null;
     }
 }

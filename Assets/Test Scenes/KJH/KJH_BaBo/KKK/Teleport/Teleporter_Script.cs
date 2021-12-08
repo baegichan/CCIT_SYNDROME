@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class Teleporter_Script : MonoBehaviour
 {
     public GameObject Scene_Translate_Partical;//포탈 탈때 생기는 파티클
-    //public GameObject Fade_out_in_canvas;//포탈 탈때 생기는 이미지인데 이거 투명도 조절하면서 
-                                         //Fade효과 줘가지고 일부러 DontDestroy걸어놨음ㅁㄴㅇㅁㄴㅇㅁㄴ이ㅏㄴ우리ㅏㅁㅇㄴ랑니라
+                                               //public GameObject Fade_out_in_canvas;//포탈 탈때 생기는 이미지인데 이거 투명도 조절하면서 
+                                               //Fade효과 줘가지고 일부러 DontDestroy걸어놨음ㅁㄴㅇㅁㄴㅇㅁㄴ이ㅏㄴ우리ㅏㅁㅇㄴ랑니라
 
-
+    public bool aaaaa = false;
     GameObject In_Porter_Unit;
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -18,9 +18,10 @@ public class Teleporter_Script : MonoBehaviour
         {
             transform.GetChild(1).gameObject.SetActive(true);
             In_Porter_Unit = collision.gameObject;
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W) && aaaaa == false)
             {
                 Instantiate(Scene_Translate_Partical, new Vector3(collision.transform.position.x, collision.transform.position.y + 1, collision.transform.position.z), Quaternion.identity);
+                aaaaa = true;
                 Invoke("Set_OFF",0.3f);
                 
             }

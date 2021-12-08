@@ -66,19 +66,14 @@ public class AbilityManager : MonoBehaviour
 
         Instantiate(PharaoEffect, ppp, Quaternion.identity);
         Physics2D.queriesStartInColliders = false;
-        Collider2D[] MonsterCol = Physics2D.OverlapBoxAll(pp, new Vector2(5, 5), 0, TargetLayer);
+        Collider2D[] MonsterCol = Physics2D.OverlapBoxAll(pp, new Vector2(7, 7), 0, TargetLayer);
         for (int i = 0; i < MonsterCol.Length; i++)
         {
             if (MonsterCol[i].tag == "Monster")
             {
                 AS.PlayOneShot(SoundManager.instance.EFXs[4].Audio);
-                Vector2 enemy = new Vector2(MonsterCol[i].transform.position.x, MonsterCol[i].transform.position.y) - pp;
-                RaycastHit2D Hit = Physics2D.Raycast(pp, enemy, TargetLayer);
-                if (Hit.transform.tag == "Monster")
-                {
-                    Hit.transform.GetComponent<Character>().Damage(ParaoAP[CP.ActiveAbility.Enhance], CP.UseApPostion, PharaoHitEffect);
-                    GetComponent<Character>().KnuckBack(transform, 0.8f, Hit.transform.GetComponent<Character>().IsBoss);
-                }
+                MonsterCol[i].transform.GetComponent<Character>().Damage(ParaoAP[CP.ActiveAbility.Enhance], CP.UseApPostion, PharaoHitEffect);
+                GetComponent<Character>().KnuckBack(transform, 0.8f, MonsterCol[i].transform.GetComponent<Character>().IsBoss);
             }
         }
     }

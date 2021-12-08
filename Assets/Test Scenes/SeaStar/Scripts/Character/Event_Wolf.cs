@@ -50,8 +50,8 @@ public class Event_Wolf : MonoBehaviour
     public Collider2D[] L_hit;
     public Collider2D[] R_hit;
 
-    public Vector3 RH;
-    public Vector3 LH;
+     Vector3 RH;
+     Vector3 LH;
 
     void L_Initialization()
     {
@@ -61,17 +61,6 @@ public class Event_Wolf : MonoBehaviour
     {
         R_hit = new Collider2D[AttackInt];
     }
-    //void overLap_R()
-    //{
-    //    RH = new Vector3(RightHand.x * transform.localScale.x + transform.position.x, RightHand.y + transform.position.y);
-    //    R_hit = Physics2D.OverlapBoxAll(RH, RightBox, 0, AM.TargetLayer);
-    //}
-
-    //void overLap_L()
-    //{
-    //    LH = new Vector3(LeftHand.x * transform.localScale.x + transform.position.x, LeftHand.y + transform.position.y);
-    //    L_hit = Physics2D.OverlapBoxAll(LH, LeftBox, 0, AM.TargetLayer);
-    //}
 
     void WolfAttack_R()
     {

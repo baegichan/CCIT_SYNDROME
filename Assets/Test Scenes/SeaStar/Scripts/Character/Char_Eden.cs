@@ -146,13 +146,10 @@ public class Char_Eden : MonoBehaviour
     {
         if (Ani.GetBool("Jump") == false)
         {
-            Debug.Log("1");
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                Debug.Log("2");
                 if (P_DashTimer >= 5)
                 {
-                    Debug.Log("3");
                     AS.PlayOneShot(SoundManager.instance.EFXs[15].Audio);
                     P_DashTimer = 0;
                     Ani.SetBool("Dash", true);
@@ -166,17 +163,6 @@ public class Char_Eden : MonoBehaviour
             P_DashTimer += Time.deltaTime;
         }
     }
-
-    //void GroundCheck()
-    //{
-    //    RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
-    //    Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
-    //    if (Ground.collider.gameObject.tag == "Ground")
-    //    {
-    //        Ani.SetBool("Jump", false);
-    //        CP.P_JumpInt = CP.P_MaxJumpInt;
-    //    }
-    //}
 
     public void PharaoWandSwitch()
     {
@@ -317,45 +303,24 @@ public class Char_Eden : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log("´Ù¿îÇÃ·§Æû ");
             CP.pf.colliderMask = layerMask;
-            Invoke("AllLayerPlatform", 0.6f);
+            CP.pf.GetComponent<PassBlock>().IsUse = true;
+            //Invoke("AllLayerPlatform", 0.6f);
+            //StartCoroutine(Cool());
         }
+        
     }
 
-    void AllLayerPlatform()
+    IEnumerator Cool()
     {
-        Debug.Log("´Ù¿îÇÃ·§Æû ÃÊ±âÈ­ ");
+        yield return new WaitForSeconds(
+            0.6f);
         CP.pf.colliderMask = Physics.AllLayers;
         CP.pf = null;
     }
-
-    void TestJump()
+    void AllLayerPlatform()
     {
-        Debug.Log("ÀáÇª" + CP.P_JumpInt);
-        if (!Ani.GetBool("Jump"))
-        {
-            Debug.Log("1´Ü Á¡ÇÁ");
-            rigid.AddForce(Vector3.up * CP.P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
-            CP.P_JumpInt--;
-            //Ani.SetBool("Jump", true);
-            if (CP.vel.y > CP.P_JumpForce)
-            {
-                CP.vel.y = CP.P_JumpForce;
-                rigid.velocity = CP.vel;
-            }
-        }
-        else if (Ani.GetBool("Jump") && CP.P_JumpInt == 1)
-        {
-            if (CP.PassiveAbility.AbCode == 6) { Instantiate(CP.DoubleJump, transform.position, Quaternion.identity); }
-            rigid.AddForce(Vector3.up * CP.P_JumpForce * Time.deltaTime, ForceMode2D.Impulse);
-            CP.P_JumpInt--;
-            //Ani.SetBool("Jump", true);
-            if (CP.vel.y > CP.P_JumpForce)
-            {
-                CP.vel.y = CP.P_JumpForce;
-                rigid.velocity = CP.vel;
-            }
-        }
+        CP.pf.colliderMask = Physics.AllLayers;
+        CP.pf = null;
     }
 }

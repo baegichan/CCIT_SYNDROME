@@ -158,8 +158,8 @@ public class Enhance : MonoBehaviour
         Enhance_.SetActive(false);
         Ability_Shop.SetActive(true);
         Ability_.SetActive(true);
-        gameObject.SetActive(false);
         Char_Parent.ShopOn = false;
+        gameObject.SetActive(false);
     }
 
     public void EnhaceAbility()

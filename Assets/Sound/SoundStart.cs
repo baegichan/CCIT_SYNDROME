@@ -24,7 +24,7 @@ public class SoundStart : MonoBehaviour
                 SoundManager.BGLoop("LabBGM");
                 break;
             case Sound.RealWorldBGM:
-                SoundManager.BGLoop("RealWorldBGM");
+                SoundManager.BGLoop("BattleField");
                 break;
             case Sound.TitleBGM:
                 SoundManager.BGLoop("TitleBGM");
