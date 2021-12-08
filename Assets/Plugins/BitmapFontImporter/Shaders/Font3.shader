@@ -1,10 +1,11 @@
 ﻿
-Shader "BFI/Font2"
+Shader "BFI/Font3"
 {
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
 		_MainTex2("Texture2", 2D) = "white" {}
+		_MainTex3("Texture3", 2D) = "white" {}
 		_Color("Tint", Color) = (1,1,1,1)
 
 		_StencilComp("Stencil Comparison", Float) = 8
@@ -96,14 +97,17 @@ Shader "BFI/Font2"
 
 			sampler2D _MainTex;
 			sampler2D _MainTex2;
+			sampler2D _MainTex3;
 
 			fixed4 frag(v2f IN) : SV_Target
 			{
 				half4 color  = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
 				half4 color2 = (tex2D(_MainTex2, IN.texcoord - float2(1.0, 0)) + _TextureSampleAdd) * IN.color;
+				half4 color3 = (tex2D(_MainTex3, IN.texcoord - float2(2.0, 0)) + _TextureSampleAdd) * IN.color;
 				color  *= when_le(IN.texcoord.x, 1.0);
-				color2 *= when_gt(IN.texcoord.x, 1.0);
-				color  += color2;
+				color2 *= and(when_gt(IN.texcoord.x, 1.0), when_lt(IN.texcoord.x, 2.0));
+				color3 *= when_gt(IN.texcoord.x, 2.0);
+				color  += color2 + color3;
 
 				color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
 
