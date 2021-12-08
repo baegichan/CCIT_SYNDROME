@@ -141,7 +141,7 @@ public class Char_Parent : Character
         {
             if (Ani.GetBool("CanIThis"))
             {
-                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                if (Input.GetKeyDown(KeyCode.W)) { Jump(); }
                 Move();
                 GroundCheck();
             }
@@ -172,11 +172,7 @@ public class Char_Parent : Character
                 {
                     UseSkill();
                 }
-            }
-            if (Ani.GetBool("CanIThis"))
-            {
-                MouseFilp();
-            }
+            }    
             if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
             if (AP_Timer > 0) { AP_Time(); }
             else { if (UseApPostion) { UseApPostion = false; } }
@@ -312,12 +308,18 @@ public class Char_Parent : Character
                 Ani.SetBool("Move", false);
                 break;
             case -1:
+                if (Ani.GetBool("CanIThis") == false)
+                {
+                    Ani.SetBool("Move", false);
+                }
+                else { SelectChar.transform.localScale = new Vector3(-1, 1, 1); Ani.SetBool("Move", true); }
+                break;
             case 1:
                 if (Ani.GetBool("CanIThis") == false)
                 {
                     Ani.SetBool("Move", false);
                 }
-                else { Ani.SetBool("Move", true); }
+                else { SelectChar.transform.localScale = new Vector3(1, 1, 1); Ani.SetBool("Move", true); }
                 break;
         }
     }
@@ -394,23 +396,31 @@ public class Char_Parent : Character
             }
         }
     }
-
-    //마우스 플립
-
-    public void MouseFilp()
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if (Ani.GetBool("CanIThis"))
+        if(col.gameObject.tag == "Ground")
         {
-            if (Mouse.x <= PlayerPosition.x)
-            {
-                SelectChar.transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else if (Mouse.x > PlayerPosition.x)
-            {
-                SelectChar.transform.localScale = new Vector3(1, 1, 1);
-            }
+            Ani.SetBool("Jump", false);
+            P_JumpInt = P_MaxJumpInt;
+            JumpCool = DoubleJumpCool;
         }
     }
+    //마우스 플립
+
+    //public void MouseFilp()
+    //{
+    //    if (Ani.GetBool("CanIThis"))
+    //    {
+    //        if (Mouse.x <= PlayerPosition.x)
+    //        {
+    //            SelectChar.transform.localScale = new Vector3(-1, 1, 1);
+    //        }
+    //        else if (Mouse.x > PlayerPosition.x)
+    //        {
+    //            SelectChar.transform.localScale = new Vector3(1, 1, 1);
+    //        }
+    //    }
+    //}
 
     //능력
     public delegate void useAbility();
