@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Char_Parent : Character
 {
+<<<<<<< HEAD
     private static Char_Parent _player;
 
     public static Char_Parent player
@@ -18,6 +19,22 @@ public class Char_Parent : Character
                     Debug.Log("no Singleton obj");
             }
             return _player;
+=======
+    private static Char_Parent _ply;
+
+    public static Char_Parent ply
+    {
+        get
+        {
+            if (!_ply)
+            {
+                _ply = FindObjectOfType(typeof(Char_Parent)) as Char_Parent;
+
+                if (_ply == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return _ply;
+>>>>>>> main
         }
     }
 
@@ -30,7 +47,11 @@ public class Char_Parent : Character
     AbilityManager AM;
     public Camera Cam;
     public static bool ShopOn;
+<<<<<<< HEAD
     public bool CheatON;
+=======
+    public bool IsInChaCharacter;
+>>>>>>> main
 
     [Header("플레이어 장비")]
     public GameObject Current_Use;
@@ -109,6 +130,7 @@ public class Char_Parent : Character
 
     void Awake()
     {
+        if (IsInChaCharacter) { singleton(); }
         //AbyssManager.abyss.Darkfog = 2000;
         Before_Position = transform.position;
         Load_StateEnhance();
@@ -121,13 +143,26 @@ public class Char_Parent : Character
         AM.CP = this;
     }
 
+    void singleton()
+    {
+        if (_ply == null)
+        {
+            _ply = this;
+        }
+        else if (_ply != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
     void FixedUpdate()
     {
         if (!ShopOn && !Dead)
         {
             if (Ani.GetBool("CanIThis"))
             {
-                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                if (Input.GetKeyDown(KeyCode.W)) { Jump(); }
                 Move();
                 GroundCheck();
             }
@@ -138,7 +173,6 @@ public class Char_Parent : Character
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
         {
-            //if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
             if (AbyssManager.abyss.isHp)
             {
                 Hp_Current -= 5;
@@ -159,15 +193,15 @@ public class Char_Parent : Character
                 {
                     UseSkill();
                 }
-            }
-            if (Ani.GetBool("CanIThis"))
-            {
-                MouseFilp();
-            }
+            }    
             if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
             if (AP_Timer > 0) { AP_Time(); }
             else { if (UseApPostion) { UseApPostion = false; } }
             Die();
+        }
+        if(Input.GetKeyDown(KeyCode.F12))
+        {
+            escape();
         }
     }
 
@@ -255,20 +289,24 @@ public class Char_Parent : Character
         vel = rigid.velocity;
         Ani = SelectChar.GetComponent<Animator>();
         Hp_Max = DefaultHP + CharHP + Enhance_Health_Point[Enhance_Health];
-        //if(!Dead) { Hp_Current = Hp_Max; }
         DP = CharDP;
         AP = CharAP + Enhance_Strength_Point[Enhance_Strength];
         speed = CharSpeed + (CharSpeed * 0.01f * Enhance_Speed_Point[Enhance_Speed]);
         AM.py = SelectChar;
+<<<<<<< HEAD
         //if (ActiveAbility != null) { ResourceManager.re.ActiveAbility = ActiveAbility; }
         //if (PassiveAbility != null) { ResourceManager.re.PassiveAbility = PassiveAbility; }
         //AbilityCheat();
+=======
+        AbilityCheat();
+>>>>>>> main
         switchItem(ActiveAbility.AbCode);
         UpdateState();
     }
 
     void AbilityCheat()
     {
+<<<<<<< HEAD
         if(CheatON)
         {
             SelectAbility();
@@ -277,6 +315,13 @@ public class Char_Parent : Character
             PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
             PlayerSkillUI.skill.PillInt.text = AlYakInt.ToString();
         }
+=======
+        //SelectAbility();
+        //PlayerSkillUI.skill.Image_Active.sprite = ActiveAbility.icon;
+        //PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
+        PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
+        PlayerSkillUI.skill.PillInt.text = AlYakInt.ToString();
+>>>>>>> main
     }
 
     void UpdateState()
@@ -301,12 +346,18 @@ public class Char_Parent : Character
                 Ani.SetBool("Move", false);
                 break;
             case -1:
+                if (Ani.GetBool("CanIThis") == false)
+                {
+                    Ani.SetBool("Move", false);
+                }
+                else { SelectChar.transform.localScale = new Vector3(-1, 1, 1); Ani.SetBool("Move", true); }
+                break;
             case 1:
                 if (Ani.GetBool("CanIThis") == false)
                 {
                     Ani.SetBool("Move", false);
                 }
-                else { Ani.SetBool("Move", true); }
+                else { SelectChar.transform.localScale = new Vector3(1, 1, 1); Ani.SetBool("Move", true); }
                 break;
         }
     }
@@ -358,24 +409,30 @@ public class Char_Parent : Character
     public float[] Distance_X;
     public float[] Distance_Y;
     public float[] Distance_;
+    public Vector3[] pivot;
     int DI;
 
     public LayerMask lm;
     RaycastHit2D LGround, RGround;
     void GroundCheck()
     {
-        LGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
-        Debug.DrawRay(SelectChar.transform.position + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.yellow);
-        RGround = Physics2D.Raycast(SelectChar.transform.position + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
-        Debug.DrawRay(SelectChar.transform.position + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.cyan);
+        LGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
+        Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.yellow);
+        RGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
+        Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.cyan);
         Physics2D.queriesStartInColliders = false;
 
         if (Ani.GetBool("Jump")) { JumpCool -= Time.deltaTime; }
 
+<<<<<<< HEAD
         if (rigid.velocity.y < 0 && (LGround != false || RGround != false))
         {
             Debug.Log(LGround.collider.gameObject.tag + "1");
             Debug.Log(RGround.collider.gameObject.tag);
+=======
+        if(rigid.velocity.y < 0 && (LGround != false || RGround != false))
+        {
+>>>>>>> main
             if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
             {
                 Ani.SetBool("Jump", false);
@@ -384,23 +441,31 @@ public class Char_Parent : Character
             }
         }
     }
-
-    //마우스 플립
-
-    public void MouseFilp()
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if (Ani.GetBool("CanIThis"))
+        if(col.gameObject.tag == "Ground")
         {
-            if (Mouse.x <= PlayerPosition.x)
-            {
-                SelectChar.transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else if (Mouse.x > PlayerPosition.x)
-            {
-                SelectChar.transform.localScale = new Vector3(1, 1, 1);
-            }
+            Ani.SetBool("Jump", false);
+            P_JumpInt = P_MaxJumpInt;
+            JumpCool = DoubleJumpCool;
         }
     }
+    //마우스 플립
+
+    //public void MouseFilp()
+    //{
+    //    if (Ani.GetBool("CanIThis"))
+    //    {
+    //        if (Mouse.x <= PlayerPosition.x)
+    //        {
+    //            SelectChar.transform.localScale = new Vector3(-1, 1, 1);
+    //        }
+    //        else if (Mouse.x > PlayerPosition.x)
+    //        {
+    //            SelectChar.transform.localScale = new Vector3(1, 1, 1);
+    //        }
+    //    }
+    //}
 
     //능력
     public delegate void useAbility();
@@ -599,4 +664,15 @@ public class Char_Parent : Character
         float fontsize = Random.Range(0.8f * fontExtra, 1.0f * fontExtra);
         Text.GetComponentInChildren<Text>().fontSize = (int)fontsize;
     }
+<<<<<<< HEAD
 }
+=======
+    public void escape()
+    {
+        if(MapManager.s_Instace!=null)
+        {
+          SelectChar.transform.position=  MapManager.s_Instace.map[(int)MapManager.s_Instace.Current_Room.x, (int)MapManager.s_Instace.Current_Room.y].transform.GetComponentInChildren<Potals>().GetONPotals();
+        }
+    }
+}
+>>>>>>> main

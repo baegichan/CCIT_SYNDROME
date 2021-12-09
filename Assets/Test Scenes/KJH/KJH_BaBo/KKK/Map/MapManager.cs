@@ -130,10 +130,7 @@ public class MapManager : MonoBehaviour
         {
 
         }
-        else
-        {
-
-        }
+       
     }
     public void StartRoom()
     {
@@ -240,26 +237,62 @@ public class MapManager : MonoBehaviour
         //map[Level, Level].transform.position = new Vector2(0, 0);
         //Start_Map = map[Level, Level].transform.position;
         make_map();
-        Map_Move();
-        bbb();
+        Map_Move();       
     }
     private void Start()
     {
 
-
+        bbb();
         StartCoroutine(test());
-    
-       
+        
+
     }
     public IEnumerator test()
     {
         yield return new WaitForSeconds(2);
         AllCreatedRoom();
+        SettingSpeacialShop();
         Maps.GetComponent<MapLoadTest>().Starting_Setting();
         MapAllOff();
         PCurrent_Room = new Vector2(Level, Level);
+
+
         Minimap.MiniMapSetting();
     }
+
+    ///   XXXXX
+    ///   XOOOX
+    ///   XOXOX
+    ///   XOOOX
+    ///   XXXXX
+    /// <summary>
+    /// 시작지점 근처  상점 강제적 설정 ^^
+    /// </summary>
+    private void SettingSpeacialShop()
+    {
+        List<GameObject> SpeacialShoproom = new List<GameObject>();
+
+        for(int y = Level-1;y<Level+1;y++)
+        {
+            for(int x = Level - 1; x < Level + 1; x++)
+            {
+            if((x!=Level)&&(y!=Level))
+            {
+                    if (map[x, y].GetComponent<Room_data>().Room_Created)
+                    {
+                        SpeacialShoproom.Add(map[x, y]);
+                    }
+            }
+            }
+        }
+   
+       if(SpeacialShoproom.Count!=0)
+       {
+            int randomroom = Random.Range(0, SpeacialShoproom.Count);
+            SpeacialShoproom[randomroom].GetComponent<Room_data>().Room_Type = Room_data.RoomType.Shop;
+       }
+    }
+   
     void bbb()//맵 최소 개수 
     {
         Check_Map_Code(Level, Level);
@@ -267,13 +300,12 @@ public class MapManager : MonoBehaviour
     }
     void aaa()//맵 최소 개수
     {
-        if (map_count < ((2 * Level) + 1) * ((2 * Level) + 1) / 2)
+        if (map_count < ((2 * Level) + 1) * ((2 * Level) + 1) / 2 + 1)
         {
-            Debug.Log(22);
-            int abc = (2 * Level) - 1;
-            for(int i = 0; i < abc + 2; i++)
+            int abc = 2 * Level + 1;
+            for(int i = 0; i < abc; i++)
             {
-                for(int a = 0; a < abc + 2; a++)
+                for(int a = 0; a < abc; a++)
                 {
                     map[i, a].GetComponent<Room_data>().Room_Created = false;
                     map[i, a].GetComponent<Room_data>().Top = false;
@@ -281,16 +313,18 @@ public class MapManager : MonoBehaviour
                     map[i, a].GetComponent<Room_data>().Bottom = false;
                     map[i, a].GetComponent<Room_data>().Left = false;
                     map[i, a].GetComponent<Room_data>().map_code = 0;
-
+                    map[i, a].GetComponent<Room_data>().VisitedRoom = false;
                 }
             }
+            map_count = 1;
             bbb();
         }
         else
         {
             //
         }
-
+        
+        
     }
     void make_map()
     {
@@ -2941,7 +2975,7 @@ public class MapManager : MonoBehaviour
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 13;
                     map[a, b].GetComponent<Room_data>().Top = true;
-                    map[a, b + 1].GetComponent<Room_data>().Top = true;
+                    map[a, b + 1].GetComponent<Room_data>().Bottom = true;
                 }
             }
 
@@ -2972,7 +3006,7 @@ public class MapManager : MonoBehaviour
                     {
                         map[a, b].GetComponent<Room_data>().map_code = 6;
                         map[a, b].GetComponent<Room_data>().Bottom = true;
-                        map[a, b + 1].GetComponent<Room_data>().Top = true;
+                        map[a, b - 1].GetComponent<Room_data>().Top = true;
                     }
                 }
                 if (map[a + 1, b].GetComponent<Room_data>().Room_Created == false && map[a, b - 1].GetComponent<Room_data>().Room_Created == true)
@@ -3006,7 +3040,7 @@ public class MapManager : MonoBehaviour
                     {
                         map[a, b].GetComponent<Room_data>().map_code = 6;
                         map[a, b].GetComponent<Room_data>().Bottom = true;
-                        map[a, b + 1].GetComponent<Room_data>().Top = true;
+                        map[a, b - 1].GetComponent<Room_data>().Top = true;
                     }
                     else if(aa == 3)
                     {
@@ -3014,7 +3048,7 @@ public class MapManager : MonoBehaviour
                         map[a, b].GetComponent<Room_data>().Right = true;
                         map[a + 1, b].GetComponent<Room_data>().Left = true;
                         map[a, b].GetComponent<Room_data>().Bottom = true;
-                        map[a, b + 1].GetComponent<Room_data>().Top = true;
+                        map[a, b - 1].GetComponent<Room_data>().Top = true;
                     }
                 }
             }
@@ -3197,15 +3231,15 @@ public class MapManager : MonoBehaviour
 
 
         //사이드 정점
-            if (a == 2 * Level && b == 2 * Level)
-            {
+      if (a == 2 * Level && b == 2 * Level)
+      {
             if(map[a,b].GetComponent<Room_data>().Left == true && map[a, b].GetComponent<Room_data>().Bottom == true)
             {
                 map[a, b].GetComponent<Room_data>().map_code = 10;
             }
             if (map[a, b].GetComponent<Room_data>().Left == true && map[a, b].GetComponent<Room_data>().Bottom == false)
             {
-                int aa = Random.Range(0, 1);
+                int aa = Random.Range(0, 2);
                 if(aa == 0)
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 4;
@@ -3219,10 +3253,11 @@ public class MapManager : MonoBehaviour
             }
             if (map[a, b].GetComponent<Room_data>().Left == false && map[a, b].GetComponent<Room_data>().Bottom == true)
             {
-                int aa = Random.Range(0, 1);
+                int aa = Random.Range(0, 2);
                 if (aa == 0)
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 3;
+                    map[a, b].GetComponent<Room_data>().Top = false;
                 }
                 else if (aa == 1)
                 {
@@ -3241,7 +3276,7 @@ public class MapManager : MonoBehaviour
             }
             if (map[a, b].GetComponent<Room_data>().Left == true && map[a, b].GetComponent<Room_data>().Top == false)
             {
-                int aa = Random.Range(0, 1);
+                int aa = Random.Range(0, 2);
                 if (aa == 0)
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 4;
@@ -3255,7 +3290,7 @@ public class MapManager : MonoBehaviour
             }
             if (map[a, b].GetComponent<Room_data>().Left == false && map[a, b].GetComponent<Room_data>().Top == true)
             {
-                int aa = Random.Range(0, 1);
+                int aa = Random.Range(0, 2);
                 if (aa == 0)
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 1;
@@ -3276,7 +3311,7 @@ public class MapManager : MonoBehaviour
             }
             if (map[a, b].GetComponent<Room_data>().Right == true && map[a, b].GetComponent<Room_data>().Bottom == false)
             {
-                int aa = Random.Range(0, 1);
+                int aa = Random.Range(0, 2);
                 if (aa == 0)
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 2;
@@ -3290,7 +3325,7 @@ public class MapManager : MonoBehaviour
             }
             if (map[a, b].GetComponent<Room_data>().Left == false && map[a, b].GetComponent<Room_data>().Bottom == true)
             {
-                int aa = Random.Range(0, 1);
+                int aa = Random.Range(0, 2);
                 if (aa == 0)
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 3;
@@ -3311,7 +3346,7 @@ public class MapManager : MonoBehaviour
             }
             if (map[a, b].GetComponent<Room_data>().Top == true && map[a, b].GetComponent<Room_data>().Right == false)
             {
-                int aa = Random.Range(0, 1);
+                int aa = Random.Range(0,2);
                 if (aa == 0)
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 1;
@@ -3320,12 +3355,12 @@ public class MapManager : MonoBehaviour
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 5;
                     map[a, b].GetComponent<Room_data>().Right = true;
-                    map[a + 1, b].GetComponent<Room_data>().Bottom = true;
+                    map[a + 1, b].GetComponent<Room_data>().Left = true;
                 }
             }
             if (map[a, b].GetComponent<Room_data>().Left == false && map[a, b].GetComponent<Room_data>().Right == true)
             {
-                int aa = Random.Range(0, 1);
+                int aa = Random.Range(0, 2);
                 if (aa == 0)
                 {
                     map[a, b].GetComponent<Room_data>().map_code = 2;

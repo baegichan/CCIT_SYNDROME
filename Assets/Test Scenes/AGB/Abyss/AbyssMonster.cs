@@ -33,7 +33,11 @@ public class AbyssMonster : MonoBehaviour
         }
         else
         {
-            Instantiate(DarkFog,transform.position, Quaternion.identity);
+            if(DarkFog!=null)
+            {
+                Instantiate(DarkFog, transform.position, Quaternion.identity);
+            }
+          
       
         
         }

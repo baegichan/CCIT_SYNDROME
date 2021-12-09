@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class NPC : MonoBehaviour
 {
@@ -14,8 +15,8 @@ public class NPC : MonoBehaviour
 
     protected void Flip()
     {
-        GameObject player = ply.GetComponent<Char_Parent>().SelectChar;
-        if(player.transform.position.x > transform.position.x) { Scale.x = DefaultX; }
+        ply = Camera.main.transform.Find("CM vcam1").GetComponent<CinemachineVirtualCamera>().Follow.gameObject;
+        if (ply.transform.position.x > transform.position.x) { Scale.x = DefaultX; }
         else { Scale.x = FlipX; }
 
         transform.localScale = Scale;

@@ -146,13 +146,10 @@ public class Char_Eden : MonoBehaviour
     {
         if (Ani.GetBool("Jump") == false)
         {
-            Debug.Log("1");
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                Debug.Log("2");
                 if (P_DashTimer >= 5)
                 {
-                    Debug.Log("3");
                     AS.PlayOneShot(SoundManager.instance.EFXs[15].Audio);
                     P_DashTimer = 0;
                     Ani.SetBool("Dash", true);
@@ -166,17 +163,6 @@ public class Char_Eden : MonoBehaviour
             P_DashTimer += Time.deltaTime;
         }
     }
-
-    //void GroundCheck()
-    //{
-    //    RaycastHit2D Ground = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down, CP.RayDistance);
-    //    Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.05f), Vector2.down * CP.RayDistance, Color.blue);
-    //    if (Ground.collider.gameObject.tag == "Ground")
-    //    {
-    //        Ani.SetBool("Jump", false);
-    //        CP.P_JumpInt = CP.P_MaxJumpInt;
-    //    }
-    //}
 
     public void PharaoWandSwitch()
     {
@@ -318,14 +304,17 @@ public class Char_Eden : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             CP.pf.colliderMask = layerMask;
+            CP.pf.GetComponent<PassBlock>().IsUse = true;
             //Invoke("AllLayerPlatform", 0.6f);
-            StartCoroutine(Cool());
+            //StartCoroutine(Cool());
         }
+        
     }
 
     IEnumerator Cool()
     {
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(
+            0.6f);
         CP.pf.colliderMask = Physics.AllLayers;
         CP.pf = null;
     }
