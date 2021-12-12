@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -119,5 +120,16 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-   
+    public void DarkFogSelect(bool isClear)
+    {
+
+        if(!isClear)
+            darkFog = Convert.ToInt32(darkFog * 0.1f);
+           
+      
+           
+            
+    }
+
+          
 }
