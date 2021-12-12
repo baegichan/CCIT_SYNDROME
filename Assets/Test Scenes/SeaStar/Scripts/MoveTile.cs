@@ -38,11 +38,14 @@ public class MoveTile : MonoBehaviour
         {   
             col.transform.parent.SetParent(Target.transform);
         }
-        else { col.gameObject.transform.SetParent(Target.transform); } 
+       // else { col.gameObject.transform.SetParent(Target.transform); } 
     }
     private void OnCollisionExit2D(Collision2D col)
     {
-        Target.transform.DetachChildren();
+        if (col.gameObject.tag == "Player")
+        {
+            Target.transform.DetachChildren();
+        }
     }
 }
 
