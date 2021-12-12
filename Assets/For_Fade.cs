@@ -66,7 +66,7 @@ public class For_Fade : MonoBehaviour
     {
         if (Fade != null)
         {
-            Fade.Fad_out_To_StartRoom();
+            //Fade.Fad_out_To_StartRoom();
         }
     }
 
@@ -114,7 +114,10 @@ public class For_Fade : MonoBehaviour
             GetComponent<Image>().color = new Color(0, 0, 0, i_alpha);
         }
         Use_Scene_Change.Change_Boss_Scene();
-        
+        if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Abyss)
+        {
+            MapChangeTester.AbyssMask.test.SetTrigger("Changed");
+        }
         Invoke("Delay_a_back", 3f);
        
         StopCoroutine(Fade_out_To_BossRoom());
@@ -176,14 +179,14 @@ public class For_Fade : MonoBehaviour
     }
 
 
-    public void Fad_out_To_StartRoom()
+    public void Fad_out_To_StartRoom(bool isClear)
     {
         i_alpha = GetComponent<Image>().color.a;
-        StartCoroutine(Fade_out_To_StartRoom());
+        StartCoroutine(Fade_out_To_StartRoom(isClear));
     }
     int Abyss_10 = 0;
     public GameObject aby;
-    IEnumerator Fade_out_To_StartRoom()
+    IEnumerator Fade_out_To_StartRoom(bool isClear)
     {
         while (i_alpha < 1.0f)
         {
@@ -197,8 +200,9 @@ public class For_Fade : MonoBehaviour
         GameObject ResourceManager1 = GameObject.Find("ResourceManager");
         GameObject AbyssManager1 = GameObject.Find("AbyssManager");
         GameObject SettingManager = GameObject.Find("SettingManager");
-        Abyss_10 =Convert.ToInt32( AbyssManager.abyss.Darkfog * 0.1f);
-        ResourceManager.re.DarkFog = Abyss_10;
+       
+        ResourceManager.re.DarkFogSelect(isClear);
+     
         for (int i = 0; i< aa.Count; i++)
         {
             if(aa[i] != Fade || aa[i] != ResourceManager1 || aa[i] != SettingManager)
@@ -208,7 +212,7 @@ public class For_Fade : MonoBehaviour
         }
         Destroy(Fade);
         Use_Scene_Change.Change_Start_Scene();
-        StopCoroutine(Fade_out_To_StartRoom());
+      
 
     }
    

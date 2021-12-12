@@ -106,7 +106,11 @@ public class AbyssManager : MonoBehaviour
 
     #endregion
 
-
+    private void OnEnable()
+    {
+        if (ResourceManager.re.DarkFog != 0)
+            darkfog = ResourceManager.re.DarkFog;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -231,6 +235,7 @@ public class AbyssManager : MonoBehaviour
         {
             darkfog = value;
             StateManager.state.DarkFog = darkfog;
+            ResourceManager.re.DarkFog = darkfog;
 
         }
     }
