@@ -200,7 +200,7 @@ public class For_Fade : MonoBehaviour
         GameObject ResourceManager1 = GameObject.Find("ResourceManager");
         GameObject AbyssManager1 = GameObject.Find("AbyssManager");
         GameObject SettingManager = GameObject.Find("SettingManager");
-       
+        AbyssManager.abyss.GoReal();
         ResourceManager.re.DarkFogSelect(isClear);
      
         for (int i = 0; i< aa.Count; i++)
@@ -211,6 +211,7 @@ public class For_Fade : MonoBehaviour
             }
         }
         Destroy(Fade);
+       
         Use_Scene_Change.Change_Start_Scene();
       
 
