@@ -375,13 +375,18 @@ public class Char_Parent : Character
     int DI;
 
     public LayerMask lm;
-    RaycastHit2D LGround, RGround;
+    RaycastHit2D LGround, RGround, LLGround, RRGround;
     void GroundCheck()
     {
         LGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
         Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.yellow);
         RGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
         Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.cyan);
+        LLGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
+        Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.left * Distance_[DI], Color.yellow);
+        RRGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
+        Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.right * Distance_[DI], Color.cyan);
+
         Physics2D.queriesStartInColliders = false;
 
         if (Ani.GetBool("Jump")) { JumpCool -= Time.deltaTime; }

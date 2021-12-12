@@ -297,12 +297,13 @@ public class Char_Eden : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         CP.pf = col.transform.GetComponent<PlatformEffector2D>();
-        if (col.gameObject.tag == "Ground")
-        {
-            Ani.SetBool("Jump", false);
-            CP.P_JumpInt = CP.P_MaxJumpInt;
-            CP.JumpCool = CP.DoubleJumpCool;
-        }
+        //if (col.gameObject.tag == "Ground")
+        //{
+        //    Debug.Log("ºü»¡°£¸À");
+        //    Ani.SetBool("Jump", false);
+        //    CP.P_JumpInt = CP.P_MaxJumpInt;
+        //    CP.JumpCool = CP.DoubleJumpCool;
+        //}
     }
 
     void DownPlatform()
