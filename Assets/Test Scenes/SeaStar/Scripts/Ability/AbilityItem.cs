@@ -117,7 +117,7 @@ public class AbilityItem : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Player")
+        if (col.tag == "Player" && gameObject.layer == LayerMask.NameToLayer("NomalObjectLayer"))
         {
             Ply = col.gameObject;
             pt = col.GetComponentInParent<Char_Parent>();

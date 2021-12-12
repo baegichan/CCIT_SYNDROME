@@ -8,8 +8,8 @@ public class Eden_Foot : MonoBehaviour
     {
         if (col.gameObject.tag == "Ground")
         {
-            GetComponentInParent<MentalChaild>().Ani.SetBool("Jump", false);
-            GetComponentInParent<TestPlayer>().P_JumpInt = GetComponentInParent<TestPlayer>().P_MaxJumpInt;
+            GetComponentInParent<Char_Eden>().Ani.SetBool("Jump", false);
+            GetComponentInParent<Char_Parent>().P_JumpInt = GetComponentInParent<Char_Parent>().P_MaxJumpInt;
         }
     }
 }
