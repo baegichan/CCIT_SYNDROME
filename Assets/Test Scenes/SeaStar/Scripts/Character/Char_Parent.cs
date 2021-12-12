@@ -396,15 +396,15 @@ public class Char_Parent : Character
             }
         }
     }
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if(col.gameObject.tag == "Ground")
-        {
-            Ani.SetBool("Jump", false);
-            P_JumpInt = P_MaxJumpInt;
-            JumpCool = DoubleJumpCool;
-        }
-    }
+    //void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    if(col.gameObject.tag == "Ground")
+    //    {
+    //        Ani.SetBool("Jump", false);
+    //        P_JumpInt = P_MaxJumpInt;
+    //        JumpCool = DoubleJumpCool;
+    //    }
+    //}
     //마우스 플립
 
     //public void MouseFilp()
