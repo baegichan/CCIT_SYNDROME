@@ -15379,6 +15379,7 @@ MonoBehaviour:
   SelectChar: {fileID: 1150757678918172422}
   Ani: {fileID: 1150757678918172420}
   Cam: {fileID: 0}
+  IsInChaCharacter: 0
   Current_Use: {fileID: 0}
   PharaoWand_Senaka: {fileID: 1150757679660203767}
   PharaoWand: {fileID: 1150757680362327211}
@@ -15396,6 +15397,7 @@ MonoBehaviour:
   P_JumpInt: 1
   UseApPostion: 0
   P_OtherWorld: 0
+  DoubleJump: {fileID: 0}
   Enhance_Health: 0
   Enhance_Strength: 0
   Enhance_Speed: 0
@@ -15406,6 +15408,8 @@ MonoBehaviour:
   PharaoCool: 5
   EvilSworldCool: 5
   BattleAxeCool: 5
+  DoubleJumpCool: 0
+  JumpCool: 0
   MulYakInt: 10
   AlYakInt: 10
   P_Money: 10000
@@ -15445,7 +15449,13 @@ MonoBehaviour:
     IsUsing: 1
     AbExplan: "\uD55C \uBC88 \uB354 \uC810\uD504\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   pf: {fileID: 0}
-  Distance: 0.1
+  vel: {x: 0, y: 0}
+  Distance: []
+  Distance_X: []
+  Distance_Y: []
+  Distance_: []
+  Distance_Side: []
+  pivot: []
   lm:
     serializedVersion: 2
     m_Bits: 2147483968
@@ -15690,6 +15700,7 @@ Transform:
   - {fileID: 1150757680389590497}
   - {fileID: 1150757679562199008}
   - {fileID: 1150757679402683325}
+  - {fileID: 8081086789456715579}
   m_Father: {fileID: 1150757678812185961}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -124038,6 +124049,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 050000000a0000000f00000014000000
+  AP: 
   DP: 0
   CP: {fileID: 1150757678812185959}
   AM: {fileID: 1150757678812185960}
@@ -124047,6 +124059,9 @@ MonoBehaviour:
   P_Attack_State: 0
   P_AttackMoveInt: 0.7
   Wolf_GageBar: {fileID: 2231633689988157583}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1150757680148197229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124084,8 +124099,6 @@ MonoBehaviour:
   - {fileID: 1150757680148197230}
   - {fileID: 0}
   R_hit: []
-  RH: {x: 1.4, y: 0.3, z: 0}
-  LH: {x: 1.4, y: 0.3, z: 0}
 --- !u!61 &1150757680148197230
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -137127,6 +137140,8 @@ MonoBehaviour:
   AM: {fileID: 1150757678812185960}
   KnuckBackForce: 0
   HitEffect: {fileID: 260349557343662014, guid: 0d089599635594c43bf68c54aa989640, type: 3}
+  Point: {x: 0, y: 0, z: 0}
+  Size: {x: 0, y: 0, z: 0}
 --- !u!1 &1150757680755360345
 GameObject:
   m_ObjectHideFlags: 0
@@ -137209,6 +137224,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1542870550157224045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8081086789456715579}
+  - component: {fileID: 4762831351878793935}
+  - component: {fileID: 2009558516535637010}
+  m_Layer: 30
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8081086789456715579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542870550157224045}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1150757678918172421}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &4762831351878793935
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542870550157224045}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0132834315, y: -0.02}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.25233316, y: 0.018913507}
+  m_EdgeRadius: 0
+--- !u!114 &2009558516535637010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542870550157224045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 478108cb16fb26d46b2c3ac3d851be61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CE: {fileID: 0}
+  CP: {fileID: 0}
 --- !u!1 &2231633688213562476
 GameObject:
   m_ObjectHideFlags: 0
