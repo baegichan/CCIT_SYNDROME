@@ -21,7 +21,7 @@ public class Addtilesinspecter : Editor
         GUILayout.Label("");
         if (GUILayout.Button("맵데이터 세이브"))
         {
-            //map.Save_MapData();
+            map.Save_MapData();
             EditorUtility.SetDirty(map);
         }
         if (GUILayout.Button("맵데이터 로드"))
@@ -199,8 +199,8 @@ public class Addtilesinspecter : Editor
                 {
 
                     DestroyImmediate(map.GetEventObjectCheck().transform.GetChild(0).gameObject);
-                    //map.MapData.Map_Event[i].DestroyEvent();
-                    //map.MapData.Map_Event = null;
+                   // map.MapData.Map_Event[i].DestroyEvent();
+                    map.MapData.Map_Event = null;
                 }
 
             }
