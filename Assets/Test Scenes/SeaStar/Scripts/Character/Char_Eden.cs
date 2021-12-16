@@ -164,6 +164,33 @@ public class Char_Eden : MonoBehaviour
         }
     }
 
+    void MousePosition()
+    {
+        Vector2 Low = new Vector2(200, 200);
+        Vector2 Middle = new Vector2(300,300);
+        Vector2 High = new Vector2(400,400);
+
+        //if (Ani.GetBool("CanIThis"))
+        //{
+        //    if (CP.Mouse.x <= CP.PlayerPosition = new Vector2(0, 0) && CP.Mouse.y <= CP.PlayerPosition.y)
+        //    {
+        //        CP.SelectChar.transform.localScale = new Vector3(-1, 1, 1);
+        //    }
+        //    else if (CP.Mouse.x <= CP.PlayerPosition.x && CP.Mouse.y <= CP.PlayerPosition.y)
+        //    {
+        //        CP.SelectChar.transform.localScale = new Vector3(1, 1, 1);
+        //    }
+        //    else if (CP.Mouse.x <= CP.PlayerPosition.x && CP.Mouse.y <= CP.PlayerPosition.y)
+        //    {
+
+        //    }
+        //    else if (CP.Mouse.x <= CP.PlayerPosition.x && CP.Mouse.y <= CP.PlayerPosition.y)
+        //    {
+
+        //    }
+        //}
+    }
+
     public void PharaoWandSwitch()
     {
         if (CP.PharaoWand_Senaka.activeSelf) { CP.PharaoWand_Senaka.SetActive(false); }

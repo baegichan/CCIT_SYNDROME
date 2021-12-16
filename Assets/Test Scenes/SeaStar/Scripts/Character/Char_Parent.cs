@@ -81,8 +81,8 @@ public class Char_Parent : Character
     public static float Active_Cool_Max;
     public static float Active_Cool = 0f;
     public GameObject DoubleJump;
-    Vector2 Mouse;
-    Vector2 PlayerPosition;
+    public Vector2 Mouse;
+    public Vector2 PlayerPosition;
 
     [Header("능력치 강화 수치")]
     public int Enhance_Health;
@@ -149,6 +149,7 @@ public class Char_Parent : Character
     }
     void Update()
     {
+        Debug.Log(Mouse);
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
         {
