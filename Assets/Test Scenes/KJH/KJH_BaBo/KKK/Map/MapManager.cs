@@ -201,8 +201,8 @@ public class MapManager : MonoBehaviour
         }
 
         BossRoomList[Random.Range(0, BossRoomList.Count)].Room_Type = Room_data.RoomType.Boss;
-        int CraneLimit = Random.Range(1, Level);
-        int ShopLimit = Random.Range(0, Level - 1);
+        int CraneLimit = Random.Range(2, Level+1);
+        int ShopLimit = Random.Range(1, Level);
         for (int i = 0; i < ShopLimit; i++)
         {
             int RanShop = Random.Range(0, RoomList.Count);
@@ -250,8 +250,9 @@ public class MapManager : MonoBehaviour
     public IEnumerator test()
     {
         yield return new WaitForSeconds(2);
-        AllCreatedRoom();
         SettingSpeacialShop();
+        AllCreatedRoom();
+       
         Maps.GetComponent<MapLoadTest>().Starting_Setting();
         MapAllOff();
         PCurrent_Room = new Vector2(Level, Level);
