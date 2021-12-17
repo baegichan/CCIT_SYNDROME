@@ -15,21 +15,23 @@ public class MonsterBox : MonoBehaviour
 
     GameObject normalBox;
     GameObject abyssBox;
+ 
 
-    
-
+    bool isclear = false;
+    bool isMonsterMap = false;
 
     // Start is called before the first frame update
     private void Awake()
     {
         abyssBox = transform.Find("AbyssMonsterP(Clone)").gameObject;
         normalBox = transform.Find("NormalMonsterP(Clone)").gameObject;
-      
+    
+
     }
-
-
+ 
     private void OnEnable()
     {
+      
         if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Reality)
         {
       
@@ -61,10 +63,15 @@ public class MonsterBox : MonoBehaviour
         if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Abyss && monsteridQue.Count != 0)
            AbyssMonsterSpawn();
 
-
+        if(abyssBox.transform.childCount == 0 && normalBox.transform.childCount == 0 && !isclear && monsteridQue.Count ==0 && isMonsterMap)
+        {
+            isclear = true;
+            RoomClearManager.clear.RoomClear();
+        }
 
 
     }
+
     void AbyssMonsterSpawn()
      {
       
@@ -82,7 +89,17 @@ public class MonsterBox : MonoBehaviour
 
     }
    
-
+    public bool MonsterMap
+    {
+        set
+        {
+            isMonsterMap = value;
+        }
+        get
+        {
+            return isMonsterMap;
+        }
+    }
     #endregion
 
 }
