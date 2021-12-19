@@ -21,11 +21,12 @@ public class Ability
     public Sprite ResultIcon;
     public Sprite icon;
     public Sprite CoolTime;
+    public Sprite toolTip;
     public bool IsUsing;
     [TextArea]
     public string AbExplan;
     
-    public Ability(int AbCode, string AbName, ABTYPE AbType, ABGRADE AbGrade, int Enhance, int[] Enhance_Cost, GameObject Effect, int AbPrice, bool IsSelect,Sprite AbIcon, Sprite AbSprite, Sprite ResultIcon, Sprite icon, Sprite CoolTime, bool IsUsing, string AbExplan)
+    public Ability(int AbCode, string AbName, ABTYPE AbType, ABGRADE AbGrade, int Enhance, int[] Enhance_Cost, GameObject Effect, int AbPrice, bool IsSelect,Sprite AbIcon, Sprite AbSprite, Sprite ResultIcon, Sprite icon, Sprite CoolTime, Sprite toolTip, bool IsUsing, string AbExplan)
     {
         this.AbCode = AbCode;
         this.AbName = AbName;
@@ -41,6 +42,7 @@ public class Ability
         this.ResultIcon = ResultIcon;
         this.icon = icon;
         this.CoolTime = CoolTime;
+        this.toolTip = toolTip;
         this.IsUsing = IsUsing;
         this.AbExplan = AbExplan;
     }

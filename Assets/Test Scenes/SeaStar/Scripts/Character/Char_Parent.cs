@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +26,7 @@ public class Char_Parent : Character
     public GameObject SelectChar;
     public Animator Ani;
     public static Rigidbody2D rigid;
-    AbilityManager AM;
+    public AbilityManager AM;
     public Camera Cam;
     public static bool ShopOn;
     public bool IsInChaCharacter;
@@ -39,6 +38,7 @@ public class Char_Parent : Character
     public GameObject BattleAxe_Senaka;
     public GameObject BattleAxe;
     public GameObject EvilSword;
+    public GameObject DarkFog;
     public List<Ability> AbilityHistory;
 
     [Header("플레이어 스테이터스")]
@@ -97,6 +97,7 @@ public class Char_Parent : Character
     public int PharaoCool;
     public int EvilSworldCool;
     public int BattleAxeCool;
+    public int DarkFogCool;
     public float DoubleJumpCool;
     public float JumpCool;
 
@@ -149,7 +150,6 @@ public class Char_Parent : Character
     }
     void Update()
     {
-        Debug.Log(Mouse);
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
         if (!Dead)
         {
@@ -398,9 +398,14 @@ public class Char_Parent : Character
             if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
             {
                 Ani.SetBool("Jump", false);
+                Ani.SetBool("Down", false);
                 P_JumpInt = P_MaxJumpInt;
                 JumpCool = DoubleJumpCool;
             }
+        }
+        if(LGround == false || RGround == false)
+        {
+            Ani.SetBool("Down", true);
         }
     }
     //void OnCollisionEnter2D(Collision2D col)
@@ -555,7 +560,9 @@ public class Char_Parent : Character
                 Active_Cool_Max = EvilSworldCool;
                 break;
             case 9:
-                Active_Cool_Max = 4f;
+                OnDarkFog();
+                Current_Use = DarkFog;
+                Active_Cool_Max = DarkFogCool;
                 break;
         }
         Active_Cool = Active_Cool_Max;
@@ -579,6 +586,10 @@ public class Char_Parent : Character
         BattleAxe.SetActive(true);
     }
 
+    public void OnDarkFog()
+    {
+        Debug.Log("qoqoqoqoqoqo"); DarkFog.SetActive(true);
+    }
     public void EvillSwordSwitch()
     {
         if (EvilSword.activeSelf) { EvilSword.SetActive(false); }
@@ -587,13 +598,10 @@ public class Char_Parent : Character
 
     void Load_StateEnhance()
     {
-
         Enhance_Health = ResourceManager.re.Enhance_Health;
         Enhance_Strength = ResourceManager.re.Enhance_Strength;
         Enhance_Speed = ResourceManager.re.Enhance_Speed;
         StateManager.state.DarkFog = AbyssManager.abyss.Darkfog;
-
-
     }
 
     public void Save_StateEnhance()
