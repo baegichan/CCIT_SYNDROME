@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3388566482125473719}
   - component: {fileID: 9188634929099420573}
   - component: {fileID: 1066521508411774938}
+  - component: {fileID: 5500661711445742356}
   m_Layer: 0
   m_Name: Rooms
   m_TagString: Room
@@ -50,6 +51,7 @@ MonoBehaviour:
   Bottom: 0
   Left: 0
   Room_Created: 0
+  Map_index: {x: 0, y: 0}
   sp:
   - {fileID: 21300000, guid: 3e56ecb713508944ca597b687c411b7b, type: 3}
   - {fileID: 21300000, guid: d4499b4c79b3aac40a5d86b8de57e941, type: 3}
@@ -66,6 +68,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 30038428e9fd1214baefcef4aca67add, type: 3}
   - {fileID: 21300000, guid: 20c145572e43634419c3a06d58fcf0ea, type: 3}
   - {fileID: 21300000, guid: f94d06d3e040f70468da7d3ee81ba462, type: 3}
+  VisitedRoom: 0
+  Room_Type: 0
 --- !u!212 &1066521508411774938
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -117,3 +121,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5500661711445742356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3388566482125473716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee912205722fd434ba86e10d94ba3eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Monster_count: 1
+  AbyssMonsterKillCount: 0
+  BoxEvent: 0
+  Box_OBJ: {fileID: 0}

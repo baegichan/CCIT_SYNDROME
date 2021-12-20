@@ -66,7 +66,7 @@ public class MonsterBox : MonoBehaviour
         if(abyssBox.transform.childCount == 0 && normalBox.transform.childCount == 0 && !isclear && monsteridQue.Count ==0 && isMonsterMap)
         {
             isclear = true;
-            RoomClearManager.clear.RoomClear();
+         //   RoomClearManager.clear.RoomClear();
         }
 
 

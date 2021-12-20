@@ -177,6 +177,7 @@ public class FireflyMonster:Character
     {
         GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
+        GetComponent<MonsterCount>().MonsterKill();
         Destroy(gameObject);
     }
 

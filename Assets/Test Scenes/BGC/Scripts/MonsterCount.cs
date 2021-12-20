@@ -4,16 +4,31 @@ using UnityEngine;
 
 public class MonsterCount : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-    
-    
+        if(MonsterState==state.Normal)
+        {
+            transform.parent.parent.parent.GetComponent<MonsterCounter>().Monster_count += 1;
+        }
     }
-    // Update is called once per frame
-    void Update()
+    public enum state
     {
-    
-    
+    Normal,
+    Abyss
+    }
+    public state MonsterState;
+    public void MonsterKill()
+    {
+        switch(MonsterState)
+        {
+            case state.Normal:
+                transform.parent.parent.parent.GetComponent<MonsterCounter>().NormalMonsterKillCount += 1;
+                break;
+            case state.Abyss:
+                transform.parent.parent.parent.GetComponent<MonsterCounter>().AbyssMonsterKillCount += 1;
+                break;
+
+        }
+      
     }
 }
