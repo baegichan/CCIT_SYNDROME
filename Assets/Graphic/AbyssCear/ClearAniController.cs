@@ -6,6 +6,7 @@ public class ClearAniController : MonoBehaviour
 {
     public static ClearAniController s_instance;
     public Animator ClearController;
+    public Char_Parent Player_cha;
     public void Instance()
     {
     if(s_instance==null)
@@ -29,8 +30,8 @@ public class ClearAniController : MonoBehaviour
     }
   public void ALLClear()
   {
-        ClearController.ResetTrigger("MapBossOn");
-        ClearController.ResetTrigger("BossOn");
+        //ClearController.ResetTrigger("MapBossOn");
+        //ClearController.ResetTrigger("BossOn");
         ClearController.ResetTrigger("AllMonster");
         ClearController.ResetTrigger("DoorLock");
         ClearController.ResetTrigger("AbyssAllClear");
@@ -48,16 +49,19 @@ public class ClearAniController : MonoBehaviour
         switch(i)
         {
             case 0:
-                ALLAbyssClear();
                 Get150();
+                ALLAbyssClear();
+               
                 break;
             case 1:
-                ALLAbyssClear();
                 HPPotion();
+                ALLAbyssClear();
+               
                 break;
             case 2:
-                ALLAbyssClear();
                 AbyssPotion();
+                ALLAbyssClear();
+             
                 break;
            
         }
@@ -65,22 +69,42 @@ public class ClearAniController : MonoBehaviour
     public void Get150()
     {
         ClearController.SetBool("Get150", true);
+        AbyssManager.abyss.Darkfog += 150;
     }
   public void HPPotion()
   {
+        Player_cha.MulYakInt += 1;
+        PlayerSkillUI.skill.HpPotionInt.text = Player_cha.MulYakInt.ToString();
         ClearController.SetBool("GetHPPotion", true);
-  }
+    
+    }
   public void AbyssPotion()
   {
+        StateManager.state.AbyssGage += 50;
         ClearController.SetBool("GetPotion",true);
+     
+
     }
+
+
+    private bool BossOnCheck = false;
+    private bool BossMapOn = false;
   public void BossOn()
   {
-        ClearController.SetTrigger("BossOn");
+        if(BossOnCheck==false)
+          {
+            BossOnCheck = true;
+            ClearController.SetTrigger("BossOn");
+        }
+       
     }
   public void BossOpen()
-  {
-        ClearController.SetTrigger("MapBossOn");
+    {
+        if (BossMapOn == false)
+        {
+            BossMapOn = true;
+            ClearController.SetTrigger("MapBossOn");
+        }
     }
   public void ALLMonsterClear()
   {
@@ -89,9 +113,9 @@ public class ClearAniController : MonoBehaviour
   public void NonEnergy()
   {
         ClearController.SetTrigger("DoorLock");
-    }
+   }
   public void ALLAbyssClear()
   {
         ClearController.SetTrigger("AbyssAllClear");
-    }
+  }
 }

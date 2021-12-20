@@ -29,8 +29,17 @@ public class Room_data : MonoBehaviour
     }
     public RoomType Room_Type = RoomType.Nomal;
 
-
     
+    public void CheckLocation()
+    {
+     if(Room_Type==RoomType.Boss && VisitedRoom ==false)
+     {
+      if(RoomClearManager.clear.bar.fillAmount > 0.5)
+      {
+                VisitedRoom = true;
+      }
+     }
+    }
     public void SetMapData()
     {
         //Left = false; Right = false; Top = false; Bottom =false;
@@ -102,8 +111,11 @@ public class Room_data : MonoBehaviour
                 break;
         }
     }
- 
-   
+
+    private void Update()
+    {
+        CheckLocation();
+    }
     public bool Check_Right_Connect()
     {
         return Right;

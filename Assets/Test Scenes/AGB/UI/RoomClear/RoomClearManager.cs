@@ -62,10 +62,11 @@ public class RoomClearManager : MonoBehaviour
 
         if (bar.fillAmount > 0.5 && !isKey)
         {
+            
             isKey = true;
             OnKey.SetActive(true);
             OffKey.SetActive(false);
-            
+            ClearAniController.s_instance.BossOpen();
             //여기에 보스방 문 열림추가
             
         }
@@ -73,6 +74,7 @@ public class RoomClearManager : MonoBehaviour
         if (bar.fillAmount == 1)
         {
             BossImage.SetActive(true);
+            ClearAniController.s_instance.BossOn();
 
             //여기에 보스방 위치 추가
         }
