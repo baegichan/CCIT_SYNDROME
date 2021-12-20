@@ -321,7 +321,7 @@ public class Char_Eden : MonoBehaviour
         {
             CP.pf.colliderMask = layerMask;
             CP.pf.GetComponent<PassBlock>().IsUse = true;
-            Ani.SetBool("Down", true);
+            //Ani.SetBool("Down", true);
             //Invoke("AllLayerPlatform", 0.6f);
             //StartCoroutine(Cool());
         }
