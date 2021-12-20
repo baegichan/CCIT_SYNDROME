@@ -21,6 +21,12 @@ public class RoomClearManager : MonoBehaviour
     public int MaxClear = 6;
     int clearNum = 0;
     bool isKey = false;
+    bool isclear = false;
+    bool isTarClear = false;
+
+
+    GameObject AfterPa;
+    
     private static RoomClearManager _clear;
     public static RoomClearManager clear
     {
@@ -38,7 +44,18 @@ public class RoomClearManager : MonoBehaviour
         }
     }
 
-    
+    private void Update()
+    {
+        if(isclear)
+        {
+            AfterPa.transform.position = new Vector3(Camera.transform.position.x, Camera.transform.position.y, Camera.transform.position.z + 20);
+        }
+        else if(isTarClear)
+        {
+            AfterPa.transform.position=  new Vector3(Gagepos.transform.position.x, Gagepos.transform.position.y, Camera.transform.position.z + 20);
+        }
+    }
+
     public void RoomClear()
     {
         if(MaxClear>clearNum)
@@ -46,11 +63,14 @@ public class RoomClearManager : MonoBehaviour
     }
     IEnumerator ClearRoom()
     {
-        var d = Instantiate(Particle, Camera.transform.position, Quaternion.identity);
+        AfterPa = Instantiate(Particle, new Vector3(Camera.transform.position.x, Camera.transform.position.y, Camera.transform.position.z + 20), Quaternion.identity);
+        isclear = true;
         yield return new WaitForSeconds(2f);
-        d.transform.position = Gagepos.transform.position;
+        isclear = false;
+        isTarClear = true;
         yield return new WaitForSeconds(3f);
-        Destroy(d);
+        isTarClear = false;
+        Destroy(AfterPa);
         GaeUp();
     }
 
