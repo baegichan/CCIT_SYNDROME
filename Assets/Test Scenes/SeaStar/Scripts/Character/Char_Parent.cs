@@ -280,9 +280,14 @@ public class Char_Parent : Character
 
     void AbilityCheat()
     {
-        //SelectAbility();
-        //PlayerSkillUI.skill.Image_Active.sprite = ActiveAbility.icon;
-        //PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
+        if (IsInChaCharacter)
+        {
+            SelectAbility();
+            PlayerSkillUI.skill.Image_Passive.sprite = PassiveAbility.icon;
+            UsePassive();
+            //PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
+        }
+
         PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
         PlayerSkillUI.skill.PillInt.text = AlYakInt.ToString();
     }

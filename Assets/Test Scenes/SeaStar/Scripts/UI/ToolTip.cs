@@ -12,6 +12,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log("¿Ö¾ÈµÅ!!!");
         if (Char_Parent.ply.ActiveAbility.AbCode != 99 && AT == AbilityType.ACTIVE)
         {
             toolTip.enabled = false;
@@ -24,6 +25,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("¿Ö¾ÈµÅ@@@");
         if (Char_Parent.ply.ActiveAbility.AbCode != 99 && AT == AbilityType.ACTIVE)
         {
             toolTip.sprite = Char_Parent.ply.ActiveAbility.toolTip;
