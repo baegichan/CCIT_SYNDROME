@@ -596,7 +596,7 @@ public class Char_Parent : Character
 
     public void OnDarkFog()
     {
-        Debug.Log("qoqoqoqoqoqo"); DarkFog.SetActive(true);
+        DarkFog.SetActive(true);
     }
     public void EvillSwordSwitch()
     {

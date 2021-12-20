@@ -37,6 +37,27 @@ public class MapManager : MonoBehaviour
         ;
         }
     }
+    public bool findBossroom = false;
+    public void BossMapOnline()
+    {
+        if(findBossroom!= true)
+        {
+            for (int i = 0; i < Level * 2 + 1; i++)
+            {
+                for (int j = 0; j < Level * 2 + 1; j++)
+                {
+                    if (map[i, j].GetComponent<Room_data>().Room_Type == Room_data.RoomType.Boss)
+                    {
+
+                        map[i, j].GetComponent<Room_data>().VisitedRoom = true;
+                        findBossroom = true;
+
+                    }
+
+                }
+            }
+        }
+    }
     public void MapLock()
     {
         Map_Lock = true;

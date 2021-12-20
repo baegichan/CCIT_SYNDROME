@@ -32,13 +32,7 @@ public class Room_data : MonoBehaviour
     
     public void CheckLocation()
     {
-     if(Room_Type==RoomType.Boss && VisitedRoom ==false)
-     {
-      if(RoomClearManager.clear.bar.fillAmount > 0.5)
-      {
-                VisitedRoom = true;
-      }
-     }
+    
     }
     public void SetMapData()
     {
@@ -111,9 +105,10 @@ public class Room_data : MonoBehaviour
                 break;
         }
     }
-
+    
     private void FixedUpdate()
     {
+        //if(Room_Type == RoomType.Boss)
         CheckLocation();
     }
     public bool Check_Right_Connect()

@@ -95,7 +95,7 @@ public class RoomClearManager : MonoBehaviour
         {
             BossImage.SetActive(true);
             ClearAniController.s_instance.BossOn();
-
+            MapManager.s_Instace.BossMapOnline();
             //여기에 보스방 위치 추가
         }
            

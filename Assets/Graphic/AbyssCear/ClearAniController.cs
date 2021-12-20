@@ -81,6 +81,7 @@ public class ClearAniController : MonoBehaviour
   public void AbyssPotion()
   {
         StateManager.state.AbyssGage += 50;
+
         ClearController.SetBool("GetPotion",true);
      
 
