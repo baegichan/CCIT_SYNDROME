@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
+
 public class settingmanager : MonoBehaviour
 {
-    //public static settingmanager GM;
+    public static settingmanager SM;
     public GameObject CAN;
     public GameObject ExitPanel;
     public GameObject[] button_ar;
     public GameObject[] volume_ar;
     public GameObject CANVAS;
 
+    public GameObject Box;
+    public GameObject ApplyBtn;
+  
+
 
     public AudioMixer masterMixer;
     public AudioSource audio;
     public AudioClip clip;
+
+    bool isok = false;
     // Start is called before the first frame update
     public KeyCode jump { get; set; }
     public KeyCode up { get; set; }
@@ -67,6 +75,7 @@ public class settingmanager : MonoBehaviour
 
     private static settingmanager _state;
 
+ 
     public static settingmanager GM
     {
         get
@@ -82,29 +91,33 @@ public class settingmanager : MonoBehaviour
             return _state;
         }
     }
+    private void instance()
+    {
+    if(SM==null)
+    {
+            SM = this;
+    }
+    else
+    {
+            Destroy(gameObject);
+    }
+    }
 
     private void Awake()
     {
-        PlayerPrefs.DeleteAll();
+
+
+        instance();
+        //PlayerPrefs.DeleteAll();
         defalutsetter();
 
         update_keycode();
-
-        if (_state == null)
-        {
-            _state = this;
-        }
-        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
-        else if (_state != this)
-        {
-            Destroy(gameObject);
-        }
-        // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
         DontDestroyOnLoad(gameObject);
     }
 
     private void OnDisable()
     {
+      
         update_keycode();
     }
 
@@ -129,8 +142,18 @@ public class settingmanager : MonoBehaviour
                 Time.timeScale = 0;
             }
 
-
-
+        }
+        if (SceneManager.GetActiveScene().name != "InCha 2" && !isok)
+        {
+            Box.SetActive(false);
+            ApplyBtn.SetActive(true);
+            isok = true;
+        }
+        else if((SceneManager.GetActiveScene().name == "InCha 2" || SceneManager.GetActiveScene().name == "Boss_Scene") && isok)
+        {
+            Box.SetActive(true);
+            ApplyBtn.SetActive(false);
+            isok = false;
         }
     }
     public void update_keycode()
@@ -301,4 +324,18 @@ public class settingmanager : MonoBehaviour
 
         PlayerPrefs.SetFloat(name.name, name.GetComponent<Slider>().value);
     }
+
+
+
+
+    #region 안기범 수정
+    public void GoHomes()
+    {
+        For_Fade.Fade.Fad_out_To_StartRoom(false);
+        AbyssManager.abyss.GoReal();
+        Time.timeScale = 1;
+
+    }
+
+    #endregion
 }

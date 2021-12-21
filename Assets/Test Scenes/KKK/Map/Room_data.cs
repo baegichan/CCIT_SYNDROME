@@ -29,8 +29,11 @@ public class Room_data : MonoBehaviour
     }
     public RoomType Room_Type = RoomType.Nomal;
 
-
     
+    public void CheckLocation()
+    {
+    
+    }
     public void SetMapData()
     {
         //Left = false; Right = false; Top = false; Bottom =false;
@@ -102,8 +105,12 @@ public class Room_data : MonoBehaviour
                 break;
         }
     }
- 
-   
+    
+    private void FixedUpdate()
+    {
+        //if(Room_Type == RoomType.Boss)
+        CheckLocation();
+    }
     public bool Check_Right_Connect()
     {
         return Right;

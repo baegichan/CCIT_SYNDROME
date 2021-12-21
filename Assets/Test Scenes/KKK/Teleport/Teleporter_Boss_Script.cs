@@ -45,8 +45,15 @@ public class Teleporter_Boss_Script : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.W))
             {
-                DontDestroyOnLoad(Player_For_DonDestroy);
-                For_Fade.FadeOff_To_BossRoom();
+                if(RoomClearManager.clear.bar.fillAmount > 0.5)
+                {
+                    DontDestroyOnLoad(Player_For_DonDestroy);
+                    For_Fade.FadeOff_To_BossRoom();
+                }
+                else
+                {
+                    ClearAniController.s_instance.NonEnergy();
+                }
             }
 
         }

@@ -182,6 +182,10 @@ public class StateManager : MonoBehaviour
          
 
         }
+        get
+        {
+            return avssGage;
+        }
     }
     public int DarkFog
     {

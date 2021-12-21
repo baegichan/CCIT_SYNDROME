@@ -37,6 +37,27 @@ public class MapManager : MonoBehaviour
         ;
         }
     }
+    public bool findBossroom = false;
+    public void BossMapOnline()
+    {
+        if(findBossroom!= true)
+        {
+            for (int i = 0; i < Level * 2 + 1; i++)
+            {
+                for (int j = 0; j < Level * 2 + 1; j++)
+                {
+                    if (map[i, j].GetComponent<Room_data>().Room_Type == Room_data.RoomType.Boss)
+                    {
+
+                        map[i, j].GetComponent<Room_data>().VisitedRoom = true;
+                        findBossroom = true;
+
+                    }
+
+                }
+            }
+        }
+    }
     public void MapLock()
     {
         Map_Lock = true;
@@ -130,10 +151,7 @@ public class MapManager : MonoBehaviour
         {
 
         }
-        else
-        {
-
-        }
+       
     }
     public void StartRoom()
     {
@@ -204,8 +222,8 @@ public class MapManager : MonoBehaviour
         }
 
         BossRoomList[Random.Range(0, BossRoomList.Count)].Room_Type = Room_data.RoomType.Boss;
-        int CraneLimit = Random.Range(1, Level);
-        int ShopLimit = Random.Range(0, Level - 1);
+        int CraneLimit = Random.Range(2, Level+1);
+        int ShopLimit = Random.Range(1, Level);
         for (int i = 0; i < ShopLimit; i++)
         {
             int RanShop = Random.Range(0, RoomList.Count);
@@ -240,8 +258,7 @@ public class MapManager : MonoBehaviour
         //map[Level, Level].transform.position = new Vector2(0, 0);
         //Start_Map = map[Level, Level].transform.position;
         make_map();
-        Map_Move();
-       
+        Map_Move();       
     }
     private void Start()
     {
@@ -254,12 +271,50 @@ public class MapManager : MonoBehaviour
     public IEnumerator test()
     {
         yield return new WaitForSeconds(2);
+        SettingSpeacialShop();
         AllCreatedRoom();
+       
         Maps.GetComponent<MapLoadTest>().Starting_Setting();
         MapAllOff();
         PCurrent_Room = new Vector2(Level, Level);
+
+
         Minimap.MiniMapSetting();
     }
+
+    ///   XXXXX
+    ///   XOOOX
+    ///   XOXOX
+    ///   XOOOX
+    ///   XXXXX
+    /// <summary>
+    /// 시작지점 근처  상점 강제적 설정 ^^
+    /// </summary>
+    private void SettingSpeacialShop()
+    {
+        List<GameObject> SpeacialShoproom = new List<GameObject>();
+
+        for(int y = Level-1;y<Level+1;y++)
+        {
+            for(int x = Level - 1; x < Level + 1; x++)
+            {
+            if((x!=Level)&&(y!=Level))
+            {
+                    if (map[x, y].GetComponent<Room_data>().Room_Created)
+                    {
+                        SpeacialShoproom.Add(map[x, y]);
+                    }
+            }
+            }
+        }
+   
+       if(SpeacialShoproom.Count!=0)
+       {
+            int randomroom = Random.Range(0, SpeacialShoproom.Count);
+            SpeacialShoproom[randomroom].GetComponent<Room_data>().Room_Type = Room_data.RoomType.Shop;
+       }
+    }
+   
     void bbb()//맵 최소 개수 
     {
         Check_Map_Code(Level, Level);
@@ -267,7 +322,7 @@ public class MapManager : MonoBehaviour
     }
     void aaa()//맵 최소 개수
     {
-        if (map_count < 44)//((2 * Level) + 1) * ((2 * Level) + 1) / 2 + 1
+        if (map_count < ((2 * Level) + 1) * ((2 * Level) + 1) / 2 + 1)
         {
             int abc = 2 * Level + 1;
             for(int i = 0; i < abc; i++)

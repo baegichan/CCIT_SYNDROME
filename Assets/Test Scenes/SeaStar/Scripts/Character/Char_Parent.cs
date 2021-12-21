@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +26,7 @@ public class Char_Parent : Character
     public GameObject SelectChar;
     public Animator Ani;
     public static Rigidbody2D rigid;
-    AbilityManager AM;
+    public AbilityManager AM;
     public Camera Cam;
     public static bool ShopOn;
     public bool IsInChaCharacter;
@@ -39,6 +38,7 @@ public class Char_Parent : Character
     public GameObject BattleAxe_Senaka;
     public GameObject BattleAxe;
     public GameObject EvilSword;
+    public GameObject DarkFog;
     public List<Ability> AbilityHistory;
 
     [Header("플레이어 스테이터스")]
@@ -81,8 +81,8 @@ public class Char_Parent : Character
     public static float Active_Cool_Max;
     public static float Active_Cool = 0f;
     public GameObject DoubleJump;
-    Vector2 Mouse;
-    Vector2 PlayerPosition;
+    public Vector2 Mouse;
+    public Vector2 PlayerPosition;
 
     [Header("능력치 강화 수치")]
     public int Enhance_Health;
@@ -97,6 +97,7 @@ public class Char_Parent : Character
     public int PharaoCool;
     public int EvilSworldCool;
     public int BattleAxeCool;
+    public int DarkFogCool;
     public float DoubleJumpCool;
     public float JumpCool;
 
@@ -279,9 +280,14 @@ public class Char_Parent : Character
 
     void AbilityCheat()
     {
-        //SelectAbility();
-        //PlayerSkillUI.skill.Image_Active.sprite = ActiveAbility.icon;
-        //PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
+        if (IsInChaCharacter)
+        {
+            SelectAbility();
+            PlayerSkillUI.skill.Image_Passive.sprite = PassiveAbility.icon;
+            UsePassive();
+            //PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
+        }
+
         PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
         PlayerSkillUI.skill.PillInt.text = AlYakInt.ToString();
     }
@@ -371,40 +377,59 @@ public class Char_Parent : Character
     public float[] Distance_X;
     public float[] Distance_Y;
     public float[] Distance_;
+
+    public float[] D_Distance;
+    public float[] D_Distance_X;
+    public float[] D_Distance_Y;
+    public float[] D_Distance_;
     public Vector3[] pivot;
     int DI;
 
     public LayerMask lm;
-    RaycastHit2D LGround, RGround;
+    RaycastHit2D LGround, RGround, DownCheck;
     void GroundCheck()
     {
         LGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
         Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.yellow);
         RGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
         Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.cyan);
+
+        DownCheck = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(D_Distance_X[DI], D_Distance_Y[DI], 0), Vector2.down * D_Distance_[DI], Distance[DI]);
+        Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(D_Distance_X[DI], D_Distance_Y[DI], 0), Vector2.down * D_Distance_[DI], Color.red);
+
         Physics2D.queriesStartInColliders = false;
 
         if (Ani.GetBool("Jump")) { JumpCool -= Time.deltaTime; }
 
         if(rigid.velocity.y < 0 && (LGround != false || RGround != false))
         {
-            if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
+            if (LGround.collider.gameObject.CompareTag("Ground") || RGround.collider.gameObject.CompareTag("Ground"))
             {
                 Ani.SetBool("Jump", false);
+                Ani.SetBool("Down", false);
                 P_JumpInt = P_MaxJumpInt;
                 JumpCool = DoubleJumpCool;
             }
         }
-    }
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if(col.gameObject.tag == "Ground")
+
+        if((LGround.collider == false || RGround.collider == false) && DownCheck.collider == false)
         {
-            Ani.SetBool("Jump", false);
-            P_JumpInt = P_MaxJumpInt;
-            JumpCool = DoubleJumpCool;
+            Ani.SetBool("Down", true);
+        }
+        else
+        {
+            Ani.SetBool("Down", false);
         }
     }
+    //void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    if(col.gameObject.tag == "Ground")
+    //    {
+    //        Ani.SetBool("Jump", false);
+    //        P_JumpInt = P_MaxJumpInt;
+    //        JumpCool = DoubleJumpCool;
+    //    }
+    //}
     //마우스 플립
 
     //public void MouseFilp()
@@ -548,7 +573,9 @@ public class Char_Parent : Character
                 Active_Cool_Max = EvilSworldCool;
                 break;
             case 9:
-                Active_Cool_Max = 4f;
+                OnDarkFog();
+                Current_Use = DarkFog;
+                Active_Cool_Max = DarkFogCool;
                 break;
         }
         Active_Cool = Active_Cool_Max;
@@ -572,6 +599,10 @@ public class Char_Parent : Character
         BattleAxe.SetActive(true);
     }
 
+    public void OnDarkFog()
+    {
+        DarkFog.SetActive(true);
+    }
     public void EvillSwordSwitch()
     {
         if (EvilSword.activeSelf) { EvilSword.SetActive(false); }
@@ -580,13 +611,10 @@ public class Char_Parent : Character
 
     void Load_StateEnhance()
     {
-
         Enhance_Health = ResourceManager.re.Enhance_Health;
         Enhance_Strength = ResourceManager.re.Enhance_Strength;
         Enhance_Speed = ResourceManager.re.Enhance_Speed;
         StateManager.state.DarkFog = AbyssManager.abyss.Darkfog;
-
-
     }
 
     public void Save_StateEnhance()

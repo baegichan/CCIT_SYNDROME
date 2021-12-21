@@ -173,6 +173,7 @@ public class MothMonster : Character
     {
         GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
+        GetComponent<MonsterCount>().MonsterKill();
         Destroy(transform.gameObject);
     }
 

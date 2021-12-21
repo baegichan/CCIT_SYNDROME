@@ -158,12 +158,16 @@ public class Char_Eden : MonoBehaviour
                 }
             }
         }
+        if(CP.vel.x > P_DashForce)
+        {
+
+        }
         if (P_DashTimer < 5)
         {
             P_DashTimer += Time.deltaTime;
         }
     }
-
+    
     public void PharaoWandSwitch()
     {
         if (CP.PharaoWand_Senaka.activeSelf) { CP.PharaoWand_Senaka.SetActive(false); }
@@ -288,6 +292,11 @@ public class Char_Eden : MonoBehaviour
         else { PharaoLight.SetActive(true); }
     }
 
+    void STFog()
+    {
+        CP.GetComponent<AbilityManager>().ShootFog();
+    }
+
     void Fail()
     {
         GameResultManager.result.Abilty(CP.AbilityHistory);
@@ -297,6 +306,13 @@ public class Char_Eden : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         CP.pf = col.transform.GetComponent<PlatformEffector2D>();
+        //if (col.gameObject.tag == "Ground")
+        //{
+        //    Debug.Log("ºü»¡°£¸À");
+        //    Ani.SetBool("Jump", false);
+        //    CP.P_JumpInt = CP.P_MaxJumpInt;
+        //    CP.JumpCool = CP.DoubleJumpCool;
+        //}
     }
 
     void DownPlatform()
@@ -305,6 +321,7 @@ public class Char_Eden : MonoBehaviour
         {
             CP.pf.colliderMask = layerMask;
             CP.pf.GetComponent<PassBlock>().IsUse = true;
+            //Ani.SetBool("Down", true);
             //Invoke("AllLayerPlatform", 0.6f);
             //StartCoroutine(Cool());
         }

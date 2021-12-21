@@ -25,6 +25,7 @@ public class PotalEvent : MonoBehaviour
                     if (Teleport_able == true)
                     {
                         Movement(other.gameObject);
+                        ClearAniController.s_instance.ALLClear();
                         // MapManager.s_Instace.PotalMove(PotalType);
                     }
 

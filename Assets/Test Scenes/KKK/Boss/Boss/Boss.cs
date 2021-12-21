@@ -341,6 +341,8 @@ public class Boss : Character
 
         Boss_Dead_Check = true;
         anim.SetBool("Dead", false);
+        GameResultManager.result.Abilty(Char_Parent.ply.AbilityHistory);
+ 
         GameResultManager.result.CountKillBoss++;
         GameResultManager.result.ShowResult(true);
         
