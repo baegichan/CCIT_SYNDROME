@@ -3325,7 +3325,7 @@ public class MapManager : MonoBehaviour
                     map[a + 1, b].GetComponent<Room_data>().Left = true;
                 }
             }
-            if (map[a, b].GetComponent<Room_data>().Left == false && map[a, b].GetComponent<Room_data>().Right == true)
+            if (map[a, b].GetComponent<Room_data>().Top == false && map[a, b].GetComponent<Room_data>().Right == true)
             {
                 int aa = Random.Range(0, 2);
                 if (aa == 0)
