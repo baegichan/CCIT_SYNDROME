@@ -148,6 +148,7 @@ public class Char_Parent : Character
             }
         }
     }
+
     void Update()
     {
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
@@ -579,6 +580,14 @@ public class Char_Parent : Character
                 break;
         }
         Active_Cool = Active_Cool_Max;
+        if(AbilityCode != 9)
+        {
+            DarkFog.SetActive(false);
+            BeforeDarkFogArm[0].SetActive(true);
+            BeforeDarkFogArm[1].SetActive(true);
+            BeforeDarkFogArm[2].SetActive(true);
+            BeforeDarkFogArm[3].SetActive(true);
+        }
     }
 
     public void PharaoWandSwitch()
@@ -598,10 +607,15 @@ public class Char_Parent : Character
         BattleAxe_Senaka.SetActive(false);
         BattleAxe.SetActive(true);
     }
-
+    public GameObject[] BeforeDarkFogArm;
+    
     public void OnDarkFog()
     {
         DarkFog.SetActive(true);
+        BeforeDarkFogArm[0].SetActive(false);
+        BeforeDarkFogArm[1].SetActive(false);
+        BeforeDarkFogArm[2].SetActive(false);
+        BeforeDarkFogArm[3].SetActive(false);
     }
     public void EvillSwordSwitch()
     {

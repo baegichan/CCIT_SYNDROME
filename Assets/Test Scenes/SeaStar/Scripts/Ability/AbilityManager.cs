@@ -15,7 +15,9 @@ public class AbilityManager : MonoBehaviour
     public int[] WolfAP = { 3, 4, 5, 6 };
     public int[] AxeAP = { 15, 18, 21, 23 };
     public int[] EvilAP = { 6, 9, 12, 15 };
-    public int[] DarkSmokeAP = { 6, 9, 12, 15 };
+    public int[] DarkSmokeAP = { 10, 15, 20, 30 };
+    public int[] DarkSmokeExplosionAP = { 10, 13, 16, 20 };
+    public int[] DarkSmokeMinus = { 50, 75, 100, 125 };
     public GameObject PharaoHitEffect;
     public AudioSource AS;
     //¸¶°Ë
@@ -183,7 +185,8 @@ public class AbilityManager : MonoBehaviour
         CP.Ani.SetBool("CanIThis", true);
     }
 
-    public GameObject B_Ball;
+    public GameObject DarkFog_Ball;
+    public Transform EdenArm;
     public float B_Damage;
     public float B_Speed;
     public float[] Angle;
@@ -201,22 +204,25 @@ public class AbilityManager : MonoBehaviour
             if (CP.Ani.GetBool("Move")) { CP.Ani.SetBool("Move", false);}
             Char_Parent.Active_Cool = 0f;
             CP.Ani.SetInteger("AbilityNum", 9);
-            MouseP = Input.mousePosition;
-            MouseP = cam.ScreenToWorldPoint(MouseP);
+            MouseP = cam.ScreenToWorldPoint(Input.mousePosition);
             Dir = MouseP - Point;
             Dir = Dir.normalized;
             MouseAngle = Vector2.Angle(Vector2.up, MouseP);
-            MousePosition();   
+            MousePosition();
+            //EdenArm.localEulerAngles = new Vector3(0f, 0f, MouseAngle);
         }
     }
-
+   
     public void ShootFog()
     {
         Point = RightHand.position;
-        GameObject BB = Instantiate(B_Ball, Point, Quaternion.identity);
+        EdenArm.localEulerAngles = new Vector3(0f,0f, Dir.x);
+        GameObject BB = Instantiate(DarkFog_Ball, Point, Quaternion.identity);
+        AbyssManager.abyss.Darkfog -= DarkSmokeMinus[Char_Parent.ply.ActiveAbility.Enhance];
         BB.GetComponent<Smoke_>().Dir = Dir;
         BB.GetComponent<Smoke_>().PP = Point;
         CP.Ani.SetBool("Combat", true);
+
     }
 
     void MousePosition()
@@ -260,12 +266,12 @@ public class AbilityManager : MonoBehaviour
         {
             if (CP.Mouse.x <= CP.PlayerPosition.x)
             {
-                CP.Ani.SetBool("Turn", false);
+                CP.Ani.SetBool("Turn", true);
                 CP.Ani.SetTrigger("Ability");
             }
             else if (CP.Mouse.x > CP.PlayerPosition.x)
             {
-                CP.Ani.SetBool("Turn", true);
+                CP.Ani.SetBool("Turn", false);
                 CP.Ani.SetTrigger("Ability");
             }
         }
