@@ -13,12 +13,16 @@ public class SeletShopNPC : MonoBehaviour
 
         if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Abyss && IsAbyss)
         {
+            AbyssShop.GetComponent<OtherWorldShop>().Enhance_UI.GetComponent<Enhance>().Exit();
+            NormalShop.GetComponent<nRealWorldShop>().RealWorldShop_UI.GetComponent<RealWorldShop>().close();
             AbyssShop.SetActive(true);
             NormalShop.SetActive(false);
             IsAbyss = false;
         }
         else if (AbyssManager.abyss.abyssState == AbyssManager.AbyssState.Reality && !IsAbyss)
         {
+            AbyssShop.GetComponent<OtherWorldShop>().Enhance_UI.GetComponent<Enhance>().Exit();
+            NormalShop.GetComponent<nRealWorldShop>().RealWorldShop_UI.GetComponent<RealWorldShop>().close();
             AbyssShop.SetActive(false);
             NormalShop.SetActive(true);
             IsAbyss = true;

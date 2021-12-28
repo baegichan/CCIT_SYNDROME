@@ -36,6 +36,13 @@ public class AbilityManager : MonoBehaviour
     {
         AS = GetComponent<AudioSource>();
     }
+
+     void Update()
+    {
+        float angle = Mathf.Atan2(Dir.y, Dir.x) * Mathf.Rad2Deg;
+        EdenArm.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
     public void Werewolf()
     {
         if (Input.GetMouseButtonDown(1) && !CP.Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
@@ -192,31 +199,36 @@ public class AbilityManager : MonoBehaviour
     public float[] Angle;
     public float MouseAngle;
     public Transform RightHand;
-    Vector2 MouseP;
-    Vector2 Point;
-    Vector2 Dir;
+    public Vector2 MouseP;
+    public Vector2 Point;
+    public Vector2 Dir;
+    public static bool isShoot = false;
     //검은안개능력
     public void BlackSmoke()
     {
-        if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if(CP.Ani.GetBool("Jump") == false)
         {
-            CP.Ani.SetBool("CanIThis", false);
-            if (CP.Ani.GetBool("Move")) { CP.Ani.SetBool("Move", false);}
-            Char_Parent.Active_Cool = 0f;
-            CP.Ani.SetInteger("AbilityNum", 9);
-            MouseP = cam.ScreenToWorldPoint(Input.mousePosition);
-            Dir = MouseP - Point;
-            Dir = Dir.normalized;
-            MouseAngle = Vector2.Angle(Vector2.up, MouseP);
-            MousePosition();
-            //EdenArm.localEulerAngles = new Vector3(0f, 0f, MouseAngle);
+            if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+            {
+                isShoot = true;
+                CP.Ani.SetBool("CanIThis", false);
+                if (CP.Ani.GetBool("Move")) { CP.Ani.SetBool("Move", false); }
+                Char_Parent.Active_Cool = 0f;
+                CP.Ani.SetInteger("AbilityNum", 9);
+                MouseP = cam.ScreenToWorldPoint(Input.mousePosition);
+                Dir = MouseP - Point;
+                Dir = Dir.normalized;
+                MouseAngle = Vector2.Angle(Vector2.up, MouseP);
+                MousePosition();
+            }
         }
     }
    
     public void ShootFog()
     {
+        isShoot = true;
+        RightHand.localScale = new Vector3(1, 1, 1);
         Point = RightHand.position;
-        EdenArm.localEulerAngles = new Vector3(0f,0f, Dir.x);
         GameObject BB = Instantiate(DarkFog_Ball, Point, Quaternion.identity);
         AbyssManager.abyss.Darkfog -= DarkSmokeMinus[Char_Parent.ply.ActiveAbility.Enhance];
         BB.GetComponent<Smoke_>().Dir = Dir;

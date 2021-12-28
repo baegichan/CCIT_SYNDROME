@@ -174,13 +174,13 @@ public class Char_Parent : Character
                 {
                     UseSkill();
                 }
-            }    
+            }
             if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
             if (AP_Timer > 0) { AP_Time(); }
             else { if (UseApPostion) { UseApPostion = false; } }
             Die();
         }
-        if(Input.GetKeyDown(KeyCode.F12))
+        if (Input.GetKeyDown(KeyCode.F12))
         {
             escape();
         }
@@ -226,7 +226,7 @@ public class Char_Parent : Character
     {
         for (int i = 0; i < this.Char.Length; i++)
         {
-            if(this.Char[i] != SelectChar) { this.Char[i].SetActive(false); }
+            if (this.Char[i] != SelectChar) { this.Char[i].SetActive(false); }
 
         }
         Char.transform.position = Before_Position;
@@ -346,7 +346,7 @@ public class Char_Parent : Character
 
     public PlatformEffector2D pf;
     public Vector2 vel;
-    
+
     public void Jump()
     {
         if (!Ani.GetBool("Jump"))
@@ -373,7 +373,7 @@ public class Char_Parent : Character
             }
         }
     }
-    
+
     public float[] Distance;
     public float[] Distance_X;
     public float[] Distance_Y;
@@ -402,7 +402,7 @@ public class Char_Parent : Character
 
         if (Ani.GetBool("Jump")) { JumpCool -= Time.deltaTime; }
 
-        if(rigid.velocity.y < 0 && (LGround != false || RGround != false))
+        if (rigid.velocity.y < 0 && (LGround != false || RGround != false))
         {
             if (LGround.collider.gameObject.CompareTag("Ground") || RGround.collider.gameObject.CompareTag("Ground"))
             {
@@ -413,7 +413,7 @@ public class Char_Parent : Character
             }
         }
 
-        if((LGround.collider == false || RGround.collider == false) && DownCheck.collider == false)
+        if ((LGround.collider == false || RGround.collider == false) && DownCheck.collider == false)
         {
             Ani.SetBool("Down", true);
         }
@@ -580,8 +580,9 @@ public class Char_Parent : Character
                 break;
         }
         Active_Cool = Active_Cool_Max;
-        if(AbilityCode != 9)
+        if (AbilityCode != 9)
         {
+            DefaultDarkFog.SetActive(false);
             DarkFog.SetActive(false);
             BeforeDarkFogArm[0].SetActive(true);
             BeforeDarkFogArm[1].SetActive(true);
@@ -608,14 +609,31 @@ public class Char_Parent : Character
         BattleAxe.SetActive(true);
     }
     public GameObject[] BeforeDarkFogArm;
-    
+    public GameObject DefaultDarkFog;
     public void OnDarkFog()
     {
-        DarkFog.SetActive(true);
-        BeforeDarkFogArm[0].SetActive(false);
-        BeforeDarkFogArm[1].SetActive(false);
-        BeforeDarkFogArm[2].SetActive(false);
-        BeforeDarkFogArm[3].SetActive(false);
+        if (AbilityManager.isShoot == true)
+        {
+            DefaultDarkFog.SetActive(false);
+            DarkFog.SetActive(true);
+            BeforeDarkFogArm[0].SetActive(false);
+            BeforeDarkFogArm[1].SetActive(false);
+            BeforeDarkFogArm[2].SetActive(false);
+            BeforeDarkFogArm[3].SetActive(false);
+        }
+        else if (AbilityManager.isShoot == false)
+        {
+            OffDarkFog();
+        }
+    }
+    void OffDarkFog()
+    {
+        DefaultDarkFog.SetActive(true);
+        DarkFog.SetActive(false);
+        BeforeDarkFogArm[0].SetActive(true);
+        BeforeDarkFogArm[1].SetActive(true);
+        BeforeDarkFogArm[2].SetActive(true);
+        BeforeDarkFogArm[3].SetActive(true);
     }
     public void EvillSwordSwitch()
     {
@@ -656,16 +674,16 @@ public class Char_Parent : Character
         CurrentCha = GetComponent<Char_Parent>().SelectChar;
         GameObject Text = (GameObject)Instantiate(Resources.Load("DMGCANVAS2"), CurrentCha.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
-      
-        float fontExtra = Mathf.Clamp(Damage / 3 , 5.0f, 10.0f);
+
+        float fontExtra = Mathf.Clamp(Damage / 3, 5.0f, 10.0f);
         float fontsize = Random.Range(0.8f * fontExtra, 1.0f * fontExtra);
         Text.GetComponentInChildren<Text>().fontSize = (int)fontsize;
     }
     public void escape()
     {
-        if(MapManager.s_Instace!=null)
+        if (MapManager.s_Instace != null)
         {
-          SelectChar.transform.position=  MapManager.s_Instace.map[(int)MapManager.s_Instace.Current_Room.x, (int)MapManager.s_Instace.Current_Room.y].transform.GetComponentInChildren<Potals>().GetONPotals();
+            SelectChar.transform.position = MapManager.s_Instace.map[(int)MapManager.s_Instace.Current_Room.x, (int)MapManager.s_Instace.Current_Room.y].transform.GetComponentInChildren<Potals>().GetONPotals();
         }
     }
 }
