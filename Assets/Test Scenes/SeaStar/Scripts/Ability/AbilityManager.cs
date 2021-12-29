@@ -208,7 +208,7 @@ public class AbilityManager : MonoBehaviour
     {
         if(CP.Ani.GetBool("Jump") == false)
         {
-            if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+            if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max && Char_Parent.ply.Ani.GetInteger("AbilityNum") == 9)
             {
                 isShoot = true;
                 CP.Ani.SetBool("CanIThis", false);

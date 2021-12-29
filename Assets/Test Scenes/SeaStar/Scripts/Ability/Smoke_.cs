@@ -22,7 +22,6 @@ public class Smoke_ : MonoBehaviour
     void FixedUpdate()
     {
         rigid.velocity = (Dir * Speed * Time.deltaTime);
-        //transform.Translate(Dir * Speed * Time.deltaTime);
         Dis = Vector2.Distance(PP, transform.position);
         if (Dis >= Distance)
         {
@@ -43,7 +42,6 @@ public class Smoke_ : MonoBehaviour
                         ES.GetComponent<ParticleSystem>().Clear(); 
                         gameObject.SetActive(false);
                         Destroy(gameObject, 0f);
-                        //Destroy(ES, 0f);
                         isEndOfEXPLOSION = false;
                         AbilityManager.isShoot = false;
                     } 
@@ -83,7 +81,6 @@ public class Smoke_ : MonoBehaviour
                     ES.GetComponent<ParticleSystem>().Clear();
                     gameObject.SetActive(false);
                     Destroy(gameObject, 0f);
-                    //Destroy(ES, 0f);
                     isEndOfEXPLOSION = false;
                     AbilityManager.isShoot = false;
                 }

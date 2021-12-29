@@ -338,14 +338,16 @@ public class Boss : Character
     }
     public void Boss_End()
     {
+        if(!Char_Parent.ply.Dead)
+        {
+            Char_Parent.ply.Clear = true;
+            Boss_Dead_Check = true;
+            anim.SetBool("Dead", false);
+            GameResultManager.result.Abilty(Char_Parent.ply.AbilityHistory);
 
-        Boss_Dead_Check = true;
-        anim.SetBool("Dead", false);
-        GameResultManager.result.Abilty(Char_Parent.ply.AbilityHistory);
- 
-        GameResultManager.result.CountKillBoss++;
-        GameResultManager.result.ShowResult(true);
-        
+            GameResultManager.result.CountKillBoss++;
+            GameResultManager.result.ShowResult(true);
+        }
     }
     public void Change_Abyss_Boss()
     {

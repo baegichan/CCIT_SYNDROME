@@ -85,28 +85,31 @@ public class Character : MonoBehaviour
     }
     public void Damage(int DamageValue)
     {
-        int firstDamge = DamageValue;
-        if (DamageValue > 20)
+        if (!Char_Parent.ply.Clear)
         {
-            CameraShake.Cam_instance.Shake(0.1f, 0.4f);
-        }
-        int secondDamge = firstDamge - Shield;
-        if (secondDamge > 0)
-        {
-            Hp_Current -= secondDamge - DP;
+            int firstDamge = DamageValue;
+            if (DamageValue > 20)
+            {
+                CameraShake.Cam_instance.Shake(0.1f, 0.4f);
+            }
+            int secondDamge = firstDamge - Shield;
+            if (secondDamge > 0)
+            {
+                Hp_Current -= secondDamge - DP;
 
-        }
-        if (Shield > 0)
-            Shield -= firstDamge - DP;
+            }
+            if (Shield > 0)
+                Shield -= firstDamge - DP;
 
-        if (transform.tag == "Player")
-        {
-            GetComponent<Char_Parent>().Special_Load_Damage_Text(DamageValue);
-            StateManager.state.Hp = Hp_Current;
-        }
-        else
-        {
-            Load_Damage_Text(this, DamageValue);
+            if (transform.tag == "Player")
+            {
+                GetComponent<Char_Parent>().Special_Load_Damage_Text(DamageValue);
+                StateManager.state.Hp = Hp_Current;
+            }
+            else
+            {
+                Load_Damage_Text(this, DamageValue);
+            }
         }
     }
 

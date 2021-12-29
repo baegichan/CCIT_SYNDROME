@@ -315,13 +315,6 @@ public class Char_Eden : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         CP.pf = col.transform.GetComponent<PlatformEffector2D>();
-        //if (col.gameObject.tag == "Ground")
-        //{
-        //    Debug.Log("ºü»¡°£¸À");
-        //    Ani.SetBool("Jump", false);
-        //    CP.P_JumpInt = CP.P_MaxJumpInt;
-        //    CP.JumpCool = CP.DoubleJumpCool;
-        //}
     }
 
     void DownPlatform()
@@ -330,11 +323,7 @@ public class Char_Eden : MonoBehaviour
         {
             CP.pf.colliderMask = layerMask;
             CP.pf.GetComponent<PassBlock>().IsUse = true;
-            //Ani.SetBool("Down", true);
-            //Invoke("AllLayerPlatform", 0.6f);
-            //StartCoroutine(Cool());
         }
-        
     }
 
     IEnumerator Cool()
