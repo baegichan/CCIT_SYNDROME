@@ -42,6 +42,7 @@ public class Char_Parent : Character
     public List<Ability> AbilityHistory;
 
     [Header("플레이어 스테이터스")]
+    public bool Clear;
     public bool Dead;
     public int DefaultHP;
     public int CharHP;
@@ -574,10 +575,9 @@ public class Char_Parent : Character
                 Active_Cool_Max = EvilSworldCool;
                 break;
             case 9:
-                //OnDarkFog();
                 Current_Use = DefaultDarkFog;
                 Active_Cool_Max = DarkFogCool;
-                break;
+                    break;
         }
         Active_Cool = Active_Cool_Max; 
     }
@@ -604,25 +604,27 @@ public class Char_Parent : Character
 
     public void OnDarkFog()
     {
+        if(Ani.GetInteger("AbilityNum") == 9)
+        {
             DefaultDarkFog.SetActive(false);
             DarkFog.SetActive(true);
             BeforeDarkFogArm[0].SetActive(false);
             BeforeDarkFogArm[1].SetActive(false);
             BeforeDarkFogArm[2].SetActive(false);
             BeforeDarkFogArm[3].SetActive(false);
-        //else if (AbilityManager.isShoot == false)
-        //{
-        //    OffDarkFog();
-        //}
+        }
     }
     public void OffDarkFog()
     {
-        DefaultDarkFog.SetActive(true);
-        DarkFog.SetActive(false);
-        BeforeDarkFogArm[0].SetActive(true);
-        BeforeDarkFogArm[1].SetActive(true);
-        BeforeDarkFogArm[2].SetActive(true);
-        BeforeDarkFogArm[3].SetActive(true);
+        if (Ani.GetInteger("AbilityNum") == 9)
+        {
+            DefaultDarkFog.SetActive(true);
+            DarkFog.SetActive(false);
+            BeforeDarkFogArm[0].SetActive(true);
+            BeforeDarkFogArm[1].SetActive(true);
+            BeforeDarkFogArm[2].SetActive(true);
+            BeforeDarkFogArm[3].SetActive(true);
+        }
     }
     public void EvillSwordSwitch()
     {

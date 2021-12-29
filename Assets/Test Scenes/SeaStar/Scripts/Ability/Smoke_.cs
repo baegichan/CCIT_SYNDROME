@@ -22,7 +22,6 @@ public class Smoke_ : MonoBehaviour
     void FixedUpdate()
     {
         rigid.velocity = (Dir * Speed * Time.deltaTime);
-        //transform.Translate(Dir * Speed * Time.deltaTime);
         Dis = Vector2.Distance(PP, transform.position);
         if (Dis >= Distance)
         {
