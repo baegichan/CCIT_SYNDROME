@@ -226,15 +226,17 @@ public class AbilityManager : MonoBehaviour
    
     public void ShootFog()
     {
-        isShoot = true;
-        RightHand.localScale = new Vector3(1, 1, 1);
-        Point = RightHand.position;
-        GameObject BB = Instantiate(DarkFog_Ball, Point, Quaternion.identity);
-        AbyssManager.abyss.Darkfog -= DarkSmokeMinus[Char_Parent.ply.ActiveAbility.Enhance];
-        BB.GetComponent<Smoke_>().Dir = Dir;
-        BB.GetComponent<Smoke_>().PP = Point;
-        CP.Ani.SetBool("Combat", true);
-
+        if(AbyssManager.abyss.Darkfog >= DarkSmokeMinus[Char_Parent.ply.ActiveAbility.Enhance])
+        {
+            isShoot = true;
+            RightHand.localScale = new Vector3(1, 1, 1);
+            Point = RightHand.position;
+            GameObject BB = Instantiate(DarkFog_Ball, Point, Quaternion.identity);
+            AbyssManager.abyss.Darkfog -= DarkSmokeMinus[Char_Parent.ply.ActiveAbility.Enhance];
+            BB.GetComponent<Smoke_>().Dir = Dir;
+            BB.GetComponent<Smoke_>().PP = Point;
+            CP.Ani.SetBool("Combat", true);
+        }
     }
 
     void MousePosition()

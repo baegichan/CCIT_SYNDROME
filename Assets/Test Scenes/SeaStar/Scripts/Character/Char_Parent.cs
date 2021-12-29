@@ -98,7 +98,7 @@ public class Char_Parent : Character
     public int PharaoCool;
     public int EvilSworldCool;
     public int BattleAxeCool;
-    public int DarkFogCool;
+    public float DarkFogCool;
     public float DoubleJumpCool;
     public float JumpCool;
 
@@ -284,9 +284,11 @@ public class Char_Parent : Character
     {
         if (IsInChaCharacter)
         {
-            SelectAbility();
-            PlayerSkillUI.skill.Image_Passive.sprite = PassiveAbility.icon;
-            UsePassive();
+            //SelectAbility();
+            //PlayerSkillUI.skill.Image_Passive.sprite = PassiveAbility.icon;
+            //UsePassive();
+
+            //PlayerSkillUI.skill.Image_Active.sprite = ActiveAbility.icon;
             //PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
         }
 
