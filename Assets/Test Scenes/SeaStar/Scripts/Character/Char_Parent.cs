@@ -574,21 +574,12 @@ public class Char_Parent : Character
                 Active_Cool_Max = EvilSworldCool;
                 break;
             case 9:
-                OnDarkFog();
-                Current_Use = DarkFog;
+                //OnDarkFog();
+                Current_Use = DefaultDarkFog;
                 Active_Cool_Max = DarkFogCool;
                 break;
         }
-        Active_Cool = Active_Cool_Max;
-        if (AbilityCode != 9)
-        {
-            DefaultDarkFog.SetActive(false);
-            DarkFog.SetActive(false);
-            BeforeDarkFogArm[0].SetActive(true);
-            BeforeDarkFogArm[1].SetActive(true);
-            BeforeDarkFogArm[2].SetActive(true);
-            BeforeDarkFogArm[3].SetActive(true);
-        }
+        Active_Cool = Active_Cool_Max; 
     }
 
     public void PharaoWandSwitch()
@@ -610,23 +601,21 @@ public class Char_Parent : Character
     }
     public GameObject[] BeforeDarkFogArm;
     public GameObject DefaultDarkFog;
+
     public void OnDarkFog()
     {
-        if (AbilityManager.isShoot == true)
-        {
             DefaultDarkFog.SetActive(false);
             DarkFog.SetActive(true);
             BeforeDarkFogArm[0].SetActive(false);
             BeforeDarkFogArm[1].SetActive(false);
             BeforeDarkFogArm[2].SetActive(false);
             BeforeDarkFogArm[3].SetActive(false);
-        }
-        else if (AbilityManager.isShoot == false)
-        {
-            OffDarkFog();
-        }
+        //else if (AbilityManager.isShoot == false)
+        //{
+        //    OffDarkFog();
+        //}
     }
-    void OffDarkFog()
+    public void OffDarkFog()
     {
         DefaultDarkFog.SetActive(true);
         DarkFog.SetActive(false);

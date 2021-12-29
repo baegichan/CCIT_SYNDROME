@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 349546776002612206}
   - component: {fileID: 3970446280941371913}
   - component: {fileID: 8595749222620457140}
+  - component: {fileID: -6508057672038456337}
   m_Layer: 0
   m_Name: DarkFog_Projectile
   m_TagString: Untagged
@@ -206,7 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CT: {fileID: 0}
   ES: {fileID: 3354309599334273724, guid: f6f4787f1f4ee26428c85396e3f62ca8, type: 3}
-  Speed: 20
+  Speed: 650
   Dir: {x: 0, y: 0}
   PP: {x: 0, y: 0}
   Dis: 0
@@ -227,6 +228,27 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 1
+--- !u!50 &-6508057672038456337
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6791653854937588738}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7800627772777385975
 GameObject:
   m_ObjectHideFlags: 0

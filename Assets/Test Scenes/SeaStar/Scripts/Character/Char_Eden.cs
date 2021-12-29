@@ -247,6 +247,15 @@ public class Char_Eden : MonoBehaviour
         CP.OffBattleAxe();
     }
 
+    void OnDarkFog()
+    {
+        CP.OnDarkFog();
+    }
+
+    void OffDarkFog()
+    {
+        CP.OffDarkFog();
+    }
     void BattleAxeintInitalization()
     {
        //BAX.GetComponent<BattleAxeAttack>().Attack_int = 0;
