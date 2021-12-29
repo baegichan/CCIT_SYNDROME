@@ -302,11 +302,6 @@ public class Char_Parent : Character
 
     public void Move()
     {
-        //if (Input.GetKeyDown(settingmanager.GM.left)) { h = -1; }
-        //if (Input.GetKeyUp(settingmanager.GM.left)) { h = 0; }
-
-        //if (Input.GetKeyDown(settingmanager.GM.right)) { h = 1; }
-        //if (Input.GetKeyUp(settingmanager.GM.right)) { h = 0; }
         h = Input.GetAxisRaw("Horizontal");
         SelectChar.transform.position += new Vector3(h * speed * Time.deltaTime, 0);
 
@@ -423,31 +418,6 @@ public class Char_Parent : Character
             Ani.SetBool("Down", false);
         }
     }
-    //void OnCollisionEnter2D(Collision2D col)
-    //{
-    //    if(col.gameObject.tag == "Ground")
-    //    {
-    //        Ani.SetBool("Jump", false);
-    //        P_JumpInt = P_MaxJumpInt;
-    //        JumpCool = DoubleJumpCool;
-    //    }
-    //}
-    //마우스 플립
-
-    //public void MouseFilp()
-    //{
-    //    if (Ani.GetBool("CanIThis"))
-    //    {
-    //        if (Mouse.x <= PlayerPosition.x)
-    //        {
-    //            SelectChar.transform.localScale = new Vector3(-1, 1, 1);
-    //        }
-    //        else if (Mouse.x > PlayerPosition.x)
-    //        {
-    //            SelectChar.transform.localScale = new Vector3(1, 1, 1);
-    //        }
-    //    }
-    //}
 
     //능력
     public delegate void useAbility();

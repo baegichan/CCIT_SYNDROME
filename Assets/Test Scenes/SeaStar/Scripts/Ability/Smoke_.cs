@@ -42,7 +42,6 @@ public class Smoke_ : MonoBehaviour
                         ES.GetComponent<ParticleSystem>().Clear(); 
                         gameObject.SetActive(false);
                         Destroy(gameObject, 0f);
-                        //Destroy(ES, 0f);
                         isEndOfEXPLOSION = false;
                         AbilityManager.isShoot = false;
                     } 
@@ -82,7 +81,6 @@ public class Smoke_ : MonoBehaviour
                     ES.GetComponent<ParticleSystem>().Clear();
                     gameObject.SetActive(false);
                     Destroy(gameObject, 0f);
-                    //Destroy(ES, 0f);
                     isEndOfEXPLOSION = false;
                     AbilityManager.isShoot = false;
                 }
