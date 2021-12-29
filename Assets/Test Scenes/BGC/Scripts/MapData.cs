@@ -96,11 +96,11 @@ public class MapData : ScriptableObject
     }
 
     public Map_Direction direction = Map_Direction.x;
-    //public void Save_Potal(GameObject potal,int index)
-    //{
+    public void Save_Potal(GameObject potal,int index)
+    {
        
-    //    Potals[index].Save_Potal_Location(potal);
-    //}
+        Potals[index].Save_Potal_Location(potal);
+    }
     public void DestroyPotal(int index)
     {
         Potals[index].DestroyPotal();
@@ -397,16 +397,16 @@ public class MapData : ScriptableObject
         for(int i=0; i<BG.Length;i++)
         {
 
-          //GameObject MapPrefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
-         // BG[i].Tilemap = MapPrefab;
+       //  GameObject MapPrefab =PrefabUtility.SaveAsPrefabAsset(grid.transform.GetChild(i).gameObject,"Assets/Test Scenes/BGC/TileMap/TileMaps/"+BG[i].TilemapName+ ".prefab");
+         //BG[i].Tilemap = MapPrefab;
            // 추가로 이벤트도 저장해야됨
             
         }
-        //Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
+     //  Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
     }
     public void Save_Event(GameObject Event)
     {
-       //Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
+     //  Map_Event = PrefabUtility.SaveAsPrefabAsset(Event, "Assets/Test Scenes/BGC/Event/Events/" + this.name + "_Event" + ".prefab");
     }
 
     public Sprite Get_Sprite(int index)

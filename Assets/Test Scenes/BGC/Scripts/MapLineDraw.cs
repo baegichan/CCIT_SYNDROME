@@ -17,14 +17,10 @@ public class MapLineDraw : MonoBehaviour
     Wall
     }
   public  UpdateTest updating = UpdateTest.None;
-
     private void OnDrawGizmos()
     {
-
-
         if(updating== UpdateTest.None)
         {
-
             Gizmos.color = LineColor;
             Gizmos.DrawLine(new Vector2(L_Area + this.transform.position.x, T_Area + this.transform.position.y), new Vector2(R_Area + this.transform.position.x, T_Area + this.transform.position.y));
             Gizmos.DrawLine(new Vector2(R_Area + this.transform.position.x, T_Area + this.transform.position.y), new Vector2(R_Area + this.transform.position.x, B_Area + this.transform.position.y));

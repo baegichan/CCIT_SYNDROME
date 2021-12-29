@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +26,7 @@ public class Char_Parent : Character
     public GameObject SelectChar;
     public Animator Ani;
     public static Rigidbody2D rigid;
-    AbilityManager AM;
+    public AbilityManager AM;
     public Camera Cam;
     public static bool ShopOn;
     public bool IsInChaCharacter;
@@ -39,9 +38,11 @@ public class Char_Parent : Character
     public GameObject BattleAxe_Senaka;
     public GameObject BattleAxe;
     public GameObject EvilSword;
+    public GameObject DarkFog;
     public List<Ability> AbilityHistory;
 
     [Header("플레이어 스테이터스")]
+    public bool Clear;
     public bool Dead;
     public int DefaultHP;
     public int CharHP;
@@ -81,8 +82,8 @@ public class Char_Parent : Character
     public static float Active_Cool_Max;
     public static float Active_Cool = 0f;
     public GameObject DoubleJump;
-    Vector2 Mouse;
-    Vector2 PlayerPosition;
+    public Vector2 Mouse;
+    public Vector2 PlayerPosition;
 
     [Header("능력치 강화 수치")]
     public int Enhance_Health;
@@ -97,6 +98,7 @@ public class Char_Parent : Character
     public int PharaoCool;
     public int EvilSworldCool;
     public int BattleAxeCool;
+    public float DarkFogCool;
     public float DoubleJumpCool;
     public float JumpCool;
 
@@ -141,12 +143,13 @@ public class Char_Parent : Character
         {
             if (Ani.GetBool("CanIThis"))
             {
-                if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
+                if (Input.GetKeyDown(KeyCode.W)) { Jump(); }
                 Move();
                 GroundCheck();
             }
         }
     }
+
     void Update()
     {
         PlayerPosition = Cam.WorldToScreenPoint(SelectChar.transform.position);
@@ -173,16 +176,12 @@ public class Char_Parent : Character
                     UseSkill();
                 }
             }
-            if (Ani.GetBool("CanIThis"))
-            {
-                MouseFilp();
-            }
             if (Active_Cool < Active_Cool_Max) { Active_Cool += Time.deltaTime; }
             if (AP_Timer > 0) { AP_Time(); }
             else { if (UseApPostion) { UseApPostion = false; } }
             Die();
         }
-        if(Input.GetKeyDown(KeyCode.F12))
+        if (Input.GetKeyDown(KeyCode.F12))
         {
             escape();
         }
@@ -228,7 +227,7 @@ public class Char_Parent : Character
     {
         for (int i = 0; i < this.Char.Length; i++)
         {
-            if(this.Char[i] != SelectChar) { this.Char[i].SetActive(false); }
+            if (this.Char[i] != SelectChar) { this.Char[i].SetActive(false); }
 
         }
         Char.transform.position = Before_Position;
@@ -283,9 +282,16 @@ public class Char_Parent : Character
 
     void AbilityCheat()
     {
-        //SelectAbility();
-        //PlayerSkillUI.skill.Image_Active.sprite = ActiveAbility.icon;
-        //PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
+        if (IsInChaCharacter)
+        {
+            //SelectAbility();
+            //PlayerSkillUI.skill.Image_Passive.sprite = PassiveAbility.icon;
+            //UsePassive();
+
+            //PlayerSkillUI.skill.Image_Active.sprite = ActiveAbility.icon;
+            //PlayerSkillUI.skill.Image_CoolTime.sprite = ActiveAbility.CoolTime;
+        }
+
         PlayerSkillUI.skill.HpPotionInt.text = MulYakInt.ToString();
         PlayerSkillUI.skill.PillInt.text = AlYakInt.ToString();
     }
@@ -298,11 +304,6 @@ public class Char_Parent : Character
 
     public void Move()
     {
-        //if (Input.GetKeyDown(settingmanager.GM.left)) { h = -1; }
-        //if (Input.GetKeyUp(settingmanager.GM.left)) { h = 0; }
-
-        //if (Input.GetKeyDown(settingmanager.GM.right)) { h = 1; }
-        //if (Input.GetKeyUp(settingmanager.GM.right)) { h = 0; }
         h = Input.GetAxisRaw("Horizontal");
         SelectChar.transform.position += new Vector3(h * speed * Time.deltaTime, 0);
 
@@ -312,12 +313,18 @@ public class Char_Parent : Character
                 Ani.SetBool("Move", false);
                 break;
             case -1:
+                if (Ani.GetBool("CanIThis") == false)
+                {
+                    Ani.SetBool("Move", false);
+                }
+                else { SelectChar.transform.localScale = new Vector3(-1, 1, 1); Ani.SetBool("Move", true); }
+                break;
             case 1:
                 if (Ani.GetBool("CanIThis") == false)
                 {
                     Ani.SetBool("Move", false);
                 }
-                else { Ani.SetBool("Move", true); }
+                else { SelectChar.transform.localScale = new Vector3(1, 1, 1); Ani.SetBool("Move", true); }
                 break;
         }
     }
@@ -337,7 +344,7 @@ public class Char_Parent : Character
 
     public PlatformEffector2D pf;
     public Vector2 vel;
-    
+
     public void Jump()
     {
         if (!Ani.GetBool("Jump"))
@@ -364,51 +371,53 @@ public class Char_Parent : Character
             }
         }
     }
-    
+
     public float[] Distance;
     public float[] Distance_X;
     public float[] Distance_Y;
     public float[] Distance_;
+
+    public float[] D_Distance;
+    public float[] D_Distance_X;
+    public float[] D_Distance_Y;
+    public float[] D_Distance_;
     public Vector3[] pivot;
     int DI;
 
     public LayerMask lm;
-    RaycastHit2D LGround, RGround;
+    RaycastHit2D LGround, RGround, DownCheck;
     void GroundCheck()
     {
         LGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
         Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(-Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.yellow);
         RGround = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Distance[DI]);
         Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(Distance_X[DI], Distance_Y[DI], 0), Vector2.down * Distance_[DI], Color.cyan);
+
+        DownCheck = Physics2D.Raycast(SelectChar.transform.position + pivot[DI] + new Vector3(D_Distance_X[DI], D_Distance_Y[DI], 0), Vector2.down * D_Distance_[DI], Distance[DI]);
+        Debug.DrawRay(SelectChar.transform.position + pivot[DI] + new Vector3(D_Distance_X[DI], D_Distance_Y[DI], 0), Vector2.down * D_Distance_[DI], Color.red);
+
         Physics2D.queriesStartInColliders = false;
 
         if (Ani.GetBool("Jump")) { JumpCool -= Time.deltaTime; }
 
-        if(rigid.velocity.y < 0 && (LGround != false || RGround != false))
+        if (rigid.velocity.y < 0 && (LGround != false || RGround != false))
         {
-            if (LGround.collider.gameObject.tag == "Ground" || RGround.collider.gameObject.tag == "Ground")
+            if (LGround.collider.gameObject.CompareTag("Ground") || RGround.collider.gameObject.CompareTag("Ground"))
             {
                 Ani.SetBool("Jump", false);
+                Ani.SetBool("Down", false);
                 P_JumpInt = P_MaxJumpInt;
                 JumpCool = DoubleJumpCool;
             }
         }
-    }
 
-    //마우스 플립
-
-    public void MouseFilp()
-    {
-        if (Ani.GetBool("CanIThis"))
+        if ((LGround.collider == false || RGround.collider == false) && DownCheck.collider == false)
         {
-            if (Mouse.x <= PlayerPosition.x)
-            {
-                SelectChar.transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else if (Mouse.x > PlayerPosition.x)
-            {
-                SelectChar.transform.localScale = new Vector3(1, 1, 1);
-            }
+            Ani.SetBool("Down", true);
+        }
+        else
+        {
+            Ani.SetBool("Down", false);
         }
     }
 
@@ -538,10 +547,11 @@ public class Char_Parent : Character
                 Active_Cool_Max = EvilSworldCool;
                 break;
             case 9:
-                Active_Cool_Max = 4f;
-                break;
+                Current_Use = DefaultDarkFog;
+                Active_Cool_Max = DarkFogCool;
+                    break;
         }
-        Active_Cool = Active_Cool_Max;
+        Active_Cool = Active_Cool_Max; 
     }
 
     public void PharaoWandSwitch()
@@ -561,7 +571,33 @@ public class Char_Parent : Character
         BattleAxe_Senaka.SetActive(false);
         BattleAxe.SetActive(true);
     }
+    public GameObject[] BeforeDarkFogArm;
+    public GameObject DefaultDarkFog;
 
+    public void OnDarkFog()
+    {
+        if(Ani.GetInteger("AbilityNum") == 9)
+        {
+            DefaultDarkFog.SetActive(false);
+            DarkFog.SetActive(true);
+            BeforeDarkFogArm[0].SetActive(false);
+            BeforeDarkFogArm[1].SetActive(false);
+            BeforeDarkFogArm[2].SetActive(false);
+            BeforeDarkFogArm[3].SetActive(false);
+        }
+    }
+    public void OffDarkFog()
+    {
+        if (Ani.GetInteger("AbilityNum") == 9)
+        {
+            DefaultDarkFog.SetActive(true);
+            DarkFog.SetActive(false);
+            BeforeDarkFogArm[0].SetActive(true);
+            BeforeDarkFogArm[1].SetActive(true);
+            BeforeDarkFogArm[2].SetActive(true);
+            BeforeDarkFogArm[3].SetActive(true);
+        }
+    }
     public void EvillSwordSwitch()
     {
         if (EvilSword.activeSelf) { EvilSword.SetActive(false); }
@@ -570,13 +606,10 @@ public class Char_Parent : Character
 
     void Load_StateEnhance()
     {
-
         Enhance_Health = ResourceManager.re.Enhance_Health;
         Enhance_Strength = ResourceManager.re.Enhance_Strength;
         Enhance_Speed = ResourceManager.re.Enhance_Speed;
         StateManager.state.DarkFog = AbyssManager.abyss.Darkfog;
-
-
     }
 
     public void Save_StateEnhance()
@@ -604,16 +637,16 @@ public class Char_Parent : Character
         CurrentCha = GetComponent<Char_Parent>().SelectChar;
         GameObject Text = (GameObject)Instantiate(Resources.Load("DMGCANVAS2"), CurrentCha.transform.position + Vector3.up * 1 + new Vector3(Random.Range(0.0f, 0.9f), Random.Range(0.0f, 0.3f), 0), Quaternion.identity);
         Text.GetComponent<DamageOBJ>().DamageText(Damage);
-      
-        float fontExtra = Mathf.Clamp(Damage / 3 , 5.0f, 10.0f);
+
+        float fontExtra = Mathf.Clamp(Damage / 3, 5.0f, 10.0f);
         float fontsize = Random.Range(0.8f * fontExtra, 1.0f * fontExtra);
         Text.GetComponentInChildren<Text>().fontSize = (int)fontsize;
     }
     public void escape()
     {
-        if(MapManager.s_Instace!=null)
+        if (MapManager.s_Instace != null)
         {
-          SelectChar.transform.position=  MapManager.s_Instace.map[(int)MapManager.s_Instace.Current_Room.x, (int)MapManager.s_Instace.Current_Room.y].transform.GetComponentInChildren<Potals>().GetONPotals();
+            SelectChar.transform.position = MapManager.s_Instace.map[(int)MapManager.s_Instace.Current_Room.x, (int)MapManager.s_Instace.Current_Room.y].transform.GetComponentInChildren<Potals>().GetONPotals();
         }
     }
 }

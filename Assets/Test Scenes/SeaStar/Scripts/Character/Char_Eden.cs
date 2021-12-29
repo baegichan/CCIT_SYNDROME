@@ -158,12 +158,16 @@ public class Char_Eden : MonoBehaviour
                 }
             }
         }
+        if(CP.vel.x > P_DashForce)
+        {
+
+        }
         if (P_DashTimer < 5)
         {
             P_DashTimer += Time.deltaTime;
         }
     }
-
+    
     public void PharaoWandSwitch()
     {
         if (CP.PharaoWand_Senaka.activeSelf) { CP.PharaoWand_Senaka.SetActive(false); }
@@ -243,6 +247,15 @@ public class Char_Eden : MonoBehaviour
         CP.OffBattleAxe();
     }
 
+    void OnDarkFog()
+    {
+        CP.OnDarkFog();
+    }
+
+    void OffDarkFog()
+    {
+        CP.OffDarkFog();
+    }
     void BattleAxeintInitalization()
     {
        //BAX.GetComponent<BattleAxeAttack>().Attack_int = 0;
@@ -288,6 +301,11 @@ public class Char_Eden : MonoBehaviour
         else { PharaoLight.SetActive(true); }
     }
 
+    void STFog()
+    {
+        CP.GetComponent<AbilityManager>().ShootFog();
+    }
+
     void Fail()
     {
         GameResultManager.result.Abilty(CP.AbilityHistory);
@@ -305,10 +323,7 @@ public class Char_Eden : MonoBehaviour
         {
             CP.pf.colliderMask = layerMask;
             CP.pf.GetComponent<PassBlock>().IsUse = true;
-            //Invoke("AllLayerPlatform", 0.6f);
-            //StartCoroutine(Cool());
         }
-        
     }
 
     IEnumerator Cool()

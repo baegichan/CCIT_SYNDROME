@@ -14,7 +14,7 @@ public class AXE : MonoBehaviour
     public Vector3 Size;
     public void AxeAttack()
     {
-        Vector3 Axe = new Vector3(transform.position.x + Point.x * transform.localScale.x, transform.position.y + Point.y);
+        Vector3 Axe = new Vector3(CP.SelectChar.transform.position.x + Point.x * CP.SelectChar.transform.localScale.x, transform.position.y + Point.y);
         Collider2D[] hitAxe = Physics2D.OverlapBoxAll(Axe, Size, 0);
 
         if (AbilityManager.A_Attack_State == true)
@@ -35,7 +35,7 @@ public class AXE : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(new Vector3(transform.position.x + Point.x * transform.localScale.x, transform.position.y + Point.y), Size);
+        Gizmos.DrawWireCube(new Vector3(transform.position.x + Point.x * CP.SelectChar.transform.localScale.x, transform.position.y + Point.y), Size);
     }
     private void Fourth(Collider2D col)
     {

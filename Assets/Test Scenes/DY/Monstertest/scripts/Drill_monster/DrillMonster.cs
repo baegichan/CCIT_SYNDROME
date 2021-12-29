@@ -162,6 +162,7 @@ public class DrillMonster : Character
     {
         GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
+        GetComponent<MonsterCount>().MonsterKill();
         Destroy(gameObject);
     }
 

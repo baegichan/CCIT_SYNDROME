@@ -7,6 +7,7 @@ public class YamiNoDark : MonoBehaviour
     bool isPlayer = false;
     bool isOpen = false;
     public GameObject Effect;
+    public GameObject box;
     Vector3 EffectPosition = new Vector2(0, -0.6f);
 
     void Awake()
@@ -27,7 +28,14 @@ public class YamiNoDark : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Player") { isPlayer = true; }
+        if (col.tag == "Player")
+        {
+            AbyssManager.abyss.Darkfog += Random.Range(80, 141);
+            Destroy(box.gameObject);
+            Destroy(transform.gameObject);
+          
+            isPlayer = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)

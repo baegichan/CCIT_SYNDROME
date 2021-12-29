@@ -298,13 +298,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2498815424892380375}
   - component: {fileID: 2498815424892380374}
+  - component: {fileID: 3772686633006449145}
   m_Layer: 14
   m_Name: Attack_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2498815424892380375
 Transform:
   m_ObjectHideFlags: 0
@@ -371,6 +372,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3772686633006449145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2498815424892380372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88885c52ebfe8b428cdef94fb2fed86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorchager: {r: 0, g: 0, b: 0, a: 0}
+  attack: {fileID: 2498815424892380372}
 --- !u!1 &2498815425155300496
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,6 +693,7 @@ GameObject:
   - component: {fileID: 3882405519251958654}
   - component: {fileID: 4334656203789326323}
   - component: {fileID: 5820323848795054845}
+  - component: {fileID: -7611993132043621322}
   m_Layer: 14
   m_Name: Monster_RobotClup
   m_TagString: Monster
@@ -786,6 +802,7 @@ MonoBehaviour:
   trace: 0
   Targeton: 0
   Dead: 0
+  attackeffect: {fileID: 2498815424892380372}
   m_bDebugMode: 0
   m_horizontalViewAngle: 210
   m_viewRadius: 5
@@ -877,6 +894,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eye: {fileID: 7862910088386111128}
+--- !u!114 &-7611993132043621322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3941622753299243638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5e556283fc2474e803010e78989961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MonsterState: 0
 --- !u!1 &4127974974922238141
 GameObject:
   m_ObjectHideFlags: 0

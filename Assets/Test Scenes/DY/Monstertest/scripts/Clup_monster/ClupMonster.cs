@@ -31,6 +31,8 @@ public class ClupMonster : Character
     public bool Targeton = false;
     public bool Dead;
     private bool Online;
+    public bool attackeffact;
+    public GameObject attackeffect;
 
     //2D sight
     [Header("View Config")] //헤더를 사용하여 관련 필드 그룹화
@@ -55,6 +57,11 @@ public class ClupMonster : Character
     {
         playerTransform = null;
         Targeton = false;
+        if(Targeton == true)
+        {
+            attackeffact = true;
+        }
+        
         if (Online)
         {
             anim.SetFloat("Direction", 1);
@@ -63,12 +70,16 @@ public class ClupMonster : Character
         {
             ClupDestroy();
         }
+        
         transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     private void OnDisable()
     {
-       
+       if(Targeton == false)
+        {
+            attackeffact = false;
+        }
         anim.SetFloat("Direction", 1);
         Vector2 current = transform.localScale;
         current.x = 1;
@@ -168,6 +179,7 @@ public class ClupMonster : Character
     {
         GameResultManager.result.CountKillMonster++;
         abyss.MonsterDie();
+        GetComponent<MonsterCount>().MonsterKill();
         Destroy(gameObject);
     }
 

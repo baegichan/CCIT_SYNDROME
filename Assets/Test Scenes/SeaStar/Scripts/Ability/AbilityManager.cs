@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AbilityManager : MonoBehaviour
@@ -11,12 +9,15 @@ public class AbilityManager : MonoBehaviour
     Rigidbody2D rg;
     public LayerMask TargetLayer;
     public int RockAP;
-    public float[] DoubleJumpP = { 5, 10, 15, 20};
-    public int[] ParaoAP = { 20, 25, 30, 35};
+    public float[] DoubleJumpP = { 5, 10, 15, 20 };
+    public int[] ParaoAP = { 20, 25, 30, 35 };
     public int[] BoomAP = { 10, 13, 16, 20 };
     public int[] WolfAP = { 3, 4, 5, 6 };
     public int[] AxeAP = { 15, 18, 21, 23 };
     public int[] EvilAP = { 6, 9, 12, 15 };
+    public int[] DarkSmokeAP = { 10, 15, 20, 30 };
+    public int[] DarkSmokeExplosionAP = { 10, 13, 16, 20 };
+    public int[] DarkSmokeMinus = { 50, 75, 100, 125 };
     public GameObject PharaoHitEffect;
     public AudioSource AS;
     //마검
@@ -35,6 +36,13 @@ public class AbilityManager : MonoBehaviour
     {
         AS = GetComponent<AudioSource>();
     }
+
+     void Update()
+    {
+        float angle = Mathf.Atan2(Dir.y, Dir.x) * Mathf.Rad2Deg;
+        EdenArm.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
     public void Werewolf()
     {
         if (Input.GetMouseButtonDown(1) && !CP.Ani.GetBool("Jump") && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
@@ -99,8 +107,8 @@ public class AbilityManager : MonoBehaviour
     public float ShieldCool;
     public void Ability_D()
     {
-        if(ShieldCool > 0) { ShieldCool -= Time.deltaTime; }
-        else if(ShieldCool <= 0) { CP.Shield = 0; }
+        if (ShieldCool > 0) { ShieldCool -= Time.deltaTime; }
+        else if (ShieldCool <= 0) { CP.Shield = 0; }
 
         if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
         {
@@ -149,13 +157,13 @@ public class AbilityManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             EvilSword_Attack();
-            if(Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+            if (Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
             {
                 py.GetComponent<Char_Eden>().P_CombatInt = 0;
                 EA.SetTrigger("First");
                 EA.SetTrigger("Attack");
             }
-            else if(Char_Parent.Active_Cool < Char_Parent.Active_Cool_Max)
+            else if (Char_Parent.Active_Cool < Char_Parent.Active_Cool_Max)
             {
                 EA.SetTrigger("Attack");
             }
@@ -184,25 +192,102 @@ public class AbilityManager : MonoBehaviour
         CP.Ani.SetBool("CanIThis", true);
     }
 
-    public GameObject B_Ball;
+    public GameObject DarkFog_Ball;
+    public Transform EdenArm;
     public float B_Damage;
     public float B_Speed;
+    public float[] Angle;
+    public float MouseAngle;
+    public Transform RightHand;
+    public Vector2 MouseP;
+    public Vector2 Point;
+    public Vector2 Dir;
+    public static bool isShoot = false;
     //검은안개능력
     public void BlackSmoke()
     {
-        if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        if(CP.Ani.GetBool("Jump") == false)
         {
-            Char_Parent.Active_Cool = 0f;
-            CP.Ani.SetTrigger("Ability");
-            Vector2 MouseP = Input.mousePosition;
-            MouseP = cam.ScreenToWorldPoint(MouseP);
-            Vector2 Point = py.transform.position;
-            Vector2 Dir = MouseP - Point;
-            Dir = Dir.normalized;
-
-            GameObject BB = Instantiate(B_Ball, Point, Quaternion.identity);
+            if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max && Char_Parent.ply.Ani.GetInteger("AbilityNum") == 9)
+            {
+                isShoot = true;
+                CP.Ani.SetBool("CanIThis", false);
+                if (CP.Ani.GetBool("Move")) { CP.Ani.SetBool("Move", false); }
+                Char_Parent.Active_Cool = 0f;
+                CP.Ani.SetInteger("AbilityNum", 9);
+                MouseP = cam.ScreenToWorldPoint(Input.mousePosition);
+                Dir = MouseP - Point;
+                Dir = Dir.normalized;
+                MouseAngle = Vector2.Angle(Vector2.up, MouseP);
+                MousePosition();
+            }
+        }
+    }
+   
+    public void ShootFog()
+    {
+        if(AbyssManager.abyss.Darkfog >= DarkSmokeMinus[Char_Parent.ply.ActiveAbility.Enhance])
+        {
+            isShoot = true;
+            RightHand.localScale = new Vector3(1, 1, 1);
+            Point = RightHand.position;
+            GameObject BB = Instantiate(DarkFog_Ball, Point, Quaternion.identity);
+            AbyssManager.abyss.Darkfog -= DarkSmokeMinus[Char_Parent.ply.ActiveAbility.Enhance];
             BB.GetComponent<Smoke_>().Dir = Dir;
             BB.GetComponent<Smoke_>().PP = Point;
+            CP.Ani.SetBool("Combat", true);
+        }
+    }
+
+    void MousePosition()
+    {
+        if (!CP.Ani.GetBool("CanIThis"))
+        {
+            if (MouseAngle <= Angle[0])
+            {
+                CP.Ani.SetTrigger("High");
+                Height();
+            }
+            else if (MouseAngle > Angle[0] && MouseAngle <= Angle[1])
+            {
+                CP.Ani.SetTrigger("Middle");
+                Height();
+            }
+            else if (MouseAngle > Angle[1] && MouseAngle <= Angle[2])
+            {
+                CP.Ani.SetTrigger("Low");
+                Height();
+            }
+        }
+    }
+
+    void Height()
+    {
+        if (CP.SelectChar.transform.localScale.x == -1)
+        {
+            if (CP.Mouse.x <= CP.PlayerPosition.x)
+            {
+                CP.Ani.SetBool("Turn", false);
+                CP.Ani.SetTrigger("Ability");
+            }
+            else if (CP.Mouse.x > CP.PlayerPosition.x)
+            {
+                CP.Ani.SetBool("Turn", true);
+                CP.Ani.SetTrigger("Ability");
+            }
+        }
+        else
+        {
+            if (CP.Mouse.x <= CP.PlayerPosition.x)
+            {
+                CP.Ani.SetBool("Turn", true);
+                CP.Ani.SetTrigger("Ability");
+            }
+            else if (CP.Mouse.x > CP.PlayerPosition.x)
+            {
+                CP.Ani.SetBool("Turn", false);
+                CP.Ani.SetTrigger("Ability");
+            }
         }
     }
 

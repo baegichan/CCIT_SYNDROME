@@ -27,8 +27,8 @@ public class AbyssMonster : MonoBehaviour
         {
             monsterBox = transform.parent.parent.GetComponent<MonsterBox>();
             monsterBox.AbyssMonsterAdd(id, transform.position);
-             
-            
+            if (!monsterBox.MonsterMap)
+                monsterBox.MonsterMap = true;
 
         }
         else
