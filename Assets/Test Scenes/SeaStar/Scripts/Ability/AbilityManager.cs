@@ -4,7 +4,6 @@ public class AbilityManager : MonoBehaviour
 {
     public Camera cam;
     public GameObject py;
-    public GameObject Bomb;
     public float WereWolf_Gauge = 0;
     Rigidbody2D rg;
     public LayerMask TargetLayer;
@@ -18,6 +17,7 @@ public class AbilityManager : MonoBehaviour
     public int[] DarkSmokeAP = { 10, 15, 20, 30 };
     public int[] DarkSmokeExplosionAP = { 10, 13, 16, 20 };
     public int[] DarkSmokeMinus = { 50, 75, 100, 125 };
+    public int[] BombAP = { 10, 15, 20, 30 };
     public GameObject PharaoHitEffect;
     public AudioSource AS;
     //¸¶°Ë
@@ -83,24 +83,6 @@ public class AbilityManager : MonoBehaviour
                 MonsterCol[i].transform.GetComponent<Character>().Damage(ParaoAP[CP.ActiveAbility.Enhance], CP.UseApPostion, PharaoHitEffect);
                 GetComponent<Character>().KnuckBack(transform, 0.8f, MonsterCol[i].transform.GetComponent<Character>().IsBoss);
             }
-        }
-    }
-
-    public void BomberMan()
-    {
-        if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
-        {
-            Char_Parent.Active_Cool = 0f;
-            CP.Ani.SetTrigger("Ability");
-            Vector2 pp = py.transform.position;
-            Vector2 CursorPos = Input.mousePosition;
-            CursorPos = cam.ScreenToWorldPoint(CursorPos);
-            Vector2 Dir = CursorPos - pp;
-            Dir = Dir.normalized;
-            GameObject Boom = Instantiate(Bomb, pp, Quaternion.identity);
-            Boom.gameObject.name = "Bomb";
-            Rigidbody2D rg = Boom.GetComponent<Rigidbody2D>();
-            rg.AddForce(Dir * 100000 * Time.deltaTime);
         }
     }
 
@@ -190,6 +172,56 @@ public class AbilityManager : MonoBehaviour
     public void EvilRe()
     {
         CP.Ani.SetBool("CanIThis", true);
+    }
+
+    public GameObject Bomb;
+    public float Bomb_Damage;
+    public float Bomb_Speed;
+    Vector2 pp;
+    Vector2 CursorPos;
+    Vector2 Dire;
+
+    public void BomberMan()
+    {
+        if (Input.GetMouseButtonDown(1) && Char_Parent.Active_Cool >= Char_Parent.Active_Cool_Max)
+        {
+            if (CP.SelectChar.transform.localScale.x == 1)
+            {
+                if (CP.Mouse.x <= CP.PlayerPosition.x)
+                {
+                    CP.Ani.SetBool("Turn", true);
+                    CP.SelectChar.transform.localScale = new Vector3(CP.SelectChar.transform.localScale.x * -1, 1, 1);
+                }
+            }
+            else
+            {
+                if (CP.Mouse.x > CP.PlayerPosition.x)
+                {
+                    CP.Ani.SetBool("Turn", true);
+                    CP.SelectChar.transform.localScale = new Vector3(CP.SelectChar.transform.localScale.x * -1, 1, 1);
+                }
+            }
+
+            Char_Parent.Active_Cool = 0f;
+            CP.Ani.SetTrigger("Ability");
+            pp = py.transform.position;
+            CursorPos = Input.mousePosition;
+            CursorPos = cam.ScreenToWorldPoint(CursorPos);
+            Dire = CursorPos - pp;
+            Dire = Dire.normalized;
+        }
+    }
+
+    public void ThrowBomb()
+    {
+        GameObject Boom = Instantiate(Bomb, EdenArm.position, Quaternion.identity);
+        Boom.gameObject.name = "Bomb";
+        Rigidbody2D rg = Boom.GetComponent<Rigidbody2D>();
+        rg.AddForce(Dire * Bomb_Speed * Time.deltaTime);
+        BombObject BO = Boom.GetComponent<BombObject>();
+        BO.parent = Char_Parent.ply.SelectChar;
+        BO.AP = BombAP[CP.ActiveAbility.Enhance];
+        CP.Ani.SetBool("Turn", false);
     }
 
     public GameObject DarkFog_Ball;

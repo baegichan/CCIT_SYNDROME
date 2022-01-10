@@ -101,6 +101,7 @@ public class Char_Parent : Character
     public float DarkFogCool;
     public float DoubleJumpCool;
     public float JumpCool;
+    public float BombCool;
 
     [Header("소지 물약&능력")]
     public int MulYakInt;
@@ -454,6 +455,9 @@ public class Char_Parent : Character
             case 9:
                 active = new useAbility(AM.BlackSmoke);
                 break;
+            case 10:
+                active = new useAbility(AM.BomberMan);
+                break;
         }
     }
 
@@ -468,6 +472,7 @@ public class Char_Parent : Character
             case 4:
             case 5:
             case 9:
+            case 10:
                 active();
                 Ani.SetInteger("AbilityNum", ActiveAbility.AbCode);
                 break;
@@ -550,6 +555,9 @@ public class Char_Parent : Character
                 Current_Use = DefaultDarkFog;
                 Active_Cool_Max = DarkFogCool;
                     break;
+            case 10:
+                Active_Cool_Max = BombCool;
+                break;
         }
         Active_Cool = Active_Cool_Max; 
     }

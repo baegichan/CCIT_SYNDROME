@@ -306,6 +306,11 @@ public class Char_Eden : MonoBehaviour
         CP.GetComponent<AbilityManager>().ShootFog();
     }
 
+    void STBomb()
+    {
+        CP.AM.ThrowBomb();
+    }
+
     void Fail()
     {
         GameResultManager.result.Abilty(CP.AbilityHistory);
