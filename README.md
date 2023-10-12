@@ -44,6 +44,7 @@ SYNDROME 프로젝트는 현실과 심연 사이에서 난폭하게 변해버린
 
 
 ### 인게임 사진
+<div>
 ![신드롬1](https://github.com/baegichan/CCIT_SYNDROME/assets/88014706/87eefa8d-66da-42b0-908f-7d674aee6e16)
 ![신드롬10](https://github.com/baegichan/CCIT_SYNDROME/assets/88014706/89d39e73-6fc9-48e9-9eda-f0f6397469ed)
 ![신드롬21](https://github.com/baegichan/CCIT_SYNDROME/assets/88014706/a71e742e-66f7-4efb-a3bc-56b5c83ccd17)
