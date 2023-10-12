@@ -1,11 +1,10 @@
 # CCIT_SYNDROME
  
 ### 소개
-대학생 공감 VR 프로젝트는 VR HMD를 활용하여 대학생들에게 VR 컨텐츠를 체험시킴으로써 현실에서의 능력, 친사회적 행동을 끌어내는 것을 목표로 진행된 프로젝트입니다.
-
-체험자는 도심 속 히어로가 되어 위기 상황에 닥친 사람들의 외침을 듣고 현장으로 이동한 뒤, 멀리 있는 물건을 조종할 수 있는 염력을 사용하여 사람들을 돕는 경험을 하게 됩니다.
-
-본 프로젝트는 서울대학교 기초교육원 주관으로 진행 된 2022학년도 2학기 가상현실(VR) 활용 교육 콘텐츠 개발 연구과제 공모전에 제출되었으며, 서울대학교 인간공학 심리연구실과 협업하여 2022년 12월 19일에 시작하여 2023년 3월 6월까지 진행되었습니다.
+SYNDROME 프로젝트는 현실과 심연 사이에서 난폭하게 변해버린 생명체들을 정화하는 주인공의 이야기를 담은 2D 로그라이크 액션 플랫포머 게임입니다.
+유저는 액티브, 패시브 능력과 펫을 조합하여 총 126가지의 조합을 할 수 있으며, 일반 스테이지 클리어 후 캐릭터 능력 강화 및 상점에서 사용할 수 있는 재화를 제공하는 심연 스테이지를 통해
+위험을 감수하고 빠르게 성장하거나 안전한 플레이와 같은 다양한 플레이 스타일로 플레이할 수 있게 됩니다.
+본 프로젝트는 프로젝트는 2021년도 1, 2학기 Culture Content & Information Technology 발표회와 글로벌 게임 챌린지 2022에 제출되었으며, 2021년 3월 00일부터 2021년 12월 00일까지 진행되었습니다.
 
 <br/>
 <br/>
@@ -37,7 +36,8 @@
 <br/>
 
 ### 게임 순환 구조
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/1a699e78-7327-4c27-b8f7-f51adc2d9d1c)
+![image](https://github.com/baegichan/CCIT_SYNDROME/assets/88014706/09657e63-7831-4472-b525-b914c8ccff67)
+
 
 <br/>
 <br/>
@@ -45,22 +45,9 @@
 
 ### 인게임 사진
 #### * 주인공의 방
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/5601fa9f-bac6-4b23-9c41-c222b9c976bf)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/65d5432a-8453-4c36-8f59-851d999c2bcc)
-
-#### * A 시나리오(화물 정리)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/33b03e0c-9425-4c5f-bde7-c394e007a3fd)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/59d01b68-2cdc-450d-b297-9134aa32c62f)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/c7c9d385-9600-418d-9185-768c26c2d8ee)
-
-#### * B 시나리오(동물 구조)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/b44d01f2-ecb0-4896-bc09-f6f88ea2b6c6)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/e43b88e9-e842-40ef-b7d1-9e0a49adc851)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/cfbc6849-d431-469c-b5f0-94a0e7e629f0)
-
-#### * C 시나리오(화물 정리)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/f05707d9-503f-47d5-bea4-af49d70df176)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/f986e412-63c5-49f7-99cb-b1fa89e7e91c)
-![image](https://github.com/JeonSeaStar/Empathy--VR-2Team/assets/88014706/d0ecbc35-85c7-439a-9714-f34d878c27b1)
+![신드롬1](https://github.com/baegichan/CCIT_SYNDROME/assets/88014706/87eefa8d-66da-42b0-908f-7d674aee6e16)
+![신드롬10](https://github.com/baegichan/CCIT_SYNDROME/assets/88014706/89d39e73-6fc9-48e9-9eda-f0f6397469ed)
+![신드롬21](https://github.com/baegichan/CCIT_SYNDROME/assets/88014706/a71e742e-66f7-4efb-a3bc-56b5c83ccd17)
+![클리어](https://github.com/baegichan/CCIT_SYNDROME/assets/88014706/c4894758-b79f-4ad9-95fa-3505d943d24a)
 
 <br/> 
